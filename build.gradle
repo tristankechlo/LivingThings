@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.16.1-1.0.0'
-group = 'com.tristankechlo.livingthing' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.tristankechlo.livingthings' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'livingthings'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
