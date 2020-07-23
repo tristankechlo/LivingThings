@@ -7,26 +7,30 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Logger;
 
+import com.tristankechlo.livingthings.client.renderer.RenderHandler;
 import com.tristankechlo.livingthings.init.ModEntities;
-
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod(LivingThings.MOD_ID)
 public class LivingThings {
 	
-    public static LivingThings instance;
+    public static LivingThings INSTANCE;
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "livingthings";
     
     public LivingThings() {
-		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    	INSTANCE = this;
 		
-
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModEntities.ENTITIES.register(modEventBus);
-		
-		
-        LivingThings.instance = this;
-        MinecraftForge.EVENT_BUS.register((Object)this);
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::ClientSetup);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+    
+    public void ClientSetup(final FMLClientSetupEvent event) {
+    	RenderHandler.registerEntityRenders();
     }
             
 }

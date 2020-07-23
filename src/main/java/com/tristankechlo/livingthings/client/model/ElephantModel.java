@@ -119,8 +119,7 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 		RightEar.setTextureOffset(244, 62).addBox(-2.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
 
 		Tusks = new ModelRenderer(this);
-		Tusks.setRotationPoint(0.0F, 0.0F, 0.0F);
-		Head.addChild(Tusks);
+		Tusks.setRotationPoint(0.0F, -12.0F, -19.0F);
 
 		LeftTusk = new ModelRenderer(this);
 		LeftTusk.setRotationPoint(7.0F, 7.0F, -10.0F);
@@ -167,21 +166,49 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		if(this.isChild) {
+			matrixStack.scale(0.6F, 0.6F, 0.6F);
+			matrixStack.translate(0, 1, 0);
+		} else {
+			Tusks.render(matrixStack, buffer, packedLight, packedOverlay);
+		}
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
-		this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+	    int i = entityIn.getAttackTimer();
+	    if (i == 0) {
+			this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+			this.Tusks.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+	    }
 		this.Head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
+		this.Tusks.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
+		
 		this.RightFrontLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F	* limbSwingAmount;
 		this.RightBackLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.LeftFrontLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.LeftBackLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+
 	}
 
 	@Override
 	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-		
+	    int i = entityIn.getAttackTimer();
+	    if (i > 0) {
+	       this.Head.rotateAngleX = 2F * MathHelper.func_233021_e_((float)i - partialTick, 10.0F);
+	       this.Tusks.rotateAngleX = 2F * MathHelper.func_233021_e_((float)i - partialTick, 10.0F);
+	    }
+
+		float test = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;		
+		this.Trunk.rotateAngleX = test;
+		this.Trunk.rotateAngleY = test;
+		this.Trunk.rotateAngleZ = test;
+		this.TrunkMiddle.rotateAngleX = test;
+		this.TrunkMiddle.rotateAngleY = test;
+		this.TrunkMiddle.rotateAngleZ = test;
+		this.TrunkBottom.rotateAngleX = test;
+		this.TrunkBottom.rotateAngleY = test;
+		this.TrunkBottom.rotateAngleZ = test;
 	}
 
 	private void setRotationAngleForModel(ModelRenderer modelRenderer, float x, float y, float z) {
@@ -189,6 +216,4 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
 	}
-
-
 }
