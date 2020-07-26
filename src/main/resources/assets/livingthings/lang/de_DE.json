@@ -1,3 +1,5 @@
 {
-	"entity.livingthings.elephant" : "Elefant"
+	"entity.livingthings.elephant" : "Elefant",
+	"entity.livingthings.giraffe" : "Giraffe",
+	"entity.livingthings.lion" : "Löwe"
 }

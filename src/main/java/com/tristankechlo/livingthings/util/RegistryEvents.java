@@ -1,5 +1,6 @@
-package com.tristankechlo.livingthings;
+package com.tristankechlo.livingthings.util;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.init.ModEntities;
 
 import net.minecraft.entity.EntityType;

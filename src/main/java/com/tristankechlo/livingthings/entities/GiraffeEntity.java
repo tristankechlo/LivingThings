@@ -33,32 +33,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ElephantEntity extends AnimalEntity implements IAngerable {
+public class GiraffeEntity extends AnimalEntity implements IAngerable {
 
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int integer;
-	private int attackTimer;
 	private UUID uuid;
-
-	public ElephantEntity(EntityType<? extends ElephantEntity> entityType, World worldIn) {
+	
+	public GiraffeEntity(EntityType<? extends GiraffeEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
-		
+	
 	@Override
 	public AgeableEntity createChild(AgeableEntity ageable) {
-		return ModEntities.ELEPHANT_ENTITY.get().create(this.world);
+		return ModEntities.GIRAFFE_ENTITY.get().create(this.world);
 	}
 	
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MAX_HEALTH, 80.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.25D)
+				.func_233815_a_(Attributes.MAX_HEALTH, 30.0D)
+				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.3D)
 				.func_233815_a_(Attributes.FOLLOW_RANGE, 50.0D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 15.0D)
+				.func_233815_a_(Attributes.ATTACK_DAMAGE, 8.0D)
 				.func_233815_a_(Attributes.ATTACK_KNOCKBACK, 0.25D)
 				.func_233815_a_(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
 	}
-
+	
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
@@ -81,12 +80,9 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 
 	@Override
 	public boolean attackEntityAsMob(Entity target) {
-		this.attackTimer = 10;
 	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this),
-				(float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
-	        target.setMotion(target.getMotion().add(0.0D, (double)0.5F, 0.0D));
 			this.applyEnchantments(this, target);
 		}
 		return flag;
@@ -95,11 +91,8 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if (this.attackTimer > 0) {
-			--this.attackTimer;
-		}
 	}
-	
+		
 	@Override
 	public boolean canBreatheUnderwater() {
 		return false;
@@ -107,24 +100,19 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return 4;
 	}
 
 	@Override
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		ItemStack leather = new ItemStack(Items.LEATHER, 4);
-		ItemEntity itementity = entityDropItem(leather);
+		// drop Inventory or something else
+		ItemStack stack = new ItemStack(Items.LEATHER, 4);
+		ItemEntity itementity = entityDropItem(stack);
 		if (itementity != null) {
 			itementity.setNoDespawn();
 		}
-		
-		ItemStack bones = new ItemStack(Items.BONE, 1);
-		ItemEntity itemEntity = entityDropItem(bones);
-		if (itemEntity != null) {
-			itemEntity.setNoDespawn();
-		}
 	}
-
+	
 	@Override
 	public int func_230256_F__() {
 		return this.integer;
@@ -154,16 +142,10 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	@OnlyIn(Dist.CLIENT)
 	public void handleStatusUpdate(byte id) {
 		if (id == 4) {
-			this.attackTimer = 10;
 			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
 		} else {
 			super.handleStatusUpdate(id);
 		}
 	}
-
-	@OnlyIn(Dist.CLIENT)
-	public int getAttackTimer() {
-		return this.attackTimer;
-	}
-			
+		
 }
