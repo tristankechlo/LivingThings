@@ -1,4 +1,11 @@
 {
+
+	"itemGroup.LivingThings" : "Lebewesen",
+	
+	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",
+	"item.livingthings.giraffe_spawn_egg" : "Erschaffe Giraffe",
+	"item.livingthings.lion_spawn_egg" : "Erschaffe Löwe",
+
 	"entity.livingthings.elephant" : "Elefant",
 	"entity.livingthings.giraffe" : "Giraffe",
 	"entity.livingthings.lion" : "Löwe"
