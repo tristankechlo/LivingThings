@@ -1,9 +1,10 @@
 package com.tristankechlo.livingthings.util;
 
+import com.google.common.base.Preconditions;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.init.ModEntities;
-
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -13,9 +14,19 @@ public class RegistryEvents {
 
 	@SubscribeEvent
 	public static void onEntityRegistry(RegistryEvent.Register<EntityType<?>> event) {
-		ModEntities.registerAttributes();
-		ModEntities.registerEntitySpawns();
-		ModEntities.registerEntitySpawnPlacements();
+        for (@SuppressWarnings("rawtypes") EntityType entity : ModEntityTypes.ENTITIES) {
+            Preconditions.checkNotNull(entity.getRegistryName(), "registryName");
+            event.getRegistry().register(entity);
+        }
+		ModEntityTypes.registerAttributes();
+		ModEntityTypes.registerEntitySpawnPlacements();
 	}
 
+    @SubscribeEvent
+    public static void registerSpawnEggs(RegistryEvent.Register<Item> event) {
+        for (Item spawnEgg : ModEntityTypes.SPAWN_EGGS) {
+            Preconditions.checkNotNull(spawnEgg.getRegistryName(), "registryName");
+            event.getRegistry().register(spawnEgg);
+        }
+    }
 }

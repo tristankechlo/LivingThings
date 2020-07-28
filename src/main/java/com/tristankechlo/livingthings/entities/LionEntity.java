@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -55,7 +55,7 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	private static final DataParameter<Boolean> IS_MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
 	private static final Predicate<LivingEntity> TARGET_ENTITIES = (entity) -> {
 		EntityType<?> entitytype = entity.getType();
-		return entitytype == EntityType.SHEEP || entitytype == EntityType.VILLAGER || entitytype == ModEntities.ELEPHANT_ENTITY.get();
+		return entitytype == EntityType.SHEEP || entitytype == EntityType.VILLAGER || entitytype == ModEntityTypes.ELEPHANT_ENTITY;
 	};
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int integer;
@@ -67,7 +67,7 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 
 	@Override
 	public AgeableEntity createChild(AgeableEntity ageable) {
-		LionEntity entity = ModEntities.LION_ENTITY.get().create(this.world);
+		LionEntity entity = ModEntityTypes.LION_ENTITY.create(this.world);
 		entity.setMale(new Random().nextBoolean());
 		return entity;
 	}

@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.entities;
 
 import java.util.UUID;
-import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -46,7 +46,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 		
 	@Override
 	public AgeableEntity createChild(AgeableEntity ageable) {
-		return ModEntities.ELEPHANT_ENTITY.get().create(this.world);
+		return ModEntityTypes.ELEPHANT_ENTITY.create(this.world);
 	}
 	
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
