@@ -19,7 +19,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -83,10 +82,9 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	public boolean attackEntityAsMob(Entity target) {
 		this.attackTimer = 10;
 	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this),
-				(float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
-	        target.setMotion(target.getMotion().add(0.0D, (double)0.5F, 0.0D));
+	        target.setMotion(target.getMotion().add(0.0D, 0.5D, 0.0D));
 			this.applyEnchantments(this, target);
 		}
 		return flag;
@@ -107,22 +105,23 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return 5;
 	}
 
 	@Override
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		ItemStack leather = new ItemStack(Items.LEATHER, 4);
-		ItemEntity itementity = entityDropItem(leather);
-		if (itementity != null) {
-			itementity.setNoDespawn();
+	@OnlyIn(Dist.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 4) {
+			this.attackTimer = 10;
+			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+		} else {
+			super.handleStatusUpdate(id);
 		}
-		
-		ItemStack bones = new ItemStack(Items.BONE, 1);
-		ItemEntity itemEntity = entityDropItem(bones);
-		if (itemEntity != null) {
-			itemEntity.setNoDespawn();
-		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public int getAttackTimer() {
+		return this.attackTimer;
 	}
 
 	@Override
@@ -148,22 +147,6 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public void func_230258_H__() {
 		this.func_230260_a__(rangedInteger.func_233018_a_(this.rand));
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		if (id == 4) {
-			this.attackTimer = 10;
-			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
-		} else {
-			super.handleStatusUpdate(id);
-		}
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public int getAttackTimer() {
-		return this.attackTimer;
 	}
 			
 }

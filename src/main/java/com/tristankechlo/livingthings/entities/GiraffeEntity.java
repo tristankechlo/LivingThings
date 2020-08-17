@@ -19,7 +19,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -87,11 +86,6 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 		}
 		return flag;
 	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
-	}
 		
 	@Override
 	public boolean canBreatheUnderwater() {
@@ -104,12 +98,12 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 	}
 
 	@Override
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		// drop Inventory or something else
-		ItemStack stack = new ItemStack(Items.LEATHER, 4);
-		ItemEntity itementity = entityDropItem(stack);
-		if (itementity != null) {
-			itementity.setNoDespawn();
+	@OnlyIn(Dist.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 4) {
+			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+		} else {
+			super.handleStatusUpdate(id);
 		}
 	}
 	
@@ -136,16 +130,6 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public void func_230258_H__() {
 		this.func_230260_a__(rangedInteger.func_233018_a_(this.rand));
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		if (id == 4) {
-			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
-		} else {
-			super.handleStatusUpdate(id);
-		}
 	}
 		
 }

@@ -4,7 +4,7 @@ loaderVersion="[32,)" #mandatory This is typically bumped every Minecraft versio
 #issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 modId="livingthings" #mandatory
-version="1.16.1 - 1.0.1" #mandatory
+version="1.16.1 - 1.0.2" #mandatory
 displayName="Living Things" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 #displayURL="http://example.com/" #optional
@@ -14,8 +14,8 @@ authors="Buecher_wurm" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-adds various mobs to Minecraft
-'''
+adds various new mobs to Minecraft'''
+
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.livingthings]] #optional
     # the modid of the dependency
