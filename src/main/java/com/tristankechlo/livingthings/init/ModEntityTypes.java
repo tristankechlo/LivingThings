@@ -3,10 +3,10 @@ package com.tristankechlo.livingthings.init;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.entities.SharkEntity;
 import com.google.common.collect.Lists;
 import com.tristankechlo.livingthings.LivingThings;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.CreatureEntity;
@@ -19,7 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.Heightmap;
 
@@ -34,6 +34,7 @@ public class ModEntityTypes {
     public static final EntityType<ElephantEntity> ELEPHANT_ENTITY = createEntity("elephant", ElephantEntity::new, EntityClassification.CREATURE, 1.85F, 2.7F, 0x000000, 0x4e4e4e);
     public static final EntityType<GiraffeEntity> GIRAFFE_ENTITY = createEntity("giraffe", GiraffeEntity::new, EntityClassification.CREATURE, 1.5F, 3.2F, 0xebb26c, 0xFFFFFF);
     public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, 0xebb26c, 0x785f40);
+    public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x000896, 0x595a6b);
 
 
     /**
@@ -49,7 +50,7 @@ public class ModEntityTypes {
         return entity_type;
     }
 
-    /**
+	/**
      * register Entity with SpawnEgg
      */
     private static <T extends CreatureEntity> EntityType<T> createEntity(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height, int eggPrimaryColor, int eggSecondaryColor) {
@@ -75,7 +76,8 @@ public class ModEntityTypes {
 	public static void registerAttributes(){
 		GlobalEntityTypeAttributes.put(ELEPHANT_ENTITY, ElephantEntity.func_234200_m_().func_233813_a_());
 		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(LION_ENTITY, GiraffeEntity.func_234200_m_().func_233813_a_());
+		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.func_234200_m_().func_233813_a_());
+		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().func_233813_a_());
 	}
 
 	/*
@@ -85,6 +87,7 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(LION_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
 	}
 
 	/*
@@ -94,26 +97,30 @@ public class ModEntityTypes {
     	registerElephantSpawns();
     	registerGiraffeSpawns();
     	registerLionSpawns();
+    	registerSharkSpawns();
+    }
+    
+    private static void registerSharkSpawns() {
+    	Biomes.OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 4, 1, 2));
+    	Biomes.DEEP_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 5, 1, 2));
+    	Biomes.WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
+    	Biomes.DEEP_WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
+    	Biomes.LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
+    	Biomes.DEEP_LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
     }
     
     private static void registerElephantSpawns() {
-        final List<Biome> biomes = Arrays.asList(Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
-        for (Biome biome : biomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
-        }
+    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
+    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
     }
     
     private static void registerGiraffeSpawns() {
-        final List<Biome> biomes = Arrays.asList(Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
-        for (Biome biome : biomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
-        }
+    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
+    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
     }
     
     private static void registerLionSpawns() {
-        final List<Biome> biomes = Arrays.asList(Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
-        for (Biome biome : biomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(LION_ENTITY, 15, 3, 5));
-        }
+    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
+    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
     }
 }

@@ -5,8 +5,10 @@
 	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",
 	"item.livingthings.giraffe_spawn_egg" : "Erschaffe Giraffe",
 	"item.livingthings.lion_spawn_egg" : "Erschaffe Löwe",
+	"item.livingthings.shark_spawn_egg" : "Erschaffe Hai",
 
 	"entity.livingthings.elephant" : "Elefant",
 	"entity.livingthings.giraffe" : "Giraffe",
-	"entity.livingthings.lion" : "Löwe"
+	"entity.livingthings.lion" : "Löwe",
+	"entity.livingthings.shark" : "Hai"
 }
