@@ -2,6 +2,9 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.Random;
 import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.AgeableEntity;
@@ -41,8 +44,9 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -50,35 +54,35 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 
 	private static final DataParameter<Boolean> IS_MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
-	private int integer;
-	private UUID uuid;
+	private int angerTime;
+	private UUID angerTarget;
 
 	public LionEntity(EntityType<? extends LionEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable) {
+	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
 		LionEntity entity = ModEntityTypes.LION_ENTITY.create(this.world);
 		entity.setMale(new Random().nextBoolean());
 		return entity;
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	   public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		boolean male = (Math.random() < 0.5) ? true : false;
 		this.setMale(male);
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MAX_HEALTH, 20.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.33D)
-				.func_233815_a_(Attributes.FOLLOW_RANGE, 25.0D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 10.0D)
-				.func_233815_a_(Attributes.ATTACK_KNOCKBACK, 0.2D)
-				.func_233815_a_(Attributes.KNOCKBACK_RESISTANCE, 0.05D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.33D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 10.0D)
+				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D)
+				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.05D);
 	}
 	
 	@Override
@@ -193,7 +197,7 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public boolean attackEntityAsMob(Entity target) {
 	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
 			this.applyEnchantments(this, target);
 		}
@@ -229,27 +233,29 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	}
 
 	@Override
-	public int func_230256_F__() {
-		return this.integer;
+	public int getAngerTime() {
+		return this.angerTime;
 	}
 
 	@Override
-	public void func_230260_a__(int integer) {
-		this.integer = integer;
+	public void setAngerTime(int time) {
+		this.angerTime = time;
+		
 	}
 
 	@Override
-	public UUID func_230257_G__() {
-		return this.uuid;
+	public UUID getAngerTarget() {
+		return this.angerTarget;
 	}
 
 	@Override
-	public void func_230259_a_(UUID uuid) {
-		this.uuid = uuid;
+	public void setAngerTarget(UUID target) {
+		this.angerTarget = target;
+		
 	}
 
 	@Override
 	public void func_230258_H__() {
-		this.func_230260_a__(rangedInteger.func_233018_a_(this.rand));
+		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));		
 	}
 }

@@ -29,32 +29,33 @@ import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GiraffeEntity extends AnimalEntity implements IAngerable {
 
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
-	private int integer;
-	private UUID uuid;
+	private int angerTime;
+	private UUID angerTarget;
 	
 	public GiraffeEntity(EntityType<? extends GiraffeEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 	
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable) {
+	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
 		return ModEntityTypes.GIRAFFE_ENTITY.create(this.world);
 	}
 	
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MAX_HEALTH, 30.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.3D)
-				.func_233815_a_(Attributes.FOLLOW_RANGE, 50.0D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 8.0D)
-				.func_233815_a_(Attributes.ATTACK_KNOCKBACK, 0.25D)
-				.func_233815_a_(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D)
+				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.25D)
+				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
 	}
 	
 	@Override
@@ -80,7 +81,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public boolean attackEntityAsMob(Entity target) {
 	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.func_233637_b_(Attributes.ATTACK_DAMAGE)));
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
 			this.applyEnchantments(this, target);
 		}
@@ -106,30 +107,32 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 			super.handleStatusUpdate(id);
 		}
 	}
-	
+
 	@Override
-	public int func_230256_F__() {
-		return this.integer;
+	public int getAngerTime() {
+		return this.angerTime;
 	}
 
 	@Override
-	public void func_230260_a__(int integer) {
-		this.integer = integer;
+	public void setAngerTime(int time) {
+		this.angerTime = time;
+		
 	}
 
 	@Override
-	public UUID func_230257_G__() {
-		return this.uuid;
+	public UUID getAngerTarget() {
+		return this.angerTarget;
 	}
 
 	@Override
-	public void func_230259_a_(UUID uuid) {
-		this.uuid = uuid;
+	public void setAngerTarget(UUID target) {
+		this.angerTarget = target;
+		
 	}
 
 	@Override
 	public void func_230258_H__() {
-		this.func_230260_a__(rangedInteger.func_233018_a_(this.rand));
+		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));		
 	}
 		
 }

@@ -4,10 +4,11 @@ import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
-import com.google.common.collect.Lists;
-import com.tristankechlo.livingthings.LivingThings;
 
 import java.util.List;
+
+import com.google.common.collect.Lists;
+import com.tristankechlo.livingthings.LivingThings;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
@@ -19,8 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.Heightmap;
 
 public class ModEntityTypes {
@@ -74,10 +73,10 @@ public class ModEntityTypes {
 	 * register Attributes like Health/Speed ... 
 	 */
 	public static void registerAttributes(){
-		GlobalEntityTypeAttributes.put(ELEPHANT_ENTITY, ElephantEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().func_233813_a_());
+		GlobalEntityTypeAttributes.put(ELEPHANT_ENTITY, ElephantEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().create());
 	}
 
 	/*
@@ -92,7 +91,7 @@ public class ModEntityTypes {
 
 	/*
 	 * add Entities to Biomes to spawn in
-	 */
+	 
     public static void registerEntitySpawns() {
     	registerElephantSpawns();
     	registerGiraffeSpawns();
@@ -122,5 +121,5 @@ public class ModEntityTypes {
     private static void registerLionSpawns() {
     	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
     	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
-    }
+    }*/
 }

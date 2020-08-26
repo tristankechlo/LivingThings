@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -29,6 +31,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -36,13 +39,14 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 
 public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
-	private int integer;
-	private UUID uuid;
+	private int angerTime;
+	private UUID angerTarget;
 
 	public SharkEntity(EntityType<? extends SharkEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -52,9 +56,12 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.MAX_HEALTH, 15.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 1.1F).func_233815_a_(Attributes.FOLLOW_RANGE, 20.0D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 6.5D).func_233815_a_(Attributes.ATTACK_SPEED, 1.4D);
+		return MobEntity.func_233666_p_()
+				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.1F)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.5D)
+				.createMutableAttribute(Attributes.ATTACK_SPEED, 1.4D);
 	}
 
 	@Override
@@ -63,7 +70,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double) 1.12F, true) {
 				@Override
 				public double getAttackReachSqr(LivingEntity attackTarget) {
-				      return (double)(this.attacker.getWidth() * 1.2F * this.attacker.getWidth() * 1.2F + attackTarget.getWidth());
+				      return (double)(this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());
 				}
 			});
 		this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 10));
@@ -133,11 +140,13 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos,
-			Random rand) {
-		return pos.getY() > 45 && pos.getY() < world.getSeaLevel()
-				&& (world.getBiome(pos) != Biomes.OCEAN || world.getBiome(pos) != Biomes.DEEP_OCEAN)
-				&& world.getFluidState(pos).isTagged(FluidTags.WATER);
+	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+	      if (pos.getY() > 45 && pos.getY() < world.getSeaLevel()) {
+	          Optional<RegistryKey<Biome>> optional = world.func_242406_i(pos);
+	          return (!Objects.equals(optional, Optional.of(Biomes.OCEAN)) || !Objects.equals(optional, Optional.of(Biomes.DEEP_OCEAN))) && world.getFluidState(pos).isTagged(FluidTags.WATER);
+	       } else {
+	          return false;
+	       }
 	}
 
 	@Override
@@ -146,28 +155,30 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	}
 
 	@Override
-	public int func_230256_F__() {
-		return this.integer;
+	public int getAngerTime() {
+		return this.angerTime;
 	}
 
 	@Override
-	public void func_230260_a__(int integer) {
-		this.integer = integer;
+	public void setAngerTime(int time) {
+		this.angerTime = time;
+		
 	}
 
 	@Override
-	public UUID func_230257_G__() {
-		return this.uuid;
+	public UUID getAngerTarget() {
+		return this.angerTarget;
 	}
 
 	@Override
-	public void func_230259_a_(UUID uuid) {
-		this.uuid = uuid;
+	public void setAngerTarget(UUID target) {
+		this.angerTarget = target;
+		
 	}
 
 	@Override
 	public void func_230258_H__() {
-		this.func_230260_a__(rangedInteger.func_233018_a_(this.rand));
+		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));		
 	}
 
 	static class MoveHelperController extends MovementController {
@@ -196,7 +207,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 					this.shark.rotationYaw = this.limitAngle(this.shark.rotationYaw, f, 10.0F);
 					this.shark.renderYawOffset = this.shark.rotationYaw;
 					this.shark.rotationYawHead = this.shark.rotationYaw;
-					float f1 = (float) (this.speed * this.shark.func_233637_b_(Attributes.MOVEMENT_SPEED));
+					float f1 = (float) (this.speed * this.shark.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					if (this.shark.isInWater()) {
 						this.shark.setAIMoveSpeed(f1 * 0.02F);
 						float f2 = -((float) (MathHelper.atan2(d1, (double) MathHelper.sqrt(d0 * d0 + d2 * d2))
