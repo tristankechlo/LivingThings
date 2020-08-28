@@ -57,17 +57,16 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.1F)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.5D)
-				.createMutableAttribute(Attributes.ATTACK_SPEED, 1.4D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 22.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.05F)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.5D);
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double) 1.12F, true) {
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double) 1.1F, true) {
 				@Override
 				public double getAttackReachSqr(LivingEntity attackTarget) {
 				      return (double)(this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());

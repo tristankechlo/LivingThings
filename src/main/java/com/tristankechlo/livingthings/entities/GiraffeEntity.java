@@ -52,10 +52,8 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D)
-				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.25D)
-				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
 	}
 	
 	@Override
