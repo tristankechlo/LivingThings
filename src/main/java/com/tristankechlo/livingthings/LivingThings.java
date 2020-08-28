@@ -8,6 +8,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Logger;
 
 import com.tristankechlo.livingthings.client.renderer.RenderHandler;
+import com.tristankechlo.livingthings.init.ModItems;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,6 +25,8 @@ public class LivingThings {
     	INSTANCE = this;
     	
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        
+        ModItems.ITEMS.register(modEventBus);
 		
         modEventBus.addListener(this::ClientSetup);
         modEventBus.addListener(this::CommonSetup);

@@ -23,9 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 
 public class ModEntityTypes {
-	
-	private static final Properties standard_properties = new Item.Properties().group(ModItemGroups.General);
-	
+		
 	@SuppressWarnings("rawtypes")
 	public static final List<EntityType> ENTITIES = Lists.newArrayList();
     public static final List<Item> SPAWN_EGGS = Lists.newArrayList();
@@ -35,6 +33,26 @@ public class ModEntityTypes {
     public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, 0xebb26c, 0x785f40);
     public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x000896, 0x595a6b);
 
+
+	/*
+	 * register Attributes like Health/Speed ... 
+	 */
+	public static void registerAttributes(){
+		GlobalEntityTypeAttributes.put(ELEPHANT_ENTITY, ElephantEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().create());
+	}
+
+	/*
+	 * where it is allowed to spawn the mobs
+	 */
+	public static void registerEntitySpawnPlacements() {
+		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(LION_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
+	}
 
     /**
      * register Entity without SpawnEgg
@@ -64,62 +82,12 @@ public class ModEntityTypes {
 	 * create SpawnEgg
      */
     private static <T extends CreatureEntity> void addSpawnEggToEntity(String entity_name, EntityType<T> entity_type, int eggPrimaryColor, int eggSecondaryColor) {
+    	
+    	final Properties standard_properties = new Item.Properties().group(ModItemGroups.General);
+    	
         Item spawnEggItem = new SpawnEggItem(entity_type, eggPrimaryColor, eggSecondaryColor, standard_properties);
         spawnEggItem.setRegistryName(new ResourceLocation(LivingThings.MOD_ID, entity_name + "_spawn_egg"));
         SPAWN_EGGS.add(spawnEggItem);
     }
 
-	/*
-	 * register Attributes like Health/Speed ... 
-	 */
-	public static void registerAttributes(){
-		GlobalEntityTypeAttributes.put(ELEPHANT_ENTITY, ElephantEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().create());
-	}
-
-	/*
-	 * where it is allowed to spawn the mobs
-	 */
-	public static void registerEntitySpawnPlacements() {
-		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(LION_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
-	}
-
-	/*
-	 * add Entities to Biomes to spawn in
-	 
-    public static void registerEntitySpawns() {
-    	registerElephantSpawns();
-    	registerGiraffeSpawns();
-    	registerLionSpawns();
-    	registerSharkSpawns();
-    }
-    
-    private static void registerSharkSpawns() {
-    	Biomes.OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 4, 1, 2));
-    	Biomes.DEEP_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 5, 1, 2));
-    	Biomes.WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
-    	Biomes.DEEP_WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
-    	Biomes.LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
-    	Biomes.DEEP_LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
-    }
-    
-    private static void registerElephantSpawns() {
-    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
-    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
-    }
-    
-    private static void registerGiraffeSpawns() {
-    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
-    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
-    }
-    
-    private static void registerLionSpawns() {
-    	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
-    	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
-    }*/
 }

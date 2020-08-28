@@ -48,3 +48,37 @@ public class RegistryEvents {
  * .add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY, 15, 2, 4))
  * .add(new Spawners(ModEntityTypes.LION_ENTITY, 15, 3, 5))
  */
+
+/*
+ * add Entities to Biomes to spawn in
+ 
+public static void registerEntitySpawns() {
+	registerElephantSpawns();
+	registerGiraffeSpawns();
+	registerLionSpawns();
+	registerSharkSpawns();
+}
+
+private static void registerSharkSpawns() {
+	Biomes.OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 4, 1, 2));
+	Biomes.DEEP_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 5, 1, 2));
+	Biomes.WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
+	Biomes.DEEP_WARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
+	Biomes.LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 6, 1, 2));
+	Biomes.DEEP_LUKEWARM_OCEAN.getSpawns(EntityClassification.WATER_CREATURE).add(new SpawnListEntry(SHARK_ENTIY, 7, 1, 2));
+}
+
+private static void registerElephantSpawns() {
+	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
+	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(ELEPHANT_ENTITY, 15, 2, 5));
+}
+
+private static void registerGiraffeSpawns() {
+	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
+	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(GIRAFFE_ENTITY, 15, 2, 4));
+}
+
+private static void registerLionSpawns() {
+	Biomes.SAVANNA.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
+	Biomes.SAVANNA_PLATEAU.getSpawns(EntityClassification.CREATURE).add(new SpawnListEntry(LION_ENTITY, 15, 3, 5));
+}*/
