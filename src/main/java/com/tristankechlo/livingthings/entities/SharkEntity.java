@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
@@ -20,7 +21,6 @@ import net.minecraft.entity.ai.goal.FindWaterGoal;
 import net.minecraft.entity.ai.goal.FollowBoatGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
@@ -36,7 +36,6 @@ import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -66,7 +65,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double) 1.1F, true) {
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, (double) 1.1F, false) {
 				@Override
 				public double getAttackReachSqr(LivingEntity attackTarget) {
 				      return (double)(this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());
@@ -77,7 +76,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	    this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 1, true, true, null));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 
@@ -98,15 +97,6 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return true;
-	}
-
-	@Override
-	public boolean canAttack(LivingEntity target) {
-		boolean peaceful = (target.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) ? true : false;
-		if (peaceful) {
-			return false;
-		}
-		return super.canAttack(target);
 	}
 
 	@Override

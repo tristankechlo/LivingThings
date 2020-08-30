@@ -1,6 +1,8 @@
 package com.tristankechlo.livingthings.entities;
 
 import java.util.UUID;
+
+import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.AgeableEntity;
@@ -15,7 +17,6 @@ import net.minecraft.entity.ai.goal.FollowParentGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
@@ -26,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -61,15 +61,15 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2D, true));
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.2D, false));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.9D));
 		this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.95D));
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
-		this.targetSelector.addGoal(8, new ResetAngerGoal<>(this, true));
+
+		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setCallsForHelp());
+		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
 
 	@Override
@@ -77,14 +77,14 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 		Item item = stack.getItem();
 		return (item == Items.WHEAT);
 	}
-
+	
 	@Override
 	public boolean attackEntityAsMob(Entity target) {
 		this.attackTimer = 10;
 	    this.world.setEntityState(this, (byte)4);
 		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
-	        target.setMotion(target.getMotion().add(0.0D, 0.5D, 0.0D));
+	        target.setMotion(target.getMotion().add(0.0D, 0.7D, 0.0D));
 			this.applyEnchantments(this, target);
 		}
 		return flag;
@@ -99,11 +99,6 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	}
 	
 	@Override
-	public boolean canBreatheUnderwater() {
-		return false;
-	}
-	
-	@Override
 	public int getMaxSpawnedInChunk() {
 		return 5;
 	}
@@ -113,7 +108,6 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	public void handleStatusUpdate(byte id) {
 		if (id == 4) {
 			this.attackTimer = 10;
-			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
 		} else {
 			super.handleStatusUpdate(id);
 		}

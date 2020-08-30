@@ -1,8 +1,7 @@
-package com.tristankechlo.livingthings.util;
+package com.tristankechlo.livingthings.init;
 
 import com.google.common.base.Preconditions;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;

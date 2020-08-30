@@ -158,8 +158,8 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 	@Override
 	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
 		this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-		this.NeckTop.rotateAngleX = (float) (this.NeckMiddle.rotateAngleX / 1.5);
-		this.NeckMiddle.rotateAngleX = (float) (this.Head.rotateAngleX / 3);
+		this.NeckTop.rotateAngleX = (float) (this.NeckMiddle.rotateAngleX / 1);
+		this.NeckMiddle.rotateAngleX = (float) (this.Head.rotateAngleX / 2);
 
 	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
 		this.NeckTop.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);

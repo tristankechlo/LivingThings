@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.client.model.entity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.util.IGenderedMob.Gender;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -120,7 +121,7 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 	@Override
 	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
 		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
-		if(entityIn.isMale()) {
+		if(entityIn.getGender() == Gender.MALE) {
 			this.Mane.showModel = true;
 		} else {
 			this.Mane.showModel = false;
