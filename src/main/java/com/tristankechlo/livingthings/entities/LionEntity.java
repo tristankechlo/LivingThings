@@ -1,14 +1,15 @@
 package com.tristankechlo.livingthings.entities;
 
-import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-
+import com.tristankechlo.livingthings.util.IMobVariants;
+import com.tristankechlo.livingthings.util.IGenderedMob;
 import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.ILivingEntityData;
@@ -22,7 +23,6 @@ import net.minecraft.entity.ai.goal.FollowParentGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -37,22 +37,18 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RangedInteger;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.TickRangeConverter;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LionEntity extends AnimalEntity implements IAngerable {
+public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants, IGenderedMob {
 
-	private static final DataParameter<Boolean> IS_MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.createKey(LionEntity.class, DataSerializers.BYTE);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
@@ -62,16 +58,26 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-		LionEntity entity = ModEntityTypes.LION_ENTITY.create(this.world);
-		entity.setMale(new Random().nextBoolean());
-		return entity;
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {		
+		LionEntity entityChild = ModEntityTypes.LION_ENTITY.create(this.world);
+		Gender gender = world.getRandom().nextBoolean() ? Gender.MALE : Gender.FEMALE;
+		entityChild.setGender(gender);
+		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
+		return entityChild;
 	}
 	
 	@Override
-	   public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		boolean male = (Math.random() < 0.5) ? true : false;
-		this.setMale(male);
+	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		Gender gender = worldIn.getRandom().nextBoolean() ? Gender.MALE : Gender.FEMALE;
+		this.setGender(gender);
+
+		int albinoChance = LivingThingsConfig.SERVER.lionAlbinoChance.get();
+		if(Math.random() < ((double)albinoChance / 100.0D)) {
+			this.setVariant((byte) 15);
+		} else {
+			this.setVariant((byte) 0);
+		}
+		
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
@@ -86,7 +92,7 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2D, true) {
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false) {
 			@Override
 			public double getAttackReachSqr(LivingEntity attackTarget) {
 			      return (double)(this.attacker.getWidth() * 1.8F * this.attacker.getWidth() * 1.8F + attackTarget.getWidth());
@@ -98,47 +104,40 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 7.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
-	    this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 1, true, true, null));
-		this.targetSelector.addGoal(5, new ResetAngerGoal<>(this, true));
+		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setCallsForHelp());
+	    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 		
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(IS_MALE, false);
+		this.dataManager.register(MALE, false);
+		this.dataManager.register(LION_VARIANT, (byte)0);
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-	      if (this.isMale()) {
-	          compound.putBoolean("IsMale", true);
-	       }
+		if (this.getGender() == Gender.MALE) {
+			compound.putBoolean("IsMale", true);
+		}
+		compound.putByte("LionVariant", this.getVariant());
 	}
 	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-	      if (compound.getBoolean("IsMale")) {
-	          this.setMale(true);
-	      } else {
-	    	  this.setMale(false);
-	      }
-	}
-			
-	@Override
-	public boolean canBreatheUnderwater() {
-		return false;
-	}
-	
-	@Override
-	public boolean canAttack(LivingEntity target) {
-		boolean peaceful = (target.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) ? true : false;
-		if(peaceful) {
-			return false;
+		if (compound.getBoolean("IsMale")) {
+			this.setGender(Gender.MALE);
+		} else {
+			this.setGender(Gender.FEMALE);
 		}
-		return super.canAttack(target);
+		if (compound.contains("LionVariant")) {
+			this.setVariant(compound.getByte("LionVariant"));
+		} else {
+			this.setVariant((byte) 0);
+		}
 	}
 	
 	@Override
@@ -148,10 +147,8 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 		}
 		if (otherAnimal instanceof LionEntity) {
 	    	LionEntity otherLion = (LionEntity) otherAnimal;
-	    	if(!this.isMale() && otherLion.isMale()) {
-	            return this.isInLove() && otherLion.isInLove();
-	    	} else if (this.isMale() && !otherLion.isMale()) {
-	            return this.isInLove() && otherLion.isInLove();
+	    	if(this.getGender() != otherLion.getGender()) {
+	            return (this.isInLove() && otherLion.isInLove());
 	    	}
 	    }
 		return false;
@@ -164,42 +161,32 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 	
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-	      ItemStack itemstack = player.getHeldItem(hand);
-	      if (this.isBreedingItem(itemstack)) {
-	         int i = this.getGrowingAge();
-	         if (!this.world.isRemote && i == 0 && this.canBreed()) {
-	            this.consumeItemFromStack(player, itemstack);
-	            this.setInLove(player);
-	            return ActionResultType.SUCCESS;
-	         }
+		ItemStack itemstack = player.getHeldItem(hand);
+		if (this.isBreedingItem(itemstack)) {
+			int i = this.getGrowingAge();
+			if (!this.world.isRemote && i == 0 && this.canBreed()) {
+				this.consumeItemFromStack(player, itemstack);
+				this.setInLove(player);
+				return ActionResultType.SUCCESS;
+			}
 
-	         if (this.isChild()) {
-	            this.consumeItemFromStack(player, itemstack);
-	            this.ageUp((int)((float)(-i / 20) * 0.1F), true);
-	            return ActionResultType.func_233537_a_(this.world.isRemote);
-	         }
+			if (this.isChild()) {
+				this.consumeItemFromStack(player, itemstack);
+				this.ageUp((int) ((float) (-i / 20) * 0.1F), true);
+				return ActionResultType.func_233537_a_(this.world.isRemote);
+			}
 
-	         if (this.world.isRemote) {
-	            return ActionResultType.CONSUME;
-	         }
-	      }
-	      return ActionResultType.PASS;
+			if (this.world.isRemote) {
+				return ActionResultType.CONSUME;
+			}
+		}
+		return ActionResultType.PASS;
 	}
 		
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		final Ingredient breeding_Items = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
 		return breeding_Items.test(stack);
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity target) {
-	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
-		if (flag) {
-			this.applyEnchantments(this, target);
-		}
-		return flag;
 	}
 	
 	@Override
@@ -212,22 +199,29 @@ public class LionEntity extends AnimalEntity implements IAngerable {
 		return 5;
 	}
 
-	public boolean isMale(){
-		return this.getDataManager().get(IS_MALE);
-	}
-	
-	public void setMale(boolean male) {
-		this.getDataManager().set(IS_MALE, male);
-	}
-	
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		if (id == 4) {
-			this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
-		} else {
-			super.handleStatusUpdate(id);
+	public Gender getGender(){
+		if(this.getDataManager().get(MALE)) {
+			return Gender.MALE;
 		}
+		return Gender.FEMALE;
+	}
+	
+	public void setGender(Gender gender) {
+		if(gender == Gender.MALE) {
+			this.getDataManager().set(MALE, true);
+		} else {
+			this.getDataManager().set(MALE, false);
+		}
+	}
+
+	@Override
+	public byte getVariant() {
+		return this.getDataManager().get(LION_VARIANT);
+	}
+
+	@Override
+	public void setVariant(byte variant) {
+		this.getDataManager().set(LION_VARIANT, variant);
 	}
 
 	@Override

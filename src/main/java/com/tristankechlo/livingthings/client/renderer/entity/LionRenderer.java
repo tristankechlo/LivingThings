@@ -13,18 +13,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class LionRenderer extends MobRenderer<LionEntity, LionModel<LionEntity>> {
 	
-	protected static final ResourceLocation MALE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/lion/lion_entity_male.png");
-	protected static final ResourceLocation FEMALE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/lion/lion_entity_female.png");
+	protected static final ResourceLocation NORMAL = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/lion/lion_entity.png");
+	protected static final ResourceLocation ALBINO = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/lion/lion_entity_albino.png");
 
 	public LionRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new LionModel<>(), 1F);
 	}
 
 	public ResourceLocation getEntityTexture(LionEntity entity) {
-		if(entity.isMale()) {
-			return MALE;
+		if(entity.getVariant() != 0) {
+			return ALBINO;
 		}
-		return FEMALE;		
+		return NORMAL;
 	}	
 	
 }
