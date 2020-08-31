@@ -41,7 +41,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVariants {
 
-	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.createKey(LionEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.createKey(GiraffeEntity.class, DataSerializers.BYTE);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
