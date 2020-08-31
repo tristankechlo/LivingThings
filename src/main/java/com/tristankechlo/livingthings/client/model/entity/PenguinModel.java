@@ -70,14 +70,14 @@ public class PenguinModel <T extends PenguinEntity> extends EntityModel<T> {
 		this.Head.rotateAngleY = netHeadYaw * 0.0174532925F;
 
 		//wobbling effect
-		this.Body.rotateAngleZ = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 6;
+		this.Body.rotateAngleZ = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
 			
 		//animate penguin swinging wings
  		this.RightWing.rotateAngleZ = (0.1308996938F) + ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F ) * limbSwingAmount);
 		this.LeftWing.rotateAngleZ = (-0.1308996938F) + ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F )* limbSwingAmount);
 		
-		this.RightFeet.rotateAngleX = -((MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 6);
-		this.LeftFeet.rotateAngleX = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 6;
+		this.RightFeet.rotateAngleX = -((MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
+		this.LeftFeet.rotateAngleX = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
 		
 	}
 
