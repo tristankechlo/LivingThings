@@ -2,15 +2,28 @@
 
 	"itemGroup.LivingThings" : "Living Things",
 	
+	//items
 	"item.livingthings.shark_tooth" : "Shark Tooth",
 	
+	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Elephant Spawn Egg",
 	"item.livingthings.giraffe_spawn_egg" : "Giraffe Spawn Egg",
 	"item.livingthings.lion_spawn_egg" : "Lion Spawn Egg",
 	"item.livingthings.shark_spawn_egg" : "Shark Spawn Egg",
+	"item.livingthings.penguin_spawn_egg" : "Penguin Spawn Egg",
 
+	//entity names
 	"entity.livingthings.elephant" : "Elephant",
 	"entity.livingthings.giraffe" : "Giraffe",
 	"entity.livingthings.lion" : "Lion",
-	"entity.livingthings.shark" : "Shark"
+	"entity.livingthings.shark" : "Shark",
+	"entity.livingthings.penguin" : "Penguin",
+	
+	//subtitle for sounds
+	"subtitles.livingthings.lion.ambient" : "Lion roaring",
+	"subtitles.livingthings.lion.hurt" : "Lion hurt",
+	"subtitles.livingthings.lion.death" : "Lion dies",
+	"subtitles.livingthings.penguin.ambient" : "Penguin chattering",
+	"subtitles.livingthings.penguin.hurt" : "Penguin hurt",
+	"subtitles.livingthings.penguin.death" : "Penguin dies"
 }

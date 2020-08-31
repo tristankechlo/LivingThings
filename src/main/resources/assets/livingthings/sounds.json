@@ -1,0 +1,53 @@
+{
+	"lion.ambient" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:lion/lion_roar1",
+			"livingthings:lion/lion_roar2",
+			"livingthings:lion/lion_roar3"
+		],
+		"subtitle" : "subtitles.livingthings.lion.ambient"
+	},
+	"lion.hurt" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:lion/lion_roar3"
+		],
+		"subtitle" : "subtitles.livingthings.lion.hurt"
+	},
+	"lion.death" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:lion/lion_death1",
+			"livingthings:lion/lion_death2"
+		],
+		"subtitle" : "subtitles.livingthings.lion.death"
+	},
+	
+	"penguin.ambient" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:penguin/penguin_ambient1",
+			"livingthings:penguin/penguin_ambient2"
+		],
+		"subtitle" : "subtitles.livingthings.penguin.ambient"
+	},
+	"penguin.hurt" : {
+		"category" : "neutral",
+		"sounds" : [
+			"mob/parrot/hurt1",
+			"mob/parrot/hurt2"
+		],
+		"subtitle" : "subtitles.livingthings.penguin.hurt"
+	},
+	"penguin.death" : {
+		"category" : "neutral",
+		"sounds" : [
+			"mob/parrot/death1",
+			"mob/parrot/death2",
+			"mob/parrot/death3",
+			"mob/parrot/death4"
+		],
+		"subtitle" : "subtitles.livingthings.penguin.death"
+	}
+}
