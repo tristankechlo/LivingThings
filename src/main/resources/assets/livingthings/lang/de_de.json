@@ -22,8 +22,11 @@
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Löwe brüllt",
 	"subtitles.livingthings.lion.hurt" : "Löwe wurde verletzt",
-	"subtitles.livingthings.lion.death" : "Löwe ist gestorben",
+	"subtitles.livingthings.lion.death" : "Löwe stirbt",
 	"subtitles.livingthings.penguin.ambient" : "Pinguin schnattern",
 	"subtitles.livingthings.penguin.hurt" : "Pinguin wurde verletzt",
-	"subtitles.livingthings.penguin.death" : "Pinguin ist gestorben"
+	"subtitles.livingthings.penguin.death" : "Pinguin stirbt",
+	"subtitles.livingthings.elephant.ambient" : "Elefant trompetiert",
+	"subtitles.livingthings.elephant.hurt" : "Elefant wurde verletzt",
+	"subtitles.livingthings.elephant.death" : "Elefant stirbt"
 }

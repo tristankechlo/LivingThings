@@ -20,6 +20,10 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> PENGUIN_AMBIENT = SOUNDS.register("penguin_ambient", () -> new SoundEvent(getSound("penguin.ambient")));
 	public static final RegistryObject<SoundEvent> PENGUIN_HURT = SOUNDS.register("penguin_hurt", () -> new SoundEvent(getSound("penguin.hurt")));
 	public static final RegistryObject<SoundEvent> PENGUIN_DEATH = SOUNDS.register("penguin_death", () -> new SoundEvent(getSound("penguin.death")));
+
+	public static final RegistryObject<SoundEvent> ELEPHANT_AMBIENT = SOUNDS.register("elephant_ambient", () -> new SoundEvent(getSound("elephant.ambient")));
+	public static final RegistryObject<SoundEvent> ELEPHANT_HURT = SOUNDS.register("elephant_hurt", () -> new SoundEvent(getSound("elephant.hurt")));
+	public static final RegistryObject<SoundEvent> ELEPHANT_DEATH = SOUNDS.register("elephant_death", () -> new SoundEvent(getSound("elephant.death")));
 	
 	
 	private static ResourceLocation getSound(String name) {

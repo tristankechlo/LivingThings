@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -27,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -101,6 +103,21 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 5;
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.ELEPHANT_AMBIENT.get();
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.ELEPHANT_HURT.get();
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.ELEPHANT_DEATH.get();
 	}
 
 	@Override

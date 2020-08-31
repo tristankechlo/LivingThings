@@ -49,5 +49,28 @@
 			"mob/parrot/death4"
 		],
 		"subtitle" : "subtitles.livingthings.penguin.death"
+	},
+	
+	"elephant.ambient" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:elephant/elephant_ambient1",
+			"livingthings:elephant/elephant_ambient2"
+		],
+		"subtitle" : "subtitles.livingthings.elephant.ambient"
+	},
+	"elephant.hurt" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:elephant/elephant_hurt1"
+		],
+		"subtitle" : "subtitles.livingthings.elephant.hurt"
+	},
+	"elephant.death" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:elephant/elephant_death1"
+		],
+		"subtitle" : "subtitles.livingthings.elephant.death"
 	}
 }

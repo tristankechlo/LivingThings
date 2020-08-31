@@ -25,5 +25,8 @@
 	"subtitles.livingthings.lion.death" : "Lion dies",
 	"subtitles.livingthings.penguin.ambient" : "Penguin chattering",
 	"subtitles.livingthings.penguin.hurt" : "Penguin hurt",
-	"subtitles.livingthings.penguin.death" : "Penguin dies"
+	"subtitles.livingthings.penguin.death" : "Penguin dies",
+	"subtitles.livingthings.elephant.ambient" : "Elephant trumpeting",
+	"subtitles.livingthings.elephant.hurt" : "Elephant hurt",
+	"subtitles.livingthings.elephant.death" : "Elephant dies"
 }
