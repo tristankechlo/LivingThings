@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.init;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.entities.PenguinEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class ModEntityTypes {
     public static final EntityType<GiraffeEntity> GIRAFFE_ENTITY = createEntity("giraffe", GiraffeEntity::new, EntityClassification.CREATURE, 1.5F, 3.2F, 0xebb26c, 0x785f40);
     public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, 0xebb26c, 0xFFFFFF);
     public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x000896, 0x595a6b);
+    public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, 0x000000, 0xFFFFFF);
 
 
 	/*
@@ -42,6 +44,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(GIRAFFE_ENTITY, GiraffeEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(LION_ENTITY, LionEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(PENGUIN_ENTITY, PenguinEntity.getAttributes().create());
 	}
 
 	/*
@@ -52,6 +55,7 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(LION_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
+		EntitySpawnPlacementRegistry.register(PENGUIN_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 	}
 
     /**
