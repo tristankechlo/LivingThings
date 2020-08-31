@@ -189,6 +189,7 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
+	@Override
 	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
 	    int i = entityIn.getAttackTimer();
 	    if (i == 0) {
