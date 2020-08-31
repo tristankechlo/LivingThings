@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IGenderedMob;
 import net.minecraft.entity.AgeableEntity;
@@ -37,8 +38,10 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -187,6 +190,21 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	public boolean isBreedingItem(ItemStack stack) {
 		final Ingredient breeding_Items = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
 		return breeding_Items.test(stack);
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.LION_AMBIENT.get();
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.LION_HURT.get();
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.LION_DEATH.get();
 	}
 	
 	@Override
