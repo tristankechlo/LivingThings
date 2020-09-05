@@ -72,5 +72,34 @@
 			"livingthings:elephant/elephant_death1"
 		],
 		"subtitle" : "subtitles.livingthings.elephant.death"
+	},
+	
+	"ostrich.egg.cracks" : {
+		"category" : "block",
+		"sounds" : [
+		    "mob/turtle/egg/egg_crack1",
+		    "mob/turtle/egg/egg_crack2",
+		    "mob/turtle/egg/egg_crack3",
+		    "mob/turtle/egg/egg_crack4",
+		    "mob/turtle/egg/egg_crack5"
+		],
+		"subtitle" : "subtitles.livingthings.ostrich.egg.laying"
+	},
+	"ostrich.egg.laying" : {
+		"category" : "block",
+		"sounds" : [
+      		"mob/turtle/egg/drop_egg1",
+      		"mob/turtle/egg/drop_egg2"
+		],
+		"subtitle" : "subtitles.livingthings.ostrich.egg.laying"
+	},
+	"ostrich.ambient" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:ostrich/ostrich_ambient1",
+			"livingthings:ostrich/ostrich_ambient2",
+			"livingthings:ostrich/ostrich_ambient3"
+		],
+		"subtitle" : "subtitles.livingthings.ostrich.ambient"
 	}
 }

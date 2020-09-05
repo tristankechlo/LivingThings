@@ -25,6 +25,10 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> ELEPHANT_HURT = SOUNDS.register("elephant_hurt", () -> new SoundEvent(getSound("elephant.hurt")));
 	public static final RegistryObject<SoundEvent> ELEPHANT_DEATH = SOUNDS.register("elephant_death", () -> new SoundEvent(getSound("elephant.death")));
 	
+	public static final RegistryObject<SoundEvent> OSTRICH_EGG_CRACKS = SOUNDS.register("ostrich_egg_cracks", () -> new SoundEvent(getSound("ostrich.egg.cracks")));
+	public static final RegistryObject<SoundEvent> OSTRICH_EGG_LAYING = SOUNDS.register("ostrich_egg_laying", () -> new SoundEvent(getSound("ostrich.egg.laying")));
+	public static final RegistryObject<SoundEvent> OSTRICH_AMBIENT = SOUNDS.register("ostrich_ambient", () -> new SoundEvent(getSound("ostrich.ambient")));
+	
 	
 	private static ResourceLocation getSound(String name) {
 		return new ResourceLocation(LivingThings.MOD_ID, name);

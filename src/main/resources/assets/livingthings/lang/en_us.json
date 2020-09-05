@@ -2,8 +2,12 @@
 
 	"itemGroup.LivingThings" : "Living Things",
 	
+	//blocks
+	"block.livingthings.ostrich_nest" : "Ostrich Nest",
+	
 	//items
 	"item.livingthings.shark_tooth" : "Shark Tooth",
+	"item.livingthings.ostrich_egg" : "Ostrich Egg",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Elephant Spawn Egg",
@@ -11,6 +15,7 @@
 	"item.livingthings.lion_spawn_egg" : "Lion Spawn Egg",
 	"item.livingthings.shark_spawn_egg" : "Shark Spawn Egg",
 	"item.livingthings.penguin_spawn_egg" : "Penguin Spawn Egg",
+	"item.livingthings.ostrich_spawn_egg" : "Ostrich Spawn Egg",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elephant",
@@ -18,6 +23,7 @@
 	"entity.livingthings.lion" : "Lion",
 	"entity.livingthings.shark" : "Shark",
 	"entity.livingthings.penguin" : "Penguin",
+	"entity.livingthings.ostrich" : "Ostrich",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Lion roaring",
@@ -28,5 +34,8 @@
 	"subtitles.livingthings.penguin.death" : "Penguin dies",
 	"subtitles.livingthings.elephant.ambient" : "Elephant trumpeting",
 	"subtitles.livingthings.elephant.hurt" : "Elephant hurt",
-	"subtitles.livingthings.elephant.death" : "Elephant dies"
+	"subtitles.livingthings.elephant.death" : "Elephant dies",
+	"subtitles.livingthings.ostrich.egg.cracks" : "Ostrich egg cracks",
+	"subtitles.livingthings.ostrich.egg.laying" : "Ostrich lays an egg",
+	"subtitles.livingthings.ostrich.ambient" : "Ostrich noise"
 }

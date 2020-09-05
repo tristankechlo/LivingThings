@@ -2,8 +2,12 @@
 
 	"itemGroup.LivingThings" : "Living Things",
 	
+	//blocks
+	"block.livingthings.ostrich_nest" : "Straußen Nest",
+	
 	//items
 	"item.livingthings.shark_tooth" : "Haifischzahn",
+	"item.livingthings.ostrich_egg" : "Straußen Ei",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",
@@ -11,6 +15,7 @@
 	"item.livingthings.lion_spawn_egg" : "Erschaffe Löwe",
 	"item.livingthings.shark_spawn_egg" : "Erschaffe Hai",
 	"item.livingthings.penguin_spawn_egg" : "Erschaffe Pinguin",
+	"item.livingthings.ostrich_spawn_egg" : "Erschaffe Strauß",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elefant",
@@ -18,6 +23,7 @@
 	"entity.livingthings.lion" : "Löwe",
 	"entity.livingthings.shark" : "Hai",
 	"entity.livingthings.penguin" : "Pinguin",
+	"entity.livingthings.ostrich" : "Strauß",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Löwe brüllt",
@@ -28,5 +34,8 @@
 	"subtitles.livingthings.penguin.death" : "Pinguin stirbt",
 	"subtitles.livingthings.elephant.ambient" : "Elefant trompetiert",
 	"subtitles.livingthings.elephant.hurt" : "Elefant wurde verletzt",
-	"subtitles.livingthings.elephant.death" : "Elefant stirbt"
+	"subtitles.livingthings.elephant.death" : "Elefant stirbt",
+	"subtitles.livingthings.ostrich.egg.cracks" : "Straußen Ei knackt",
+	"subtitles.livingthings.ostrich.egg.laying" : "Straußen Ei gelegt",
+	"subtitles.livingthings.ostrich.ambient" : "Strauß Geräusche"
 }
