@@ -36,8 +36,9 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal{
 	@Override
 	public void resetTask() {
 		if(this.attacker instanceof IAngerable) {
-			IAngerable test = (IAngerable)this.attacker;
-			test.func_241355_J__();
+			IAngerable entity = (IAngerable)this.attacker;
+			//reset anger
+			entity.func_241355_J__();
 		}
 		super.resetTask();
 	}
