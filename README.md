@@ -8,6 +8,8 @@
   - Giraffes
   - Lions
   - Shark
+  - Penguin
+  - Ostrich
    
   
   
