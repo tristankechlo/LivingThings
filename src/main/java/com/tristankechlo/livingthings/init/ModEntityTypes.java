@@ -51,7 +51,7 @@ public class ModEntityTypes {
 	}
 
 	/*
-	 * where it is allowed to spawn the mobs
+	 * add checks if entity can spawn on specific blocks inside a biome
 	 */
 	public static void registerEntitySpawnPlacements() {
 		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);

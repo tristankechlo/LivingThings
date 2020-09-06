@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraftforge.event.RegistryEvent;
@@ -50,8 +49,8 @@ public class RegistryEvents {
     			addSavannaSpawns(biome);
     		} else if(biome.getCategory() == Category.OCEAN) {
     			addOceanSpawns(biome);
-    		} else if (biome.getRegistryName() == Biomes.SNOWY_TUNDRA.getRegistryName()) {
-    			addTundraSpawns(biome);
+    		} else if (biome.getCategory() == Category.TAIGA) {
+    			addTaigaSpawns(biome);
     		}
     	}    	
     }
@@ -63,8 +62,8 @@ public class RegistryEvents {
     	List<Spawners> spawns_new = new ArrayList<>(spawns_old);
     	
     	spawns_new.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY, 15, 2, 5));
-    	spawns_new.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY, 15, 2, 4));
-    	spawns_new.add(new Spawners(ModEntityTypes.LION_ENTITY, 15, 3, 5));
+    	spawns_new.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY, 15, 3, 5));
+    	spawns_new.add(new Spawners(ModEntityTypes.LION_ENTITY, 15, 2, 4));
     	spawns_new.add(new Spawners(ModEntityTypes.OSTRICH_ENTIY, 15, 3, 5));
     	
     	spawn_map.put(EntityClassification.CREATURE, spawns_new);
@@ -75,23 +74,27 @@ public class RegistryEvents {
     private static void addOceanSpawns(Biome biome) {
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
-    	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
+    	List<Spawners> spawns_old = spawn_map.get(EntityClassification.WATER_CREATURE);
     	List<Spawners> spawns_new = new ArrayList<>(spawns_old);
     	
-    	spawns_new.add(new Spawners(ModEntityTypes.SHARK_ENTIY, 6, 1, 2));
+    	spawns_new.add(new Spawners(ModEntityTypes.SHARK_ENTIY, 7, 1, 2));
     	
-    	spawn_map.put(EntityClassification.CREATURE, spawns_new);
+    	spawn_map.put(EntityClassification.WATER_CREATURE, spawns_new);
+    	
+    	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
     }
     
-    private static void addTundraSpawns(Biome biome) {
+    private static void addTaigaSpawns(Biome biome) {
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
     	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
     	List<Spawners> spawns_new = new ArrayList<>(spawns_old);
     	
-    	spawns_new.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY, 6, 1, 2));
+    	spawns_new.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY, 15, 3, 6));
     	
     	spawn_map.put(EntityClassification.CREATURE, spawns_new);
+
+    	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
     }
     
 }
