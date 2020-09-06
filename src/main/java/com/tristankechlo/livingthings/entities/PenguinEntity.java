@@ -77,6 +77,11 @@ public class PenguinEntity extends AnimalEntity {
 	protected float getWaterSlowDown() {
 		return 0.98F;
 	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 180;
+	}
 
     @Override
     protected float getStandingEyeHeight(@Nonnull Pose pose, @Nonnull EntitySize size) {
