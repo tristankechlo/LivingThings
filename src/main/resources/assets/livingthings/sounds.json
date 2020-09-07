@@ -83,7 +83,7 @@
 		    "mob/turtle/egg/egg_crack4",
 		    "mob/turtle/egg/egg_crack5"
 		],
-		"subtitle" : "subtitles.livingthings.ostrich.egg.laying"
+		"subtitle" : "subtitles.livingthings.ostrich.egg.cracks"
 	},
 	"ostrich.egg.laying" : {
 		"category" : "block",
