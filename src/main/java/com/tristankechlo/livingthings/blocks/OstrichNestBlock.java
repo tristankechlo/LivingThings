@@ -64,7 +64,7 @@ public class OstrichNestBlock extends Block {
 				return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 			}
 			if (state.get(OstrichNestBlock.EGG)) {
-				worldIn.setBlockState(pos, state.with(OstrichNestBlock.EGG, false), 2);
+				worldIn.setBlockState(pos, state.with(OstrichNestBlock.EGG, false).with(OstrichNestBlock.HATCH, 0), 2);
 				worldIn.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F);
 
 				ItemEntity entity = new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5D, pos.getZ(), new ItemStack(ModItems.OSTRICH_EGG.get(), 1));

@@ -34,7 +34,7 @@ public class OstrichEggItem extends Item {
 				return super.onItemUse(context);
 			}
 			if(!state.get(OstrichNestBlock.EGG)) {
-				world.setBlockState(pos, state.with(OstrichNestBlock.EGG, true), 2);
+				world.setBlockState(pos, state.with(OstrichNestBlock.EGG, true).with(OstrichNestBlock.HATCH, 0), 2);
 				world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PLACE, SoundCategory.BLOCKS, 0.7F, 0.9F);
 				context.getItem().shrink(1);
 				return ActionResultType.SUCCESS;
