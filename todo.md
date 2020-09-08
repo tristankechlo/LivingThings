@@ -1,5 +1,5 @@
 
-## Todo:
+## Todo / Ideas:
 
  - change Eye Height for Elephant/Giraffe/Lion
  - imrpove Penguin AI (proper swimming animation / hunting fish / laying eggs)
