@@ -1,0 +1,10 @@
+{
+	"name" : "LivingThings Knowledge",
+	"landing_text" : "This book holds the knowledge about the newly added mobs and items",
+	"version" : 1,
+	"book_texture" : "patchouli:textures/gui/book_blue.png",
+	"model" : "patchouli:book_blue",
+	"creative_tab" : "LivingThings",
+	"progress_bar_color" : "55a7ff",
+	"pause_game" : true
+}

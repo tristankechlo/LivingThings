@@ -1,0 +1,19 @@
+{
+	"name" : "Elephant",
+	"icon" : "livingthings:elephant_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()40 Hearts$(br)$(bold)Attack-Damage: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:elephant",
+			"rotate" : false,
+			"scale" : 0.9,
+			"default_rotation" : 45,
+			"text" : "Can be found in all $(bold)Savanna$() biomes."
+		}
+	]
+}

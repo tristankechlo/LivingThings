@@ -25,6 +25,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
 
             mods {
                 livingthings {
@@ -37,6 +38,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
 
             mods {
                 livingthings {
@@ -49,6 +51,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
 
             args '--mod', 'livingthings', '--all', '--output', file('src/generated/resources/')
 
@@ -61,7 +64,14 @@ minecraft {
     }
 }
 
+repositories {
+    maven { url 'https://maven.blamejared.com' }
+}
+
 dependencies {
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 

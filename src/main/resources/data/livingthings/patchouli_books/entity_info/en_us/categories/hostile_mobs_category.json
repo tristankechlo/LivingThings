@@ -1,0 +1,6 @@
+{
+	"name": "Hostile Mobs",
+	"description": "Be aware of these mobs, because they might attack you!",
+	"icon": "minecraft:writable_book",
+	"sortnum" : 2
+}

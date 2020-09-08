@@ -1,0 +1,17 @@
+{
+	"type" : "crafting_shapeless",
+	"ingredients" : [
+		{
+			"item" : "minecraft:book"
+		},
+		{
+			"item" : "minecraft:lapis_lazuli"
+		}
+	],
+	"result" : {
+		"item" : "patchouli:guide_book",
+		"nbt" : {
+			"patchouli:book" : "livingthings:entity_info"
+		}
+	}
+}
