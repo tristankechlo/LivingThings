@@ -32,45 +32,45 @@ public class SharkModel<T extends SharkEntity> extends EntityModel<T> {
 
 		Body = new ModelRenderer(this);
 		Body.setRotationPoint(0.0F, 17.0F, 0.0F);
-		Body.setTextureOffset(48, 22).addBox(-6.0F, -7.0F, -10.0F, 12.0F, 14.0F, 28.0F, 0.0F, false);
+		Body.setTextureOffset(48, 22).addBox(-6.0F, -7.0F, -18.0F, 12.0F, 14.0F, 28.0F, 0.0F, false);
 
 		TopFin = new ModelRenderer(this);
-		TopFin.setRotationPoint(0.0F, -7.0F, 0.0F);
+		TopFin.setRotationPoint(0.0F, -2.0F, 0.0F);
 		Body.addChild(TopFin);
 		setRotationAngle(TopFin, -0.6109F, 0.0F, 0.0F);
-		TopFin.setTextureOffset(0, 0).addBox(-1.0F, -8.0F, 0.0F, 2.0F, 8.0F, 4.0F, 0.0F, false);
+		TopFin.setTextureOffset(0, 0).addBox(-1.0F, -8.0F, -8.0F, 2.0F, 8.0F, 4.0F, 0.0F, false);
 
 		RightFin = new ModelRenderer(this);
-		RightFin.setRotationPoint(-4.0F, 5.0F, -1.0F);
+		RightFin.setRotationPoint(-4.0F, 4.0F, -8.0F);
 		Body.addChild(RightFin);
-		setRotationAngle(RightFin, -1.0036F, 0.0F, 0.6981F);
-		RightFin.setTextureOffset(0, 30).addBox(-1.0F, -3.5F, 0.0F, 1.0F, 5.0F, 11.0F, 0.0F, false);
+		setRotationAngle(RightFin, -1.0036F, -0.1745F, 0.6981F);
+		RightFin.setTextureOffset(0, 30).addBox(-1.0F, -2.5F, 0.0F, 1.0F, 5.0F, 11.0F, 0.0F, false);
 
 		LeftFin = new ModelRenderer(this);
-		LeftFin.setRotationPoint(5.0F, 5.0F, -1.0F);
+		LeftFin.setRotationPoint(4.0F, 4.0F, -8.0F);
 		Body.addChild(LeftFin);
-		setRotationAngle(LeftFin, -1.0036F, 0.0F, -0.6981F);
-		LeftFin.setTextureOffset(0, 13).addBox(-1.0F, -3.5F, 0.0F, 1.0F, 5.0F, 11.0F, 0.0F, false);
+		setRotationAngle(LeftFin, -1.0036F, 0.1745F, -0.6981F);
+		LeftFin.setTextureOffset(0, 13).addBox(0.0F, -2.5F, 0.0F, 1.0F, 5.0F, 11.0F, 0.0F, false);
 
 		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, 0.0F, -10.0F);
+		Head.setRotationPoint(0.0F, 7.0F, 0.0F);
 		Body.addChild(Head);
 		
 
 		HeadTop = new ModelRenderer(this);
-		HeadTop.setRotationPoint(0.0F, -3.5F, 0.0F);
+		HeadTop.setRotationPoint(0.0F, -9.5F, -24.0F);
 		Head.addChild(HeadTop);
 		setRotationAngle(HeadTop, 0.1309F, 0.0F, 0.0F);
-		HeadTop.setTextureOffset(78, 0).addBox(-5.5F, -3.5F, -13.0F, 11.0F, 7.0F, 14.0F, 0.0F, false);
+		HeadTop.setTextureOffset(78, 0).addBox(-5.5F, -3.5F, -7.0F, 11.0F, 7.0F, 14.0F, 0.0F, false);
 
 		HeadBottom = new ModelRenderer(this);
-		HeadBottom.setRotationPoint(0.0F, 3.0F, 0.0F);
+		HeadBottom.setRotationPoint(0.0F, -1.0F, -9.0F);
 		Head.addChild(HeadBottom);
 		setRotationAngle(HeadBottom, -0.3054F, 0.0F, 0.0F);
-		HeadBottom.setTextureOffset(24, 1).addBox(-5.5F, -4.0F, -11.0F, 11.0F, 7.0F, 12.0F, 0.0F, false);
+		HeadBottom.setTextureOffset(24, 1).addBox(-5.5F, -3.6993F, -19.9537F, 11.0F, 7.0F, 12.0F, 0.0F, false);
 
 		Tail = new ModelRenderer(this);
-		Tail.setRotationPoint(0.0F, 0.0F, 18.0F);
+		Tail.setRotationPoint(0.0F, 0.0F, 10.0F);
 		Body.addChild(Tail);
 		Tail.setTextureOffset(30, 23).addBox(-5.0F, -6.5F, 0.0F, 10.0F, 12.0F, 11.0F, 0.0F, false);
 
@@ -80,16 +80,16 @@ public class SharkModel<T extends SharkEntity> extends EntityModel<T> {
 		Tail2.setTextureOffset(0, 47).addBox(-4.0F, -5.5F, 0.0F, 8.0F, 10.0F, 7.0F, 0.0F, false);
 
 		BackFinTop = new ModelRenderer(this);
-		BackFinTop.setRotationPoint(0.0F, -5.5F, 7.0F);
+		BackFinTop.setRotationPoint(0.0F, -0.5F, 15.0F);
 		Tail2.addChild(BackFinTop);
 		setRotationAngle(BackFinTop, -0.7854F, 0.0F, 0.0F);
-		BackFinTop.setTextureOffset(108, 29).addBox(-1.0F, -7.0F, -2.0F, 2.0F, 11.0F, 6.0F, 0.0F, false);
+		BackFinTop.setTextureOffset(108, 29).addBox(-1.0F, -3.4645F, -10.7071F, 2.0F, 11.0F, 6.0F, 0.0F, false);
 
 		BackFinBottom = new ModelRenderer(this);
-		BackFinBottom.setRotationPoint(0.0F, 4.5F, 7.0F);
+		BackFinBottom.setRotationPoint(0.0F, -0.5F, 13.0F);
 		Tail2.addChild(BackFinBottom);
 		setRotationAngle(BackFinBottom, 0.7854F, 0.0F, 0.0F);
-		BackFinBottom.setTextureOffset(32, 49).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 10.0F, 5.0F, 0.0F, false);
+		BackFinBottom.setTextureOffset(32, 49).addBox(-1.0F, -4.0F, -9.0F, 2.0F, 10.0F, 5.0F, 0.0F, false);
 	}
 
 	@Override
