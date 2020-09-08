@@ -19,6 +19,7 @@ public class ElephantRenderer extends MobRenderer<ElephantEntity, ElephantModel<
 		super(renderManagerIn, new ElephantModel<>(), 1.2F);
 	}
 
+	@Override
 	public ResourceLocation getEntityTexture(ElephantEntity entity) {
 		return TEXTURE;
 	}

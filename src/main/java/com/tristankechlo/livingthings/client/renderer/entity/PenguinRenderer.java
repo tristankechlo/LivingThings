@@ -19,6 +19,7 @@ public class PenguinRenderer extends MobRenderer<PenguinEntity, PenguinModel<Pen
 		super(renderManagerIn, new PenguinModel<>(), 0.45F);
 	}
 
+	@Override
 	public ResourceLocation getEntityTexture(PenguinEntity entity) {
 		return TEXTURE;
 	}

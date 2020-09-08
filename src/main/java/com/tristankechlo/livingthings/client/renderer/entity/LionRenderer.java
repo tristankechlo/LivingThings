@@ -20,6 +20,7 @@ public class LionRenderer extends MobRenderer<LionEntity, LionModel<LionEntity>>
 		super(renderManagerIn, new LionModel<>(), 1F);
 	}
 
+	@Override
 	public ResourceLocation getEntityTexture(LionEntity entity) {
 		if(entity.getVariant() != 0) {
 			return ALBINO;
