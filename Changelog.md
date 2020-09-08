@@ -1,6 +1,6 @@
 # Changelog
 
-### Version 1.1.1
+### Version 1.16.2 - 1.1.1
  - Ostrichs are now rideable
     - if they are being ridden they just run in the direction you look
     - no saddle needed
@@ -9,7 +9,7 @@
  - added Patchouli support
 
 
-### Version 1.1.0
+### Version 1.16.2 - 1.1.0
  - port to 1.16.2
  - improved Mob-Attributes
  - added Penguins & Ostrichs
