@@ -27,15 +27,15 @@
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Lion roaring",
-	"subtitles.livingthings.lion.hurt" : "Lion hurt",
+	"subtitles.livingthings.lion.hurt" : "Lion hurts",
 	"subtitles.livingthings.lion.death" : "Lion dies",
 	"subtitles.livingthings.penguin.ambient" : "Penguin chattering",
-	"subtitles.livingthings.penguin.hurt" : "Penguin hurt",
+	"subtitles.livingthings.penguin.hurt" : "Penguin hurts",
 	"subtitles.livingthings.penguin.death" : "Penguin dies",
 	"subtitles.livingthings.elephant.ambient" : "Elephant trumpeting",
-	"subtitles.livingthings.elephant.hurt" : "Elephant hurt",
+	"subtitles.livingthings.elephant.hurt" : "Elephant hurts",
 	"subtitles.livingthings.elephant.death" : "Elephant dies",
-	"subtitles.livingthings.ostrich.egg.cracks" : "Ostrich egg cracks",
-	"subtitles.livingthings.ostrich.egg.laying" : "Ostrich lays an egg",
+	"subtitles.livingthings.ostrich.egg.cracks" : "Ostrich egg cracking",
+	"subtitles.livingthings.ostrich.egg.laying" : "Ostrich layed egg",
 	"subtitles.livingthings.ostrich.ambient" : "Ostrich noise"
 }
