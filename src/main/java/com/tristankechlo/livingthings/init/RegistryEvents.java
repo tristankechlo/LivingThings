@@ -40,17 +40,19 @@ public class RegistryEvents {
             event.getRegistry().register(spawnEgg);
         }
     }
-    
+        
     @SubscribeEvent
     public static void onBiomeRegistry(RegistryEvent.Register<Biome> event) {
     	for (Biome biome : event.getRegistry().getValues()) {
     		
-    		if(biome.getCategory() == Category.SAVANNA) {
+    		Category category = biome.getCategory();    		
+    		
+    		if(category == Category.SAVANNA) {
     			addSavannaSpawns(biome);
-    		} else if(biome.getCategory() == Category.OCEAN) {
+    		} else if(category == Category.OCEAN) {
     			addOceanSpawns(biome);
-    		} else if (biome.getCategory() == Category.TAIGA) {
-    			addTaigaSpawns(biome);
+    		} else if (category == Category.ICY) {
+    			addPenguinSpawns(biome);
     		}
     	}    	
     }
@@ -84,7 +86,7 @@ public class RegistryEvents {
     	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
     }
     
-    private static void addTaigaSpawns(Biome biome) {
+    private static void addPenguinSpawns(Biome biome) {
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
     	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
