@@ -16,6 +16,7 @@
 	"item.livingthings.shark_spawn_egg" : "Shark Spawn Egg",
 	"item.livingthings.penguin_spawn_egg" : "Penguin Spawn Egg",
 	"item.livingthings.ostrich_spawn_egg" : "Ostrich Spawn Egg",
+	"item.livingthings.flamingo_spawn_egg" : "Flamingo Spawn Egg",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elephant",
@@ -24,6 +25,7 @@
 	"entity.livingthings.shark" : "Shark",
 	"entity.livingthings.penguin" : "Penguin",
 	"entity.livingthings.ostrich" : "Ostrich",
+	"entity.livingthings.flamingo" : "Flamingo",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Lion roaring",
