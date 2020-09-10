@@ -8,10 +8,12 @@ import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -123,6 +125,11 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 4;
+	}
+	
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+        return this.isChild() ? 1.55F : 3.15F;
 	}
 
 	@Override

@@ -89,6 +89,11 @@ public class PenguinEntity extends AnimalEntity {
     }
     
     @Override
+    public int getMaxSpawnedInChunk() {
+    	return 6;
+    }
+    
+    @Override
     protected SoundEvent getAmbientSound() {
     	return ModSounds.PENGUIN_AMBIENT.get();
     }

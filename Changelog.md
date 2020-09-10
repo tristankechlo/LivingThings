@@ -1,5 +1,14 @@
 # Changelog
 
+### Version 1.16.2 - 1.1.3
+ - small bug fixes and improvements
+     - wrong eye height for some mobs
+     - shark not swimming sometimes
+     - Ostrich Eggs now hatch a little bit faster
+
+### Version 1.16.2 - 1.1.2
+ - added Flamingos
+
 ### Version 1.16.2 - 1.1.1
  - Ostrichs are now rideable
     - if they are being ridden they just run in the direction you look

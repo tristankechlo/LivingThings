@@ -11,11 +11,13 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IGenderedMob;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -215,6 +217,11 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 5;
+	}
+	
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+        return this.isChild() ? 0.7F : 1.45F;
 	}
 
 	public Gender getGender(){
