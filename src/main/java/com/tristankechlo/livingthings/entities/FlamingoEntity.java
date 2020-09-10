@@ -62,14 +62,14 @@ public class FlamingoEntity extends AnimalEntity {
 	
 	@Override
 	protected void registerGoals() {
-		this.randomWalkingGoal = new FlamingoEntity.DeepWaterAvoidingRandomWalkingGoal(this, 1.0D, 60);
+		this.randomWalkingGoal = new FlamingoEntity.DeepWaterAvoidingRandomWalkingGoal(this, 1.0D, 50);
 		
 		this.goalSelector.addGoal(0, new FlamingoEntity.SwimInDeepWaterGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.1D));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, TEMPTATION_ITEMS, false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.2D));
-		this.goalSelector.addGoal(5, new FlamingoEntity.LiftLegsGoal(this, 10));
+		this.goalSelector.addGoal(5, new FlamingoEntity.LiftLegsGoal(this, 15));
 		this.goalSelector.addGoal(5, this.randomWalkingGoal);
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
