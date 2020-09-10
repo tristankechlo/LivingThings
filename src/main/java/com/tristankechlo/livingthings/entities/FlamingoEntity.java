@@ -98,6 +98,11 @@ public class FlamingoEntity extends AnimalEntity {
 		return 0.98F;
 	}
 	
+	@Override
+	public int getMaxSpawnedInChunk() {
+		return 5;
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	public boolean isLeftLegUp() {
 		return this.dataManager.get(LEFT_LEG_UP);

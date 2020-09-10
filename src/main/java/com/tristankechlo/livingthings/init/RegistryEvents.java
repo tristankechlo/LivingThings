@@ -52,9 +52,39 @@ public class RegistryEvents {
     		} else if(category == Category.OCEAN) {
     			addOceanSpawns(biome);
     		} else if (category == Category.ICY) {
-    			addPenguinSpawns(biome);
+    			addIcySpawns(biome);
+    		} else if(category == Category.BEACH) {
+    			addBeachSpawns(biome);
+    		} else if (category == Category.SWAMP) {
+    			addSwampSpawns(biome);
     		}
     	}    	
+    }
+    
+    private static void addSwampSpawns(Biome biome) {
+    	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
+    	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
+    	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
+    	List<Spawners> spawns_new = new ArrayList<>(spawns_old);
+    	
+    	spawns_new.add(new Spawners(ModEntityTypes.FLAMINGO_ENTIY, 15, 3, 6));
+    	
+    	spawn_map.put(EntityClassification.CREATURE, spawns_new);
+    	
+    	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
+    }
+    
+    private static void addBeachSpawns(Biome biome) {
+    	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
+    	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
+    	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
+    	List<Spawners> spawns_new = new ArrayList<>(spawns_old);
+    	
+    	spawns_new.add(new Spawners(ModEntityTypes.FLAMINGO_ENTIY, 15, 3, 6));
+    	
+    	spawn_map.put(EntityClassification.CREATURE, spawns_new);
+    	
+    	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
     }
     
     private static void addSavannaSpawns(Biome biome) {
@@ -86,7 +116,7 @@ public class RegistryEvents {
     	ObfuscationReflectionHelper.setPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), spawn_map, "field_242554_e");
     }
     
-    private static void addPenguinSpawns(Biome biome) {
+    private static void addIcySpawns(Biome biome) {
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map_old = ObfuscationReflectionHelper.getPrivateValue(MobSpawnInfo.class, biome.func_242433_b(), "field_242554_e");
     	Map<EntityClassification, List<MobSpawnInfo.Spawners>> spawn_map = new HashMap<>(spawn_map_old);
     	List<Spawners> spawns_old = spawn_map.get(EntityClassification.CREATURE);
