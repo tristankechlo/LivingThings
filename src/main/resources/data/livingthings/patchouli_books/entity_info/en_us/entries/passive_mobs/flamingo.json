@@ -1,0 +1,20 @@
+{
+	"name" : "Flamingo",
+	"icon" : "livingthings:flamingo_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Pink bird that stands most of the time on one leg.$(br2)$(bold)Health: $()8 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Raw Salmon$(li)Raw Cod"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:flamingo",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 40,
+			"offset" : 0.2,
+			"text" : "Can be found in $(bold)Swamps$() and at $(bold)Beaches$()."
+		}
+	]
+}

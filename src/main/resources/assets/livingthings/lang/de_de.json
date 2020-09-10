@@ -16,6 +16,7 @@
 	"item.livingthings.shark_spawn_egg" : "Erschaffe Hai",
 	"item.livingthings.penguin_spawn_egg" : "Erschaffe Pinguin",
 	"item.livingthings.ostrich_spawn_egg" : "Erschaffe Strauß",
+	"item.livingthings.flamingo_spawn_egg" : "Erschaffe Flamingo",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elefant",
@@ -24,6 +25,7 @@
 	"entity.livingthings.shark" : "Hai",
 	"entity.livingthings.penguin" : "Pinguin",
 	"entity.livingthings.ostrich" : "Strauß",
+	"entity.livingthings.flamingo" : "Flamingo",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Löwe brüllt",

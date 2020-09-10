@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.entities.ElephantEntity;
+import com.tristankechlo.livingthings.entities.FlamingoEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
@@ -36,6 +37,7 @@ public class ModEntityTypes {
     public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x000896, 0x595a6b);
     public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, 0x000000, 0xFFFFFF);
     public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, 0x130d08, 0xa56f5b);
+    public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
 
 
 	/*
@@ -48,6 +50,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(SHARK_ENTIY, SharkEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(PENGUIN_ENTITY, PenguinEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(OSTRICH_ENTIY, OstrichEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(FLAMINGO_ENTIY, FlamingoEntity.getAttributes().create());
 	}
 
 	/*
@@ -60,6 +63,7 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
 		EntitySpawnPlacementRegistry.register(PENGUIN_ENTITY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(OSTRICH_ENTIY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(FLAMINGO_ENTIY, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 	}
 
     /**
