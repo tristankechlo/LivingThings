@@ -27,9 +27,9 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -44,6 +44,7 @@ import net.minecraft.world.server.ServerWorld;
 public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVariants {
 
 	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.createKey(GiraffeEntity.class, DataSerializers.BYTE);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
@@ -61,7 +62,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		int albinoChance = LivingThingsConfig.SERVER.giraffeAlbinoChance.get();
+		int albinoChance = LivingThingsConfig.GIRAFFE.albinoChance.get();
 		if(Math.random() < ((double)albinoChance / 100.0D)) {
 			this.setVariant((byte) 15);
 		} else if(new Random().nextBoolean()) {
@@ -74,10 +75,10 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.GIRAFFE.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.GIRAFFE.damage.get());
 	}
 	
 	@Override
@@ -115,11 +116,10 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 			this.setVariant((byte) 0);
 		}
 	}
-
+	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		Item item = stack.getItem();
-		return (item == Items.WHEAT);
+		return BREEDING_ITEMS.test(stack);
 	}
 	
 	@Override

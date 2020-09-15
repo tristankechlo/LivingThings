@@ -39,9 +39,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
@@ -54,6 +52,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 
 	private static final DataParameter<Boolean> MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.createKey(LionEntity.class, DataSerializers.BYTE);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
@@ -76,7 +75,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		Gender gender = worldIn.getRandom().nextBoolean() ? Gender.MALE : Gender.FEMALE;
 		this.setGender(gender);
 
-		int albinoChance = LivingThingsConfig.SERVER.lionAlbinoChance.get();
+		int albinoChance = LivingThingsConfig.LION.albinoChance.get();
 		if(Math.random() < ((double)albinoChance / 100.0D)) {
 			this.setVariant((byte) 15);
 		} else {
@@ -88,10 +87,10 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.33D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
 	}
 	
 	@Override
@@ -163,35 +162,10 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	protected float getWaterSlowDown() {
 		return 0.85F;
 	}
-	
-	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getHeldItem(hand);
-		if (this.isBreedingItem(itemstack)) {
-			int i = this.getGrowingAge();
-			if (!this.world.isRemote && i == 0 && this.canBreed()) {
-				this.consumeItemFromStack(player, itemstack);
-				this.setInLove(player);
-				return ActionResultType.SUCCESS;
-			}
-
-			if (this.isChild()) {
-				this.consumeItemFromStack(player, itemstack);
-				this.ageUp((int) ((float) (-i / 20) * 0.1F), true);
-				return ActionResultType.func_233537_a_(this.world.isRemote);
-			}
-
-			if (this.world.isRemote) {
-				return ActionResultType.CONSUME;
-			}
-		}
-		return ActionResultType.PASS;
-	}
-		
+			
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		final Ingredient breeding_Items = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
-		return breeding_Items.test(stack);
+		return BREEDING_ITEMS.test(stack);
 	}
 	
 	@Override

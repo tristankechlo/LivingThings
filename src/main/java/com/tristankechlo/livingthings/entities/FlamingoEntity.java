@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.AgeableEntity;
@@ -56,7 +57,7 @@ public class FlamingoEntity extends AnimalEntity {
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 16.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 	

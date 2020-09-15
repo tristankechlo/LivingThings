@@ -1,13 +1,16 @@
 package com.tristankechlo.livingthings.entities.ai;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.entities.ElephantEntity;
+import com.tristankechlo.livingthings.entities.GiraffeEntity;
+import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.entities.SharkEntity;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.Difficulty;
 
-public class BetterMeleeAttackGoal extends MeleeAttackGoal{
+public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 	
 	public BetterMeleeAttackGoal(CreatureEntity creature, double speedIn, boolean useLongMemory) {
 		super(creature, speedIn, useLongMemory);
@@ -16,8 +19,8 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal{
 	@Override
 	public boolean shouldExecute() {
 		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
-		boolean ambientMode = LivingThingsConfig.SERVER.ambientMode.get();
-		if (peaceful || ambientMode) {
+		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
+		if (peaceful || ambientMode || this.canEntityAttack() == false) {
 			return false;
 		}
 		return super.shouldExecute();
@@ -26,21 +29,24 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal{
 	@Override
 	public boolean shouldContinueExecuting() {
 		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
-		boolean ambientMode = LivingThingsConfig.SERVER.ambientMode.get();
-		if (peaceful || ambientMode) {
+		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
+		if (peaceful || ambientMode || this.canEntityAttack() == false) {
 			return false;
 		}
 		return super.shouldContinueExecuting();
 	}
-	
-	@Override
-	public void resetTask() {
-		if(this.attacker instanceof IAngerable) {
-			IAngerable entity = (IAngerable)this.attacker;
-			//reset anger
-			entity.func_241355_J__();
+		
+	private boolean canEntityAttack() {
+		if(this.attacker instanceof ElephantEntity) {
+			return LivingThingsConfig.ELEPHANT.canAttack.get();
+		} else if(this.attacker instanceof GiraffeEntity) {
+			return LivingThingsConfig.GIRAFFE.canAttack.get();
+		} else if(this.attacker instanceof LionEntity) {
+			return LivingThingsConfig.LION.canAttack.get();
+		} else if(this.attacker instanceof SharkEntity) {
+			return LivingThingsConfig.SHARK.canAttack.get();
 		}
-		super.resetTask();
+		return false;
 	}
 
 }

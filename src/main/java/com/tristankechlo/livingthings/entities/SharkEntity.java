@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
@@ -56,10 +57,10 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 22.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.05F)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.5D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.health.get());
 	}
 
 	@Override

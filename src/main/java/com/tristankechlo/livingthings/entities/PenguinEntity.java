@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.entities;
 
 import javax.annotation.Nonnull;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 
@@ -46,7 +47,7 @@ public class PenguinEntity extends AnimalEntity {
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 16.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.PENGUIN.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 	

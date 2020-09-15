@@ -1,42 +1,36 @@
 package com.tristankechlo.livingthings.config;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.config.entity.ElephantConfig;
+import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
+import com.tristankechlo.livingthings.config.entity.GiraffeConfig;
+import com.tristankechlo.livingthings.config.entity.LionConfig;
+import com.tristankechlo.livingthings.config.entity.OstrichConfig;
+import com.tristankechlo.livingthings.config.entity.PenguinConfig;
+import com.tristankechlo.livingthings.config.entity.SharkConfig;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 @Mod.EventBusSubscriber
 public class LivingThingsConfig {
+	
+	public static final String requiresRestart = "requires Client and Server restart";
 
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-	public static final Server SERVER = new Server(BUILDER);
+	
+	public static final GeneralConfig GENERAL = new GeneralConfig(BUILDER);
+	public static final ElephantConfig ELEPHANT = new ElephantConfig(BUILDER);
+	public static final GiraffeConfig GIRAFFE = new GiraffeConfig(BUILDER);
+	public static final LionConfig LION = new LionConfig(BUILDER);
+	public static final SharkConfig SHARK = new SharkConfig(BUILDER);
+	public static final PenguinConfig PENGUIN = new PenguinConfig(BUILDER);
+	public static final FlamingoConfig FLAMINGO = new FlamingoConfig(BUILDER);
+	public static final OstrichConfig OSTRICH = new OstrichConfig(BUILDER);
+	
 	public static final ForgeConfigSpec spec = BUILDER.build();
-
-	public static class Server {
-
-		public final BooleanValue ambientMode;
-		
-		public final IntValue lionAlbinoChance;
-		public final IntValue giraffeAlbinoChance;
-
-		Server(ForgeConfigSpec.Builder builder) {
-			builder.comment("General Configuration").push("General");
-			ambientMode = builder.comment("if set to true, mobs can't attack").define("ambientMode", false);
-			builder.pop();
-
-			builder.comment("Mob-Config for Giraffe").push("Lion");			
-			lionAlbinoChance = builder.defineInRange("AlbinoChance", 1, 0, 100);
-			builder.pop();
-
-			builder.comment("Mob-Config for Lion").push("Giraffe");
-			giraffeAlbinoChance = builder.defineInRange("AlbinoChance", 1, 0, 100);
-			builder.pop();
-		}
-	}
 
 	@SubscribeEvent
 	public static void onLoad(final ModConfig.Loading configEvent) {

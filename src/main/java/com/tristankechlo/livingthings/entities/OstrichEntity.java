@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
@@ -78,9 +79,8 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 16.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.OSTRICH.health.get())
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 	
 	@Override
@@ -147,9 +147,11 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	
 	@Override
 	public boolean canBeSteered() {
-		Entity entity = this.getControllingPassenger();
-		if (entity instanceof PlayerEntity) {
-			return true;
+		if(LivingThingsConfig.OSTRICH.canBeRidden.get()) {
+			Entity entity = this.getControllingPassenger();
+			if (entity instanceof PlayerEntity) {
+				return true;
+			}
 		}
 		return false;
 	}
