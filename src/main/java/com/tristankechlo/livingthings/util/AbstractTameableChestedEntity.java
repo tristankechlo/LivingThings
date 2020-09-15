@@ -37,9 +37,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container." + LivingThings.MOD_ID + ".elephant");
-	private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> CHESTED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> TAMED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_SADDLED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> HAS_CHEST = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_TAMED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
 	private static final Ingredient TAMING_ITEMS = Ingredient.fromItems(Items.APPLE);
 	protected Inventory entityInventory;
@@ -54,16 +54,16 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(SADDLED, false);
-		this.dataManager.register(CHESTED, false);
-		this.dataManager.register(TAMED, false);
+		this.dataManager.register(IS_SADDLED, false);
+		this.dataManager.register(HAS_CHEST, false);
+		this.dataManager.register(IS_TAMED, false);
 	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.setSaddled(compound.getBoolean("Saddled"));
-		this.setChested(compound.getBoolean("Chested"));
+		this.setHasChest(compound.getBoolean("Chested"));
 		this.setTame(compound.getBoolean("Tamed"));
 		this.setTameAmount(compound.getInt("TameAmount"));
 		
@@ -75,7 +75,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
-		compound.putBoolean("Chested", this.isChested());
+		compound.putBoolean("Chested", this.hasChest());
 		compound.putBoolean("Tamed", this.isTame());
 		compound.putInt("TameAmount", this.getTameAmount());
 		compound.put("Inventory", this.entityInventory.write());
@@ -97,6 +97,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 	
 	public void openInventory(PlayerEntity player) {
+		//elephant inv is a generic chest
 		player.openContainer(new SimpleNamedContainerProvider((id, playerInv, playerIn) -> {
 			return new ChestContainer(ContainerType.GENERIC_9X3, id, player.inventory, this.entityInventory, 3);
 		}, CONTAINER_NAME));
@@ -104,14 +105,14 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		if(hand == Hand.OFF_HAND) {
+		if(hand == Hand.OFF_HAND) { //prevent offhand use
 			return ActionResultType.PASS;
 		}
 		ItemStack stack = player.getHeldItemMainhand();
 
 		if (stack.isEmpty() && this.isTame() && !this.isChild()) {
 
-			if(player.isSneaking() && this.isChested()) {
+			if(player.isSneaking() && this.hasChest()) {
 				//open inv
 				this.openInventory(player);
 				
@@ -137,8 +138,8 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				if(this.getHealth() < this.getMaxHealth()) {
 					
 					//heal entity
-					float healAmount = this.getHealingAmount(stack.getItem());
 					if(!this.world.isRemote) {
+						float healAmount = this.getHealingAmount(stack.getItem());
 						this.heal(healAmount);
 						this.consumeItemFromStack(player, stack);
 						return ActionResultType.SUCCESS;
@@ -172,7 +173,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			}
 			return ActionResultType.SUCCESS;
 			
-		} else if(this.isTame() && stack.getItem() == this.getSaddleItem() && !this.isChild()) {
+		} else if(this.isTame() && isSaddleItem(stack) && !this.isChild()) {
 			
 			//saddle entity
 			if(!this.world.isRemote && !this.isSaddled()) {
@@ -181,12 +182,12 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				return ActionResultType.SUCCESS;
 			}
 			
-		} else if(this.isTame() && this.isSaddled() && stack.getItem() == this.getChestItem() && !this.isChild()) {
+		} else if(this.isTame() && this.isSaddled() && isChestItem(stack) && !this.isChild()) {
 
 			//add chest to entity
-			if(!this.world.isRemote && !this.isChested()) {
+			if(!this.world.isRemote && !this.hasChest()) {
 				this.consumeItemFromStack(player, stack);
-				this.setChested(true);
+				this.setHasChest(true);
 				return ActionResultType.SUCCESS;
 			}
 		}
@@ -249,25 +250,16 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		if(this.isSaddled() && this.rand.nextBoolean()) {
 			this.entityDropItem(this.getSaddleItem());
 		}
-		if(this.isChested() && this.rand.nextBoolean()) {
+		if(this.hasChest() && this.rand.nextBoolean()) {
 			this.entityDropItem(this.getChestItem());
 		}
 	}
 		
 	@Override
 	public boolean canBeSteered() {
-		Entity entity = this.getControllingPassenger();
-		if (entity instanceof PlayerEntity) {
-			return true;
-		}
-		return false;
+		return this.getControllingPassenger() instanceof PlayerEntity;
 	}
-	
-	@Override
-	public void updatePassenger(Entity passenger) {
-		super.updatePassenger(passenger);
-	}
-	
+		
 	@Override
 	public void travel(Vector3d travelVector) {
 		if (this.isAlive()) {
@@ -318,61 +310,77 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 
 	public boolean isSaddled() {
-		return this.dataManager.get(SADDLED);
+		return this.dataManager.get(IS_SADDLED);
 	}
 
 	public void setSaddled(boolean saddled) {
-		this.dataManager.set(SADDLED, saddled);
+		this.dataManager.set(IS_SADDLED, saddled);
 	}
 	
-	public boolean isChested() {
-		return this.dataManager.get(CHESTED);
+	public boolean hasChest() {
+		return this.dataManager.get(HAS_CHEST);
 	}
 	
-	public void setChested(boolean chested) {
-		this.dataManager.set(CHESTED, chested);
+	public void setHasChest(boolean chested) {
+		this.dataManager.set(HAS_CHEST, chested);
 	}
 
 	public boolean isTame() {
-		return this.dataManager.get(TAMED);
+		return this.dataManager.get(IS_TAMED);
 	}
 
 	public void setTame(boolean tamed) {
-		this.dataManager.set(TAMED, tamed);
+		this.dataManager.set(IS_TAMED, tamed);
 	}
 	
-	/* how much the entity shall be healed */
+	/** how much the entity shall be healed */
 	protected float getHealingAmount(Item item) {
 		return 4.0F;
 	}
 	
+	/**if current taming amount is higher than this, entity is considered as tamed*/
 	protected int getMaxTameAmount() {
 		return 1000;
 	}
 	
+	/** how much the taming shall progress */
 	protected int getTameAmountPerItem(Item item) {
 		return 200;
 	}
 	
+	/** get the current taming amount*/
 	public int getTameAmount() {
 		return this.tameAmount;
 	}
 	
+	/**override the taming progress*/
 	public void setTameAmount(int amount) {
 		this.tameAmount = amount;
 	}
 	
+	/**add to the current taming amount*/
 	public void addTameAmount(int amount) {
 		this.tameAmount = this.getTameAmount() + amount;
 	}
-
-	/* which item is considered the saddle */
+	
+	/**which item is considered the saddle item when used*/
 	protected Item getSaddleItem() {
 		return Items.SADDLE;
 	}
-	
+
+	/**which item is considered the chest item when used*/
 	protected Item getChestItem() {
 		return Items.CHEST;
+	}
+
+	/**check if item is correct saddle item*/
+	protected boolean isSaddleItem(ItemStack stack) {
+		return stack.getItem() == this.getSaddleItem();
+	}
+
+	/**check if item is correct chest item*/
+	protected boolean isChestItem(ItemStack stack) {
+		return stack.getItem() == this.getChestItem();
 	}
 	
 }

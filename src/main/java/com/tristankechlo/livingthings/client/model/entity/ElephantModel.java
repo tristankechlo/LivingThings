@@ -260,7 +260,7 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 	       this.Tusks.rotateAngleX = 1.7F * MathHelper.func_233021_e_((float)i - partialTick, 10.0F);
 	    }
 	    
-	    this.Chests.showModel = elephant.isChested();
+	    this.Chests.showModel = elephant.hasChest();
 	    this.Saddle.showModel = elephant.isSaddled();
 
 	}
