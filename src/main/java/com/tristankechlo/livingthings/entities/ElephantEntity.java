@@ -2,9 +2,11 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.UUID;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.AbstractTameableChestedEntity;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -23,11 +25,10 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
@@ -37,8 +38,9 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ElephantEntity extends AnimalEntity implements IAngerable {
+public class ElephantEntity extends AbstractTameableChestedEntity implements IAngerable {
 
+	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private int attackTimer;
@@ -46,20 +48,24 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 
 	public ElephantEntity(EntityType<? extends ElephantEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		this.stepHeight = 1.0F;
 	}
 		
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-		return ModEntityTypes.ELEPHANT_ENTITY.create(this.world);
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.create(this.world);
+		if(this.isTame() || ((ElephantEntity)parent).isTame()) {
+			child.setTame(true);
+		}
+		return child;
 	}
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 80.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 10.0D)
-				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
 	}
 
 	@Override
@@ -75,11 +81,10 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setCallsForHelp());
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
-
+			
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		Item item = stack.getItem();
-		return (item == Items.WHEAT);
+		return BREEDING_ITEMS.test(stack);
 	}
 	
 	@Override
@@ -93,7 +98,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 		}
 		return flag;
 	}
-
+	
 	@Override
 	public void livingTick() {
 		super.livingTick();
@@ -109,9 +114,14 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? 1.3F : 2.65F;
+        return this.isChild() ? 1.3F : 2.25F;
 	}
 	
+	@Override
+	public double getMountedYOffset() {
+		return 2.45D;
+	}
+		
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.ELEPHANT_AMBIENT.get();
@@ -168,5 +178,5 @@ public class ElephantEntity extends AnimalEntity implements IAngerable {
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));
 	}
-			
+		
 }

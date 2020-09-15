@@ -2,6 +2,9 @@
 
 	"itemGroup.LivingThings" : "Living Things",
 	
+	//container
+	"container.livingthings.elephant" : "Elefant Inventar",
+	
 	//blocks
 	"block.livingthings.ostrich_nest" : "Strauﬂen Nest",
 	

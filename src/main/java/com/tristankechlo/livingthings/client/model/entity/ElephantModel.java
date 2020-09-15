@@ -18,7 +18,7 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 	private float[][] currentTrunkAngle= { {0F,0F,0F}, {0F,0F,0F}, {0F,0F,0F} };
 	private float[][] targetTrunkAngle= { {0.17F,0.17F,0.17F}, {0.17F,0.17F,0.17F}, {0.17F,0.17F,0.17F} };
 	private boolean[][] countUpwards = { {true,true,true}, {true,true,true}, {true,true,true} };
-	
+
 	private final ModelRenderer Tusks;
 	private final ModelRenderer LeftTusk;
 	private final ModelRenderer LeftTuskTop;
@@ -43,6 +43,10 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 	private final ModelRenderer Ears;
 	private final ModelRenderer LeftEar;
 	private final ModelRenderer RightEar;
+	private final ModelRenderer Chests;
+	private final ModelRenderer Saddle;
+	private final ModelRenderer SaddleRight;
+	private final ModelRenderer SaddleLeft;
 
 	public ElephantModel() {
 		textureWidth = 256;
@@ -175,7 +179,32 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 		RightEar.setRotationPoint(-9.0F, -1.0F, -6.0F);
 		Ears.addChild(RightEar);
 		setRotationAngle(RightEar, 0.1309F, -0.48F, 0.0F);
-		RightEar.setTextureOffset(222, 37).addBox(-1.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, true);
+		RightEar.setTextureOffset(244, 62).addBox(-2.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
+
+		Chests = new ModelRenderer(this);
+		Chests.setRotationPoint(0.0F, 24.0F, 0.0F);
+		Chests.setTextureOffset(54, 38).addBox(11.0F, -36.0F, 10.0F, 2.0F, 8.0F, 8.0F, 0.0F, false);
+		Chests.setTextureOffset(54, 38).addBox(-13.0F, -36.0F, 10.0F, 2.0F, 8.0F, 8.0F, 0.0F, true);
+
+		Saddle = new ModelRenderer(this);
+		Saddle.setRotationPoint(0.0F, 24.0F, 0.0F);
+		Saddle.setTextureOffset(114, 84).addBox(-6.5F, -44.0F, -7.0F, 13.0F, 1.0F, 12.0F, 0.0F, false);
+		Saddle.setTextureOffset(124, 96).addBox(-6.0F, -45.0F, 3.0F, 12.0F, 1.0F, 2.0F, 0.0F, false);
+		Saddle.setTextureOffset(136, 85).addBox(-11.1F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
+		Saddle.setTextureOffset(136, 85).addBox(10.1F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
+		Saddle.setTextureOffset(144, 90).addBox(-1.5F, -46.0F, -7.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
+
+		SaddleRight = new ModelRenderer(this);
+		SaddleRight.setRotationPoint(-8.625F, -43.175F, -1.5F);
+		Saddle.addChild(SaddleRight);
+		setRotationAngle(SaddleRight, 0.0F, 0.0F, -0.3054F);
+		SaddleRight.setTextureOffset(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
+
+		SaddleLeft = new ModelRenderer(this);
+		SaddleLeft.setRotationPoint(8.725F, -43.15F, -1.5F);
+		Saddle.addChild(SaddleLeft);
+		setRotationAngle(SaddleLeft, 0.0F, 0.0F, 0.3054F);
+		SaddleLeft.setTextureOffset(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
 	}
 
 	@Override
@@ -187,11 +216,13 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 			Tusks.render(matrixStack, buffer, packedLight, packedOverlay);
 		}
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
+		Chests.render(matrixStack, buffer, packedLight, packedOverlay);
+		Saddle.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
-	    int i = entityIn.getAttackTimer();
+	public void setRotationAngles(T elephant, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
+	    int i = elephant.getAttackTimer();
 	    if (i == 0) {
 			this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
 			this.Tusks.rotateAngleX = headPitch * ((float) Math.PI / 180F);
@@ -219,15 +250,18 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-		if(partialTick > 0.9F) {
+	public void setLivingAnimations(T elephant, float limbSwing, float limbSwingAmount, float partialTick) {
+		if(partialTick > 0.5F) {
 			setTrunkAngle();
 		}
-	    int i = entityIn.getAttackTimer();
+	    int i = elephant.getAttackTimer();
 	    if (i > 0) {
 	       this.Head.rotateAngleX = 1.7F * MathHelper.func_233021_e_((float)i - partialTick, 10.0F);
 	       this.Tusks.rotateAngleX = 1.7F * MathHelper.func_233021_e_((float)i - partialTick, 10.0F);
 	    }
+	    
+	    this.Chests.showModel = elephant.isChested();
+	    this.Saddle.showModel = elephant.isSaddled();
 
 	}
 

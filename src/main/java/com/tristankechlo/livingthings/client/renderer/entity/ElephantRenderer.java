@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ElephantRenderer extends MobRenderer<ElephantEntity, ElephantModel<ElephantEntity>> {
 	
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant_entity.png");
+	protected static final ResourceLocation TEXTURE_SADDLED = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant_entity_saddled.png");
 
 	public ElephantRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new ElephantModel<>(), 1.2F);
@@ -21,6 +22,9 @@ public class ElephantRenderer extends MobRenderer<ElephantEntity, ElephantModel<
 
 	@Override
 	public ResourceLocation getEntityTexture(ElephantEntity entity) {
+		if(entity.isTame() && !entity.isChild()) {
+			return TEXTURE_SADDLED;
+		}
 		return TEXTURE;
 	}
 }
