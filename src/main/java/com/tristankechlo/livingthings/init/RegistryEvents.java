@@ -12,10 +12,10 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -40,9 +40,9 @@ public class RegistryEvents {
             event.getRegistry().register(spawnEgg);
         }
     }
-        
-    @SubscribeEvent
-    public static void onBiomeRegistry(RegistryEvent.Register<Biome> event) {
+    
+    public void onBiomeLoading(final BiomeLoadingEvent event) {    	
+    	/*
     	for (Biome biome : event.getRegistry().getValues()) {
     		
     		Category category = biome.getCategory();    		
@@ -58,7 +58,7 @@ public class RegistryEvents {
     		} else if (category == Category.SWAMP) {
     			addSwampSpawns(biome);
     		}
-    	}    	
+    	}*/	
     }
     
     private static void addSwampSpawns(Biome biome) {
