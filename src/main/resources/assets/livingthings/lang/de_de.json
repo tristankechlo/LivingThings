@@ -40,6 +40,8 @@
 	"subtitles.livingthings.elephant.ambient" : "Elefant trompetiert",
 	"subtitles.livingthings.elephant.hurt" : "Elefant nimmt Schaden",
 	"subtitles.livingthings.elephant.death" : "Elefant stirbt",
+	"subtitles.livingthings.elephant.chest" : "Elefanten-Kiste ausgerüstet",
+	"subtitles.livingthings.elephant.saddle" : "Elefanten-Sattel ausgerüstet",
 	"subtitles.livingthings.ostrich.egg.cracks" : "Straußen Ei zerbricht",
 	"subtitles.livingthings.ostrich.egg.laying" : "Straußen legt Ei",
 	"subtitles.livingthings.ostrich.ambient" : "Strauß-Geräusche"

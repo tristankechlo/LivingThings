@@ -40,6 +40,8 @@
 	"subtitles.livingthings.elephant.ambient" : "Elephant trumpeting",
 	"subtitles.livingthings.elephant.hurt" : "Elephant hurts",
 	"subtitles.livingthings.elephant.death" : "Elephant dies",
+	"subtitles.livingthings.elephant.chest" : "equipped Elephant Chest",
+	"subtitles.livingthings.elephant.saddle" : "equipped Elephant Saddle",
 	"subtitles.livingthings.ostrich.egg.cracks" : "Ostrich egg cracking",
 	"subtitles.livingthings.ostrich.egg.laying" : "Ostrich layed egg",
 	"subtitles.livingthings.ostrich.ambient" : "Ostrich noise"

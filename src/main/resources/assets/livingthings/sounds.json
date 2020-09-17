@@ -23,7 +23,6 @@
 		],
 		"subtitle" : "subtitles.livingthings.lion.death"
 	},
-	
 	"penguin.ambient" : {
 		"category" : "neutral",
 		"sounds" : [
@@ -50,7 +49,6 @@
 		],
 		"subtitle" : "subtitles.livingthings.penguin.death"
 	},
-	
 	"elephant.ambient" : {
 		"category" : "neutral",
 		"sounds" : [
@@ -73,23 +71,36 @@
 		],
 		"subtitle" : "subtitles.livingthings.elephant.death"
 	},
-	
+	"elephant.equip.chest" : {
+		"category" : "neutral",
+		"sounds" : [
+			"mob/chicken/plop"
+		],
+		"subtitle" : "subtitles.livingthings.elephant.chest"
+	},
+	"elephant.equip.saddle" : {
+		"category" : "neutral",
+		"sounds" : [
+			"mob/horse/leather"
+		],
+		"subtitle" : "subtitles.livingthings.elephant.saddle"
+	},
 	"ostrich.egg.cracks" : {
 		"category" : "block",
 		"sounds" : [
-		    "mob/turtle/egg/egg_crack1",
-		    "mob/turtle/egg/egg_crack2",
-		    "mob/turtle/egg/egg_crack3",
-		    "mob/turtle/egg/egg_crack4",
-		    "mob/turtle/egg/egg_crack5"
+			"mob/turtle/egg/egg_crack1",
+			"mob/turtle/egg/egg_crack2",
+			"mob/turtle/egg/egg_crack3",
+			"mob/turtle/egg/egg_crack4",
+			"mob/turtle/egg/egg_crack5"
 		],
 		"subtitle" : "subtitles.livingthings.ostrich.egg.cracks"
 	},
 	"ostrich.egg.laying" : {
 		"category" : "block",
 		"sounds" : [
-      		"mob/turtle/egg/drop_egg1",
-      		"mob/turtle/egg/drop_egg2"
+			"mob/turtle/egg/drop_egg1",
+			"mob/turtle/egg/drop_egg2"
 		],
 		"subtitle" : "subtitles.livingthings.ostrich.egg.laying"
 	},

@@ -1,9 +1,14 @@
 package com.tristankechlo.livingthings.util;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.init.ModSounds;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -11,6 +16,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.ContainerType;
@@ -25,6 +31,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
@@ -40,6 +47,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	private static final DataParameter<Boolean> IS_SADDLED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> HAS_CHEST = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_TAMED = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(AbstractTameableChestedEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
 	private static final Ingredient TAMING_ITEMS = Ingredient.fromItems(Items.APPLE);
 	protected Inventory entityInventory;
@@ -57,6 +65,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		this.dataManager.register(IS_SADDLED, false);
 		this.dataManager.register(HAS_CHEST, false);
 		this.dataManager.register(IS_TAMED, false);
+	    this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
 	}
 
 	@Override
@@ -69,6 +78,17 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		
 		this.entityInventory.read(compound.getList("Inventory", 10));
 		this.initInventory();
+
+	    UUID uuid;
+	    if (compound.hasUniqueId("Owner")) {
+	       uuid = compound.getUniqueId("Owner");
+	    } else {
+	       String string = compound.getString("Owner");
+	       uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), string);
+	    }
+	    if (uuid != null) {
+	       this.setOwnerUniqueId(uuid);
+	    }
 	}
 
 	@Override
@@ -79,6 +99,9 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		compound.putBoolean("Tamed", this.isTame());
 		compound.putInt("TameAmount", this.getTameAmount());
 		compound.put("Inventory", this.entityInventory.write());
+	    if (this.getOwnerUniqueId() != null) {
+	    	compound.putUniqueId("Owner", this.getOwnerUniqueId());
+	    }
 	}
 
 	protected void initInventory() {
@@ -166,6 +189,10 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				//if entity shall be set as tamed now
 				if(this.getTameAmount() >= this.getMaxTameAmount()) {
 					this.setTame(true);
+					this.setOwnerUniqueId(player.getUniqueID());
+				    if (player instanceof ServerPlayerEntity) {
+				        CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayerEntity)player, this);
+				    }
 				    this.world.setEntityState(this, (byte)6);
 				} else {
 				    this.world.setEntityState(this, (byte)7);
@@ -179,6 +206,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			if(!this.world.isRemote && !this.isSaddled()) {
 				this.consumeItemFromStack(player, stack);
 				this.setSaddled(true);
+				this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
 			}
 			
@@ -188,6 +216,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			if(!this.world.isRemote && !this.hasChest()) {
 				this.consumeItemFromStack(player, stack);
 				this.setHasChest(true);
+				this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
 			}
 		}
@@ -272,7 +301,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				this.renderYawOffset = this.rotationYaw;
 				this.rotationYawHead = this.renderYawOffset;
 				float sideSpeed = livingentity.moveStrafing * 0.4F;
-				float forwardSpeed = livingentity.moveForward * 0.9F;
+				float forwardSpeed = livingentity.moveForward * 0.7F;
 				
 				//if moving backwards -> move slower
 				if (forwardSpeed <= 0.0F) {
@@ -332,10 +361,19 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	public void setTame(boolean tamed) {
 		this.dataManager.set(IS_TAMED, tamed);
 	}
+
+	@Nullable
+    public UUID getOwnerUniqueId() {
+		return this.dataManager.get(OWNER_UNIQUE_ID).orElse((UUID)null);
+    }
+
+    public void setOwnerUniqueId(@Nullable UUID uniqueId) {
+       this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
+    }
 	
 	/** how much the entity shall be healed */
 	protected float getHealingAmount(Item item) {
-		return 4.0F;
+		return 3.0F;
 	}
 	
 	/**if current taming amount is higher than this, entity is considered as tamed*/
