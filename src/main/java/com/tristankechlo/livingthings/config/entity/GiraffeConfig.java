@@ -33,7 +33,7 @@ public class GiraffeConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 30.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 8.0D);
 
-		builder.comment(LivingThingsConfig.requiresRestart).comment(LivingThingsConfig.disableSpawning).push("Spawns");
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
 		include = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.func_240901_a_().toString(),
 						Biomes.SAVANNA_PLATEAU.func_240901_a_().toString(),

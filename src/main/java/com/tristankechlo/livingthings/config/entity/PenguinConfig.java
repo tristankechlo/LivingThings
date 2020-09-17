@@ -25,7 +25,7 @@ public class PenguinConfig {
 		
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 16.0D);
 
-		builder.comment(LivingThingsConfig.requiresRestart).comment(LivingThingsConfig.disableSpawning).push("Spawns");
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
 		include = builder.worldRestart().defineList("SpawnBoimes",
 					Arrays.asList(Biomes.SNOWY_TUNDRA.func_240901_a_().toString(),
 						Biomes.SNOWY_MOUNTAINS.func_240901_a_().toString(),

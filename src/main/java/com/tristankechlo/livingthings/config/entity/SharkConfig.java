@@ -30,7 +30,7 @@ public class SharkConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 22.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.5D);
 
-		builder.comment(LivingThingsConfig.requiresRestart).comment(LivingThingsConfig.disableSpawning).push("Spawns");
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
 		include = builder.worldRestart().defineList("SpawnBoimes",
 					Arrays.asList(Biomes.OCEAN.func_240901_a_().toString(),
 						Biomes.DEEP_OCEAN.func_240901_a_().toString(),
