@@ -92,7 +92,7 @@ public class RegisterEntitiesToBiomes {
 
 	public static boolean checkBiome(String name, Object test) {
 		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
-			LivingThings.LOGGER.log(Level.INFO, name + " " + String.valueOf(test));
+			//LivingThings.LOGGER.log(Level.INFO, name + " " + String.valueOf(test));
 			return true;
 		}
 		LivingThings.LOGGER.log(Level.INFO,

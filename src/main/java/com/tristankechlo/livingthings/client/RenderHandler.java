@@ -1,12 +1,12 @@
-package com.tristankechlo.livingthings.client.renderer;
+package com.tristankechlo.livingthings.client;
 
-import com.tristankechlo.livingthings.client.renderer.entity.ElephantRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.FlamingoRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.GiraffeRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.LionRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.OstrichRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.PenguinRenderer;
-import com.tristankechlo.livingthings.client.renderer.entity.SharkRenderer;
+import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
+import com.tristankechlo.livingthings.client.renderer.FlamingoRenderer;
+import com.tristankechlo.livingthings.client.renderer.GiraffeRenderer;
+import com.tristankechlo.livingthings.client.renderer.LionRenderer;
+import com.tristankechlo.livingthings.client.renderer.OstrichRenderer;
+import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
+import com.tristankechlo.livingthings.client.renderer.SharkRenderer;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

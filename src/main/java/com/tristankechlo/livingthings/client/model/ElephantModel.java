@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.client.model.entity;
+package com.tristankechlo.livingthings.client.model;
 
 import java.util.Random;
 

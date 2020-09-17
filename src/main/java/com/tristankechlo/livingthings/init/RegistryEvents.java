@@ -2,7 +2,6 @@ package com.tristankechlo.livingthings.init;
 
 import com.google.common.base.Preconditions;
 import com.tristankechlo.livingthings.LivingThings;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -29,4 +28,5 @@ public class RegistryEvents {
             event.getRegistry().register(spawnEgg);
         }
     }
+    
 }

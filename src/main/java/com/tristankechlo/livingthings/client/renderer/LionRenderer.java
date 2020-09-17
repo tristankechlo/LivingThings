@@ -1,7 +1,7 @@
-package com.tristankechlo.livingthings.client.renderer.entity;
+package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.entity.LionModel;
+import com.tristankechlo.livingthings.client.model.LionModel;
 import com.tristankechlo.livingthings.entities.LionEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

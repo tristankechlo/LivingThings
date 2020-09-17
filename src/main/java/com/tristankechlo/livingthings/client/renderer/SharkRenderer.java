@@ -1,7 +1,7 @@
-package com.tristankechlo.livingthings.client.renderer.entity;
+package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.entity.SharkModel;
+import com.tristankechlo.livingthings.client.model.SharkModel;
 import com.tristankechlo.livingthings.entities.SharkEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
