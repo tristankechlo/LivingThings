@@ -9,10 +9,12 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.AbstractTameableChestedEntity;
 
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -78,7 +80,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setCallsForHelp());
+		this.targetSelector.addGoal(0, (new ElephantEntity.NewHurtByTargetGoal(this)).setCallsForHelp());
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
 			
@@ -109,7 +111,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 5;
+		return 6;
 	}
 	
 	@Override
@@ -177,6 +179,28 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));
+	}
+	
+	static class NewHurtByTargetGoal extends HurtByTargetGoal {
+
+		public NewHurtByTargetGoal(CreatureEntity creatureIn) {
+			super(creatureIn);
+		}
+		
+		@Override
+		public boolean shouldExecute() {
+		    LivingEntity livingentity = this.goalOwner.getRevengeTarget();
+			if(livingentity instanceof PlayerEntity) {
+				UUID ownerID = ((AbstractTameableChestedEntity)this.goalOwner).getOwnerUniqueId();
+				if(ownerID != null) {
+					if(ownerID == ((PlayerEntity)livingentity).getUniqueID()) {
+						return false;
+					}
+				}
+			}
+			return super.shouldExecute();
+		}
+		
 	}
 		
 }

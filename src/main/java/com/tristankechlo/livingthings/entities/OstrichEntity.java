@@ -132,7 +132,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 5;
+		return 6;
 	}
 	
 	@Override

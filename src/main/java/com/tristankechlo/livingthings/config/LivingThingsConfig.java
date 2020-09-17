@@ -18,6 +18,7 @@ import net.minecraftforge.fml.config.ModConfig;
 public class LivingThingsConfig {
 	
 	public static final String requiresRestart = "requires Client and Server restart";
+	public static final String disableSpawning = "to disable Spawning leave the array SpawnBoimes empty";
 
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	

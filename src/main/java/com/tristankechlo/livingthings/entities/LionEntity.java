@@ -190,7 +190,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 5;
+		return 6;
 	}
 	
 	@Override

@@ -124,7 +124,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 4;
+		return 6;
 	}
 	
 	@Override

@@ -34,8 +34,6 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FlamingoEntity extends AnimalEntity {
 
@@ -101,15 +99,13 @@ public class FlamingoEntity extends AnimalEntity {
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 5;
+		return 6;
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public boolean isLeftLegUp() {
 		return this.dataManager.get(LEFT_LEG_UP);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public boolean isRightLegUp() {
 		return this.dataManager.get(RIGHT_LEG_UP);
 	}

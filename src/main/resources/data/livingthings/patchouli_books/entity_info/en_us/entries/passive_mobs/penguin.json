@@ -13,7 +13,7 @@
 			"rotate" : false,
 			"scale" : 1.0,
 			"default_rotation" : 45,
-			"text" : "Can be found in $(bold)Snowy-Tundra$() and $(bold)Snowy-Montains$()."
+			"text" : "Can be found in $(bold)Snowy$() biomes."
 		}
 	]
 }

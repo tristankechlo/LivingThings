@@ -40,7 +40,7 @@ public class ModEntityTypes {
     public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
 
 
-	/*
+	/**
 	 * register Attributes like Health/Speed ... 
 	 */
 	public static void registerAttributes(){
@@ -53,7 +53,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(FLAMINGO_ENTIY, FlamingoEntity.getAttributes().create());
 	}
 
-	/*
+	/**
 	 * add checks if entity can spawn on specific blocks inside a biome
 	 */
 	public static void registerEntitySpawnPlacements() {

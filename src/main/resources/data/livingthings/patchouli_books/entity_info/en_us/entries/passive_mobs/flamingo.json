@@ -14,7 +14,7 @@
 			"scale" : 0.8,
 			"default_rotation" : 40,
 			"offset" : 0.2,
-			"text" : "Can be found in $(bold)Swamps$() and at $(bold)Beaches$()."
+			"text" : "Can be found in $(bold)Swamps$() and at $(bold)Rivers$()."
 		}
 	]
 }

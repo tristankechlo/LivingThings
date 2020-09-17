@@ -103,7 +103,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 2;
+		return 4;
 	}
 	
 	@Override
