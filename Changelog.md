@@ -3,7 +3,12 @@
 ### Version 1.16.3 - 1.1.4
  - port to 1.16.3
  - extended config
+    - health and damage now changeable
+    - spawnbiomes for mobs can be modified
+    - individual option for each mob if it can attack
  - elephant ridable
+    - they need to be tamed before
+    - they can have an inventory when rightclicked with a chest before
 
 ### Version 1.16.2 - 1.1.3
  - small bug fixes and improvements
