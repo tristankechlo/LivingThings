@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.init.ModParticle;
 import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -229,9 +230,10 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		switch (id) {
 			case 6: //entity tamed
 				this.spawnParticle(ParticleTypes.HAPPY_VILLAGER);
+				this.spawnParticle(ParticleTypes.FIREWORK);
 				break;
 			case 7: //progress while taming
-				this.spawnParticle(ParticleTypes.ENCHANT);
+				this.spawnParticle(ModParticle.ARROW_UP_GREEN.get());
 				break;
 	
 			default:
