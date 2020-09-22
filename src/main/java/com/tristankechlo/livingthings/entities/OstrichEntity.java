@@ -222,7 +222,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		boolean breedingItem = this.isBreedingItem(player.getHeldItem(hand));
-		if (!breedingItem && !this.isBeingRidden() && !player.isSecondaryUseActive() && player.getHeldItemMainhand().getItem() == Items.AIR) {
+		if (!breedingItem && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive() && player.getHeldItemMainhand().getItem() == Items.AIR) {
 			if (!this.world.isRemote && LivingThingsConfig.OSTRICH.canBeRidden.get()) {
 				player.startRiding(this);
 			}
