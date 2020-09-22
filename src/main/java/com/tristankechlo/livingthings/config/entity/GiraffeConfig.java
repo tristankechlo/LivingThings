@@ -19,7 +19,7 @@ public class GiraffeConfig {
 	public final BooleanValue canAttack;	
 	public final IntValue albinoChance;
 
-	public final ConfigValue<List<? extends String>> include;
+	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
 	public final ConfigValue<Integer> minSpawns;
 	public final ConfigValue<Integer> maxSpawns;
@@ -33,8 +33,8 @@ public class GiraffeConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 30.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 8.0D);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
-		include = builder.worldRestart().defineList("SpawnBoimes",
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.func_240901_a_().toString(),
 						Biomes.SAVANNA_PLATEAU.func_240901_a_().toString(),
 						Biomes.SHATTERED_SAVANNA.func_240901_a_().toString(),

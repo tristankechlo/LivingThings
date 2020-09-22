@@ -14,7 +14,7 @@ public class PenguinConfig {
 
 	public final ConfigValue<Double> health;
 
-	public final ConfigValue<List<? extends String>> include;
+	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
 	public final ConfigValue<Integer> minSpawns;
 	public final ConfigValue<Integer> maxSpawns;
@@ -25,8 +25,8 @@ public class PenguinConfig {
 		
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 16.0D);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
-		include = builder.worldRestart().defineList("SpawnBoimes",
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 					Arrays.asList(Biomes.SNOWY_TUNDRA.func_240901_a_().toString(),
 						Biomes.SNOWY_MOUNTAINS.func_240901_a_().toString(),
 						Biomes.SNOWY_BEACH.func_240901_a_().toString(),

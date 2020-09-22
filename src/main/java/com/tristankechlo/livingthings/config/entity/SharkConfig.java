@@ -17,7 +17,7 @@ public class SharkConfig {
 	public final ConfigValue<Double> damage;	
 	public final BooleanValue canAttack;
 
-	public final ConfigValue<List<? extends String>> include;
+	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
 	public final ConfigValue<Integer> minSpawns;
 	public final ConfigValue<Integer> maxSpawns;
@@ -30,8 +30,8 @@ public class SharkConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 22.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.5D);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
-		include = builder.worldRestart().defineList("SpawnBoimes",
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
+		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 					Arrays.asList(Biomes.OCEAN.func_240901_a_().toString(),
 						Biomes.DEEP_OCEAN.func_240901_a_().toString(),
 						Biomes.FROZEN_OCEAN.func_240901_a_().toString(),
@@ -43,9 +43,9 @@ public class SharkConfig {
 						Biomes.LUKEWARM_OCEAN.func_240901_a_().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.func_240901_a_().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Shark", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 9);
-		minSpawns = builder.worldRestart().define("MinSpawns", 1);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 2);
+		weight = builder.worldRestart().define("SpawnWeight", 12);
+		minSpawns = builder.worldRestart().define("MinSpawns", 2);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 3);
 		builder.pop();
 		
 		builder.pop();

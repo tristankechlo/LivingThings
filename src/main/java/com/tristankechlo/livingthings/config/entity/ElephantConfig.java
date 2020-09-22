@@ -17,7 +17,7 @@ public class ElephantConfig {
 	public final ConfigValue<Double> damage;
 	public final BooleanValue canAttack;
 
-	public final ConfigValue<List<? extends String>> include;
+	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
 	public final ConfigValue<Integer> minSpawns;
 	public final ConfigValue<Integer> maxSpawns;
@@ -30,8 +30,8 @@ public class ElephantConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 80.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 10.0D);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning).push("Spawns");
-		include = builder.worldRestart().defineList("SpawnBoimes",
+		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.func_240901_a_().toString(),
 						Biomes.SAVANNA_PLATEAU.func_240901_a_().toString(),
 						Biomes.SHATTERED_SAVANNA.func_240901_a_().toString(),
