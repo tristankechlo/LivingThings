@@ -24,13 +24,13 @@ public class RegisterEntitiesToBiomes {
 
 		String currentBiome = event.getName().toString();
 
-		List<? extends String> ElephantSpawnBiomes = LivingThingsConfig.ELEPHANT.include.get();
-		List<? extends String> GiraffeSpawnBiomes = LivingThingsConfig.GIRAFFE.include.get();
-		List<? extends String> LionSpawnBiomes = LivingThingsConfig.LION.include.get();
-		List<? extends String> SharkSpawnBiomes = LivingThingsConfig.SHARK.include.get();
-		List<? extends String> PenguinSpawnBiomes = LivingThingsConfig.PENGUIN.include.get();
-		List<? extends String> OstrichSpawnBiomes = LivingThingsConfig.OSTRICH.include.get();
-		List<? extends String> FlamingoSpawnBiomes = LivingThingsConfig.FLAMINGO.include.get();
+		List<? extends String> ElephantSpawnBiomes = LivingThingsConfig.ELEPHANT.spawnBiomes.get();
+		List<? extends String> GiraffeSpawnBiomes = LivingThingsConfig.GIRAFFE.spawnBiomes.get();
+		List<? extends String> LionSpawnBiomes = LivingThingsConfig.LION.spawnBiomes.get();
+		List<? extends String> SharkSpawnBiomes = LivingThingsConfig.SHARK.spawnBiomes.get();
+		List<? extends String> PenguinSpawnBiomes = LivingThingsConfig.PENGUIN.spawnBiomes.get();
+		List<? extends String> OstrichSpawnBiomes = LivingThingsConfig.OSTRICH.spawnBiomes.get();
+		List<? extends String> FlamingoSpawnBiomes = LivingThingsConfig.FLAMINGO.spawnBiomes.get();
 
 		if (ElephantSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)

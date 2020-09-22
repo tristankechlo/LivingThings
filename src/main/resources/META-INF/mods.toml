@@ -1,15 +1,14 @@
 modLoader="javafml" #mandatory
-loaderVersion="[33,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[34,)"
 license="All rights reserved"
 showAsResourcePack=false
 
 #issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 	modId="livingthings" #mandatory
-	version="1.16.3-1.1.4" #mandatory
+	version="1.16.3-1.1.5" #mandatory
 	displayName="Living Things" #mandatory
-	#updateJSONURL="http://myurl.me/" #optional
-	#displayURL="http://example.com/" #optional
+	displayURL="https://www.curseforge.com/minecraft/mc-mods/living-things" #optional
 	#logoFile="livingthings.png" #optional
 	#credits="Thanks for this example mod goes to Java" #optional
 	authors="Buecher_wurm" #optional
@@ -20,7 +19,7 @@ showAsResourcePack=false
 [[dependencies.livingthings]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[33,)" #mandatory
+    versionRange="[34,)" #mandatory
     ordering="NONE"
     side="BOTH"
 	

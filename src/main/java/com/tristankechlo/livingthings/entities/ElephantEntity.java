@@ -80,7 +80,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(0, (new ElephantEntity.NewHurtByTargetGoal(this)).setCallsForHelp());
+		this.targetSelector.addGoal(0, new ElephantEntity.NewHurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
 			

@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.16.3 - 1.1.5
+ - fix shark only spawning in two biomes
+ - ostrich babys are no longer rideable
+ - fix recipe for patchouli book (producing errors on startup if mod not installed)
+ - added some config comments
+
 ### Version 1.16.3 - 1.1.4
  - port to 1.16.3
  - extended config
