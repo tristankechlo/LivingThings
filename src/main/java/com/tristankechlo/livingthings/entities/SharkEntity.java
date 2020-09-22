@@ -1,7 +1,5 @@
 package com.tristankechlo.livingthings.entities;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -32,15 +30,12 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RangedInteger;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
 
 public class SharkEntity extends WaterMobEntity implements IAngerable {
 
@@ -137,9 +132,8 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	@SuppressWarnings("deprecation")
 	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-	      if (pos.getY() > 45 && pos.getY() < world.getSeaLevel()) {
-	          Optional<RegistryKey<Biome>> optional = world.func_242406_i(pos);
-	          return (!Objects.equals(optional, Optional.of(Biomes.OCEAN)) || !Objects.equals(optional, Optional.of(Biomes.DEEP_OCEAN))) && world.getFluidState(pos).isTagged(FluidTags.WATER);
+	      if (pos.getY() > 35 && pos.getY() < world.getSeaLevel()) {
+	          return world.getFluidState(pos).isTagged(FluidTags.WATER);
 	       } else {
 	          return false;
 	       }
