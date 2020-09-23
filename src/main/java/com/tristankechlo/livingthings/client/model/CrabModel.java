@@ -1,0 +1,229 @@
+package com.tristankechlo.livingthings.client.model;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.entities.CrabEntity;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class CrabModel<T extends CrabEntity> extends EntityModel<T> {
+
+	private final ModelRenderer Body;
+	private final ModelRenderer Shear1;
+	private final ModelRenderer Shear1Arm;
+	private final ModelRenderer Shear1UpperBottom;
+	private final ModelRenderer Shear1Upper;
+	private final ModelRenderer Shear1Bottom;
+	private final ModelRenderer Shear2;
+	private final ModelRenderer Shear2Arm;
+	private final ModelRenderer Shear2UpperBottom;
+	private final ModelRenderer Shear2Upper;
+	private final ModelRenderer Shear2Bottom;
+	private final ModelRenderer Leg1;
+	private final ModelRenderer Leg11;
+	private final ModelRenderer Leg2;
+	private final ModelRenderer Leg22;
+	private final ModelRenderer Leg3;
+	private final ModelRenderer Leg33;
+	private final ModelRenderer Leg4;
+	private final ModelRenderer Leg44;
+	private final ModelRenderer Leg5;
+	private final ModelRenderer Leg55;
+	private final ModelRenderer Leg6;
+	private final ModelRenderer Leg66;
+	private final ModelRenderer Leg7;
+	private final ModelRenderer Leg77;
+	private final ModelRenderer Leg8;
+	private final ModelRenderer Leg88;
+
+	public CrabModel() {
+		textureWidth = 32;
+		textureHeight = 32;
+
+		Body = new ModelRenderer(this);
+		Body.setRotationPoint(0.0F, 20.4F, 0.0F);
+		Body.setTextureOffset(0, 24).addBox(-3.0F, -1.0F, -3.0F, 6.0F, 2.0F, 6.0F, 0.0F, false);
+		Body.setTextureOffset(25, 25).addBox(-1.7F, -2.5F, -3.0F, 1.0F, 2.0F, 1.0F, 0.0F, true);
+		Body.setTextureOffset(25, 29).addBox(0.9F, -2.5F, -3.0F, 1.0F, 2.0F, 1.0F, 0.0F, true);
+
+		Shear1 = new ModelRenderer(this);
+		Shear1.setRotationPoint(2.5F, -0.3F, -2.5F);
+		Body.addChild(Shear1);
+		setRotationAngle(Shear1, -0.0873F, -0.7854F, 0.0F);
+		Shear1.setTextureOffset(0, 0).addBox(-0.5F, -0.5F, -2.05F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+
+		Shear1Arm = new ModelRenderer(this);
+		Shear1Arm.setRotationPoint(0.0F, 0.0F, -1.9091F);
+		Shear1.addChild(Shear1Arm);
+		setRotationAngle(Shear1Arm, 0.0F, 0.5236F, 0.0F);
+		Shear1Arm.setTextureOffset(0, 4).addBox(-0.4805F, -0.5046F, -0.9277F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Shear1UpperBottom = new ModelRenderer(this);
+		Shear1UpperBottom.setRotationPoint(0.102F, -0.0247F, -0.7323F);
+		Shear1Arm.addChild(Shear1UpperBottom);
+		setRotationAngle(Shear1UpperBottom, 0.0F, 0.2618F, 0.0F);
+		
+
+		Shear1Upper = new ModelRenderer(this);
+		Shear1Upper.setRotationPoint(0.0031F, 0.0494F, -0.0074F);
+		Shear1UpperBottom.addChild(Shear1Upper);
+		setRotationAngle(Shear1Upper, -0.0873F, 0.0F, 0.0F);
+		Shear1Upper.setTextureOffset(0, 7).addBox(-0.552F, -0.9267F, -2.0836F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+		Shear1Upper.setTextureOffset(0, 11).addBox(-0.552F, -1.2255F, -2.0836F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+
+		Shear1Bottom = new ModelRenderer(this);
+		Shear1Bottom.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Shear1UpperBottom.addChild(Shear1Bottom);
+		setRotationAngle(Shear1Bottom, 0.1309F, 0.0F, 0.0F);
+		Shear1Bottom.setTextureOffset(0, 15).addBox(-0.552F, -0.1753F, -1.8686F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+		Shear1Bottom.setTextureOffset(0, 18).addBox(-0.552F, -0.1753F, -1.07F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Shear2 = new ModelRenderer(this);
+		Shear2.setRotationPoint(-2.5F, -0.3F, -2.5F);
+		Body.addChild(Shear2);
+		setRotationAngle(Shear2, -0.0873F, 0.7854F, 0.0F);
+		Shear2.setTextureOffset(7, 0).addBox(-0.5F, -0.5F, -2.05F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+
+		Shear2Arm = new ModelRenderer(this);
+		Shear2Arm.setRotationPoint(0.3535F, 0.4994F, -1.6338F);
+		Shear2.addChild(Shear2Arm);
+		setRotationAngle(Shear2Arm, 0.0F, -0.5236F, 0.0F);
+		Shear2Arm.setTextureOffset(7, 4).addBox(-0.975F, -1.0F, -0.95F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Shear2UpperBottom = new ModelRenderer(this);
+		Shear2UpperBottom.setRotationPoint(-0.4926F, -0.4745F, -0.6809F);
+		Shear2Arm.addChild(Shear2UpperBottom);
+		setRotationAngle(Shear2UpperBottom, 0.0F, -0.2618F, 0.0F);
+		
+
+		Shear2Upper = new ModelRenderer(this);
+		Shear2Upper.setRotationPoint(0.0031F, 0.0537F, -0.0074F);
+		Shear2UpperBottom.addChild(Shear2Upper);
+		setRotationAngle(Shear2Upper, -0.0873F, 0.0F, 0.0F);
+		Shear2Upper.setTextureOffset(7, 7).addBox(-0.552F, -1.0017F, -2.2336F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+		Shear2Upper.setTextureOffset(7, 11).addBox(-0.552F, -1.3005F, -2.2336F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+
+		Shear2Bottom = new ModelRenderer(this);
+		Shear2Bottom.setRotationPoint(0.0F, 0.0044F, 0.0F);
+		Shear2UpperBottom.addChild(Shear2Bottom);
+		setRotationAngle(Shear2Bottom, 0.1309F, 0.0F, 0.0F);
+		Shear2Bottom.setTextureOffset(7, 15).addBox(-0.552F, -0.2503F, -2.0186F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+		Shear2Bottom.setTextureOffset(7, 18).addBox(-0.552F, -0.2503F, -1.22F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg1 = new ModelRenderer(this);
+		Leg1.setRotationPoint(0.1F, 0.05F, 0.0F);
+		Body.addChild(Leg1);
+		setRotationAngle(Leg1, 0.0F, 0.1745F, 0.48F);
+		Leg1.setTextureOffset(14, 0).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg11 = new ModelRenderer(this);
+		Leg11.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg1.addChild(Leg11);
+		setRotationAngle(Leg11, 0.0F, 0.0F, 0.6109F);
+		Leg11.setTextureOffset(23, 0).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg2 = new ModelRenderer(this);
+		Leg2.setRotationPoint(0.0F, -0.025F, 1.0F);
+		Body.addChild(Leg2);
+		setRotationAngle(Leg2, 0.0F, 0.0436F, 0.48F);
+		Leg2.setTextureOffset(14, 3).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg22 = new ModelRenderer(this);
+		Leg22.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg2.addChild(Leg22);
+		setRotationAngle(Leg22, 0.0F, 0.0F, 0.6109F);
+		Leg22.setTextureOffset(23, 3).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg3 = new ModelRenderer(this);
+		Leg3.setRotationPoint(-0.2F, -0.125F, 2.125F);
+		Body.addChild(Leg3);
+		setRotationAngle(Leg3, 0.0F, -0.0436F, 0.48F);
+		Leg3.setTextureOffset(14, 6).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg33 = new ModelRenderer(this);
+		Leg33.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg3.addChild(Leg33);
+		setRotationAngle(Leg33, 0.0F, 0.0F, 0.6109F);
+		Leg33.setTextureOffset(23, 6).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg4 = new ModelRenderer(this);
+		Leg4.setRotationPoint(-0.4F, -0.225F, 3.05F);
+		Body.addChild(Leg4);
+		setRotationAngle(Leg4, 0.0F, -0.1745F, 0.48F);
+		Leg4.setTextureOffset(14, 9).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg44 = new ModelRenderer(this);
+		Leg44.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg4.addChild(Leg44);
+		setRotationAngle(Leg44, 0.0F, 0.0F, 0.6109F);
+		Leg44.setTextureOffset(23, 9).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg5 = new ModelRenderer(this);
+		Leg5.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Body.addChild(Leg5);
+		setRotationAngle(Leg5, 3.1416F, -0.1745F, 2.6616F);
+		Leg5.setTextureOffset(14, 12).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg55 = new ModelRenderer(this);
+		Leg55.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg5.addChild(Leg55);
+		setRotationAngle(Leg55, 0.0F, 0.0F, 0.6109F);
+		Leg55.setTextureOffset(23, 12).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg6 = new ModelRenderer(this);
+		Leg6.setRotationPoint(0.0F, -0.025F, -1.0F);
+		Body.addChild(Leg6);
+		setRotationAngle(Leg6, 3.1416F, -0.0436F, 2.6616F);
+		Leg6.setTextureOffset(14, 15).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg66 = new ModelRenderer(this);
+		Leg66.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg6.addChild(Leg66);
+		setRotationAngle(Leg66, 0.0F, 0.0F, 0.6109F);
+		Leg66.setTextureOffset(23, 15).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg7 = new ModelRenderer(this);
+		Leg7.setRotationPoint(0.1F, -0.025F, -2.05F);
+		Body.addChild(Leg7);
+		setRotationAngle(Leg7, 3.1416F, 0.0436F, 2.6616F);
+		Leg7.setTextureOffset(14, 18).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg77 = new ModelRenderer(this);
+		Leg77.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg7.addChild(Leg77);
+		setRotationAngle(Leg77, 0.0F, 0.0F, 0.6109F);
+		Leg77.setTextureOffset(23, 18).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg8 = new ModelRenderer(this);
+		Leg8.setRotationPoint(0.3F, -0.175F, -2.875F);
+		Body.addChild(Leg8);
+		setRotationAngle(Leg8, 3.1416F, 0.1745F, 2.6616F);
+		Leg8.setTextureOffset(14, 21).addBox(2.2F, -1.0F, -2.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+
+		Leg88 = new ModelRenderer(this);
+		Leg88.setRotationPoint(5.5F, -0.5F, -1.5F);
+		Leg8.addChild(Leg88);
+		setRotationAngle(Leg88, 0.0F, 0.0F, 0.6109F);
+		Leg88.setTextureOffset(23, 21).addBox(-0.5492F, -0.2219F, -0.4963F, 2.0F, 1.0F, 1.0F, 0.0F, false);
+	}
+
+
+	@Override
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		
+	}
+
+	@Override
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		Body.render(matrixStack, buffer, packedLight, packedOverlay);
+	}
+
+	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+		modelRenderer.rotateAngleX = x;
+		modelRenderer.rotateAngleY = y;
+		modelRenderer.rotateAngleZ = z;
+	}
+}

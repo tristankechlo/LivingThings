@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.init;
 
+import com.tristankechlo.livingthings.entities.CrabEntity;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
@@ -39,6 +40,7 @@ public class ModEntityTypes {
     public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, 0x000000, 0xFFFFFF);
     public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, 0x130d08, 0xa56f5b);
     public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
+    public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, 0xeb4034, 0x73706f);
 
 
 	/**
@@ -52,6 +54,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(PENGUIN_ENTITY, PenguinEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(OSTRICH_ENTIY, OstrichEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(FLAMINGO_ENTIY, FlamingoEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(CRAB_ENTITY, CrabEntity.getAttributes().create());
 	}
 
 	/**
@@ -65,6 +68,7 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(PENGUIN_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(OSTRICH_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(FLAMINGO_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(CRAB_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
 	}
 
     /**
