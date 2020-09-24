@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client;
 
+import com.tristankechlo.livingthings.client.renderer.CrabRenderer;
 import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
 import com.tristankechlo.livingthings.client.renderer.FlamingoRenderer;
 import com.tristankechlo.livingthings.client.renderer.GiraffeRenderer;
@@ -21,5 +22,6 @@ public class RenderHandler {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PENGUIN_ENTITY, PenguinRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.OSTRICH_ENTIY, OstrichRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FLAMINGO_ENTIY, FlamingoRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CRAB_ENTITY, CrabRenderer::new);
 	}
 }

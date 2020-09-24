@@ -28,9 +28,9 @@ public class FlamingoConfig {
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 						Arrays.asList(
-							Biomes.SWAMP.func_240901_a_().toString(),
-							Biomes.SWAMP_HILLS.func_240901_a_().toString(),
-							Biomes.RIVER.func_240901_a_().toString()),
+							Biomes.SWAMP.getLocation().toString(),
+							Biomes.SWAMP_HILLS.getLocation().toString(),
+							Biomes.RIVER.getLocation().toString()),
 						biome -> RegisterEntitiesToBiomes.checkBiome("Flamingo", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 24);
 		minSpawns = builder.worldRestart().define("MinSpawns", 3);

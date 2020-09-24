@@ -247,6 +247,6 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 
 	@Override
 	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));		
+		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));		
 	}
 }

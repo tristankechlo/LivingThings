@@ -32,16 +32,16 @@ public class SharkConfig {
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-					Arrays.asList(Biomes.OCEAN.func_240901_a_().toString(),
-						Biomes.DEEP_OCEAN.func_240901_a_().toString(),
-						Biomes.FROZEN_OCEAN.func_240901_a_().toString(),
-						Biomes.DEEP_FROZEN_OCEAN.func_240901_a_().toString(),
-						Biomes.COLD_OCEAN.func_240901_a_().toString(),
-						Biomes.DEEP_COLD_OCEAN.func_240901_a_().toString(),
-						Biomes.WARM_OCEAN.func_240901_a_().toString(),
-						Biomes.DEEP_WARM_OCEAN.func_240901_a_().toString(),
-						Biomes.LUKEWARM_OCEAN.func_240901_a_().toString(),
-						Biomes.DEEP_LUKEWARM_OCEAN.func_240901_a_().toString()),
+					Arrays.asList(Biomes.OCEAN.getLocation().toString(),
+						Biomes.DEEP_OCEAN.getLocation().toString(),
+						Biomes.FROZEN_OCEAN.getLocation().toString(),
+						Biomes.DEEP_FROZEN_OCEAN.getLocation().toString(),
+						Biomes.COLD_OCEAN.getLocation().toString(),
+						Biomes.DEEP_COLD_OCEAN.getLocation().toString(),
+						Biomes.WARM_OCEAN.getLocation().toString(),
+						Biomes.DEEP_WARM_OCEAN.getLocation().toString(),
+						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
+						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Shark", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 12);
 		minSpawns = builder.worldRestart().define("MinSpawns", 2);

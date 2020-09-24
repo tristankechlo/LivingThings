@@ -111,14 +111,14 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 	    compound.putBoolean("HasEgg", this.hasEgg());
-	    this.boostHelper.func_233618_a_(compound);
+	    this.boostHelper.setSaddledToNBT(compound);
 	}
 	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 	    this.setHasEgg(compound.getBoolean("HasEgg"));
-	    this.boostHelper.func_233621_b_(compound);
+	    this.boostHelper.setSaddledFromNBT(compound);
 	}
 	
 	@Override
@@ -159,7 +159,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		if (BOOST_TIME.equals(key) && this.world.isRemote) {
-			this.boostHelper.func_233616_a_();
+			this.boostHelper.updateData();
 		}
 	    super.notifyDataManagerChange(key);
 	}

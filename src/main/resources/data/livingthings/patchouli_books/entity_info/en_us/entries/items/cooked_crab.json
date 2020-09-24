@@ -1,0 +1,16 @@
+{
+	"name" : "Cooked Crab",
+	"icon" : "livingthings:cooked_crab",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)Can be obtained by smelting Raw Crab."
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_crab",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten"
+		}
+	]
+}

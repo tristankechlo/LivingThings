@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.config;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
 import com.tristankechlo.livingthings.config.entity.GiraffeConfig;
@@ -32,6 +33,7 @@ public class LivingThingsConfig {
 	public static final PenguinConfig PENGUIN = new PenguinConfig(BUILDER);
 	public static final FlamingoConfig FLAMINGO = new FlamingoConfig(BUILDER);
 	public static final OstrichConfig OSTRICH = new OstrichConfig(BUILDER);
+	public static final CrabConfig CRAB = new CrabConfig(BUILDER);
 	
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

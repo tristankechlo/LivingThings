@@ -27,12 +27,12 @@ public class PenguinConfig {
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-					Arrays.asList(Biomes.SNOWY_TUNDRA.func_240901_a_().toString(),
-						Biomes.SNOWY_MOUNTAINS.func_240901_a_().toString(),
-						Biomes.SNOWY_BEACH.func_240901_a_().toString(),
-						Biomes.SNOWY_TAIGA.func_240901_a_().toString(),
-						Biomes.SNOWY_TAIGA_HILLS.func_240901_a_().toString(),
-						Biomes.SNOWY_TAIGA_MOUNTAINS.func_240901_a_().toString()),
+					Arrays.asList(Biomes.SNOWY_TUNDRA.getLocation().toString(),
+						Biomes.SNOWY_MOUNTAINS.getLocation().toString(),
+						Biomes.SNOWY_BEACH.getLocation().toString(),
+						Biomes.SNOWY_TAIGA.getLocation().toString(),
+						Biomes.SNOWY_TAIGA_HILLS.getLocation().toString(),
+						Biomes.SNOWY_TAIGA_MOUNTAINS.getLocation().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Penguin", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 12);
 		minSpawns = builder.worldRestart().define("MinSpawns", 3);

@@ -11,6 +11,9 @@
 	//items
 	"item.livingthings.shark_tooth" : "Haifischzahn",
 	"item.livingthings.ostrich_egg" : "Straußen Ei",
+	"item.livingthings.raw_crab" : "Rohes Krabben Fleisch",
+	"item.livingthings.cooked_crab" : "Krabben Fleisch",
+	"item.livingthings.crab_shell" : "Krabben Panzer",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",
@@ -20,6 +23,7 @@
 	"item.livingthings.penguin_spawn_egg" : "Erschaffe Pinguin",
 	"item.livingthings.ostrich_spawn_egg" : "Erschaffe Strauß",
 	"item.livingthings.flamingo_spawn_egg" : "Erschaffe Flamingo",
+	"item.livingthings.crab_spawn_egg" : "Erschaffe Krabbe",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elefant",
@@ -29,6 +33,7 @@
 	"entity.livingthings.penguin" : "Pinguin",
 	"entity.livingthings.ostrich" : "Strauß",
 	"entity.livingthings.flamingo" : "Flamingo",
+	"entity.livingthings.crab" : "Krabbe",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Löwe brüllt",

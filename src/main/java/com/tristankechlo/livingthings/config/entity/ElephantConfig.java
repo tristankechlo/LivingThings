@@ -32,10 +32,10 @@ public class ElephantConfig {
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.SAVANNA.func_240901_a_().toString(),
-						Biomes.SAVANNA_PLATEAU.func_240901_a_().toString(),
-						Biomes.SHATTERED_SAVANNA.func_240901_a_().toString(),
-						Biomes.SHATTERED_SAVANNA_PLATEAU.func_240901_a_().toString()),
+				Arrays.asList(Biomes.SAVANNA.getLocation().toString(),
+						Biomes.SAVANNA_PLATEAU.getLocation().toString(),
+						Biomes.SHATTERED_SAVANNA.getLocation().toString(),
+						Biomes.SHATTERED_SAVANNA_PLATEAU.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Elephant", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 15);
 		minSpawns = builder.worldRestart().define("MinSpawns", 3);

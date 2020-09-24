@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.util;
 import java.util.Random;
 
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.util.WeightedRandom;
 
 public interface IMobVariants {
 
@@ -35,6 +36,17 @@ public interface IMobVariants {
 		} else {
 			return (byte) 0;
 		}
+	}
+	
+	static class MobVariant extends WeightedRandom.Item {
+		
+		public final byte variant;
+
+		public MobVariant(int weight, byte variant) {
+			super(weight);
+			this.variant = variant;
+		}
+		
 	}
 
 }

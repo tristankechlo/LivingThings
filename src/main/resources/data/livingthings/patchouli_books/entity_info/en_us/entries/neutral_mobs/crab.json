@@ -1,0 +1,20 @@
+{
+	"name" : "Crab",
+	"icon" : "livingthings:crab_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br2)$(bold)Health: $()2.5 Hearts$(br)$(bold)Attack-Damage: $()1 Heart"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:crab",
+			"rotate" : false,
+			"scale" : 1.1,
+			"default_rotation" : 25,
+			"offset" : -0.3,
+			"text" : "Can be found in $(bold)River$() and $(bold)Beach$() biomes."
+		}
+	]
+}
