@@ -1,7 +1,5 @@
 
 ## Todo / Ideas:
-
- - lion / giraffe change variants to weighted items instead %
  
  - Elephant saddle item
     

@@ -34,7 +34,7 @@ public class CrabConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 5.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 2.0D);
 		
-		builder.comment("are considered as weighted items").push("Variants");
+		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);
 		color2Weight = builder.define("Color2Weight", 50);
 		colorAlbinoWeight = builder.define("AlbinoWeight", 1);
@@ -45,7 +45,7 @@ public class CrabConfig {
 				Arrays.asList(Biomes.RIVER.getLocation().toString(),
 						Biomes.BEACH.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 15);
+		weight = builder.worldRestart().define("SpawnWeight", 20);
 		minSpawns = builder.worldRestart().define("MinSpawns", 3);
 		maxSpawns = builder.worldRestart().define("MaxSpawns", 6);
 		builder.pop();

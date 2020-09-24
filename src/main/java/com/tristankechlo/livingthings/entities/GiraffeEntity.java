@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 import java.util.UUID;
 
+import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -36,6 +37,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -62,15 +64,22 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		int albinoChance = LivingThingsConfig.GIRAFFE.albinoChance.get();
-		if(Math.random() < ((double)albinoChance / 100.0D)) {
-			this.setVariant((byte) 15);
-		} else if(new Random().nextBoolean()) {
-			this.setVariant((byte) 1);
-		} else {
-			this.setVariant((byte) 0);			
-		}		
+		this.setVariant(GiraffeEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
+	public static byte getWeightedRandomColorVariant(Random random) {
+		int color1Weight = LivingThingsConfig.GIRAFFE.color1Weight.get();
+		int color2Weight = LivingThingsConfig.GIRAFFE.color2Weight.get();
+		int albinoWeight = LivingThingsConfig.GIRAFFE.colorAlbinoWeight.get();
+		if(color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
+			return 0;
+		}
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
+				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
+				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
+				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
+		return variant.variant;
 	}
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {

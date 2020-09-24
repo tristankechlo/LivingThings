@@ -22,6 +22,7 @@ public class LivingThingsConfig {
 	public static final String disableSpawning = "to disable Spawning leave the array SpawnBoimes empty";
 	public static final String spawningVanilla = "can spawn on grass-blocks where lightlevel is higher than 8";
 	public static final String spawningWater = "can spawn in water where y-axis is between 35 and sea-level";
+	public static final String weightedRandom = "the values are considered as weighted-random items";
 
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	

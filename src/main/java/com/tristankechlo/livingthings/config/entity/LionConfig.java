@@ -10,14 +10,18 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class LionConfig {
-
-	public final ConfigValue<Double> health;
-	public final ConfigValue<Double> damage;	
+	
 	public final BooleanValue canAttack;
-	public final IntValue albinoChance;
+	public final ConfigValue<Double> health;
+	public final ConfigValue<Double> damage;
+
+	public final ConfigValue<Integer> genderMaleWeight;
+	public final ConfigValue<Integer> genderFemaleWeight;
+
+	public final ConfigValue<Integer> color1Weight;
+	public final ConfigValue<Integer> colorAlbinoWeight;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
@@ -28,10 +32,19 @@ public class LionConfig {
 
 		builder.comment("Mob-Config for Lion").push("Lion");
 		
-		canAttack = builder.define("CanAttack", true);	
-		albinoChance = builder.defineInRange("AlbinoChance", 1, 0, 100);
+		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 20.0D);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.0D);
+
+		builder.comment(LivingThingsConfig.weightedRandom).push("GenderWeights");
+		genderMaleWeight = builder.define("GenderMaleWeight", 50);
+		genderFemaleWeight = builder.define("GenderFemaleWeight", 50);
+		builder.pop();
+
+		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
+		color1Weight = builder.define("Color1Weight", 99);
+		colorAlbinoWeight = builder.define("AlbinoWeight", 1);
+		builder.pop();
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",

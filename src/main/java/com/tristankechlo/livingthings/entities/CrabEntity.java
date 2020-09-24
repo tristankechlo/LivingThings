@@ -84,7 +84,22 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 				new MobVariant(LivingThingsConfig.CRAB.color2Weight.get(), (byte) 1),
 				new MobVariant(LivingThingsConfig.CRAB.colorAlbinoWeight.get(), (byte) 15)));
 		this.setVariant(variant.variant);
+		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
+	public static byte getWeightedRandomColorVariant(Random random) {
+		int color1Weight = LivingThingsConfig.CRAB.color1Weight.get();
+		int color2Weight = LivingThingsConfig.CRAB.color2Weight.get();
+		int albinoWeight = LivingThingsConfig.CRAB.colorAlbinoWeight.get();
+		if(color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
+			return 0;
+		}
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
+				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
+				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
+				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
+		return variant.variant;
 	}
 	
 	@Override

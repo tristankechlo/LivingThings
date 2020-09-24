@@ -38,11 +38,11 @@ public interface IMobVariants {
 		}
 	}
 	
-	static class MobVariant extends WeightedRandom.Item {
+	static class WeightedMobVariant extends WeightedRandom.Item {
 		
 		public final byte variant;
 
-		public MobVariant(int weight, byte variant) {
+		public WeightedMobVariant(int weight, byte variant) {
 			super(weight);
 			this.variant = variant;
 		}
