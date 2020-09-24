@@ -11,6 +11,9 @@
 	//items
 	"item.livingthings.shark_tooth" : "Haifischzahn",
 	"item.livingthings.ostrich_egg" : "Strauﬂen Ei",
+	"item.livingthings.raw_crab" : "Rohes Krabben Fleisch",
+	"item.livingthings.cooked_crab" : "Krabben Fleisch",
+	"item.livingthings.crab_shell" : "Krabben Panzer",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",

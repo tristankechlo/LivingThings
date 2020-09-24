@@ -11,6 +11,9 @@
 	//items
 	"item.livingthings.shark_tooth" : "Shark Tooth",
 	"item.livingthings.ostrich_egg" : "Ostrich Egg",
+	"item.livingthings.raw_crab" : "Raw Crab",
+	"item.livingthings.cooked_crab" : "Cooked Crab",
+	"item.livingthings.crab_shell" : "Crab Shell",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Elephant Spawn Egg",

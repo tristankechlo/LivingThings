@@ -1,8 +1,6 @@
 package com.tristankechlo.livingthings.items;
 
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
-import com.tristankechlo.livingthings.init.ModItemGroups;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -16,8 +14,8 @@ import net.minecraft.world.World;
 
 public class OstrichEggItem extends Item {
 
-	public OstrichEggItem() {
-		super(new Item.Properties().group(ModItemGroups.General).maxStackSize(16));
+	public OstrichEggItem(Properties properties) {
+		super(properties);
 	}
 	
 	@Override

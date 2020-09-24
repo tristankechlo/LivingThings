@@ -46,8 +46,8 @@ public class CrabConfig {
 						Biomes.BEACH.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 15);
-		minSpawns = builder.worldRestart().define("MinSpawns", 2);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 4);
+		minSpawns = builder.worldRestart().define("MinSpawns", 3);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 6);
 		builder.pop();
 		
 		builder.pop();

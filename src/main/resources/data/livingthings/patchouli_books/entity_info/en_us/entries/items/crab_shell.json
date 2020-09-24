@@ -1,0 +1,16 @@
+{
+	"name" : "Crab Shell",
+	"icon" : "livingthings:crab_shell",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)Can be dropped by Crabs."
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:crab_shell",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)no known usages"
+		}
+	]
+}

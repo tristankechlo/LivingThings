@@ -4,10 +4,9 @@
  - lion / giraffe change variants to weighted items instead %
  
  - crab entity
-     - patchouli entry
      - loot table
-     - walking animation
-     - ai
+     - improve crab skins
+     - item textures
 
  - Elephant saddle item
     

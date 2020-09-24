@@ -5,6 +5,7 @@ import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.Properties;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,6 +20,6 @@ public class ModBlocks {
 	
 	
 	//BLOCK - ITEMS
-	public static final RegistryObject<Item> OSTRICH_NEST_ITEM = ModItems.ITEMS.register("ostrich_nest", () -> new BlockItem(OSTRICH_NEST.get(), ModItems.standard_properties));
+	public static final RegistryObject<Item> OSTRICH_NEST_ITEM = ModItems.ITEMS.register("ostrich_nest", () -> new BlockItem(OSTRICH_NEST.get(), new Properties().group(ModItemGroups.General)));
 	 
 }

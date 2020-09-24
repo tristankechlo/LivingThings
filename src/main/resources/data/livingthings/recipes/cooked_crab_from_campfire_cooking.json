@@ -1,0 +1,9 @@
+{
+	"type" : "minecraft:campfire_cooking",
+	"ingredient" : {
+		"item" : "livingthings:raw_crab"
+	},
+	"result" : "livingthings:cooked_crab",
+	"experience" : 0.3,
+	"cookingtime" : 550
+}
