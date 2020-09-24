@@ -12,9 +12,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>> {
 
-	protected static final ResourceLocation TEXTURE1 = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/crab/crab.png");
-	protected static final ResourceLocation TEXTURE2 = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/crab/crab2.png");
-	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/crab/crab_albino.png");
+	protected static final ResourceLocation TEXTURE1 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/crab/crab.png");
+	protected static final ResourceLocation TEXTURE2 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/crab/crab2.png");
+	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/crab/crab_albino.png");
 
 	public CrabRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new CrabModel<>(), 0.4F);
@@ -27,9 +27,8 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
 			return TEXTURE_ALBINO;			
 		} else if(variant == 1) {
 			return TEXTURE2;
-		} else {
-			return TEXTURE1;			
 		}
+		return TEXTURE1;			
 	}
 
 }
