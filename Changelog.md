@@ -1,5 +1,13 @@
 # Changelog
 
+### Version 1.16.3 - 1.1.6
+ - added crab entity
+ - added items:
+     - raw crab
+     - cooked crab
+     - crab shell
+ - color and gender variants are now weighted-random and changeable in the config
+
 ### Version 1.16.3 - 1.1.5
  - fix shark only spawning in two biomes
  - ostrich babys are no longer rideable
