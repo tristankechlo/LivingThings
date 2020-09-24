@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
-import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
@@ -109,11 +108,6 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	protected PathNavigator createNavigator(World worldIn) {
 		return new SwimmerPathNavigator(this, worldIn);
-	}
-
-	@Override
-	public CreatureAttribute getCreatureAttribute() {
-		return CreatureAttribute.WATER;
 	}
 
 	@Override
