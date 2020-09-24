@@ -35,15 +35,15 @@ public class CrabConfig {
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 2.0D);
 		
 		builder.comment("are considered as weighted items").push("Variants");
-		color1Weight = builder.define("Color1Weight", 49);
-		color2Weight = builder.define("Color2Weight", 49);
+		color1Weight = builder.define("Color1Weight", 99);
+		color2Weight = builder.define("Color2Weight", 99);
 		colorAlbinoWeight = builder.define("AlbinoWeight", 2);
 		builder.pop();
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | can spawn on grass/dirt and sand blocks").push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.RIVER.func_240901_a_().toString(),
-						Biomes.BEACH.func_240901_a_().toString()),
+				Arrays.asList(Biomes.RIVER.getLocation().toString(),
+						Biomes.BEACH.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 15);
 		minSpawns = builder.worldRestart().define("MinSpawns", 2);

@@ -178,7 +178,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 
 	@Override
 	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.func_233018_a_(this.rand));
+		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
 	
 	static class NewHurtByTargetGoal extends HurtByTargetGoal {
