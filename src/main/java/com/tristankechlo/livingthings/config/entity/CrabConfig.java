@@ -45,6 +45,7 @@ public class CrabConfig {
 				Arrays.asList(Biomes.RIVER.getLocation().toString(),
 						Biomes.BEACH.getLocation().toString(),
 						Biomes.DESERT_LAKES.getLocation().toString(),
+						Biomes.SWAMP_HILLS.getLocation().toString(),
 						Biomes.SWAMP.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 50);

@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "$(br2)$(bold)Health: $()2.5 Hearts$(br)$(bold)Attack-Damage: $()1 Heart"
+			"text" : "$(br2)$(bold)Health: $()2.5 Hearts$(br)$(bold)Attack-Damage: $()1 Heart$(br2)$(bold)Breeding Items: $()$(br)$(li)Raw Cod"
 		},
 		{
 			"type" : "entity",
@@ -14,7 +14,7 @@
 			"scale" : 1.1,
 			"default_rotation" : 25,
 			"offset" : -0.3,
-			"text" : "Can be found in $(bold)River$() and $(bold)Beach$() biomes."
+			"text" : "Can be found in $(bold)Swamp$() and $(bold)Beach$() biomes."
 		}
 	]
 }
