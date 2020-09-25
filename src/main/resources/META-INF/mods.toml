@@ -1,29 +1,25 @@
-modLoader="javafml" #mandatory
+modLoader="javafml"
 loaderVersion="[34,)"
-license="All rights reserved"
+license="CC BY-NC-ND 4.0"
 showAsResourcePack=false
 
-#issueTrackerURL="http://my.issue.tracker/" #optional
-[[mods]] #mandatory
-	modId="livingthings" #mandatory
-	version="1.16.3-1.1.6" #mandatory
-	displayName="Living Things" #mandatory
-	displayURL="https://www.curseforge.com/minecraft/mc-mods/living-things" #optional
-	#logoFile="livingthings.png" #optional
-	#credits="Thanks for this example mod goes to Java" #optional
-	authors="Buecher_wurm" #optional
-	# The description text for the mod (multi line!) (#mandatory)
-	description='''adds various new mobs to Minecraft'''
+[[mods]]
+modId="livingthings"
+version="1.16.3 - 1.1.6"
+displayName="Living Things"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/living-things"
+#logoFile="examplemod.png"
+#credits="Thanks for this example mod goes to Java"
+authors="Buecher_wurm"
+description='''adds various new mobs to Minecraft'''
 
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.livingthings]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[34,)" #mandatory
+[[dependencies.livingthings]]
+    modId="forge"
+    mandatory=true
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
-	
-# Here's another dependency
+
 [[dependencies.livingthings]]
     modId="minecraft"
     mandatory=true
