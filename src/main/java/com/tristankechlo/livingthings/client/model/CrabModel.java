@@ -277,6 +277,10 @@ public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		if(this.isChild) {
+			matrixStack.scale(0.6F, 0.6F, 0.6F);
+			matrixStack.translate(0, 1, 0);
+		}
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 

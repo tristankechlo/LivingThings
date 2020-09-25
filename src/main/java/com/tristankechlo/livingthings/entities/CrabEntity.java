@@ -6,28 +6,37 @@ import java.util.UUID;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.IMobVariants;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.WeightedRandom;
@@ -38,16 +47,25 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerable {
+public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable {
 
 	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.COD);
 	private int angerTime;
 	private UUID angerTarget;
 	
 	public CrabEntity(EntityType<? extends CrabEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.stepHeight = 1.0F;
+	    this.setPathPriority(PathNodeType.WATER, 1.0F);
+	}
+
+	@Override
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {	
+		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.create(this.world);
+		entityChild.setVariant(this.getVariantFromParents(this, entity));
+		return entityChild;
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
@@ -61,20 +79,15 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new BetterMeleeAttackGoal(this, 1.05D, false));
+		this.goalSelector.addGoal(1, new BreedGoal(this, 1.1D));
 		this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 5.0F));
+		this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
 		
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
 
-	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-		BlockState state = worldIn.getBlockState(pos.down());
-		if(state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.SAND) || state.isIn(Blocks.DIRT) || state.isIn(Blocks.RED_SAND)) {
-			return worldIn.getLightSubtracted(pos, 0) > 6;
-		}
-		return false;
 	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
 		BlockState state = world.getBlockState(pos.down());
 		return (world.hasWater(pos)) || (state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.SAND) || state.isIn(Blocks.GRAVEL));
@@ -82,11 +95,6 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		MobVariant variant = WeightedRandom.getRandomItem(this.rand, ImmutableList.of(
-				new MobVariant(LivingThingsConfig.CRAB.color1Weight.get(), (byte) 0),
-				new MobVariant(LivingThingsConfig.CRAB.color2Weight.get(), (byte) 1),
-				new MobVariant(LivingThingsConfig.CRAB.colorAlbinoWeight.get(), (byte) 15)));
-		this.setVariant(variant.variant);
 		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -132,8 +140,18 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 	}
 	
 	@Override
+	public boolean isBreedingItem(ItemStack stack) {
+		return BREEDING_ITEMS.test(stack);
+	}
+	
+	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return 8;
+	}
+
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+		return this.isChild() ? 0.175F : 0.375F;
 	}
 	
 	@Override
@@ -145,7 +163,7 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
@@ -153,7 +171,7 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.99F;
+		return 0.98F;
 	}
 
 	@Override
