@@ -75,6 +75,9 @@ public class CrabEntity extends CreatureEntity implements IMobVariants, IAngerab
 			return worldIn.getLightSubtracted(pos, 0) > 6;
 		}
 		return false;
+	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+		BlockState state = world.getBlockState(pos.down());
+		return (world.hasWater(pos)) || (state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.SAND) || state.isIn(Blocks.GRAVEL));
 	}
 	
 	@Override

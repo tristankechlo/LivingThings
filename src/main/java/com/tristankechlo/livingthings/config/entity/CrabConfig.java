@@ -43,11 +43,13 @@ public class CrabConfig {
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | can spawn on grass/dirt and sand blocks").push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.RIVER.getLocation().toString(),
-						Biomes.BEACH.getLocation().toString()),
+						Biomes.BEACH.getLocation().toString(),
+						Biomes.DESERT_LAKES.getLocation().toString(),
+						Biomes.SWAMP.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 20);
-		minSpawns = builder.worldRestart().define("MinSpawns", 3);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 6);
+		weight = builder.worldRestart().define("SpawnWeight", 50);
+		minSpawns = builder.worldRestart().define("MinSpawns", 5);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 8);
 		builder.pop();
 		
 		builder.pop();
