@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()40 Hearts$(br)$(bold)Attack-Damage: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()40 Hearts$(br)$(bold)Attack-Damage: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat (only tamed ones)$(br2)Can be tamed with apples. Tamed Elephants can be ridden and equipped with a chest."
 		},
 		{
 			"type" : "entity",

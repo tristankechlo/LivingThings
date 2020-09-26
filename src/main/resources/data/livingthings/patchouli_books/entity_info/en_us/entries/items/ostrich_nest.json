@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "$(br)$(bold)Obtaining:$()$(br)If mined without a silk-touch tool the nest will fall apart and you get some sticks."
+			"text" : "$(br)$(bold)Obtaining:$()$(br)If mined without a silk-touch tool the nest will fall apart and you get a few sticks."
 		},
 		{
 			"type" : "spotlight",
