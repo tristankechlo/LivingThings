@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.util.IMobVariants;
 
 import net.minecraft.entity.EntitySize;
@@ -55,8 +56,8 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 14.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.15D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
 
 	@Override
@@ -98,16 +99,16 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
-		int color1Weight = 1;
-		int color2Weight = 1;
-		int albinoWeight = 1;
-		if (color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
+		int color1Weight = LivingThingsConfig.MANTARAY.color1Weight.get();
+		int color2Weight = LivingThingsConfig.MANTARAY.color2Weight.get();
+		int color3Weight = LivingThingsConfig.MANTARAY.color3Weight.get();
+		if (color1Weight <= 0 && color2Weight <= 0 && color3Weight <= 0) {
 			return 0;
 		}
 		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
 				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 0)));
+				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
+				new WeightedMobVariant(Math.max(0, color3Weight), (byte) 2)));
 		return variant.variant;
 	}
 
