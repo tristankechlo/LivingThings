@@ -64,7 +64,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 8.0F, 1.1D, 1.2D));
+		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 12.0F, 1.1D, 1.2D));
 		this.goalSelector.addGoal(4, new MantarayEntity.SwimGoal(this));
 		this.goalSelector.addGoal(3, new FollowSchoolLeaderGoal(this));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));

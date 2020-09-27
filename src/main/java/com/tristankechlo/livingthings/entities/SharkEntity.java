@@ -72,6 +72,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MantarayEntity.class, 20, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 
