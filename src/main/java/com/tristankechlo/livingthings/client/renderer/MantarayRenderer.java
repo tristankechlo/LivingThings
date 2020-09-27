@@ -1,0 +1,27 @@
+package com.tristankechlo.livingthings.client.renderer;
+
+import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.model.MantarayModel;
+import com.tristankechlo.livingthings.entities.MantarayEntity;
+
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<MantarayEntity>>{
+	
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/mantaray/mantaray.png");
+
+	public MantarayRenderer(EntityRendererManager renderManagerIn) {
+		super(renderManagerIn, new MantarayModel<>(), 0.35F);
+	}
+
+	@Override
+	public ResourceLocation getEntityTexture(MantarayEntity entity) {
+		return TEXTURE;
+	}
+
+}
