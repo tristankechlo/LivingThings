@@ -58,9 +58,9 @@ public class MantarayConfig {
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Mantaray", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 12);
-		minSpawns = builder.worldRestart().define("MinSpawns", 2);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 3);
+		weight = builder.worldRestart().define("SpawnWeight", 15);
+		minSpawns = builder.worldRestart().define("MinSpawns", 4);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 8);
 		builder.pop();
 		
 		builder.pop();

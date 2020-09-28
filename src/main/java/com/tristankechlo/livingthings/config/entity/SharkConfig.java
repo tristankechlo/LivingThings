@@ -43,7 +43,7 @@ public class SharkConfig {
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Shark", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 12);
+		weight = builder.worldRestart().define("SpawnWeight", 13);
 		minSpawns = builder.worldRestart().define("MinSpawns", 2);
 		maxSpawns = builder.worldRestart().define("MaxSpawns", 3);
 		builder.pop();

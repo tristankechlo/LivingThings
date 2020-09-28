@@ -7,6 +7,7 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IScaleableMob;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -32,7 +33,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
@@ -65,10 +65,10 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 12.0F, 1.1D, 1.2D));
-		this.goalSelector.addGoal(4, new MantarayEntity.SwimGoal(this));
+		this.goalSelector.addGoal(1, new PanicGoal(this, 1.55D));
+		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 16.0F, 1.3D, 1.45D));
 		this.goalSelector.addGoal(3, new FollowSchoolLeaderGoal(this));
+		this.goalSelector.addGoal(4, new MantarayEntity.SwimGoal(this));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
 	}
 
@@ -138,13 +138,8 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		return scaling.scaling;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason,	BlockPos pos, Random random) {
-		if (pos.getY() > 35 && pos.getY() < world.getSeaLevel()) {
-			return world.getFluidState(pos).isTagged(FluidTags.WATER);
-		} else {
-			return false;
-		}
+	      return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
 	}
 
 	@Override

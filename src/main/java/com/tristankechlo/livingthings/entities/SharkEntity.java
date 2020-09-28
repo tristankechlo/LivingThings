@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +29,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
@@ -72,7 +73,6 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MantarayEntity.class, 20, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 
@@ -125,13 +125,8 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-	      if (pos.getY() > 35 && pos.getY() < world.getSeaLevel()) {
-	          return world.getFluidState(pos).isTagged(FluidTags.WATER);
-	       } else {
-	          return false;
-	       }
+	      return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class ModEntityTypes {
     public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, 0x130d08, 0xa56f5b);
     public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
     public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, 0xeb4034, 0x73706f);
-    public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_CREATURE, 0.75F, 0.45F, 0x000896, 0x595a6b);
+    public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, 0x000896, 0x595a6b);
 
 
 	/**
@@ -67,12 +67,12 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(LION_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
+		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SharkEntity::canSharkSpawn);
 		EntitySpawnPlacementRegistry.register(PENGUIN_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(OSTRICH_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(FLAMINGO_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(CRAB_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
-		EntitySpawnPlacementRegistry.register(MANTARAY_ENTITY, PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, MantarayEntity::canMantaraySpawn);
+		EntitySpawnPlacementRegistry.register(MANTARAY_ENTITY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
 	}
 
     /**
