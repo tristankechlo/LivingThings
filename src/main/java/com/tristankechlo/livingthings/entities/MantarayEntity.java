@@ -132,9 +132,9 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		}
 		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
 				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
-				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
-				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 2),
-				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 6)));
+				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 0),
+				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 2),
+				new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
 		return scaling.scaling;
 	}
 
