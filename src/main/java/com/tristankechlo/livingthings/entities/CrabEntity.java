@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.IMobVariants;
-
+import com.tristankechlo.livingthings.util.IScaleableMob;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -47,9 +47,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable {
+public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable, IScaleableMob {
 
 	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> CRAB_SCALING = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.COD);
 	private int angerTime;
@@ -65,6 +66,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {	
 		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
+		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
 		return entityChild;
 	}
 
@@ -96,6 +98,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
+		this.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
@@ -112,28 +115,52 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
 		return variant.variant;
 	}
+
+	public static byte getWeightedRandomScaling(Random random) {
+		int scaling1Weight = LivingThingsConfig.CRAB.scaling1Weight.get();
+		int scaling2Weight = LivingThingsConfig.CRAB.scaling2Weight.get();
+		int scaling3Weight = LivingThingsConfig.CRAB.scaling3Weight.get();
+		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0) {
+			return 0;
+		}
+		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
+				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
+				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 1),
+				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 4)));
+		return scaling.scaling;
+	}
 	
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(CRAB_VARIANT, (byte)0);
+		this.dataManager.register(CRAB_SCALING, (byte)0);
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("CrabVariant", this.getVariant());
+		compound.putByte("CrabScaling", this.getScaling());
 	    this.writeAngerNBT(compound);
 	}
 	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
+		
 		if (compound.contains("CrabVariant")) {
 			this.setVariant(compound.getByte("CrabVariant"));
 		} else {
 			this.setVariant((byte) 0);
 		}
+
+		if (compound.contains("CrabScaling")) {
+			this.setScaling(compound.getByte("CrabScaling"));
+		} else {
+			this.setScaling((byte) 0);
+		}
+		
 		if(this.world instanceof ServerWorld) {
 		    this.readAngerNBT((ServerWorld)this.world, compound);
 		}
@@ -184,6 +211,16 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		this.dataManager.set(CRAB_VARIANT, variant);
 	}
 
+	@Override
+	public byte getScaling() {
+		return this.dataManager.get(CRAB_SCALING);
+	}
+
+	@Override
+	public void setScaling(byte scaling) {
+		this.dataManager.set(CRAB_SCALING, scaling);
+	}
+	
 	@Override
 	public int getAngerTime() {
 		return this.angerTime;

@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client.renderer;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.CrabModel;
 import com.tristankechlo.livingthings.entities.CrabEntity;
@@ -29,6 +30,15 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
 			return TEXTURE2;
 		}
 		return TEXTURE1;			
+	}
+	
+	@Override
+	protected void preRenderCallback(CrabEntity crab, MatrixStack matrixStackIn, float partialTickTime) {
+		if(!crab.isChild()) {
+			float scale = 1.0F + (crab.getScaling() * 0.1F);
+			matrixStackIn.scale(scale, scale, scale);
+		}
+		matrixStackIn.translate(0.0D, 0.01D, 0.0D);
 	}
 
 }
