@@ -1,0 +1,20 @@
+{
+	"name" : "Mantaray",
+	"icon" : "livingthings:mantaray_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Aquatic animal that looks like it's flying through the sea.$(br2)$(bold)Health: $()6 Hearts"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:mantaray",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 37,
+			"offset" : -0.1,
+			"text" : "Can be found in all $(bold)Ocean$() biomes."
+		}
+	]
+}

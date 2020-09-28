@@ -5,6 +5,7 @@ import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.entities.MantarayEntity;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
@@ -36,11 +37,12 @@ public class ModEntityTypes {
     public static final EntityType<ElephantEntity> ELEPHANT_ENTITY = createEntity("elephant", ElephantEntity::new, EntityClassification.CREATURE, 1.85F, 2.7F, 0x000000, 0x4e4e4e);
     public static final EntityType<GiraffeEntity> GIRAFFE_ENTITY = createEntity("giraffe", GiraffeEntity::new, EntityClassification.CREATURE, 1.5F, 3.2F, 0xebb26c, 0x785f40);
     public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, 0xebb26c, 0xFFFFFF);
-    public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x000896, 0x595a6b);
+    public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x707187, 0x595a6b);
     public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, 0x000000, 0xFFFFFF);
     public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, 0x130d08, 0xa56f5b);
     public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
     public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, 0xeb4034, 0x73706f);
+    public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, 0x000896, 0x595a6b);
 
 
 	/**
@@ -55,6 +57,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(OSTRICH_ENTIY, OstrichEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(FLAMINGO_ENTIY, FlamingoEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(CRAB_ENTITY, CrabEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(MANTARAY_ENTITY, MantarayEntity.getAttributes().create());
 	}
 
 	/**
@@ -64,11 +67,12 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(ELEPHANT_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(GIRAFFE_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(LION_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, PlacementType.IN_WATER, Heightmap.Type.OCEAN_FLOOR, SharkEntity::canSharkSpawn);
+		EntitySpawnPlacementRegistry.register(SHARK_ENTIY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SharkEntity::canSharkSpawn);
 		EntitySpawnPlacementRegistry.register(PENGUIN_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(OSTRICH_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(FLAMINGO_ENTIY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(CRAB_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
+		EntitySpawnPlacementRegistry.register(MANTARAY_ENTITY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
 	}
 
     /**
