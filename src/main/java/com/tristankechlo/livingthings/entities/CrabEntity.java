@@ -67,6 +67,13 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
 		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
+
+		double health = LivingThingsConfig.CRAB.health.get();
+		if(health > 0.0D) {
+			entityChild.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + entityChild.getScaling());
+		    entityChild.setHealth(entityChild.getMaxHealth());
+		}
+        
 		return entityChild;
 	}
 
@@ -99,6 +106,13 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
 		this.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
+		
+		double health = LivingThingsConfig.CRAB.health.get();
+		if(health > 0.0D) {
+		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + this.getScaling());
+	        this.setHealth(this.getMaxHealth());
+		}
+        
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
@@ -120,13 +134,15 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		int scaling1Weight = LivingThingsConfig.CRAB.scaling1Weight.get();
 		int scaling2Weight = LivingThingsConfig.CRAB.scaling2Weight.get();
 		int scaling3Weight = LivingThingsConfig.CRAB.scaling3Weight.get();
-		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0) {
+		int scaling4Weight = LivingThingsConfig.CRAB.scaling4Weight.get();
+		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
 			return 0;
 		}
 		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
-				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 1),
-				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 4)));
+				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
+				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 2),
+				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) -2),
+				new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
 		return scaling.scaling;
 	}
 	
@@ -178,7 +194,10 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.175F : 0.375F;
+		if(this.isChild()) {
+			return 0.175F;
+		}
+		return this.getSize(poseIn).height * 0.9F;
 	}
 	
 	@Override
@@ -219,6 +238,34 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void setScaling(byte scaling) {
 		this.dataManager.set(CRAB_SCALING, scaling);
+	    this.recenterBoundingBox();
+	    this.recalculateSize();
+	    this.experienceValue = Math.abs(scaling) * this.rand.nextInt(2);
+	}
+
+	@Override
+	public void notifyDataManagerChange(DataParameter<?> key) {
+		if (CRAB_SCALING.equals(key)) {
+			this.recalculateSize();
+		}
+		super.notifyDataManagerChange(key);
+	}
+
+	@Override
+	public void recalculateSize() {
+		double d0 = this.getPosX();
+		double d1 = this.getPosY();
+		double d2 = this.getPosZ();
+		super.recalculateSize();
+		this.setPosition(d0, d1, d2);
+	}
+
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		if(this.isChild()) {
+			return super.getSize(poseIn);
+		}
+		return super.getSize(poseIn).scale(0.85F + (0.1F * this.getScaling()));
 	}
 	
 	@Override

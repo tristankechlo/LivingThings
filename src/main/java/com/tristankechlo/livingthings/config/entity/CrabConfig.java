@@ -24,6 +24,7 @@ public class CrabConfig {
 	public final ConfigValue<Integer> scaling1Weight;
 	public final ConfigValue<Integer> scaling2Weight;
 	public final ConfigValue<Integer> scaling3Weight;
+	public final ConfigValue<Integer> scaling4Weight;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
@@ -45,9 +46,10 @@ public class CrabConfig {
 		builder.pop();
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ScalingWeights");
-		scaling1Weight = builder.define("Scaling1Weight", 33);
-		scaling2Weight = builder.define("Scaling2Weight", 33);
-		scaling3Weight = builder.define("Scaling3Weight", 33);
+		scaling1Weight = builder.define("Scaling1Weight", 30);
+		scaling2Weight = builder.define("Scaling2Weight", 30);
+		scaling3Weight = builder.define("Scaling3Weight", 25);
+		scaling4Weight = builder.define("Scaling4Weight", 15);
 		builder.pop();
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | can spawn on grass/dirt and sand blocks").push("Spawns");
