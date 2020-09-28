@@ -101,8 +101,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	public static byte getWeightedRandomColorVariant(Random random) {
 		int color1Weight = LivingThingsConfig.MANTARAY.color1Weight.get();
 		int color2Weight = LivingThingsConfig.MANTARAY.color2Weight.get();
-		int color3Weight = LivingThingsConfig.MANTARAY.color3Weight.get();
-		if (color1Weight <= 0 && color2Weight <= 0 && color3Weight <= 0) {
+		if (color1Weight <= 0 && color2Weight <= 0) {
 			return 0;
 		}
 		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(

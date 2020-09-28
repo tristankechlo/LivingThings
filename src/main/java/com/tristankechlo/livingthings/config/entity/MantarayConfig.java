@@ -16,7 +16,7 @@ public class MantarayConfig {
 	
 	public final ConfigValue<Integer> color1Weight;
 	public final ConfigValue<Integer> color2Weight;
-	public final ConfigValue<Integer> color3Weight;
+	
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final ConfigValue<Integer> weight;
@@ -30,9 +30,9 @@ public class MantarayConfig {
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 12.0D);
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
-		color1Weight = builder.define("Color1Weight", 33);
-		color2Weight = builder.define("Color2Weight", 33);
-		color3Weight = builder.define("Color3Weight", 33);
+		color1Weight = builder.define("Color1Weight", 50);
+		color2Weight = builder.define("Color2Weight", 50);
+		builder.pop();
 		builder.pop();
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
