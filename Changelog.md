@@ -3,6 +3,7 @@
 ### Version 1.16.3 - 1.1.7
  - added mantaray entity
      - can spawn in 2 different colors and 4 different sizes
+ - compressed the sound files
 
 ### Version 1.16.3 - 1.1.6
  - added crab entity
