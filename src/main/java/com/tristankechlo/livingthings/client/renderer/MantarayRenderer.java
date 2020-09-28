@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client.renderer;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.MantarayModel;
 import com.tristankechlo.livingthings.entities.MantarayEntity;
@@ -26,6 +27,12 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<
 			return TEXTURE2;
 		}
 		return TEXTURE;
+	}
+	
+	@Override
+	protected void preRenderCallback(MantarayEntity mantaray, MatrixStack matrixStackIn, float partialTickTime) {
+		float scale = 1.0F + (mantaray.getScaling() * 0.1F);
+		matrixStackIn.scale(scale, scale, scale);
 	}
 
 }

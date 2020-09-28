@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.util.IMobVariants;
+import com.tristankechlo.livingthings.util.IScaleableMob;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -43,9 +44,10 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants {
+public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants, IScaleableMob {
 
 	private static final DataParameter<Byte> MANTARAY_VARIANT = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> MANTARAY_SCALING = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
 
 	public MantarayEntity(EntityType<? extends MantarayEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -74,27 +76,37 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(MANTARAY_VARIANT, (byte) 0);
+		this.dataManager.register(MANTARAY_SCALING, (byte) 0);
 	}
 
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("MantarayVariant", this.getVariant());
+		compound.putByte("MantarayScaling", this.getScaling());
 	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
+		
 		if (compound.contains("MantarayVariant")) {
 			this.setVariant(compound.getByte("MantarayVariant"));
 		} else {
 			this.setVariant((byte) 0);
+		}
+		
+		if (compound.contains("MantarayScaling")) {
+			this.setScaling(compound.getByte("MantarayScaling"));
+		} else {
+			this.setScaling((byte) 0);
 		}
 	}
 
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(MantarayEntity.getWeightedRandomColorVariant(this.rand));
+		this.setScaling(MantarayEntity.getWeightedRandomScaling(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
@@ -106,9 +118,24 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		}
 		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
 				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
-				new WeightedMobVariant(Math.max(0, color3Weight), (byte) 2)));
+				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1)));
 		return variant.variant;
+	}
+
+	public static byte getWeightedRandomScaling(Random random) {
+		int scaling1Weight = LivingThingsConfig.MANTARAY.scaling1Weight.get();
+		int scaling2Weight = LivingThingsConfig.MANTARAY.scaling2Weight.get();
+		int scaling3Weight = LivingThingsConfig.MANTARAY.scaling3Weight.get();
+		int scaling4Weight = LivingThingsConfig.MANTARAY.scaling4Weight.get();
+		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
+			return 0;
+		}
+		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
+				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
+				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
+				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 2),
+				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 6)));
+		return scaling.scaling;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -168,6 +195,16 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	public void setVariant(byte variant) {
 		this.dataManager.set(MANTARAY_VARIANT, variant);
+	}
+
+	@Override
+	public byte getScaling() {
+		return this.dataManager.get(MANTARAY_SCALING);
+	}
+
+	@Override
+	public void setScaling(byte scaling) {
+		this.dataManager.set(MANTARAY_SCALING, scaling);
 	}
 
 	@Override
