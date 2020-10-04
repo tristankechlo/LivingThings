@@ -14,6 +14,7 @@
 	"item.livingthings.raw_crab" : "Rohes Krabben Fleisch",
 	"item.livingthings.cooked_crab" : "Krabben Fleisch",
 	"item.livingthings.crab_shell" : "Krabben Panzer",
+	"item.livingthings.lexicon" : "LivingThings Lexikon",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Erschaffe Elefant",
@@ -51,5 +52,10 @@
 	"subtitles.livingthings.elephant.saddle" : "Elefanten-Sattel ausger¸stet",
 	"subtitles.livingthings.ostrich.egg.cracks" : "Strauﬂen Ei zerbricht",
 	"subtitles.livingthings.ostrich.egg.laying" : "Strauﬂen legt Ei",
-	"subtitles.livingthings.ostrich.ambient" : "Strauﬂ-Ger‰usche"
+	"subtitles.livingthings.ostrich.ambient" : "Strauﬂ-Ger‰usche",
+	
+	//messages
+	"messages.livingthings.nopatchouli.title" : "Fehler!",
+	"messages.livingthings.nopatchouli.subtitle" : "Mod Patchouli ist nicht installiert."
+	
 }

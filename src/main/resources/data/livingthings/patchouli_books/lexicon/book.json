@@ -1,10 +1,12 @@
 {
-	"name" : "LivingThings Knowledge",
+	"name" : "item.livingthings.lexicon",
 	"landing_text" : "This book holds the knowledge about the added mobs and items",
 	"version" : 1,
 	"book_texture" : "patchouli:textures/gui/book_blue.png",
-	"model" : "patchouli:book_blue",
+	"model" : "livingthings:lexicon",
 	"creative_tab" : "LivingThings",
 	"progress_bar_color" : "55a7ff",
-	"pause_game" : true
+	"pause_game" : true,
+	"dont_generate_book" : true,
+	"custom_book_item" : "livingthings:lexicon"
 }

@@ -14,6 +14,7 @@
 	"item.livingthings.raw_crab" : "Raw Crab",
 	"item.livingthings.cooked_crab" : "Cooked Crab",
 	"item.livingthings.crab_shell" : "Crab Shell",
+	"item.livingthings.lexicon" : "LivingThings Lexicon",
 	
 	//spawn eggs
 	"item.livingthings.elephant_spawn_egg" : "Elephant Spawn Egg",
@@ -51,5 +52,10 @@
 	"subtitles.livingthings.elephant.saddle" : "equipped Elephant Saddle",
 	"subtitles.livingthings.ostrich.egg.cracks" : "Ostrich egg cracking",
 	"subtitles.livingthings.ostrich.egg.laying" : "Ostrich layed egg",
-	"subtitles.livingthings.ostrich.ambient" : "Ostrich noise"
+	"subtitles.livingthings.ostrich.ambient" : "Ostrich noise",
+	
+	//messages
+	"messages.livingthings.nopatchouli.title" : "Can't use this!",
+	"messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed."
+	
 }

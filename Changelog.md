@@ -5,6 +5,7 @@
      - can spawn in 2 different colors and 4 different sizes
  - compressed the sound files
  - crabs can spawn in different sizes now
+ - fix the patchouli book glitching sometimes
 
 ### Version 1.16.3 - 1.1.6
  - added crab entity
