@@ -11,6 +11,7 @@
   - Penguin
   - Ostrich
   - Crab
+  - Mantaray
    
   
   
