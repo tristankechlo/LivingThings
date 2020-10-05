@@ -26,6 +26,7 @@
 	"item.livingthings.flamingo_spawn_egg" : "Flamingo Spawn Egg",
 	"item.livingthings.crab_spawn_egg" : "Crab Spawn Egg",
 	"item.livingthings.mantaray_spawn_egg" : "Mantaray Spawn Egg",
+	"item.livingthings.raccoon_spawn_egg" : "Raccoon Spawn Egg",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elephant",
@@ -37,6 +38,7 @@
 	"entity.livingthings.flamingo" : "Flamingo",
 	"entity.livingthings.crab" : "Crab",
 	"entity.livingthings.mantaray" : "Mantaray",
+	"entity.livingthings.raccoon" : "Raccoon",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Lion roaring",

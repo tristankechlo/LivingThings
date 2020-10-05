@@ -26,6 +26,7 @@
 	"item.livingthings.flamingo_spawn_egg" : "Erschaffe Flamingo",
 	"item.livingthings.crab_spawn_egg" : "Erschaffe Krabbe",
 	"item.livingthings.mantaray_spawn_egg" : "Erschaffe Mantarochen",
+	"item.livingthings.raccoon_spawn_egg" : "Erschaffe Waschbär",
 
 	//entity names
 	"entity.livingthings.elephant" : "Elefant",
@@ -37,6 +38,7 @@
 	"entity.livingthings.flamingo" : "Flamingo",
 	"entity.livingthings.crab" : "Krabbe",
 	"entity.livingthings.mantaray" : "Mantarochen",
+	"entity.livingthings.raccoon" : "Waschbär",
 	
 	//subtitle for sounds
 	"subtitles.livingthings.lion.ambient" : "Löwe brüllt",
