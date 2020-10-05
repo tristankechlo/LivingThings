@@ -32,15 +32,20 @@ public class RaccoonConfig {
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.RIVER.getLocation().toString(),
-						Biomes.BEACH.getLocation().toString(),
-						Biomes.DESERT_LAKES.getLocation().toString(),
-						Biomes.SWAMP_HILLS.getLocation().toString(),
-						Biomes.SWAMP.getLocation().toString()),
+				Arrays.asList(Biomes.PLAINS.getLocation().toString(),
+						Biomes.FOREST.getLocation().toString(),
+						Biomes.BIRCH_FOREST.getLocation().toString(),
+						Biomes.BIRCH_FOREST_HILLS.getLocation().toString(),
+						Biomes.TALL_BIRCH_FOREST.getLocation().toString(),
+						Biomes.TALL_BIRCH_HILLS.getLocation().toString(),
+						Biomes.SUNFLOWER_PLAINS.getLocation().toString(),
+						Biomes.DARK_FOREST.getLocation().toString(),
+						Biomes.DARK_FOREST_HILLS.getLocation().toString(),
+						Biomes.FLOWER_FOREST.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Raccoon", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 50);
-		minSpawns = builder.worldRestart().define("MinSpawns", 5);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 8);
+		weight = builder.worldRestart().define("SpawnWeight", 20);
+		minSpawns = builder.worldRestart().define("MinSpawns", 2);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 6);
 		builder.pop();
 		
 		builder.pop();
