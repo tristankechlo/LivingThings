@@ -56,6 +56,8 @@
 	"subtitles.livingthings.ostrich.egg.laying" : "Strauﬂen legt Ei",
 	"subtitles.livingthings.ostrich.ambient" : "Strauﬂ-Ger‰usche",
 	"subtitles.livingthings.raccoon.ambient" : "Waschb‰r-Ger‰usche",
+	"subtitles.livingthings.raccoon.hurt" : "Waschb‰r nimmt Schaden",
+	"subtitles.livingthings.raccoon.death" : "Waschb‰r stirbt",
 	
 	//messages
 	"messages.livingthings.nopatchouli.title" : "Fehler!",

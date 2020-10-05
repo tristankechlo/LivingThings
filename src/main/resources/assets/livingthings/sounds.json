@@ -121,5 +121,41 @@
 			"livingthings:raccoon/raccoon_ambient3"
 		],
 		"subtitle" : "subtitles.livingthings.raccoon.ambient"
+	},
+	"raccoon.hurt" : {
+		"category" : "neutral",
+		"sounds" : [
+			{
+				"name" : "mob/fox/hurt1",
+				"volume" : 0.75
+			},
+			{
+				"name" : "mob/fox/hurt2",
+				"volume" : 0.75
+			},
+			{
+				"name" : "mob/fox/hurt3",
+				"volume" : 0.75
+			},
+			{
+				"name" : "mob/fox/hurt4",
+				"volume" : 0.75
+			}
+		],
+		"subtitle" : "subtitles.livingthings.raccoon.hurt"
+	},
+	"raccoon.death" : {
+		"category" : "neutral",
+		"sounds" : [
+			{
+				"name" : "mob/fox/death1",
+				"volume" : 0.9
+			},
+			{
+				"name" : "mob/fox/death2",
+				"volume" : 0.9
+			}
+		],
+		"subtitle" : "subtitles.livingthings.raccoon.death"
 	}
 }

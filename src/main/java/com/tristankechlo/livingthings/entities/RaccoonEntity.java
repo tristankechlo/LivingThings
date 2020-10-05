@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
@@ -96,6 +97,16 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.RACCOON_AMBIENT.get();
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.RACCOON_HURT.get();
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.RACCOON_DEATH.get();
 	}
 	
 	@Override
