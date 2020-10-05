@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -30,6 +31,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -89,6 +91,16 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.RACCOON_AMBIENT.get();
+	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 300;
 	}
 
 	@Override

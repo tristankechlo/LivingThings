@@ -30,6 +30,8 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> OSTRICH_EGG_CRACKS = SOUNDS.register("ostrich_egg_cracks", () -> new SoundEvent(getSound("ostrich.egg.cracks")));
 	public static final RegistryObject<SoundEvent> OSTRICH_EGG_LAYING = SOUNDS.register("ostrich_egg_laying", () -> new SoundEvent(getSound("ostrich.egg.laying")));
 	public static final RegistryObject<SoundEvent> OSTRICH_AMBIENT = SOUNDS.register("ostrich_ambient", () -> new SoundEvent(getSound("ostrich.ambient")));
+
+	public static final RegistryObject<SoundEvent> RACCOON_AMBIENT = SOUNDS.register("raccoon_ambient", () -> new SoundEvent(getSound("raccoon.ambient")));
 	
 	
 	private static ResourceLocation getSound(String name) {
