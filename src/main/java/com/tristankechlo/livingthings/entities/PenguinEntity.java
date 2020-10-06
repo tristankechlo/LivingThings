@@ -91,7 +91,7 @@ public class PenguinEntity extends AnimalEntity {
     
     @Override
     public int getMaxSpawnedInChunk() {
-    	return 6;
+    	return LivingThingsConfig.PENGUIN.maxSpawns.get();
     }
     
     @Override

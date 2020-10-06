@@ -16,6 +16,8 @@ public class ParticleManager {
     @SuppressWarnings("resource")
 	@SubscribeEvent
     public static void onParticleRegister(ParticleFactoryRegisterEvent event) {
-    	Minecraft.getInstance().particles.registerFactory(ModParticle.ARROW_UP_GREEN.get(), ArrowUpParticle.Factory::new);
+    	Minecraft.getInstance().particles.registerFactory(ModParticle.ARROW_UP_GREEN.get(), ArrowUpParticle.Green::new);
+    	Minecraft.getInstance().particles.registerFactory(ModParticle.ARROW_UP_RED.get(), ArrowUpParticle.Red::new);
+    	Minecraft.getInstance().particles.registerFactory(ModParticle.ARROW_UP_BLUE.get(), ArrowUpParticle.Blue::new);
     }
 }

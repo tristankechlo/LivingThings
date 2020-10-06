@@ -145,6 +145,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 			compound.putBoolean("IsMale", true);
 		}
 		compound.putByte("LionVariant", this.getVariant());
+		this.writeAngerNBT(compound);
 	}
 	
 	@Override
@@ -159,6 +160,9 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 			this.setVariant(compound.getByte("LionVariant"));
 		} else {
 			this.setVariant((byte) 0);
+		}
+		if(this.world instanceof ServerWorld) {
+			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
 	
@@ -208,7 +212,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return LivingThingsConfig.LION.maxSpawns.get();
 	}
 	
 	@Override

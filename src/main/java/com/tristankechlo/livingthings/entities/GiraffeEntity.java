@@ -114,6 +114,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("GiraffeVariant", this.getVariant());
+		this.writeAngerNBT(compound);
 	}
 	
 	@Override
@@ -124,6 +125,10 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 		} else {
 			this.setVariant((byte) 0);
 		}
+		
+		if(this.world instanceof ServerWorld) {
+			this.readAngerNBT((ServerWorld) this.world, compound);
+		}
 	}
 	
 	@Override
@@ -133,7 +138,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return LivingThingsConfig.GIRAFFE.maxSpawns.get();
 	}
 	
 	@Override

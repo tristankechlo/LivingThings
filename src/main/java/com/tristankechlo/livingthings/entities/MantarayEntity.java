@@ -169,7 +169,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 7;
+		return LivingThingsConfig.MANTARAY.maxSpawns.get();
 	}
 
 	@Override

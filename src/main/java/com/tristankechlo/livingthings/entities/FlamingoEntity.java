@@ -99,7 +99,7 @@ public class FlamingoEntity extends AnimalEntity {
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return LivingThingsConfig.FLAMINGO.maxSpawns.get();
 	}
 	
 	public boolean isLeftLegUp() {
