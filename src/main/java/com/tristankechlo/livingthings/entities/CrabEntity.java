@@ -189,7 +189,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 8;
+		return LivingThingsConfig.CRAB.maxSpawns.get();
 	}
 
 	@Override

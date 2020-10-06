@@ -31,6 +31,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
@@ -83,6 +84,20 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		this.targetSelector.addGoal(0, new ElephantEntity.NewHurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		if(this.world instanceof ServerWorld) {
+			this.readAngerNBT((ServerWorld) this.world, compound);
+		}
+	}
+	
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		this.writeAngerNBT(compound);
+	}
 			
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
@@ -95,6 +110,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	    this.world.setEntityState(this, (byte)4);
 		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
 		if (flag) {
+			//throw target in the air
 	        target.setMotion(target.getMotion().add(0.0D, 0.7D, 0.0D));
 			this.applyEnchantments(this, target);
 		}
@@ -111,7 +127,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 6;
+		return LivingThingsConfig.ELEPHANT.maxSpawns.get();
 	}
 	
 	@Override

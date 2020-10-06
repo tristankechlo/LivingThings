@@ -26,6 +26,7 @@ import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
@@ -36,6 +37,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class SharkEntity extends WaterMobEntity implements IAngerable {
 
@@ -75,6 +77,20 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
+	
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		this.writeAngerNBT(compound);
+	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		if(this.world instanceof ServerWorld) {
+			this.readAngerNBT((ServerWorld) this.world, compound);
+		}
+	}
 
 	@Override
 	public void tick() {
@@ -98,7 +114,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 4;
+		return LivingThingsConfig.SHARK.maxSpawns.get();
 	}
 	
 	@Override
