@@ -38,7 +38,7 @@ import net.minecraft.world.server.ServerWorld;
 public class OwlEntity extends ShoulderRidingEntity implements IFlyingAnimal, IMobVariants {
 
 	private static final DataParameter<Byte> OWL_VARIANT = EntityDataManager.createKey(OwlEntity.class, DataSerializers.BYTE);
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
 	
 	public OwlEntity(EntityType<? extends OwlEntity> type, World worldIn) {
 		super(type, worldIn);

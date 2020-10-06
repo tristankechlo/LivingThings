@@ -1,0 +1,20 @@
+{
+	"name" : "Owl",
+	"icon" : "livingthings:owl_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Nocturnal bird that can spawn in different color variations.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat Seeds$(li)Melon Seeds$(li)Pumpkin Seeds$(li)Beetroot Seeds"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:owl",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 40,
+			"offset" : 0.1,
+			"text" : "Can be found in $(bold)Forest$() biomes."
+		}
+	]
+}
