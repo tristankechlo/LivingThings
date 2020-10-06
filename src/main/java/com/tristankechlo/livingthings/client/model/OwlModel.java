@@ -133,6 +133,10 @@ public class OwlModel <T extends OwlEntity> extends EntityModel<T> {
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		if(this.isChild) {
+			matrixStack.scale(0.5F, 0.5F, 0.5F);
+			matrixStack.translate(0, 1.5D, 0);
+		}
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
