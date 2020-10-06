@@ -61,16 +61,49 @@ public class ArrowUpParticle extends SpriteTexturedParticle {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<BasicParticleType> {
+	public static class Green implements IParticleFactory<BasicParticleType> {
 		private final IAnimatedSprite spriteSet;
 
-		public Factory(IAnimatedSprite sprite) {
+		public Green(IAnimatedSprite sprite) {
 			this.spriteSet = sprite;
 		}
 
 		public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			ArrowUpParticle particle = new ArrowUpParticle(worldIn, x, y, z);
 			particle.selectSpriteRandomly(this.spriteSet);
+			particle.setColor(0F, 1F, 0F);
+			return particle;
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static class Red implements IParticleFactory<BasicParticleType> {
+		private final IAnimatedSprite spriteSet;
+
+		public Red(IAnimatedSprite sprite) {
+			this.spriteSet = sprite;
+		}
+
+		public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			ArrowUpParticle particle = new ArrowUpParticle(worldIn, x, y, z);
+			particle.selectSpriteRandomly(this.spriteSet);
+			particle.setColor(1F, 0F, 0F);
+			return particle;
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static class Blue implements IParticleFactory<BasicParticleType> {
+		private final IAnimatedSprite spriteSet;
+
+		public Blue(IAnimatedSprite sprite) {
+			this.spriteSet = sprite;
+		}
+
+		public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			ArrowUpParticle particle = new ArrowUpParticle(worldIn, x, y, z);
+			particle.selectSpriteRandomly(this.spriteSet);
+			particle.setColor(0F, 0F, 1F);
 			return particle;
 		}
 	}
