@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.entities.ai.BreakOstrichEggGoal;
+import com.tristankechlo.livingthings.entities.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 
@@ -67,9 +69,11 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, false, BREEDING_ITEMS));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new BreakOstrichEggGoal(this, 1.0D, 3, 100, false));
+		this.goalSelector.addGoal(5, new BreakTurtleEggGoal(this, 1.0D, 3));
+		this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
