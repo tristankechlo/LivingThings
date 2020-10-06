@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
 import com.tristankechlo.livingthings.config.entity.OstrichConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
+import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
 
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -37,6 +38,7 @@ public class LivingThingsConfig {
 	public static final OstrichConfig OSTRICH = new OstrichConfig(BUILDER);
 	public static final CrabConfig CRAB = new CrabConfig(BUILDER);
 	public static final MantarayConfig MANTARAY = new MantarayConfig(BUILDER);
+	public static final RaccoonConfig RACCOON = new RaccoonConfig(BUILDER);
 	
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

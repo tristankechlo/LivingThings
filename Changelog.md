@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.16.3 - 1.1.8
+ - added raccoon entity
+     - they destroy the ostrich egg in a nest
+     - they destroy turtle eggs
+
 ### Version 1.16.3 - 1.1.7
  - added mantaray entity
      - can spawn in 2 different colors and 4 different sizes
