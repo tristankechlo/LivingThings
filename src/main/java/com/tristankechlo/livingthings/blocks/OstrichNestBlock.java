@@ -100,7 +100,7 @@ public class OstrichNestBlock extends Block {
 
 	private boolean canGrow(World worldIn) {
 		float f = worldIn.func_242415_f(1.0F);
-		if (f < 0.69F && f > 0.65F) {
+		if (f < 0.7F && f > 0.6F) {
 			return true;
 		} else {
 			return worldIn.rand.nextInt(175) == 0;
