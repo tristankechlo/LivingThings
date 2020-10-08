@@ -11,8 +11,8 @@
 			"type" : "entity",
 			"entity" : "livingthings:owl",
 			"rotate" : false,
-			"scale" : 0.8,
-			"default_rotation" : 40,
+			"scale" : 1.0,
+			"default_rotation" : 30,
 			"offset" : 0.1,
 			"text" : "Can be found in $(bold)Forest$() biomes."
 		}
