@@ -60,6 +60,10 @@
 	"subtitles.livingthings.raccoon.ambient" : "Waschbär-Geräusche",
 	"subtitles.livingthings.raccoon.hurt" : "Waschbär nimmt Schaden",
 	"subtitles.livingthings.raccoon.death" : "Waschbär stirbt",
+	"subtitles.livingthings.owl.ambient" : "Eule ruft",
+	"subtitles.livingthings.owl.hurt" : "Eule nimmt Schaden",
+	"subtitles.livingthings.owl.death" : "Eule stirbt",
+	"subtitles.livingthings.owl.fly" : "Eule flattert",
 	
 	//messages
 	"messages.livingthings.nopatchouli.title" : "Fehler!",

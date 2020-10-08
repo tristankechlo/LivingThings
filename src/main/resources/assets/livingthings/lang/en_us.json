@@ -60,6 +60,10 @@
 	"subtitles.livingthings.raccoon.ambient" : "Raccon noise",
 	"subtitles.livingthings.raccoon.hurt" : "Raccon hurts",
 	"subtitles.livingthings.raccoon.death" : "Raccon dies",
+	"subtitles.livingthings.owl.ambient" : "Owl calling",
+	"subtitles.livingthings.owl.hurt" : "Owl hurts",
+	"subtitles.livingthings.owl.death" : "Owl dies",
+	"subtitles.livingthings.owl.fly" : "Owl flatters",
 	
 	//messages
 	"messages.livingthings.nopatchouli.title" : "Can't use this!",
