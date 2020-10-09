@@ -8,6 +8,7 @@ import com.tristankechlo.livingthings.config.entity.GiraffeConfig;
 import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
 import com.tristankechlo.livingthings.config.entity.OstrichConfig;
+import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
@@ -39,6 +40,7 @@ public class LivingThingsConfig {
 	public static final CrabConfig CRAB = new CrabConfig(BUILDER);
 	public static final MantarayConfig MANTARAY = new MantarayConfig(BUILDER);
 	public static final RaccoonConfig RACCOON = new RaccoonConfig(BUILDER);
+	public static final OwlConfig OWL = new OwlConfig(BUILDER);
 	
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

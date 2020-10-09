@@ -7,6 +7,7 @@ import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
 import com.tristankechlo.livingthings.entities.MantarayEntity;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
+import com.tristankechlo.livingthings.entities.OwlEntity;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
@@ -45,6 +46,7 @@ public class ModEntityTypes {
     public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, 0xeb4034, 0x73706f);
     public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, 0x000896, 0x595a6b);
     public static final EntityType<RaccoonEntity> RACCOON_ENTITY = createEntity("raccoon", RaccoonEntity::new, EntityClassification.CREATURE, 0.5F, 0.75F, 0x6e6e6e, 0x000000);
+    public static final EntityType<OwlEntity> OWL_ENTITY = createEntity("owl", OwlEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F, 0xedd7d5, 0x6e3834);
 
 
 	/**
@@ -61,6 +63,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(CRAB_ENTITY, CrabEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(MANTARAY_ENTITY, MantarayEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(RACCOON_ENTITY, RaccoonEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(OWL_ENTITY, OwlEntity.getAttributes().create());
 	}
 
 	/**
@@ -77,6 +80,7 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(CRAB_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
 		EntitySpawnPlacementRegistry.register(MANTARAY_ENTITY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
 		EntitySpawnPlacementRegistry.register(RACCOON_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(OWL_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
 	}
 
     /**

@@ -1,6 +1,5 @@
 
-## Todo / Ideas:
- 
+## Todo / Ideas: 
  - Elephant saddle item
     
  - improve Penguin AI

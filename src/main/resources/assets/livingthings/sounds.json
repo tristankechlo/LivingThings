@@ -157,5 +157,45 @@
 			}
 		],
 		"subtitle" : "subtitles.livingthings.raccoon.death"
+	},
+	"owl.ambient" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:owl/owl_ambient1",
+			"livingthings:owl/owl_ambient2"
+		],
+		"subtitle" : "subtitles.livingthings.owl.ambient"
+	},
+	"owl.hurt" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:owl/owl_hurt1",
+			"livingthings:owl/owl_hurt2"
+		],
+		"subtitle" : "subtitles.livingthings.owl.hurt"
+	},
+	"owl.death" : {
+		"category" : "neutral",
+		"sounds" : [
+			"livingthings:owl/owl_death1",
+			"livingthings:owl/owl_death2",
+			"livingthings:owl/owl_death3",
+			"livingthings:owl/owl_death4"
+		],
+		"subtitle" : "subtitles.livingthings.owl.death"
+	},
+	"owl.fly" : {
+		"category" : "neutral",
+		"sounds" : [
+			"mob/parrot/fly1",
+			"mob/parrot/fly2",
+			"mob/parrot/fly3",
+			"mob/parrot/fly4",
+			"mob/parrot/fly5",
+			"mob/parrot/fly6",
+			"mob/parrot/fly7",
+			"mob/parrot/fly8"
+		],
+		"subtitle" : "subtitles.livingthings.owl.fly"
 	}
 }
