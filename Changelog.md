@@ -4,6 +4,10 @@
  - added raccoon entity
      - they destroy the ostrich egg in a nest
      - they destroy turtle eggs
+ - added owl entity
+     - tamed owls will follow you
+     - flying animal like parrots
+     - can spawn in 3 different colors 
 
 ### Version 1.16.3 - 1.1.7
  - added mantaray entity
