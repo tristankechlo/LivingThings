@@ -1,9 +1,5 @@
 
-## Todo / Ideas:
-
- - owl
-     - spawn biome -> variant
- 
+## Todo / Ideas: 
  - Elephant saddle item
     
  - improve Penguin AI
