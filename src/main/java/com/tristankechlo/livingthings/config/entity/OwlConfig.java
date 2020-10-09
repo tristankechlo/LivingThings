@@ -37,12 +37,16 @@ public class OwlConfig {
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.SAVANNA.getLocation().toString(),
-						Biomes.SAVANNA_PLATEAU.getLocation().toString(),
-						Biomes.SHATTERED_SAVANNA.getLocation().toString(),
-						Biomes.SHATTERED_SAVANNA_PLATEAU.getLocation().toString()),
+				Arrays.asList(Biomes.FOREST.getLocation().toString(),
+						Biomes.BIRCH_FOREST.getLocation().toString(),
+						Biomes.BIRCH_FOREST_HILLS.getLocation().toString(),
+						Biomes.TALL_BIRCH_FOREST.getLocation().toString(),
+						Biomes.TALL_BIRCH_HILLS.getLocation().toString(),
+						Biomes.DARK_FOREST.getLocation().toString(),
+						Biomes.DARK_FOREST_HILLS.getLocation().toString(),
+						Biomes.FLOWER_FOREST.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Owl", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 15);
+		weight = builder.worldRestart().define("SpawnWeight", 20);
 		minSpawns = builder.worldRestart().define("MinSpawns", 2);
 		maxSpawns = builder.worldRestart().define("MaxSpawns", 4);
 		builder.pop();

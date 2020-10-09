@@ -34,6 +34,7 @@ public class RegisterEntitiesToBiomes {
 		List<? extends String> CrabSpawnBiomes = LivingThingsConfig.CRAB.spawnBiomes.get();
 		List<? extends String> MantaraySpawnBiomes = LivingThingsConfig.MANTARAY.spawnBiomes.get();
 		List<? extends String> RaccoonSpawnBiomes = LivingThingsConfig.RACCOON.spawnBiomes.get();
+		List<? extends String> OwlSpawnBiomes = LivingThingsConfig.OWL.spawnBiomes.get();
 
 		if (ElephantSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
@@ -113,6 +114,14 @@ public class RegisterEntitiesToBiomes {
 							Math.max(1, LivingThingsConfig.RACCOON.weight.get()),
 							Math.max(1, LivingThingsConfig.RACCOON.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.RACCOON.maxSpawns.get())));
+		}
+
+		if (OwlSpawnBiomes.contains(currentBiome)) {
+			event.getSpawns().getSpawner(EntityClassification.CREATURE)
+					.add(new Spawners(ModEntityTypes.OWL_ENTITY, 
+							Math.max(1, LivingThingsConfig.OWL.weight.get()),
+							Math.max(1, LivingThingsConfig.OWL.minSpawns.get()), 
+							Math.max(1, LivingThingsConfig.OWL.maxSpawns.get())));
 		}
 
 	}
