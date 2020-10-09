@@ -92,13 +92,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(reason == SpawnReason.SPAWN_EGG) {
-			this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.rand));
-		}
-		//get color depending on spawnbiome		
-		else {
-			this.setVariant((byte)0);
-		}
+		this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
@@ -166,7 +160,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 				itemstack.shrink(1);
 			}
 			if (!this.world.isRemote) {
-				if (this.rand.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
+				if (this.rand.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
 					this.setTamedBy(player);
 					this.world.setEntityState(this, (byte) 7);
 				} else {
