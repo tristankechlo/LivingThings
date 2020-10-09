@@ -44,11 +44,16 @@ public class OwlConfig {
 						Biomes.TALL_BIRCH_HILLS.getLocation().toString(),
 						Biomes.DARK_FOREST.getLocation().toString(),
 						Biomes.DARK_FOREST_HILLS.getLocation().toString(),
-						Biomes.FLOWER_FOREST.getLocation().toString()),
+						Biomes.FLOWER_FOREST.getLocation().toString(),
+						Biomes.WOODED_HILLS.getLocation().toString(),
+						Biomes.WOODED_MOUNTAINS.getLocation().toString(),
+						Biomes.TAIGA.getLocation().toString(),
+						Biomes.TAIGA_HILLS.getLocation().toString(),
+						Biomes.TAIGA_MOUNTAINS.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Owl", biome));
 		weight = builder.worldRestart().define("SpawnWeight", 20);
-		minSpawns = builder.worldRestart().define("MinSpawns", 2);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 4);
+		minSpawns = builder.worldRestart().define("MinSpawns", 3);
+		maxSpawns = builder.worldRestart().define("MaxSpawns", 6);
 		builder.pop();
 		
 		builder.pop();
