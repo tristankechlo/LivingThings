@@ -2,6 +2,7 @@
 
 ### Version 1.16.3 - 1.1.9
  - adjust mob attributes like health/damage
+ - update lexicon item
 
 ### Version 1.16.3 - 1.1.8
  - added raccoon entity

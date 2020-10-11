@@ -57,7 +57,7 @@ public class LexiconItem extends Item {
 		if(LivingThings.patchouliLoaded) {
 			return vazkii.patchouli.api.PatchouliAPI.instance.getSubtitle(ForgeRegistries.ITEMS.getKey(ModItems.LEXICON.get()));
 		}
-		return new StringTextComponent("1st Edition");
+		return new StringTextComponent("2nd Edition");
 	}
 
 }
