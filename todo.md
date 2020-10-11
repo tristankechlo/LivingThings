@@ -1,8 +1,5 @@
 
-## Todo / Ideas:
- - adjust mob health and damage
-     - especially lion and shark damage since they can kill you instantly
-     
+## Todo / Ideas:     
  - Elephant saddle item
     
  - improve Penguin AI
