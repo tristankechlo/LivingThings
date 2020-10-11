@@ -67,7 +67,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
 	}
 

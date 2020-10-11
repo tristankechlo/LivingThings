@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "A fast water creature, that will hunt down players!$(br2)$(bold)Health: $()10 Hearts$(br)$(bold)Attack-Damage: $()3 Hearts$(br2)$(bold)Drops:$()$(br)$(li)0-3 Shark Tooth$(li)1-2 Raw Cod"
+			"text" : "A fast water creature, that will hunt down players!$(br2)$(bold)Health: $()11 Hearts$(br)$(bold)Attack-Damage: $()3 Hearts$(br2)$(bold)Drops:$()$(br)$(li)0-3 Shark Tooth$(li)1-2 Raw Cod"
 		},
 		{
 			"type" : "entity",

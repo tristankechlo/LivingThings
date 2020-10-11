@@ -36,8 +36,8 @@ public class CrabConfig {
 		builder.comment("Mob-Config for Crab").push("Crab");
 		
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 5.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 2.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 8.0D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 1.0D);
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);

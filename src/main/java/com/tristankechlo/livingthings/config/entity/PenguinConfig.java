@@ -23,7 +23,7 @@ public class PenguinConfig {
 
 		builder.comment("Mob-Config for Penguin").push("Penguin");
 		
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 16.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 10.0D);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",

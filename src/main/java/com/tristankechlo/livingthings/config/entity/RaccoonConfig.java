@@ -27,8 +27,8 @@ public class RaccoonConfig {
 		builder.comment("Mob-Config for Raccoon").push("Raccoon");
 		
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 14.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 3.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 10.0D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 2.0D);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",

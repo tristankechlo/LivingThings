@@ -107,7 +107,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.33D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
 	}
 	

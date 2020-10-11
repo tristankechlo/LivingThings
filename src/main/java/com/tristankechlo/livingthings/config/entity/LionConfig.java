@@ -34,7 +34,7 @@ public class LionConfig {
 		
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 20.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.0D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 5.0D);
 
 		builder.comment(LivingThingsConfig.weightedRandom).push("GenderWeights");
 		genderMaleWeight = builder.define("GenderMaleWeight", 50);

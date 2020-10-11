@@ -81,7 +81,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.CRAB.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.CRAB.damage.get());
 	}
 	

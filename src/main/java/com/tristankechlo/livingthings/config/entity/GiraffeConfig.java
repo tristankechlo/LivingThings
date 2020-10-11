@@ -32,7 +32,7 @@ public class GiraffeConfig {
 		
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 30.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 8.0D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 4.0D);
 
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);

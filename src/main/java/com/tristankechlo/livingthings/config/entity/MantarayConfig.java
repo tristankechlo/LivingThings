@@ -31,7 +31,7 @@ public class MantarayConfig {
 
 		builder.comment("Mob-Config for Mantaray").push("Mantaray");
 		
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 12.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 10.0D);
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);

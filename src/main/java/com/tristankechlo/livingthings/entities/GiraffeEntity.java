@@ -86,7 +86,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.GIRAFFE.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.GIRAFFE.damage.get());
 	}
 	

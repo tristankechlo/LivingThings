@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.16.3 - 1.1.9
+ - adjust mob attributes like health/damage
+
 ### Version 1.16.3 - 1.1.8
  - added raccoon entity
      - they destroy the ostrich egg in a nest

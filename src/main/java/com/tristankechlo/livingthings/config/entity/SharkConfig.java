@@ -28,7 +28,7 @@ public class SharkConfig {
 		
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 22.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.5D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 6.0D);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",

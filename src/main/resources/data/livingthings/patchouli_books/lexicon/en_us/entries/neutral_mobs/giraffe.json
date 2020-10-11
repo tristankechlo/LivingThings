@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()15 Hearts$(br)$(bold)Attack-Damage: $()4 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()15 Hearts$(br)$(bold)Attack-Damage: $()2 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
 		},
 		{
 			"type" : "entity",

@@ -27,8 +27,8 @@ public class ElephantConfig {
 		builder.comment("Mob-Config for Elephant").push("Elephant");
 
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 80.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 10.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 60.0D);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 7.0D);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",

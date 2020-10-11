@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Pink bird that stands most of the time on one leg.$(br2)$(bold)Health: $()8 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Raw Salmon$(li)Raw Cod"
+			"text" : "Pink bird that stands most of the time on one leg.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Raw Salmon$(li)Raw Cod"
 		},
 		{
 			"type" : "entity",

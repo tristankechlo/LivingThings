@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Fast running bird that can be ridden without a saddle.$(br2)$(bold)Health: $()8 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat$(br2)$(bold)Breeding Behavior:$()$(br)    Next Page ..."
+			"text" : "Fast running bird that can be ridden without a saddle.$(br2)$(bold)Health: $()10 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat$(br2)$(bold)Breeding Behavior:$()$(br)    Next Page ..."
 		},
 		{
 			"type" : "entity",

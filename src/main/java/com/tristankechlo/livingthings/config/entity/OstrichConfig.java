@@ -26,7 +26,7 @@ public class OstrichConfig {
 		builder.comment("Mob-Config for Ostrich").push("Ostrich");
 		
 		canBeRidden = builder.define("CanBeRidden", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 16.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 20.0D);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
