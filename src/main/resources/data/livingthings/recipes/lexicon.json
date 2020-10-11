@@ -1,0 +1,15 @@
+"recipe" : {
+	"type" : "minecraft:crafting_shapeless",
+	"ingredients" : [
+		{
+			"item" : "minecraft:book"
+		},
+		{
+			"item" : "minecraft:lapis_lazuli"
+		}
+	],
+	"result" : {
+		"item" : "livingthings:lexicon",
+		"count" : 1
+	}
+}
