@@ -1,5 +1,6 @@
 
-## Todo / Ideas:     
+## Todo / Ideas:
+ - translate patchouli book
  - Elephant saddle item
     
  - improve Penguin AI

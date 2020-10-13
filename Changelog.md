@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.16.3 - 1.2.0
+ - translation to *pt_br* by [Mikeliro](https://github.com/Mikeliro)
+
 ### Version 1.16.3 - 1.1.9
  - adjust mob attributes like health/damage
  - update lexicon item
