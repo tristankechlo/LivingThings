@@ -1,14 +1,16 @@
 {
-
 	"itemGroup.LivingThings" : "Living Things",
 	
-	//container
+	
+	"__comment1" : "inventorys",
 	"container.livingthings.elephant" : "Elephant Inventory",
 	
-	//blocks
+	
+	"__comment2" : "blocks",
 	"block.livingthings.ostrich_nest" : "Ostrich Nest",
 	
-	//items
+	
+	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Shark Tooth",
 	"item.livingthings.ostrich_egg" : "Ostrich Egg",
 	"item.livingthings.raw_crab" : "Raw Crab",
@@ -16,7 +18,8 @@
 	"item.livingthings.crab_shell" : "Crab Shell",
 	"item.livingthings.lexicon" : "LivingThings Lexicon",
 	
-	//spawn eggs
+
+	"__comment4" : "spawn eggs",
 	"item.livingthings.elephant_spawn_egg" : "Elephant Spawn Egg",
 	"item.livingthings.giraffe_spawn_egg" : "Giraffe Spawn Egg",
 	"item.livingthings.lion_spawn_egg" : "Lion Spawn Egg",
@@ -29,7 +32,8 @@
 	"item.livingthings.raccoon_spawn_egg" : "Raccoon Spawn Egg",
 	"item.livingthings.owl_spawn_egg" : "Owl Spawn Egg",
 
-	//entity names
+
+	"__comment5" : "entity names",
 	"entity.livingthings.elephant" : "Elephant",
 	"entity.livingthings.giraffe" : "Giraffe",
 	"entity.livingthings.lion" : "Lion",
@@ -42,7 +46,8 @@
 	"entity.livingthings.raccoon" : "Raccoon",
 	"entity.livingthings.owl" : "Owl",
 	
-	//subtitle for sounds
+
+	"__comment6" : "subtitles",
 	"subtitles.livingthings.lion.ambient" : "Lion roaring",
 	"subtitles.livingthings.lion.hurt" : "Lion hurts",
 	"subtitles.livingthings.lion.death" : "Lion dies",
@@ -65,7 +70,8 @@
 	"subtitles.livingthings.owl.death" : "Owl dies",
 	"subtitles.livingthings.owl.fly" : "Owl flatters",
 	
-	//messages
+
+	"__comment7" : "messages",
 	"messages.livingthings.nopatchouli.title" : "Can't use this!",
 	"messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed."
 	
