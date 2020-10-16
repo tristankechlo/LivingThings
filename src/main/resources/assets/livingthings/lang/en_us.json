@@ -31,6 +31,7 @@
 	"item.livingthings.mantaray_spawn_egg" : "Mantaray Spawn Egg",
 	"item.livingthings.raccoon_spawn_egg" : "Raccoon Spawn Egg",
 	"item.livingthings.owl_spawn_egg" : "Owl Spawn Egg",
+	"item.livingthings.ancient_blaze_spawn_egg" : "Ancient Blaze Spawn Egg",
 
 
 	"__comment5" : "entity names",
@@ -45,6 +46,7 @@
 	"entity.livingthings.mantaray" : "Mantaray",
 	"entity.livingthings.raccoon" : "Raccoon",
 	"entity.livingthings.owl" : "Owl",
+	"entity.livingthings.ancient_blaze" : "Ancient Blaze",
 	
 
 	"__comment6" : "subtitles",

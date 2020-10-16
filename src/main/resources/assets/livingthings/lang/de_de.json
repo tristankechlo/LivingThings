@@ -31,6 +31,7 @@
 	"item.livingthings.mantaray_spawn_egg" : "Mantarochen-Spawn-Ei",
 	"item.livingthings.raccoon_spawn_egg" : "Waschb\u00e4ren-Spawn-Ei",
 	"item.livingthings.owl_spawn_egg" : "Eulen-Spawn-Ei",
+	"item.livingthings.ancient_blaze_spawn_egg" : "Antike-Lohe-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -45,6 +46,7 @@
 	"entity.livingthings.mantaray" : "Mantarochen",
 	"entity.livingthings.raccoon" : "Waschb\u00e4r",
 	"entity.livingthings.owl" : "Eule",
+	"entity.livingthings.ancient_blaze" : "Antike Lohe",
 	
 	
 	"__comment6" : "subtitles",
