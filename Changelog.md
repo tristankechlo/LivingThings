@@ -1,7 +1,11 @@
 # Changelog
 
+### Version 1.16.3 - 1.2.1
+ - added AncientBlaze entity
+
 ### Version 1.16.3 - 1.2.0
  - translation to *pt_br* by [Mikeliro](https://github.com/Mikeliro)
+ - improved *de_de* translation
 
 ### Version 1.16.3 - 1.1.9
  - adjust mob attributes like health/damage
