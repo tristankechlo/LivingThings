@@ -49,7 +49,7 @@ public class ModEntityTypes {
     public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, 0x000896, 0x595a6b);
     public static final EntityType<RaccoonEntity> RACCOON_ENTITY = createEntity("raccoon", RaccoonEntity::new, EntityClassification.CREATURE, 0.5F, 0.75F, 0x6e6e6e, 0x000000);
     public static final EntityType<OwlEntity> OWL_ENTITY = createEntity("owl", OwlEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F, 0xedd7d5, 0x6e3834);
-    public static final EntityType<AncientBlazeEntity> ANCIENT_BLAZE_ENTITY = createEntity("ancient_blaze", AncientBlazeEntity::new, EntityClassification.MONSTER, 0.7F, 2.1F, 0xF6B200, 0xFFF87D);
+    public static final EntityType<AncientBlazeEntity> ANCIENT_BLAZE_ENTITY = createEntity("ancient_blaze", AncientBlazeEntity::new, EntityClassification.MONSTER, 0.7F, 2.99F, 0xF6B200, 0xFFF87D);
 
 
 	/**
