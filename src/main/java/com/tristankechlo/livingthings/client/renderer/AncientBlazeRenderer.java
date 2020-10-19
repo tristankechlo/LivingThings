@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.layer.AncientBlazeChargedLayer;
 import com.tristankechlo.livingthings.client.model.AncientBlazeModel;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -17,6 +18,7 @@ public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, Ancien
 
 	public AncientBlazeRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new AncientBlazeModel<>(), 0.5F);
+		this.addLayer(new AncientBlazeChargedLayer(this));
 	}
 	
 	@Override

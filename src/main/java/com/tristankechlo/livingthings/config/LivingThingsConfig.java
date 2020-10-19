@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.config;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.config.entity.AncientBlazeConfig;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
@@ -41,6 +42,7 @@ public class LivingThingsConfig {
 	public static final MantarayConfig MANTARAY = new MantarayConfig(BUILDER);
 	public static final RaccoonConfig RACCOON = new RaccoonConfig(BUILDER);
 	public static final OwlConfig OWL = new OwlConfig(BUILDER);
+	public static final AncientBlazeConfig ANCIENT_BLAZE = new AncientBlazeConfig(BUILDER);
 	
 	public static final ForgeConfigSpec spec = BUILDER.build();
 
