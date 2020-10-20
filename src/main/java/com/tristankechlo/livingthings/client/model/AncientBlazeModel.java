@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.client.model;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -20,12 +21,7 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 	private final ModelRenderer Shields;
 	private final ModelRenderer[] shields = new ModelRenderer[4];
 	private final ModelRenderer Sticks;
-	private final ModelRenderer StickOne;
-	private final ModelRenderer StickTwo;
-	private final ModelRenderer StickThree;
-	private final ModelRenderer StickFour;
-	private final ModelRenderer StickFive;
-	private final ModelRenderer StickSix;
+	private final ModelRenderer[] sticks = new ModelRenderer[LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()];
 
 	public AncientBlazeModel() {
 		textureWidth = 64;
@@ -108,45 +104,28 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 		Sticks.setRotationPoint(0.0F, 5.0F, 0.0F);
 		Body.addChild(Sticks);
 		
-
-		StickOne = new ModelRenderer(this);
-		StickOne.setRotationPoint(-8.0F, 0.0F, 0.0F);
-		Sticks.addChild(StickOne);
-		StickOne.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		StickTwo = new ModelRenderer(this);
-		StickTwo.setRotationPoint(-4.0F, 0.0F, 6.928F);
-		Sticks.addChild(StickTwo);
-		StickTwo.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		StickThree = new ModelRenderer(this);
-		StickThree.setRotationPoint(4.0F, 0.0F, 6.928F);
-		Sticks.addChild(StickThree);
-		StickThree.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		StickFour = new ModelRenderer(this);
-		StickFour.setRotationPoint(8.0F, 0.0F, 0.0F);
-		Sticks.addChild(StickFour);
-		StickFour.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		StickFive = new ModelRenderer(this);
-		StickFive.setRotationPoint(4.0F, 0.0F, -6.928F);
-		Sticks.addChild(StickFive);
-		StickFive.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		StickSix = new ModelRenderer(this);
-		StickSix.setRotationPoint(-4.0F, 0.0F, -6.928F);
-		Sticks.addChild(StickSix);
-		StickSix.setTextureOffset(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
+		for (int i = 0; i < this.sticks.length; i++) {
+			this.sticks[i] = new ModelRenderer(this, 0, 18);
+			this.sticks[i].addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
+			this.Sticks.addChild(this.sticks[i]);
+		}
 	}
 
 	@Override
 	public void setRotationAngles(T blaze, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.Head.rotateAngleY = netHeadYaw * 0.017453F;
 	    this.Head.rotateAngleX = headPitch * 0.017453F;
+
+	    float f = 0.785398F + ageInTicks * -0.094247F;
+	    for(int i = 0; i < this.sticks.length; i++) {
+	    	this.sticks[i].showModel = (blaze.getShoots() > i);
+	    	this.sticks[i].rotationPointY = MathHelper.cos((i * 3F + ageInTicks) * 0.3F) - 1.0F;
+	        this.sticks[i].rotationPointX = MathHelper.cos(f) * 9.0F;
+	        this.sticks[i].rotationPointZ = MathHelper.sin(f) * 9.0F;
+	        f++;
+	    }
 	    	    
 	    if(blaze.isCharged()) {
-	    	this.Sticks.showModel = false;
 		    this.Shields.rotateAngleY = 0.785398F;
 		    this.Head.rotationPointY = -22.5F;
 
@@ -157,9 +136,6 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 		    }
 	         
 	    } else {
-
-	    	this.Sticks.showModel = true;
-		    this.Sticks.rotateAngleY = ageInTicks / 15;
 		    this.Shields.rotateAngleY = -ageInTicks / 50;
 		    this.Head.rotationPointY = -24.5F;
 
@@ -169,14 +145,6 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 		    	this.shields[i].rotateAngleX = -0.349065F;
 		    }
 		    
-		    float speed = 0.3F;	    
-		    this.StickOne.rotationPointY = MathHelper.cos((3F + ageInTicks) * speed);
-		    this.StickTwo.rotationPointY = MathHelper.cos((6F + ageInTicks) * speed);
-		    this.StickThree.rotationPointY = MathHelper.cos((9F + ageInTicks) * speed);
-		    this.StickFour.rotationPointY = MathHelper.cos((12F + ageInTicks) * speed);
-		    this.StickFive.rotationPointY = MathHelper.cos((15F + ageInTicks) * speed);
-		    this.StickSix.rotationPointY = MathHelper.cos((18F + ageInTicks) * speed);
-	    	
 	    }
 	}
 	
@@ -187,8 +155,7 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		Body.render(matrixStack, buffer, packedLight, packedOverlay);
-		
+		Body.render(matrixStack, buffer, packedLight, packedOverlay);		
 	}
 	
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {

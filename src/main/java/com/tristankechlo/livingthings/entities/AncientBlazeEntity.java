@@ -49,6 +49,7 @@ import net.minecraft.world.server.ServerBossInfo;
 
 public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob {
 
+	private static final DataParameter<Byte> SHOOTS = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.BYTE);
 	private static final DataParameter<Integer> INVULNERABLE_TIME = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.VARINT);
 	private final ServerBossInfo bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.YELLOW, BossInfo.Overlay.PROGRESS);
 
@@ -92,18 +93,21 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(INVULNERABLE_TIME, 0);
+		this.dataManager.register(SHOOTS, (byte)0);
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putInt("ChargedTime", this.getInvulnerableTime());
+		compound.putByte("Shoots", this.getShoots());
 	}
 	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.setInvulnerableTime(compound.getInt("ChargedTime"));
+		this.setShoots(compound.getByte("Shoots"));
 	    if (this.hasCustomName()) {
 	        this.bossInfo.setName(this.getDisplayName());
 	    }
@@ -164,6 +168,14 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		if (this.getInvulnerableTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
 			return false;
 			
+		//catch large fireballs
+		} else if (source.getImmediateSource() instanceof FireballEntity && source.getTrueSource() instanceof PlayerEntity) {
+			int shoots = this.getShoots();
+			if(shoots < LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()) {
+				this.setShoots((byte) (shoots + 1));
+			}
+			return false;
+	      
 		//random chance for arrows, tridents,.. to be blocked
 		} else if (source instanceof IndirectEntityDamageSource) {
 			return this.rand.nextInt(4) != 0 && super.attackEntityFrom(source, amount);
@@ -180,8 +192,11 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
         double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
         double d3 = target.getPosZ() - this.getPosZ();
         
+        int shoots = this.getShoots();
         double chance = (double)LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100.0D;
-        if(this.rand.nextDouble() < chance) {
+        
+        if(this.rand.nextDouble() < chance && shoots > 0) {
+        	this.setShoots((byte) (shoots - 1));
             FireballEntity fireballentity = new FireballEntity(this.world, this, d1, d2, d3);
             fireballentity.setPosition(fireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ());
             fireballentity.explosionPower = 1;
@@ -277,7 +292,15 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public void setInvulnerableTime(int time) {
 		this.dataManager.set(INVULNERABLE_TIME, time);
 	}
+	
+	public byte getShoots() {
+		return this.dataManager.get(SHOOTS);
+	}
 
+	public void setShoots(byte shoots) {
+		this.dataManager.set(SHOOTS, shoots);
+	}
+	
 	@Override
 	public boolean isCharged() {
 		return this.dataManager.get(INVULNERABLE_TIME) > 0;
@@ -298,16 +321,17 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		@Override
 		public void tick() {
 			int chargedtime = this.blaze.getInvulnerableTime();
+			int targetShoots = LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get();
 			if(chargedtime > 0) {
 				chargedtime--;
-				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / 40;
-				if(chargedtime % divider == 0 && this.blaze.getHealth() < this.blaze.getMaxHealth()) {
-					float heal = (float) (LivingThingsConfig.ANCIENT_BLAZE.health.get() / 40);
-					this.blaze.heal(heal);
+				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / targetShoots;
+				if(chargedtime % divider < 1 && this.blaze.getShoots() < targetShoots) {
+					this.blaze.setShoots((byte) (this.blaze.getShoots() + 1));
 				}
 			}
 			if(chargedtime == 0) {
 				this.blaze.setHealth(this.blaze.getMaxHealth());
+				this.blaze.setShoots((byte)targetShoots);
 
 				if(!this.blaze.world.isRemote) {
 			        this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
