@@ -1,11 +1,12 @@
 
 ## Todo / Ideas:
  - Ancient Blaze
-     - charging relative to config values
      - patchouli entry
      - dropping the helmet
      - finish model/texture (charging animation)
      - spawning
+     
+ - change mob configs
      
  - translate patchouli book
  - Elephant saddle item

@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 
 import net.minecraft.block.BlockState;
@@ -22,9 +23,11 @@ import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.BlazeEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -44,8 +47,7 @@ import net.minecraft.world.server.ServerBossInfo;
 
 public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob {
 
-	private static final DataParameter<Byte> SHIELDS = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Integer> CHARGED_TIME = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> INVULNERABLE_TIME = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.VARINT);
 	private final ServerBossInfo bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.YELLOW, BossInfo.Overlay.PROGRESS);
 
 	public AncientBlazeEntity(EntityType<? extends AncientBlazeEntity> type, World world) {
@@ -60,21 +62,21 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ANCIENT_BLAZE.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 48.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
 	}
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.setChargedTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
+		this.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new AncientBlazeEntity.ChargeUpGoal(this));
-	    this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 40, 20.0F));
+	    this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 30, 20.0F));
 	    this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0D));
 	    this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
 	    this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -87,51 +89,19 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(SHIELDS, (byte)4);
-		this.dataManager.register(CHARGED_TIME, 0);
-	}
-
-	@Override
-	public void livingTick() {
-		//slow falling
-	    if (!this.onGround && this.getMotion().y < 0.0D) {
-	    	this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
-	    }
-	    //smoke particles
-		if (this.world.isRemote && this.getChargedTime() == 0) {
-			for (int i = 0; i < 2; ++i) {
-				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
-			}
-		}
-		super.livingTick();
-	}
-	
-	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		//dont get damaged while charging up
-		if (this.getChargedTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
-			return false;
-			
-		//random chance for arrows, tridents,.. to be blocked
-		} else if (source instanceof IndirectEntityDamageSource) {
-			return this.rand.nextInt(5) != 0 && super.attackEntityFrom(source, amount);
-			
-		//normal damage handling
-		} else {
-			return super.attackEntityFrom(source, amount);
-		}
+		this.dataManager.register(INVULNERABLE_TIME, 0);
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		compound.putInt("ChargedTime", this.getChargedTime());
+		compound.putInt("ChargedTime", this.getInvulnerableTime());
 	}
 	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setChargedTime(compound.getInt("ChargedTime"));
+		this.setInvulnerableTime(compound.getInt("ChargedTime"));
 	    if (this.hasCustomName()) {
 	        this.bossInfo.setName(this.getDisplayName());
 	    }
@@ -142,11 +112,42 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		super.setCustomName(name);
 	    this.bossInfo.setName(this.getDisplayName());
 	}
+
+	@Override
+	public void livingTick() {
+		//slow falling
+	    if (!this.onGround && this.getMotion().y < 0.0D) {
+	    	this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
+	    }
+	    //smoke particles
+		if (this.world.isRemote && this.getInvulnerableTime() == 0) {
+			for (int i = 0; i < 2; ++i) {
+				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
+			}
+		}
+		super.livingTick();
+	}
 	
 	@Override
 	protected void updateAITasks() {
 		super.updateAITasks();
         this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+	}
+	
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		//dont get damaged while charging up
+		if (this.getInvulnerableTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
+			return false;
+			
+		//random chance for arrows, tridents,.. to be blocked
+		} else if (source instanceof IndirectEntityDamageSource) {
+			return this.rand.nextInt(4) != 0 && super.attackEntityFrom(source, amount);
+			
+		//normal damage handling
+		} else {
+			return super.attackEntityFrom(source, amount);
+		}
 	}
 
 	@Override
@@ -155,9 +156,46 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
         double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
         double d3 = target.getPosZ() - this.getPosZ();
         
-        SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.world, this, d1, d2, d3);
-        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
-        this.world.addEntity(smallfireballentity);
+        double chance = (double)(LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100);
+        if(this.rand.nextDouble() < chance) {
+            FireballEntity fireballentity = new FireballEntity(this.world, this, d1, d2, d3);
+            fireballentity.setPosition(fireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ());
+            fireballentity.explosionPower = 1;
+            this.world.addEntity(fireballentity);
+        } else {
+            SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.world, this, d1, d2, d3);
+            smallfireballentity.setPosition(smallfireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
+            this.world.addEntity(smallfireballentity);
+        }
+	}
+		
+	@SuppressWarnings("deprecation")
+	@Override
+	public void remove(boolean keepData) {
+		
+		int amount = LivingThingsConfig.ANCIENT_BLAZE.blazeSpawnCount.get();
+		LivingThings.LOGGER.debug("Test");
+		
+		if (!this.world.isRemote && amount >= 1 && this.getShouldBeDead() && !this.removed) {
+
+			for (int i = 0; i < amount; i++) {
+
+				int xOffset = this.rand.nextInt(4 + 4) - 4;
+				int zOffset =  this.rand.nextInt(4 + 4) - 4;
+				
+				BlazeEntity blaze = new BlazeEntity(EntityType.BLAZE, this.world);
+				if (this.isNoDespawnRequired()) {
+					blaze.enablePersistence();
+				}
+
+				blaze.setCustomName(this.getCustomName());
+				blaze.setNoAI(this.isAIDisabled());
+				blaze.setInvulnerable(this.isInvulnerable());
+				blaze.setLocationAndAngles(this.getPosX() + xOffset, this.getPosY() + 0.5D, this.getPosZ() + zOffset, this.rand.nextFloat() * 360.0F, 0.0F);
+				this.world.addEntity(blaze);
+			}
+		}
+		super.remove(keepData);
 	}
 
 	@Override
@@ -206,17 +244,17 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	    this.bossInfo.removePlayer(player);
 	}
 	
-	public int getChargedTime() {
-		return this.dataManager.get(CHARGED_TIME);
+	public int getInvulnerableTime() {
+		return this.dataManager.get(INVULNERABLE_TIME);
 	}
 	
-	public void setChargedTime(int chargedtime) {
-		this.dataManager.set(CHARGED_TIME, chargedtime);
+	public void setInvulnerableTime(int time) {
+		this.dataManager.set(INVULNERABLE_TIME, time);
 	}
 
 	@Override
 	public boolean isCharged() {
-		return this.dataManager.get(CHARGED_TIME) > 0;
+		return this.dataManager.get(INVULNERABLE_TIME) > 0;
 	}
 
 	class ChargeUpGoal extends Goal {
@@ -229,11 +267,11 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		}
 		@Override
 		public boolean shouldExecute() {
-			return this.blaze.getChargedTime() > 0;
+			return this.blaze.getInvulnerableTime() > 0;
 		}
 		@Override
 		public void tick() {
-			int chargedtime = this.blaze.getChargedTime();
+			int chargedtime = this.blaze.getInvulnerableTime();
 			if(chargedtime > 0) {
 				chargedtime--;
 				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / 40;
@@ -244,8 +282,24 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 			}
 			if(chargedtime == 0) {
 				this.blaze.setHealth(this.blaze.getMaxHealth());
+				
+				for (int i = 0; i < 4; i++) {
+					double accelX = Math.pow(-1, i) * 90;
+					double accelZ =  (i < 2) ? 90: -90;
+			        SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -10D, accelZ);
+			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D), smallfireballentity.getPosZ());
+			        this.blaze.world.addEntity(smallfireballentity);
+				}
+
+				for (int i = 0; i < 4; i++) {
+					double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
+					double accelZ =  (i < 2) ? Math.pow(-1, i) * 90 : 0;
+			        FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -10D, accelZ);
+			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
+			        this.blaze.world.addEntity(smallfireballentity);
+				}
 			}
-			this.blaze.setChargedTime(chargedtime);
+			this.blaze.setInvulnerableTime(chargedtime);
 		}
 	}
 
