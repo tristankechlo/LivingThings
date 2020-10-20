@@ -167,8 +167,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	
 	@Override
 	protected boolean isDespawnPeaceful() {
-		//TODO check config for despawn peaceful
-		return super.isDespawnPeaceful();
+		return LivingThingsConfig.ANCIENT_BLAZE.peacefulDespawn.get() && super.isDespawnPeaceful();
 	}
 
 	@Override
