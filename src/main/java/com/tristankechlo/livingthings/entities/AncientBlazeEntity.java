@@ -2,8 +2,8 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
 
-import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -37,6 +37,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
@@ -115,12 +117,19 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 
 	@Override
 	public void livingTick() {
-		//slow falling
-	    if (!this.onGround && this.getMotion().y < 0.0D) {
-	    	this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
-	    }
-	    //smoke particles
+		// slow falling
+		if (!this.onGround && this.getMotion().y < 0.0D) {
+			this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
+		}
+		
 		if (this.world.isRemote && this.getInvulnerableTime() == 0) {
+
+			//burn sound
+			if (this.rand.nextInt(24) == 0 && !this.isSilent()) {
+				this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), ModSounds.ANCIENT_BLAZE_BURN.get(), this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
+			}
+
+			// smoke particles
 			for (int i = 0; i < 2; ++i) {
 				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
 			}
@@ -132,6 +141,21 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	protected void updateAITasks() {
 		super.updateAITasks();
         this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.ANCIENT_BLAZE_AMBIENT.get();
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.ANCIENT_BLAZE_HURT.get();
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.ANCIENT_BLAZE_DEATH.get();
 	}
 	
 	@Override
@@ -156,7 +180,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
         double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
         double d3 = target.getPosZ() - this.getPosZ();
         
-        double chance = (double)(LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100);
+        double chance = (double)LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100.0D;
         if(this.rand.nextDouble() < chance) {
             FireballEntity fireballentity = new FireballEntity(this.world, this, d1, d2, d3);
             fireballentity.setPosition(fireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ());
@@ -167,6 +191,9 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
             smallfireballentity.setPosition(smallfireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
             this.world.addEntity(smallfireballentity);
         }
+        if(!this.world.isRemote) {
+            this.world.playSound(null, this.getPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundCategory.HOSTILE, 2.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+        }
 	}
 		
 	@SuppressWarnings("deprecation")
@@ -174,7 +201,6 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public void remove(boolean keepData) {
 		
 		int amount = LivingThingsConfig.ANCIENT_BLAZE.blazeSpawnCount.get();
-		LivingThings.LOGGER.debug("Test");
 		
 		if (!this.world.isRemote && amount >= 1 && this.getShouldBeDead() && !this.removed) {
 
@@ -282,11 +308,15 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 			}
 			if(chargedtime == 0) {
 				this.blaze.setHealth(this.blaze.getMaxHealth());
+
+				if(!this.blaze.world.isRemote) {
+			        this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+				}
 				
 				for (int i = 0; i < 4; i++) {
 					double accelX = Math.pow(-1, i) * 90;
 					double accelZ =  (i < 2) ? 90: -90;
-			        SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -10D, accelZ);
+			        SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
 			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D), smallfireballentity.getPosZ());
 			        this.blaze.world.addEntity(smallfireballentity);
 				}
@@ -294,7 +324,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				for (int i = 0; i < 4; i++) {
 					double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
 					double accelZ =  (i < 2) ? Math.pow(-1, i) * 90 : 0;
-			        FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -10D, accelZ);
+			        FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
 			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
 			        this.blaze.world.addEntity(smallfireballentity);
 				}

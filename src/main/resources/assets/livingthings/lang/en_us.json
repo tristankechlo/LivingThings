@@ -71,6 +71,12 @@
 	"subtitles.livingthings.owl.hurt" : "Owl hurts",
 	"subtitles.livingthings.owl.death" : "Owl dies",
 	"subtitles.livingthings.owl.fly" : "Owl flatters",
+    "subtitles.livingthings.ancient_blaze.ambient": "Ancient Blaze breathes",
+    "subtitles.livingthings.ancient_blaze.burn": "Ancient Blaze crackles",
+    "subtitles.livingthings.ancient_blaze.death": "Ancient Blae dies",
+    "subtitles.livingthings.ancient_blaze.hurt": "Ancient Blaze hurts",
+    "subtitles.livingthings.ancient_blaze.shoot": "Ancient Blaze shoots",
+    "subtitles.livingthings.ancient_blaze.spawn": "Ancient Blaze released",
 	
 
 	"__comment7" : "messages",

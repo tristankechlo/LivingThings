@@ -197,5 +197,47 @@
 			"mob/parrot/fly8"
 		],
 		"subtitle" : "subtitles.livingthings.owl.fly"
+	},
+	"ancient_blaze.ambient" : {
+		"sounds" : [
+			"mob/blaze/breathe1",
+			"mob/blaze/breathe2",
+			"mob/blaze/breathe3",
+			"mob/blaze/breathe4"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.ambient"
+	},
+	"ancient_blaze.burn" : {
+		"sounds" : [
+			"fire/fire"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.burn"
+	},
+	"ancient_blaze.death" : {
+		"sounds" : [
+			"mob/blaze/death"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.death"
+	},
+	"ancient_blaze.hurt" : {
+		"sounds" : [
+			"mob/blaze/hit1",
+			"mob/blaze/hit2",
+			"mob/blaze/hit3",
+			"mob/blaze/hit4"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.hurt"
+	},
+	"ancient_blaze.shoot" : {
+		"sounds" : [
+			"mob/ghast/fireball4"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.shoot"
+	},
+	"ancient_blaze.spawn" : {
+		"sounds" : [
+			"mob/wither/spawn"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.spawn"
 	}
 }

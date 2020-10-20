@@ -40,6 +40,13 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> OWL_DEATH = SOUNDS.register("owl_death", () -> new SoundEvent(getSound("owl.death")));
 	public static final RegistryObject<SoundEvent> OWL_FLY = SOUNDS.register("owl_fly", () -> new SoundEvent(getSound("owl.fly")));
 	
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_AMBIENT = SOUNDS.register("ancient_blaze_ambient", () -> new SoundEvent(getSound("ancient_blaze.ambient")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_HURT = SOUNDS.register("ancient_blaze_hurt", () -> new SoundEvent(getSound("ancient_blaze.hurt")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_DEATH = SOUNDS.register("ancient_blaze_death", () -> new SoundEvent(getSound("ancient_blaze.death")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_BURN = SOUNDS.register("ancient_blaze_burn", () -> new SoundEvent(getSound("ancient_blaze.burn")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SHOOT = SOUNDS.register("ancient_blaze_shoot", () -> new SoundEvent(getSound("ancient_blaze.shoot")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SPAWN = SOUNDS.register("ancient_blaze_spawn", () -> new SoundEvent(getSound("ancient_blaze.spawn")));
+	
 	
 	private static ResourceLocation getSound(String name) {
 		return new ResourceLocation(LivingThings.MOD_ID, name);

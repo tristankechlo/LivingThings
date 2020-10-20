@@ -71,6 +71,12 @@
 	"subtitles.livingthings.owl.hurt" : "Eule nimmt Schaden",
 	"subtitles.livingthings.owl.death" : "Eule stirbt",
 	"subtitles.livingthings.owl.fly" : "Eule flattert",
+    "subtitles.livingthings.ancient_blaze.ambient": "Antike Lohe atmet",
+    "subtitles.livingthings.ancient_blaze.burn": "Antike Lohe knistert",
+    "subtitles.livingthings.ancient_blaze.death": "Antike Lohe stirbt",
+    "subtitles.livingthings.ancient_blaze.hurt": "Antike Lohe nimmt Schaden",
+    "subtitles.livingthings.ancient_blaze.shoot": "Antike Lohe schie\u00dft",
+    "subtitles.livingthings.ancient_blaze.spawn": "Antike Lohe entfesselt",
 	
 	
 	"__comment7" : "messages",
