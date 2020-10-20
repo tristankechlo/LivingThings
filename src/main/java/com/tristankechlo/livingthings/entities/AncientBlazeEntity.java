@@ -98,7 +98,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	    	this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
 	    }
 	    //smoke particles
-		if (this.world.isRemote) {
+		if (this.world.isRemote && this.getChargedTime() == 0) {
 			for (int i = 0; i < 2; ++i) {
 				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
 			}
