@@ -173,8 +173,9 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 			int shoots = this.getShoots();
 			if(shoots < LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()) {
 				this.setShoots((byte) (shoots + 1));
+				return false;
 			}
-			return false;
+			return true;
 	      
 		//random chance for arrows, tridents,.. to be blocked
 		} else if (source instanceof IndirectEntityDamageSource) {
@@ -327,6 +328,9 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / targetShoots;
 				if(chargedtime % divider < 1 && this.blaze.getShoots() < targetShoots) {
 					this.blaze.setShoots((byte) (this.blaze.getShoots() + 1));
+					if(!this.blaze.world.isRemote) {
+				        this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+					}
 				}
 			}
 			if(chargedtime == 0) {

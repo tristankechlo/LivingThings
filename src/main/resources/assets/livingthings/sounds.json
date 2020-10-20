@@ -239,5 +239,11 @@
 			"mob/wither/spawn"
 		],
 		"subtitle" : "subtitles.livingthings.ancient_blaze.spawn"
+	},
+	"ancient_blaze.charge_up" : {
+		"sounds" : [
+			"livingthings:ancient_blaze/ancient_blaze_charge_up1"
+		],
+		"subtitle" : "subtitles.livingthings.ancient_blaze.charge_up"
 	}
 }

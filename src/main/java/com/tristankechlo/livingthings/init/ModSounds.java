@@ -46,6 +46,7 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_BURN = SOUNDS.register("ancient_blaze_burn", () -> new SoundEvent(getSound("ancient_blaze.burn")));
 	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SHOOT = SOUNDS.register("ancient_blaze_shoot", () -> new SoundEvent(getSound("ancient_blaze.shoot")));
 	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SPAWN = SOUNDS.register("ancient_blaze_spawn", () -> new SoundEvent(getSound("ancient_blaze.spawn")));
+	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_CHARGE_UP = SOUNDS.register("ancient_blaze_charge_up", () -> new SoundEvent(getSound("ancient_blaze.charge_up")));
 	
 	
 	private static ResourceLocation getSound(String name) {
