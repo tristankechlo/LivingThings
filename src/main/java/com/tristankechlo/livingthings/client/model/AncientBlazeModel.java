@@ -18,10 +18,7 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 	private final ModelRenderer Helmet;
 	private final ModelRenderer Crystal;
 	private final ModelRenderer Shields;
-	private final ModelRenderer ShieldOne;
-	private final ModelRenderer ShieldTwo;
-	private final ModelRenderer ShieldThree;
-	private final ModelRenderer ShieldFour;
+	private final ModelRenderer[] shields = new ModelRenderer[4];
 	private final ModelRenderer Sticks;
 	private final ModelRenderer StickOne;
 	private final ModelRenderer StickTwo;
@@ -99,30 +96,13 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 		Body.addChild(Shields);
 		setRotationAngle(Shields, 0.0F, -0.7854F, 0.0F);
 		
-
-		ShieldOne = new ModelRenderer(this);
-		ShieldOne.setRotationPoint(0.0F, 0.0F, -7.5F);
-		Shields.addChild(ShieldOne);
-		setRotationAngle(ShieldOne, -0.3491F, 0.0F, 0.0F);
-		ShieldOne.setTextureOffset(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
-
-		ShieldTwo = new ModelRenderer(this);
-		ShieldTwo.setRotationPoint(-7.5F, 0.0F, 0.0F);
-		Shields.addChild(ShieldTwo);
-		setRotationAngle(ShieldTwo, -0.3491F, 1.5708F, 0.0F);
-		ShieldTwo.setTextureOffset(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
-
-		ShieldThree = new ModelRenderer(this);
-		ShieldThree.setRotationPoint(0.0F, 0.0F, 7.5F);
-		Shields.addChild(ShieldThree);
-		setRotationAngle(ShieldThree, -0.3491F, 3.1416F, 0.0F);
-		ShieldThree.setTextureOffset(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
-
-		ShieldFour = new ModelRenderer(this);
-		ShieldFour.setRotationPoint(7.5F, 0.0F, 0.0F);
-		Shields.addChild(ShieldFour);
-		setRotationAngle(ShieldFour, -0.3491F, -1.5708F, 0.0F);
-		ShieldFour.setTextureOffset(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
+		for (int i = 0; i < this.shields.length; i++) {
+			this.shields[i] = new ModelRenderer(this, 0, 43);
+			this.shields[i].addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
+			this.shields[i].setRotationPoint(i * 7.5F, 0.0F, i * 7.5F);
+			setRotationAngle(this.shields[i], -0.3491F, ((-1)^i) * 1.570796F, 0.0F);
+			this.Shields.addChild(this.shields[i]);
+		}
 
 		Sticks = new ModelRenderer(this);
 		Sticks.setRotationPoint(0.0F, 5.0F, 0.0F);
@@ -161,20 +141,48 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T blaze, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.Head.rotateAngleY = netHeadYaw * 0.017453F;
 	    this.Head.rotateAngleX = headPitch * 0.017453F;
-	    
-	    this.Sticks.rotateAngleY = ageInTicks / 15;
-	    this.Shields.rotateAngleY = -ageInTicks / 50;
-	    
-	    float speed = 0.3F;	    
-	    this.StickOne.rotationPointY = MathHelper.cos((3F + ageInTicks) * speed);
-	    this.StickTwo.rotationPointY = MathHelper.cos((6F + ageInTicks) * speed);
-	    this.StickThree.rotationPointY = MathHelper.cos((9F + ageInTicks) * speed);
-	    this.StickFour.rotationPointY = MathHelper.cos((12F + ageInTicks) * speed);
-	    this.StickFive.rotationPointY = MathHelper.cos((15F + ageInTicks) * speed);
-	    this.StickSix.rotationPointY = MathHelper.cos((18F + ageInTicks) * speed);
+	    	    
+	    if(blaze.isCharged()) {
+	    	this.Sticks.showModel = false;
+		    this.Shields.rotateAngleY = 0.785398F;
+		    this.Head.rotationPointY = -22.5F;
+
+		    for(int i = 0; i < this.shields.length; i++) {
+		    	this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 6.0F;
+		    	this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 6.0F;
+		    	this.shields[i].rotateAngleX = 0F;
+		    }
+	         
+	    } else {
+
+	    	this.Sticks.showModel = true;
+		    this.Sticks.rotateAngleY = ageInTicks / 15;
+		    this.Shields.rotateAngleY = -ageInTicks / 50;
+		    this.Head.rotationPointY = -24.5F;
+
+		    for(int i = 0; i < this.shields.length; i++) {
+		    	this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 7.5F;
+		    	this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 7.5F;
+		    	this.shields[i].rotateAngleX = -0.349065F;
+		    }
+		    
+		    float speed = 0.3F;	    
+		    this.StickOne.rotationPointY = MathHelper.cos((3F + ageInTicks) * speed);
+		    this.StickTwo.rotationPointY = MathHelper.cos((6F + ageInTicks) * speed);
+		    this.StickThree.rotationPointY = MathHelper.cos((9F + ageInTicks) * speed);
+		    this.StickFour.rotationPointY = MathHelper.cos((12F + ageInTicks) * speed);
+		    this.StickFive.rotationPointY = MathHelper.cos((15F + ageInTicks) * speed);
+		    this.StickSix.rotationPointY = MathHelper.cos((18F + ageInTicks) * speed);
+	    	
+	    }
+	}
+	
+	@Override
+	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
+		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
 	}
 
 	@Override

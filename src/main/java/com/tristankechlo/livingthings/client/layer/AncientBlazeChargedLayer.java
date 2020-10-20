@@ -20,8 +20,8 @@ public class AncientBlazeChargedLayer extends EnergyLayer<AncientBlazeEntity, An
       super(entityRenderer);
    }
 
-   protected float func_225634_a_(float value) {
-      return value * 0.01F;
+   protected float func_225634_a_(float speed) {
+      return speed * 0.005F;
    }
 
    protected ResourceLocation func_225633_a_() {
