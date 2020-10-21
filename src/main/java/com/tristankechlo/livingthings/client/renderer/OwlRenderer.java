@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.OwlModel;
+import com.tristankechlo.livingthings.client.model.entity.OwlModel;
 import com.tristankechlo.livingthings.entities.OwlEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

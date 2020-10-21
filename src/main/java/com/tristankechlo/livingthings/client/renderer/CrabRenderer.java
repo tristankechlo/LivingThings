@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.CrabModel;
+import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.entities.CrabEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -59,7 +58,7 @@ public class MantarayConfig {
 						Biomes.DEEP_WARM_OCEAN.getLocation().toString(),
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
-					biome -> RegisterEntitiesToBiomes.checkBiome("Mantaray", biome));
+					biome -> LivingThingsConfig.checkBiome("Mantaray", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 15, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 4, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 7, 1, Short.MAX_VALUE);

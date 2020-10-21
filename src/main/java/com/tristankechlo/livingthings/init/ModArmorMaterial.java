@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.items.armor;
+package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 

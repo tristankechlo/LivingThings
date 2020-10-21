@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.ElephantModel;
+import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

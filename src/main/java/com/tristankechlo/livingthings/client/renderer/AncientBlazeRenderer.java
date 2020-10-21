@@ -1,8 +1,8 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.layer.AncientBlazeChargedLayer;
-import com.tristankechlo.livingthings.client.model.AncientBlazeModel;
+import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
+import com.tristankechlo.livingthings.client.renderer.layer.AncientBlazeChargedLayer;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

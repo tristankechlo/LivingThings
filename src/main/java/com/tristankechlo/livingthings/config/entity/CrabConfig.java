@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -61,7 +60,7 @@ public class CrabConfig {
 						Biomes.DESERT_LAKES.getLocation().toString(),
 						Biomes.SWAMP_HILLS.getLocation().toString(),
 						Biomes.SWAMP.getLocation().toString()),
-				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
+				biome -> LivingThingsConfig.checkBiome("Crab", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 50, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 5, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 8, 1, Short.MAX_VALUE);

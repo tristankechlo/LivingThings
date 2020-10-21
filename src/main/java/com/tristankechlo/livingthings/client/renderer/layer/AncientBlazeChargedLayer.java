@@ -1,7 +1,7 @@
-package com.tristankechlo.livingthings.client.layer;
+package com.tristankechlo.livingthings.client.renderer.layer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.AncientBlazeModel;
+import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;

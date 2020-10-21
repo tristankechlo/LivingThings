@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -44,7 +43,7 @@ public class SharkConfig {
 						Biomes.DEEP_WARM_OCEAN.getLocation().toString(),
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
-					biome -> RegisterEntitiesToBiomes.checkBiome("Shark", biome));
+					biome -> LivingThingsConfig.checkBiome("Shark", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 13, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 3, 1, Short.MAX_VALUE);

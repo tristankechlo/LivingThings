@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -44,7 +43,7 @@ public class RaccoonConfig {
 						Biomes.DARK_FOREST.getLocation().toString(),
 						Biomes.DARK_FOREST_HILLS.getLocation().toString(),
 						Biomes.FLOWER_FOREST.getLocation().toString()),
-				biome -> RegisterEntitiesToBiomes.checkBiome("Raccoon", biome));
+				biome -> LivingThingsConfig.checkBiome("Raccoon", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 20, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);

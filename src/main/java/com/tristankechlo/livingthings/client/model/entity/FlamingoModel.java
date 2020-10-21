@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.client.model;
+package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -189,7 +189,7 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
 	    
 		if(flamingo.isLeftLegUp()) {
-			//values are defined by: ((Math.PI / 180) * AngleIn°)
+			//values are defined by: ((Math.PI / 180) * AngleInï¿½)
 			this.LeftLegTop.rotateAngleX = 1.3089969389F;
 			this.LeftLegBottom.rotateAngleX = -2.7052603405F;
 			this.LeftFoot.rotateAngleX = 0.174532925F;

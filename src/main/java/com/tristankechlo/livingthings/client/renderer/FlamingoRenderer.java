@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.FlamingoModel;
+import com.tristankechlo.livingthings.client.model.entity.FlamingoModel;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

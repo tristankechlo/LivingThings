@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.OstrichModel;
+import com.tristankechlo.livingthings.client.model.entity.OstrichModel;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

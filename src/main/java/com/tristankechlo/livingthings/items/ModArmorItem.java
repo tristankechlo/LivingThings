@@ -1,6 +1,6 @@
-package com.tristankechlo.livingthings.items.armor;
+package com.tristankechlo.livingthings.items;
 
-import com.tristankechlo.livingthings.client.model.AncientArmorModel;
+import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.init.ModItems;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;

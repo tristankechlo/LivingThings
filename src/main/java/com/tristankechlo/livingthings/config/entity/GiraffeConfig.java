@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -48,7 +47,7 @@ public class GiraffeConfig {
 						Biomes.SAVANNA_PLATEAU.getLocation().toString(),
 						Biomes.SHATTERED_SAVANNA.getLocation().toString(),
 						Biomes.SHATTERED_SAVANNA_PLATEAU.getLocation().toString()),
-				biome -> RegisterEntitiesToBiomes.checkBiome("Giraffe", biome));
+				biome -> LivingThingsConfig.checkBiome("Giraffe", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 15, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 5, 1, Short.MAX_VALUE);

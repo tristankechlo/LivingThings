@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -52,7 +51,7 @@ public class OwlConfig {
 						Biomes.TAIGA.getLocation().toString(),
 						Biomes.TAIGA_HILLS.getLocation().toString(),
 						Biomes.TAIGA_MOUNTAINS.getLocation().toString()),
-				biome -> RegisterEntitiesToBiomes.checkBiome("Owl", biome));
+				biome -> LivingThingsConfig.checkBiome("Owl", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 20, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);

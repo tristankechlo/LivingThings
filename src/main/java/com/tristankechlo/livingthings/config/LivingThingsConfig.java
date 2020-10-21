@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.config;
 
+import org.apache.logging.log4j.Level;
+
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.AncientBlazeConfig;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
@@ -14,10 +16,12 @@ import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber
 public class LivingThingsConfig {
@@ -58,6 +62,16 @@ public class LivingThingsConfig {
 		if (configEvent.getConfig().getModId() == LivingThings.MOD_ID) {
 			LivingThings.LOGGER.debug("Config just got changed on the file system!");
 		}
+	}
+	
+	public static boolean checkBiome(String name, Object test) {
+		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
+			//LivingThings.LOGGER.log(Level.INFO, name + " " + String.valueOf(test));
+			return true;
+		}
+		LivingThings.LOGGER.log(Level.INFO,
+				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
+		return false;
 	}
 
 }

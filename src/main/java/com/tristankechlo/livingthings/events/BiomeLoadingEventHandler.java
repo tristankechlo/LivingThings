@@ -1,23 +1,20 @@
-package com.tristankechlo.livingthings.init;
+package com.tristankechlo.livingthings.events;
 
 import java.util.List;
 
-import org.apache.logging.log4j.Level;
-
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = LivingThings.MOD_ID)
-public class RegisterEntitiesToBiomes {
+public class BiomeLoadingEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onBiomeLoading(BiomeLoadingEvent event) {
@@ -125,15 +122,4 @@ public class RegisterEntitiesToBiomes {
 		}
 
 	}
-
-	public static boolean checkBiome(String name, Object test) {
-		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
-			//LivingThings.LOGGER.log(Level.INFO, name + " " + String.valueOf(test));
-			return true;
-		}
-		LivingThings.LOGGER.log(Level.INFO,
-				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
-		return false;
-	}
-
 }

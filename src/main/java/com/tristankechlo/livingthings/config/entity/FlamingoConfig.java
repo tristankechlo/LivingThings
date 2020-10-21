@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -33,7 +32,7 @@ public class FlamingoConfig {
 							Biomes.SWAMP.getLocation().toString(),
 							Biomes.SWAMP_HILLS.getLocation().toString(),
 							Biomes.RIVER.getLocation().toString()),
-						biome -> RegisterEntitiesToBiomes.checkBiome("Flamingo", biome));
+						biome -> LivingThingsConfig.checkBiome("Flamingo", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 24, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);

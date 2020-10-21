@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.client.model;
+package com.tristankechlo.livingthings.client.model.armor;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

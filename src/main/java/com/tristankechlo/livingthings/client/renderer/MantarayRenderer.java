@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.MantarayModel;
+import com.tristankechlo.livingthings.client.model.entity.MantarayModel;
 import com.tristankechlo.livingthings.entities.MantarayEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

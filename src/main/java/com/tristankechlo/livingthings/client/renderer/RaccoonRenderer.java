@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.client.model.RaccoonModel;
+import com.tristankechlo.livingthings.client.model.entity.RaccoonModel;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

@@ -2,9 +2,8 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.items.LexiconItem;
+import com.tristankechlo.livingthings.items.ModArmorItem;
 import com.tristankechlo.livingthings.items.OstrichEggItem;
-import com.tristankechlo.livingthings.items.armor.ModArmorItem;
-import com.tristankechlo.livingthings.items.armor.ModArmorMaterial;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;

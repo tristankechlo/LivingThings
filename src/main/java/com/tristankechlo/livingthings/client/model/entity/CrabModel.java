@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.client.model;
+package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
