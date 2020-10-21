@@ -11,6 +11,7 @@ import com.tristankechlo.livingthings.client.RenderHandler;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.events.RightClickBlockEventHandler;
 import com.tristankechlo.livingthings.init.ModBlocks;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModParticle;
 import com.tristankechlo.livingthings.init.ModSounds;
@@ -38,6 +39,7 @@ public class LivingThings {
         ModBlocks.BLOCKS.register(modEventBus);
         ModSounds.SOUNDS.register(modEventBus);
         ModParticle.PARTICLES.register(modEventBus);
+        ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		
         modEventBus.addListener(this::ClientSetup);
         modEventBus.addListener(this::CommonSetup);

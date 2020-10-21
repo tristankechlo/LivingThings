@@ -90,7 +90,7 @@ public class OstrichNestBlock extends Block {
 				worldIn.setBlockState(pos, state.with(EGG, false).with(HATCH, 0), 2);
 	            worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
 
-				OstrichEntity turtleentity = ModEntityTypes.OSTRICH_ENTIY.create(worldIn);
+				OstrichEntity turtleentity = ModEntityTypes.OSTRICH_ENTITY.get().create(worldIn);
 				turtleentity.setGrowingAge(-24000);
 				turtleentity.setLocationAndAngles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0F, 0.0F);
 				worldIn.addEntity(turtleentity);

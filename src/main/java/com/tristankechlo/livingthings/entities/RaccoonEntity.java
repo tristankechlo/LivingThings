@@ -52,7 +52,7 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
-		return ModEntityTypes.RACCOON_ENTITY.create(world);
+		return ModEntityTypes.RACCOON_ENTITY.get().create(world);
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {

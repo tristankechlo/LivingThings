@@ -66,7 +66,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {		
-		LionEntity entityChild = ModEntityTypes.LION_ENTITY.create(this.world);
+		LionEntity entityChild = ModEntityTypes.LION_ENTITY.get().create(this.world);
 		entityChild.setGender(LionEntity.getWeightedRandomGender(this.rand));
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;

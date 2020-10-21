@@ -38,7 +38,7 @@ public class RightClickBlockEventHandler {
         	world.setBlockState(pos.down(), Blocks.AIR.getDefaultState(), 3);
         	world.setBlockState(pos.down(2), Blocks.AIR.getDefaultState(), 3);
         	
-        	AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE_ENTITY.create((World) world);
+        	AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE_ENTITY.get().create((World) world);
         	blaze.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
         	blaze.setPosition(pos.getX() + 0.5D, pos.down(2).getY() + 0.2D, pos.getZ() + 0.5D);
         	world.addEntity(blaze);

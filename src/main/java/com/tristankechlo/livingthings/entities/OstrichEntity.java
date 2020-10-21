@@ -74,7 +74,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
-		return ModEntityTypes.OSTRICH_ENTIY.create(world);
+		return ModEntityTypes.OSTRICH_ENTITY.get().create(world);
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
@@ -217,7 +217,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		boolean breedingItem = this.isBreedingItem(player.getHeldItem(hand));
-		if (!breedingItem && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive() && player.getHeldItemMainhand().getItem() == Items.AIR) {
+		if (!breedingItem && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive()) {
 			if (!this.world.isRemote && LivingThingsConfig.OSTRICH.canBeRidden.get()) {
 				player.startRiding(this);
 			}

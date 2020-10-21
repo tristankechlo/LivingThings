@@ -56,7 +56,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
-		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.create(this.world);
+		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.get().create(this.world);
 		if(this.isTame() || ((ElephantEntity)parent).isTame()) {
 			child.setTame(true);
 		}

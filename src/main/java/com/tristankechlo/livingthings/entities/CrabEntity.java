@@ -64,7 +64,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {	
-		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.create(this.world);
+		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.get().create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
 		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
 

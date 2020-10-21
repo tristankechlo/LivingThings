@@ -78,7 +78,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
-		OwlEntity child = ModEntityTypes.OWL_ENTITY.create(world);
+		OwlEntity child = ModEntityTypes.OWL_ENTITY.get().create(world);
 		child.setVariant(this.getVariantFromParents(this, entity));
 		return child;
 	}

@@ -57,7 +57,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {	
-		GiraffeEntity entityChild = ModEntityTypes.GIRAFFE_ENTITY.create(this.world);
+		GiraffeEntity entityChild = ModEntityTypes.GIRAFFE_ENTITY.get().create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;
 	}

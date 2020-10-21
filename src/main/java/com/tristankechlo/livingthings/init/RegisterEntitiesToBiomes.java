@@ -38,7 +38,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (ElephantSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY,
+					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY.get(),
 							Math.max(1, LivingThingsConfig.ELEPHANT.weight.get()),
 							Math.max(1, LivingThingsConfig.ELEPHANT.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.ELEPHANT.maxSpawns.get())));
@@ -46,7 +46,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (GiraffeSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY,
+					.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY.get(),
 							Math.max(1, LivingThingsConfig.GIRAFFE.weight.get()),
 							Math.max(1, LivingThingsConfig.GIRAFFE.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.GIRAFFE.maxSpawns.get())));
@@ -54,7 +54,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (LionSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.LION_ENTITY, 
+					.add(new Spawners(ModEntityTypes.LION_ENTITY.get(), 
 							Math.max(1,LivingThingsConfig.LION.weight.get()),
 							Math.max(1, LivingThingsConfig.LION.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.LION.maxSpawns.get())));
@@ -62,7 +62,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (SharkSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE)
-					.add(new Spawners(ModEntityTypes.SHARK_ENTIY, 
+					.add(new Spawners(ModEntityTypes.SHARK_ENTITY.get(), 
 							Math.max(1,	LivingThingsConfig.SHARK.weight.get()),
 							Math.max(1, LivingThingsConfig.SHARK.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.SHARK.maxSpawns.get())));
@@ -70,7 +70,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (PenguinSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY,
+					.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY.get(),
 							Math.max(1, LivingThingsConfig.PENGUIN.weight.get()),
 							Math.max(1, LivingThingsConfig.PENGUIN.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.PENGUIN.maxSpawns.get())));
@@ -78,7 +78,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (OstrichSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OSTRICH_ENTIY, 
+					.add(new Spawners(ModEntityTypes.OSTRICH_ENTITY.get(), 
 							Math.max(1, LivingThingsConfig.OSTRICH.weight.get()),
 							Math.max(1, LivingThingsConfig.OSTRICH.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.OSTRICH.maxSpawns.get())));
@@ -86,7 +86,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (FlamingoSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTIY, 
+					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTITY.get(), 
 							Math.max(1, LivingThingsConfig.FLAMINGO.weight.get()),
 							Math.max(1, LivingThingsConfig.FLAMINGO.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.FLAMINGO.maxSpawns.get())));
@@ -94,7 +94,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (CrabSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.CRAB_ENTITY, 
+					.add(new Spawners(ModEntityTypes.CRAB_ENTITY.get(), 
 							Math.max(1, LivingThingsConfig.CRAB.weight.get()),
 							Math.max(1, LivingThingsConfig.CRAB.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.CRAB.maxSpawns.get())));
@@ -102,7 +102,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (MantaraySpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT)
-					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY, 
+					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY.get(), 
 							Math.max(1,	LivingThingsConfig.MANTARAY.weight.get()),
 							Math.max(1, LivingThingsConfig.MANTARAY.minSpawns.get()),
 							Math.max(1, LivingThingsConfig.MANTARAY.maxSpawns.get())));
@@ -110,7 +110,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (RaccoonSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY, 
+					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY.get(), 
 							Math.max(1, LivingThingsConfig.RACCOON.weight.get()),
 							Math.max(1, LivingThingsConfig.RACCOON.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.RACCOON.maxSpawns.get())));
@@ -118,7 +118,7 @@ public class RegisterEntitiesToBiomes {
 
 		if (OwlSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OWL_ENTITY, 
+					.add(new Spawners(ModEntityTypes.OWL_ENTITY.get(), 
 							Math.max(1, LivingThingsConfig.OWL.weight.get()),
 							Math.max(1, LivingThingsConfig.OWL.minSpawns.get()), 
 							Math.max(1, LivingThingsConfig.OWL.maxSpawns.get())));

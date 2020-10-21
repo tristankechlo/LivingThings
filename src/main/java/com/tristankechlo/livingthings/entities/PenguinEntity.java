@@ -42,7 +42,7 @@ public class PenguinEntity extends AnimalEntity {
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld worldIn, AgeableEntity parent) {
-		return ModEntityTypes.PENGUIN_ENTITY.create(worldIn);
+		return ModEntityTypes.PENGUIN_ENTITY.get().create(worldIn);
 	}
 	
 	public static AttributeModifierMap.MutableAttribute getAttributes() {

@@ -50,7 +50,7 @@ public class FlamingoEntity extends AnimalEntity {
 
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
-		return ModEntityTypes.FLAMINGO_ENTIY.create(world);
+		return ModEntityTypes.FLAMINGO_ENTITY.get().create(world);
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
