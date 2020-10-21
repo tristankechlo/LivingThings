@@ -1,7 +1,5 @@
 
-## Todo / Ideas:
- - redo particles (crashing sometimes)
-     
+## Todo / Ideas:     
  - translate patchouli book
  - Elephant saddle item
     
