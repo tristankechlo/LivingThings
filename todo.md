@@ -2,7 +2,6 @@
 ## Todo / Ideas:
  - Ancient Blaze
      - patchouli entry
-     - dropping the helmet
      - spawning
      
  - change mob configs

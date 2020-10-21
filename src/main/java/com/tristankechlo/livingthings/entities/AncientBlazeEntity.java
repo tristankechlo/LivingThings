@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.entities;
 import java.util.EnumSet;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.block.BlockState;
@@ -23,6 +24,7 @@ import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.BlazeEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,7 +61,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		this.setPathPriority(PathNodeType.LAVA, 8.0F);
 		this.setPathPriority(PathNodeType.DANGER_FIRE, 0.0F);
 		this.setPathPriority(PathNodeType.DAMAGE_FIRE, 0.0F);
-		this.experienceValue = 20;
+		this.experienceValue = 30;
 	}
 
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
@@ -145,6 +147,16 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	protected void updateAITasks() {
 		super.updateAITasks();
         this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+	}
+	
+	@Override
+	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
+		super.dropSpecialItems(source, looting, recentlyHitIn);
+		ItemEntity itementity = this.entityDropItem(ModItems.ANCIENT_HELMET.get());
+		if (itementity != null) {
+			itementity.setNoDespawn();
+			itementity.isImmuneToFire();
+		}
 	}
 	
 	@Override
