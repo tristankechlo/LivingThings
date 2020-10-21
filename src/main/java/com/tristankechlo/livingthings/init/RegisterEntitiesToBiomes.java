@@ -39,89 +39,89 @@ public class RegisterEntitiesToBiomes {
 		if (ElephantSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY.get(),
-							Math.max(1, LivingThingsConfig.ELEPHANT.weight.get()),
-							Math.max(1, LivingThingsConfig.ELEPHANT.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.ELEPHANT.maxSpawns.get())));
+							LivingThingsConfig.ELEPHANT.weight.get(),
+							LivingThingsConfig.ELEPHANT.minSpawns.get(),
+							LivingThingsConfig.ELEPHANT.maxSpawns.get()));
 		}
 
 		if (GiraffeSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY.get(),
-							Math.max(1, LivingThingsConfig.GIRAFFE.weight.get()),
-							Math.max(1, LivingThingsConfig.GIRAFFE.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.GIRAFFE.maxSpawns.get())));
+							LivingThingsConfig.GIRAFFE.weight.get(),
+							LivingThingsConfig.GIRAFFE.minSpawns.get(),
+							LivingThingsConfig.GIRAFFE.maxSpawns.get()));
 		}
 
 		if (LionSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.LION_ENTITY.get(), 
-							Math.max(1,LivingThingsConfig.LION.weight.get()),
-							Math.max(1, LivingThingsConfig.LION.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.LION.maxSpawns.get())));
+							LivingThingsConfig.LION.weight.get(),
+							LivingThingsConfig.LION.minSpawns.get(),
+							LivingThingsConfig.LION.maxSpawns.get()));
 		}
 
 		if (SharkSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE)
 					.add(new Spawners(ModEntityTypes.SHARK_ENTITY.get(), 
-							Math.max(1,	LivingThingsConfig.SHARK.weight.get()),
-							Math.max(1, LivingThingsConfig.SHARK.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.SHARK.maxSpawns.get())));
+							LivingThingsConfig.SHARK.weight.get(),
+							LivingThingsConfig.SHARK.minSpawns.get(),
+							LivingThingsConfig.SHARK.maxSpawns.get()));
 		}
 
 		if (PenguinSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY.get(),
-							Math.max(1, LivingThingsConfig.PENGUIN.weight.get()),
-							Math.max(1, LivingThingsConfig.PENGUIN.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.PENGUIN.maxSpawns.get())));
+							LivingThingsConfig.PENGUIN.weight.get(),
+							LivingThingsConfig.PENGUIN.minSpawns.get(),
+							LivingThingsConfig.PENGUIN.maxSpawns.get()));
 		}
 
 		if (OstrichSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.OSTRICH_ENTITY.get(), 
-							Math.max(1, LivingThingsConfig.OSTRICH.weight.get()),
-							Math.max(1, LivingThingsConfig.OSTRICH.minSpawns.get()), 
-							Math.max(1, LivingThingsConfig.OSTRICH.maxSpawns.get())));
+							LivingThingsConfig.OSTRICH.weight.get(),
+							LivingThingsConfig.OSTRICH.minSpawns.get(), 
+							LivingThingsConfig.OSTRICH.maxSpawns.get()));
 		}
 
 		if (FlamingoSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTITY.get(), 
-							Math.max(1, LivingThingsConfig.FLAMINGO.weight.get()),
-							Math.max(1, LivingThingsConfig.FLAMINGO.minSpawns.get()), 
-							Math.max(1, LivingThingsConfig.FLAMINGO.maxSpawns.get())));
+							LivingThingsConfig.FLAMINGO.weight.get(),
+							LivingThingsConfig.FLAMINGO.minSpawns.get(), 
+							LivingThingsConfig.FLAMINGO.maxSpawns.get()));
 		}
 
 		if (CrabSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.CRAB_ENTITY.get(), 
-							Math.max(1, LivingThingsConfig.CRAB.weight.get()),
-							Math.max(1, LivingThingsConfig.CRAB.minSpawns.get()), 
-							Math.max(1, LivingThingsConfig.CRAB.maxSpawns.get())));
+							LivingThingsConfig.CRAB.weight.get(),
+							LivingThingsConfig.CRAB.minSpawns.get(), 
+							LivingThingsConfig.CRAB.maxSpawns.get()));
 		}
 
 		if (MantaraySpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT)
 					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY.get(), 
-							Math.max(1,	LivingThingsConfig.MANTARAY.weight.get()),
-							Math.max(1, LivingThingsConfig.MANTARAY.minSpawns.get()),
-							Math.max(1, LivingThingsConfig.MANTARAY.maxSpawns.get())));
+							LivingThingsConfig.MANTARAY.weight.get(),
+							LivingThingsConfig.MANTARAY.minSpawns.get(),
+							LivingThingsConfig.MANTARAY.maxSpawns.get()));
 		}
 
 		if (RaccoonSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY.get(), 
-							Math.max(1, LivingThingsConfig.RACCOON.weight.get()),
-							Math.max(1, LivingThingsConfig.RACCOON.minSpawns.get()), 
-							Math.max(1, LivingThingsConfig.RACCOON.maxSpawns.get())));
+							LivingThingsConfig.RACCOON.weight.get(),
+							LivingThingsConfig.RACCOON.minSpawns.get(), 
+							LivingThingsConfig.RACCOON.maxSpawns.get()));
 		}
 
 		if (OwlSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
 					.add(new Spawners(ModEntityTypes.OWL_ENTITY.get(), 
-							Math.max(1, LivingThingsConfig.OWL.weight.get()),
-							Math.max(1, LivingThingsConfig.OWL.minSpawns.get()), 
-							Math.max(1, LivingThingsConfig.OWL.maxSpawns.get())));
+							LivingThingsConfig.OWL.weight.get(),
+							LivingThingsConfig.OWL.minSpawns.get(), 
+							LivingThingsConfig.OWL.maxSpawns.get()));
 		}
 
 	}
@@ -132,7 +132,7 @@ public class RegisterEntitiesToBiomes {
 			return true;
 		}
 		LivingThings.LOGGER.log(Level.INFO,
-				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBoimes");
+				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
 		return false;
 	}
 

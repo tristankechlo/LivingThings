@@ -9,10 +9,12 @@ import com.tristankechlo.livingthings.init.RegisterEntitiesToBiomes;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class MantarayConfig {
 
-	public final ConfigValue<Double> health;
+	public final DoubleValue health;
 	
 	public final ConfigValue<Integer> color1Weight;
 	public final ConfigValue<Integer> color2Weight;
@@ -23,15 +25,15 @@ public class MantarayConfig {
 	public final ConfigValue<Integer> scaling4Weight;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
-	public final ConfigValue<Integer> weight;
-	public final ConfigValue<Integer> minSpawns;
-	public final ConfigValue<Integer> maxSpawns;
+	public final IntValue weight;
+	public final IntValue minSpawns;
+	public final IntValue maxSpawns;
 
 	public MantarayConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Mantaray").push("Mantaray");
 		
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 10.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);
@@ -58,9 +60,9 @@ public class MantarayConfig {
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
 					biome -> RegisterEntitiesToBiomes.checkBiome("Mantaray", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 15);
-		minSpawns = builder.worldRestart().define("MinSpawns", 4);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 8);
+		weight = builder.worldRestart().defineInRange("SpawnWeight", 15, 1, Short.MAX_VALUE);
+		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 4, 1, Short.MAX_VALUE);
+		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 7, 1, Short.MAX_VALUE);
 		builder.pop();
 		
 		builder.pop();

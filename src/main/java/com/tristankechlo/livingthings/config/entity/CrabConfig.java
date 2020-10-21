@@ -10,12 +10,14 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class CrabConfig {
 
 	public final BooleanValue canAttack;
-	public final ConfigValue<Double> health;
-	public final ConfigValue<Double> damage;	
+	public final DoubleValue health;
+	public final DoubleValue damage;	
 	
 	public final ConfigValue<Integer> color1Weight;
 	public final ConfigValue<Integer> color2Weight;
@@ -27,17 +29,17 @@ public class CrabConfig {
 	public final ConfigValue<Integer> scaling4Weight;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
-	public final ConfigValue<Integer> weight;
-	public final ConfigValue<Integer> minSpawns;
-	public final ConfigValue<Integer> maxSpawns;
+	public final IntValue weight;
+	public final IntValue minSpawns;
+	public final IntValue maxSpawns;
 
 	public CrabConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Crab").push("Crab");
 		
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("Health", 8.0D);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().define("AttackDamage", 1.0D);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 8.0D, 1.0D, Short.MAX_VALUE);
+		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 1.0D, 1.0D, Short.MAX_VALUE);
 		
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);
@@ -60,9 +62,9 @@ public class CrabConfig {
 						Biomes.SWAMP_HILLS.getLocation().toString(),
 						Biomes.SWAMP.getLocation().toString()),
 				biome -> RegisterEntitiesToBiomes.checkBiome("Crab", biome));
-		weight = builder.worldRestart().define("SpawnWeight", 50);
-		minSpawns = builder.worldRestart().define("MinSpawns", 5);
-		maxSpawns = builder.worldRestart().define("MaxSpawns", 8);
+		weight = builder.worldRestart().defineInRange("SpawnWeight", 50, 1, Short.MAX_VALUE);
+		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 5, 1, Short.MAX_VALUE);
+		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 8, 1, Short.MAX_VALUE);
 		builder.pop();
 		
 		builder.pop();

@@ -1,6 +1,5 @@
 
-## Todo / Ideas:     
- - change mob configs
+## Todo / Ideas:
  - redo particles (crashing sometimes)
      
  - translate patchouli book
