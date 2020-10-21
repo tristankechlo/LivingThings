@@ -1,8 +1,5 @@
 
-## Todo / Ideas:
- - Ancient Blaze
-     - spawning the reinforcements
-     
+## Todo / Ideas:     
  - change mob configs
  - redo particles (crashing sometimes)
      

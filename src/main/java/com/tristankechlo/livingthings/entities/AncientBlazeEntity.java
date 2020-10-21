@@ -233,10 +233,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		if (!this.world.isRemote && amount >= 1 && this.getShouldBeDead() && !this.removed) {
 
 			for (int i = 0; i < amount; i++) {
-
-				int xOffset = this.rand.nextInt(4 + 4) - 4;
-				int zOffset =  this.rand.nextInt(4 + 4) - 4;
-				
+								
 				BlazeEntity blaze = new BlazeEntity(EntityType.BLAZE, this.world);
 				if (this.isNoDespawnRequired()) {
 					blaze.enablePersistence();
@@ -245,7 +242,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				blaze.setCustomName(this.getCustomName());
 				blaze.setNoAI(this.isAIDisabled());
 				blaze.setInvulnerable(this.isInvulnerable());
-				blaze.setLocationAndAngles(this.getPosX() + xOffset, this.getPosY() + 0.5D, this.getPosZ() + zOffset, this.rand.nextFloat() * 360.0F, 0.0F);
+				blaze.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rand.nextFloat() * 360.0F, 0.0F);
 				this.world.addEntity(blaze);
 			}
 		}
