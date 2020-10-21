@@ -1,0 +1,19 @@
+{
+	"name" : "Ancient Blaze",
+	"icon" : "livingthings:ancient_blaze_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Another boss for the Nether!$(br2)$(bold)Health: $()150 Hearts$(br)$(bold)Attack-Damage: $()3 Hearts$(br2)$(bold)Attacks: $()$(br)$(li)6 Large Fireballs$(li)\u221e Small Fireballs"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:ancient_blaze{Shoots:6}",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 35,
+			"text" : "Can be summoned"
+		}
+	]
+}
