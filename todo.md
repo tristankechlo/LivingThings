@@ -3,10 +3,10 @@
  - Ancient Blaze
      - patchouli entry
      - dropping the helmet
-     - finish model/texture (charging animation)
      - spawning
      
  - change mob configs
+ - redo particles (crashing sometimes)
      
  - translate patchouli book
  - Elephant saddle item
