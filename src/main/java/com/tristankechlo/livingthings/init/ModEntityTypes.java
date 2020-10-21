@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.init;
 
+import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 import com.tristankechlo.livingthings.entities.CrabEntity;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
@@ -23,6 +24,7 @@ import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
@@ -36,17 +38,18 @@ public class ModEntityTypes {
 	public static final List<EntityType> ENTITIES = Lists.newArrayList();
     public static final List<Item> SPAWN_EGGS = Lists.newArrayList();
     
-    public static final EntityType<ElephantEntity> ELEPHANT_ENTITY = createEntity("elephant", ElephantEntity::new, EntityClassification.CREATURE, 1.85F, 2.7F, 0x000000, 0x4e4e4e);
-    public static final EntityType<GiraffeEntity> GIRAFFE_ENTITY = createEntity("giraffe", GiraffeEntity::new, EntityClassification.CREATURE, 1.5F, 3.2F, 0xebb26c, 0x785f40);
-    public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, 0xebb26c, 0xFFFFFF);
-    public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, 0x707187, 0x595a6b);
-    public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, 0x000000, 0xFFFFFF);
-    public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, 0x130d08, 0xa56f5b);
-    public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, 0xf38989, 0x2d0404);
-    public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, 0xeb4034, 0x73706f);
-    public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, 0x000896, 0x595a6b);
-    public static final EntityType<RaccoonEntity> RACCOON_ENTITY = createEntity("raccoon", RaccoonEntity::new, EntityClassification.CREATURE, 0.5F, 0.75F, 0x6e6e6e, 0x000000);
-    public static final EntityType<OwlEntity> OWL_ENTITY = createEntity("owl", OwlEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F, 0xedd7d5, 0x6e3834);
+    public static final EntityType<ElephantEntity> ELEPHANT_ENTITY = createEntity("elephant", ElephantEntity::new, EntityClassification.CREATURE, 1.85F, 2.7F, false, 0x000000, 0x4e4e4e);
+    public static final EntityType<GiraffeEntity> GIRAFFE_ENTITY = createEntity("giraffe", GiraffeEntity::new, EntityClassification.CREATURE, 1.5F, 3.2F, false, 0xebb26c, 0x785f40);
+    public static final EntityType<LionEntity> LION_ENTITY = createEntity("lion", LionEntity::new, EntityClassification.CREATURE, 1.25F, 1.5F, false, 0xebb26c, 0xFFFFFF);
+    public static final EntityType<SharkEntity> SHARK_ENTIY = createEntity("shark", SharkEntity::new, EntityClassification.WATER_CREATURE, 1.4F, 1.1F, false, 0x707187, 0x595a6b);
+    public static final EntityType<PenguinEntity> PENGUIN_ENTITY = createEntity("penguin", PenguinEntity::new, EntityClassification.CREATURE, 0.8F, 1.45F, false, 0x000000, 0xFFFFFF);
+    public static final EntityType<OstrichEntity> OSTRICH_ENTIY = createEntity("ostrich", OstrichEntity::new, EntityClassification.CREATURE, 0.8F, 1.8F, false, 0x130d08, 0xa56f5b);
+    public static final EntityType<FlamingoEntity> FLAMINGO_ENTIY = createEntity("flamingo", FlamingoEntity::new, EntityClassification.CREATURE, 0.6F, 1.25F, false, 0xf38989, 0x2d0404);
+    public static final EntityType<CrabEntity> CRAB_ENTITY = createEntity("crab", CrabEntity::new, EntityClassification.CREATURE, 0.4F, 0.4F, false, 0xeb4034, 0x73706f);
+    public static final EntityType<MantarayEntity> MANTARAY_ENTITY = createEntity("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F, false, 0x000896, 0x595a6b);
+    public static final EntityType<RaccoonEntity> RACCOON_ENTITY = createEntity("raccoon", RaccoonEntity::new, EntityClassification.CREATURE, 0.5F, 0.75F, false, 0x6e6e6e, 0x000000);
+    public static final EntityType<OwlEntity> OWL_ENTITY = createEntity("owl", OwlEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F, false, 0xedd7d5, 0x6e3834);
+    public static final EntityType<AncientBlazeEntity> ANCIENT_BLAZE_ENTITY = createEntity("ancient_blaze", AncientBlazeEntity::new, EntityClassification.MONSTER, 0.7F, 2.99F, true, 0xF6B200, 0xFFF87D);
 
 
 	/**
@@ -64,6 +67,7 @@ public class ModEntityTypes {
 		GlobalEntityTypeAttributes.put(MANTARAY_ENTITY, MantarayEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(RACCOON_ENTITY, RaccoonEntity.getAttributes().create());
 		GlobalEntityTypeAttributes.put(OWL_ENTITY, OwlEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(ANCIENT_BLAZE_ENTITY, AncientBlazeEntity.getAttributes().create());
 	}
 
 	/**
@@ -81,15 +85,20 @@ public class ModEntityTypes {
 		EntitySpawnPlacementRegistry.register(MANTARAY_ENTITY, PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
 		EntitySpawnPlacementRegistry.register(RACCOON_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(OWL_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
+		EntitySpawnPlacementRegistry.register(ANCIENT_BLAZE_ENTITY, PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
 	}
 
     /**
      * register Entity without SpawnEgg
      */
-    private static <T extends CreatureEntity> EntityType<T> createEntity(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height) {
+    private static <T extends CreatureEntity> EntityType<T> createEntity(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height, boolean immuneToFire) {
         
     	ResourceLocation location = new ResourceLocation(LivingThings.MOD_ID, entity_name);
-        EntityType<T> entity_type = EntityType.Builder.create(factory, classification).size(width, height).build(location.toString());
+        EntityType.Builder<T> builder = EntityType.Builder.create(factory, classification).size(width, height);
+        if(immuneToFire) {
+        	builder.immuneToFire();
+        }
+        EntityType<T> entity_type = builder.build(location.toString());
         entity_type.setRegistryName(location);
         ENTITIES.add(entity_type);
         
@@ -99,9 +108,9 @@ public class ModEntityTypes {
 	/**
      * register Entity with SpawnEgg
      */
-    private static <T extends CreatureEntity> EntityType<T> createEntity(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height, int eggPrimaryColor, int eggSecondaryColor) {
+    private static <T extends CreatureEntity> EntityType<T> createEntity(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height, boolean immuneToFire, int eggPrimaryColor, int eggSecondaryColor) {
         
-    	EntityType<T> entity_type = createEntity(entity_name, factory, classification, width, height);        
+    	EntityType<T> entity_type = createEntity(entity_name, factory, classification, width, height, immuneToFire);        
         addSpawnEggToEntity(entity_name, entity_type, eggPrimaryColor, eggSecondaryColor);
         
         return entity_type;

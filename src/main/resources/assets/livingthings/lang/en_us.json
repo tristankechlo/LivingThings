@@ -17,6 +17,7 @@
 	"item.livingthings.cooked_crab" : "Cooked Crab",
 	"item.livingthings.crab_shell" : "Crab Shell",
 	"item.livingthings.lexicon" : "LivingThings Lexicon",
+	"item.livingthings.ancient_helmet" : "Ancient Helmet",
 	
 
 	"__comment4" : "spawn eggs",
@@ -31,6 +32,7 @@
 	"item.livingthings.mantaray_spawn_egg" : "Mantaray Spawn Egg",
 	"item.livingthings.raccoon_spawn_egg" : "Raccoon Spawn Egg",
 	"item.livingthings.owl_spawn_egg" : "Owl Spawn Egg",
+	"item.livingthings.ancient_blaze_spawn_egg" : "Ancient Blaze Spawn Egg",
 
 
 	"__comment5" : "entity names",
@@ -45,6 +47,7 @@
 	"entity.livingthings.mantaray" : "Mantaray",
 	"entity.livingthings.raccoon" : "Raccoon",
 	"entity.livingthings.owl" : "Owl",
+	"entity.livingthings.ancient_blaze" : "Ancient Blaze",
 	
 
 	"__comment6" : "subtitles",
@@ -69,6 +72,13 @@
 	"subtitles.livingthings.owl.hurt" : "Owl hurts",
 	"subtitles.livingthings.owl.death" : "Owl dies",
 	"subtitles.livingthings.owl.fly" : "Owl flatters",
+    "subtitles.livingthings.ancient_blaze.ambient": "Ancient Blaze breathes",
+    "subtitles.livingthings.ancient_blaze.burn": "Ancient Blaze crackles",
+    "subtitles.livingthings.ancient_blaze.death": "Ancient Blae dies",
+    "subtitles.livingthings.ancient_blaze.hurt": "Ancient Blaze hurts",
+    "subtitles.livingthings.ancient_blaze.shoot": "Ancient Blaze shoots",
+    "subtitles.livingthings.ancient_blaze.spawn": "Ancient Blaze released",
+    "subtitles.livingthings.ancient_blaze.charge_up": "Ancient Blaze charged up",
 	
 
 	"__comment7" : "messages",

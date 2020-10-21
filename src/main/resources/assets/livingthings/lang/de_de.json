@@ -17,6 +17,7 @@
 	"item.livingthings.cooked_crab" : "Krabben Fleisch",
 	"item.livingthings.crab_shell" : "Krabben Panzer",
 	"item.livingthings.lexicon" : "LivingThings Lexikon",
+	"item.livingthings.ancient_helmet" : "Antiker Helm",
 	
 	
 	"__comment4" : "spawn eggs",
@@ -31,6 +32,7 @@
 	"item.livingthings.mantaray_spawn_egg" : "Mantarochen-Spawn-Ei",
 	"item.livingthings.raccoon_spawn_egg" : "Waschb\u00e4ren-Spawn-Ei",
 	"item.livingthings.owl_spawn_egg" : "Eulen-Spawn-Ei",
+	"item.livingthings.ancient_blaze_spawn_egg" : "Antike-Lohe-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -45,6 +47,7 @@
 	"entity.livingthings.mantaray" : "Mantarochen",
 	"entity.livingthings.raccoon" : "Waschb\u00e4r",
 	"entity.livingthings.owl" : "Eule",
+	"entity.livingthings.ancient_blaze" : "Antike Lohe",
 	
 	
 	"__comment6" : "subtitles",
@@ -69,6 +72,13 @@
 	"subtitles.livingthings.owl.hurt" : "Eule nimmt Schaden",
 	"subtitles.livingthings.owl.death" : "Eule stirbt",
 	"subtitles.livingthings.owl.fly" : "Eule flattert",
+    "subtitles.livingthings.ancient_blaze.ambient": "Antike Lohe atmet",
+    "subtitles.livingthings.ancient_blaze.burn": "Antike Lohe knistert",
+    "subtitles.livingthings.ancient_blaze.death": "Antike Lohe stirbt",
+    "subtitles.livingthings.ancient_blaze.hurt": "Antike Lohe nimmt Schaden",
+    "subtitles.livingthings.ancient_blaze.shoot": "Antike Lohe schie\u00dft",
+    "subtitles.livingthings.ancient_blaze.spawn": "Antike Lohe entfesselt",
+    "subtitles.livingthings.ancient_blaze.charge_up": "Antike Lohe l\u00e4dt sich auf",
 	
 	
 	"__comment7" : "messages",
