@@ -1,8 +1,7 @@
 
 ## Todo / Ideas:
  - Ancient Blaze
-     - patchouli entry
-     - spawning
+     - spawning the reinforcements
      
  - change mob configs
  - redo particles (crashing sometimes)

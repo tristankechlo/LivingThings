@@ -2,6 +2,7 @@
 
 ### Version 1.16.3 - 1.2.1
  - added AncientBlaze entity
+     - will drop it's helmet on death (helmet adds 2min of Fire Resistance as Effect when worn)
 
 ### Version 1.16.3 - 1.2.0
  - translation to *pt_br* by [Mikeliro](https://github.com/Mikeliro)
