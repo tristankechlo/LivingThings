@@ -5,6 +5,7 @@
      - will drop it's helmet on death
  - added Ancient Helmet
      - adds 2 minutes of Fire Resistance as Effect when worn
+ - fix Shark-Damage not changeable through the config
 
 ### Version 1.16.3 - 1.2.0
  - translation to *pt_br* by [Mikeliro](https://github.com/Mikeliro)

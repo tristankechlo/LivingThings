@@ -69,7 +69,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ANCIENT_BLAZE.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 48.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ANCIENT_BLAZE.damage.get());
 	}
 	
 	@Override

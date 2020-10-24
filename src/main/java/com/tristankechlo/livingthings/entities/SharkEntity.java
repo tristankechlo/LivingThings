@@ -57,7 +57,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.05F)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.health.get());
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.damage.get());
 	}
 
 	@Override
