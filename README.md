@@ -13,6 +13,8 @@
   - Crab
   - Mantaray
   - Raccoon
+  - Owl
+  - Ancient Blaze
    
   
   
