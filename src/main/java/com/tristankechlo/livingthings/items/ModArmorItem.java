@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModArmorItem extends ArmorItem {
 
@@ -33,6 +35,7 @@ public class ModArmorItem extends ArmorItem {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+    @OnlyIn(Dist.CLIENT)
 	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
 		AncientArmorModel model = new AncientArmorModel(2.0F);
 		

@@ -49,7 +49,13 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(
+   value = Dist.CLIENT,
+   _interface = IChargeableMob.class
+)
 public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob {
 
 	private static final DataParameter<Byte> SHOOTS = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.BYTE);

@@ -19,7 +19,7 @@ public class AncientArmorModel extends BipedModel<LivingEntity> {
 		HelmetForm.setRotationPoint(0.0F, 0.0F, 0.0F);
 		Helmet.addChild(HelmetForm);
 		HelmetForm.setTextureOffset(0, 32).addBox(3.5F, -8.9F, -4.5F, 1.0F, 9.0F, 2.0F, 0.0F, false);
-		HelmetForm.setTextureOffset(32, 32).addBox(-3.5F, -7.9F, -4.5F, 7.0F, 3.0F, 1.0F, 0.0F, false);
+		HelmetForm.setTextureOffset(32, 32).addBox(-3.5F, -7.9F, -4.5F, 7.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(32, 36).addBox(-2.5F, -8.9F, -4.5F, 2.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(38, 36).addBox(0.5F, -8.9F, -4.5F, 2.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(32, 38).addBox(-3.5F, -9.9F, -4.5F, 2.0F, 1.0F, 1.0F, 0.0F, false);
@@ -27,8 +27,8 @@ public class AncientArmorModel extends BipedModel<LivingEntity> {
 		HelmetForm.setTextureOffset(32, 40).addBox(0.5F, -10.9F, -4.5F, 2.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(38, 40).addBox(-2.5F, -10.9F, -4.5F, 2.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(48, 32).addBox(-1.5F, -11.9F, -4.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-		HelmetForm.setTextureOffset(56, 32).addBox(1.5F, -2.9F, -4.5F, 2.0F, 3.0F, 1.0F, 0.0F, false);
-		HelmetForm.setTextureOffset(56, 37).addBox(-3.5F, -2.9F, -4.5F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+		HelmetForm.setTextureOffset(56, 32).addBox(1.5F, -1.9F, -4.5F, 2.0F, 2.0F, 1.0F, 0.0F, false);
+		HelmetForm.setTextureOffset(56, 37).addBox(-3.5F, -1.9F, -4.5F, 2.0F, 2.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(6, 32).addBox(-4.5F, -8.9F, -4.5F, 1.0F, 9.0F, 2.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(44, 36).addBox(-2.5F, -8.9F, 3.5F, 5.0F, 1.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(44, 38).addBox(-2.5F, -0.9F, 3.5F, 5.0F, 1.0F, 1.0F, 0.0F, false);
@@ -60,7 +60,6 @@ public class AncientArmorModel extends BipedModel<LivingEntity> {
 		HelmetForm.setTextureOffset(36, 46).addBox(-4.5F, -12.9F, -4.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(40, 45).addBox(2.5F, -14.9F, -4.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 		HelmetForm.setTextureOffset(45, 43).addBox(-3.5F, -14.9F, -4.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		HelmetForm.setTextureOffset(0, 62).addBox(-3.5F, -5.1F, -4.5F, 7.0F, 1.0F, 1.0F, 0.0F, false);
 
 		ModelRenderer Crystal = new ModelRenderer(this);
 		Crystal.setRotationPoint(0.0F, 0.0F, 0.0F);
