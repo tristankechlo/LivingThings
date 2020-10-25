@@ -44,6 +44,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -201,6 +202,13 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 
 	@Override
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+		//don't attack if disabled in config
+		boolean peaceful = (this.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
+		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
+		if (peaceful || ambientMode || !LivingThingsConfig.ANCIENT_BLAZE.canAttack.get()) {
+			return;
+		}
+		
         double d1 = target.getPosX() - this.getPosX();
         double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
         double d3 = target.getPosZ() - this.getPosZ();
