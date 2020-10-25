@@ -3,6 +3,7 @@
 ### Version 1.16.3 - 1.2.1
  - added AncientBlaze entity
      - will drop it's helmet on death
+     - can be created by placing a Jack o'Lantern on top of two glowstone blocks
  - added Ancient Helmet
      - adds 2 minutes of Fire Resistance as Effect when worn
  - fix Shark-Damage not changeable through the config
