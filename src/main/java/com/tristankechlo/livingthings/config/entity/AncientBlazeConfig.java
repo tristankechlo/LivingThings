@@ -22,7 +22,7 @@ public class AncientBlazeConfig {
 
 		builder.comment("Mob-Config for AncientBlaze").push("AncientBlaze");
 
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 150.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 250.0D, 1.0D, Short.MAX_VALUE);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 6.0D, 1.0D, Short.MAX_VALUE);
 		chargingTime = builder.comment("time in ticks, until the entity can be hit").worldRestart().defineInRange("InvulnerableTime", 200, 10, Short.MAX_VALUE);
 		blazeSpawnCount = builder.comment("amount of blazes spawned on death").defineInRange("BlazeSpawnCount", 4, 0, 16);

@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Another boss from the Nether!$(br2)$(bold)Health: $()150 Hearts$(br)$(bold)Attack-Damage: $()3 Hearts$(br2)$(bold)Attacks: $()$(br)$(li)6 Large Fireballs$(li)\u221e Small Fireballs"
+			"text" : "Another boss from the Nether!$(br2)$(bold)Health: $()125 Hearts$(br)$(bold)Attack-Damage: $()3 Hearts$(br2)$(bold)Attacks: $()$(br)$(li)6 Large Fireballs$(li)\u221e Small Fireballs"
 		},
 		{
 			"type" : "entity",
