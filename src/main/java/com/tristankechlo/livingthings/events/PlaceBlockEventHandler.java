@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class RightClickBlockEventHandler {
+public class PlaceBlockEventHandler {
 
     @SubscribeEvent
     public void onPlayerRightClickBlock(final BlockEvent.EntityPlaceEvent event) {

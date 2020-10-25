@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.tristankechlo.livingthings.client.RenderHandler;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.events.RightClickBlockEventHandler;
+import com.tristankechlo.livingthings.events.PlaceBlockEventHandler;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
@@ -44,7 +44,7 @@ public class LivingThings {
         modEventBus.addListener(this::ClientSetup);
         modEventBus.addListener(this::CommonSetup);
         
-        MinecraftForge.EVENT_BUS.register(new RightClickBlockEventHandler());
+        MinecraftForge.EVENT_BUS.register(new PlaceBlockEventHandler());
         MinecraftForge.EVENT_BUS.register(this);
     }
     
