@@ -6,7 +6,6 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.init.ModParticle;
 import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -229,11 +228,12 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	public void handleStatusUpdate(byte id) {
 		switch (id) {
 			case 6: //entity tamed
-				this.spawnParticle(ParticleTypes.HAPPY_VILLAGER);
+				this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
 				this.spawnParticle(ParticleTypes.FIREWORK);
 				break;
 			case 7: //progress while taming
-				this.spawnParticle(ModParticle.ARROW_UP_GREEN.get());
+				//this.spawnParticle(ModParticle.ARROW_UP_GREEN.get());
+				this.spawnParticle(ParticleTypes.COMPOSTER);
 				break;
 	
 			default:
@@ -246,9 +246,9 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	private void spawnParticle(IParticleData particle) {
 		if(particle != null) {
 			for (int i = 0; i < 7; ++i) {
-				double d0 = this.rand.nextGaussian() * 0.02D;
-				double d1 = this.rand.nextGaussian() * 0.02D;
-				double d2 = this.rand.nextGaussian() * 0.02D;
+				double d0 = this.rand.nextGaussian() * 0.03D;
+				double d1 = this.rand.nextGaussian() * 0.03D;
+				double d2 = this.rand.nextGaussian() * 0.03D;
 				this.world.addParticle(particle, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D,	this.getPosZRandom(1.0D), d0, d1, d2);
 			}
 		}
