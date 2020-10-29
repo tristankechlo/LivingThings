@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.16.3 - 1.2.3
+ - temporarily disabling custom particles
+
 ### Version 1.16.3 - 1.2.2
  - fix some server-side errors
  - improve ancient helmet model
