@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class FlamingoRenderer extends MobRenderer<FlamingoEntity, FlamingoModel<FlamingoEntity>>{
 	
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/flamingo/flamingo_entity.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/flamingo.png");
 
 	public FlamingoRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new FlamingoModel<>(), 0.35F);

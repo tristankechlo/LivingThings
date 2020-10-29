@@ -13,8 +13,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ElephantRenderer extends MobRenderer<ElephantEntity, ElephantModel<ElephantEntity>> {
 	
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant_entity.png");
-	protected static final ResourceLocation TEXTURE_SADDLED = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant_entity_saddled.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant.png");
+	protected static final ResourceLocation TEXTURE_SADDLED = new ResourceLocation(LivingThings.MOD_ID,	"textures/entity/elephant/elephant_saddled.png");
 
 	public ElephantRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new ElephantModel<>(), 1.2F);
