@@ -97,7 +97,7 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.Body.rotateAngleX = headPitch * 0.0174532925F;
 		this.Body.rotateAngleY = netHeadYaw * 0.0174532925F;
 
@@ -122,7 +122,7 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 

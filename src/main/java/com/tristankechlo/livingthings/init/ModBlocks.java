@@ -14,12 +14,10 @@ public class ModBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, LivingThings.MOD_ID);
 
-	
-	//BLOCKS
+	// BLOCKS
 	public static final RegistryObject<Block> OSTRICH_NEST = BLOCKS.register("ostrich_nest", () -> new OstrichNestBlock());
-	
-	
-	//BLOCK - ITEMS
+
+	// BLOCK - ITEMS
 	public static final RegistryObject<Item> OSTRICH_NEST_ITEM = ModItems.ITEMS.register("ostrich_nest", () -> new BlockItem(OSTRICH_NEST.get(), new Properties().group(ModItemGroups.General)));
-	 
+
 }

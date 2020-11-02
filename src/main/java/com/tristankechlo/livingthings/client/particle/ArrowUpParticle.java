@@ -16,9 +16,9 @@ public class ArrowUpParticle extends SpriteTexturedParticle {
 
 	private ArrowUpParticle(ClientWorld world, double x, double y, double z) {
 		super(world, x, y, z, 0.0D, 0.0D, 0.0D);
-		this.motionX *= (double) 0.01F;
-		this.motionY *= (double) 0.01F;
-		this.motionZ *= (double) 0.01F;
+		this.motionX *= 0.01F;
+		this.motionY *= 0.01F;
+		this.motionZ *= 0.01F;
 		this.motionY += 0.1D;
 		this.particleScale *= 1.5F;
 		this.maxAge = 16;
@@ -49,12 +49,12 @@ public class ArrowUpParticle extends SpriteTexturedParticle {
 				this.motionZ *= 1.1D;
 			}
 
-			this.motionX *= (double) 0.86F;
-			this.motionY *= (double) 0.86F;
-			this.motionZ *= (double) 0.86F;
+			this.motionX *= 0.86F;
+			this.motionY *= 0.86F;
+			this.motionZ *= 0.86F;
 			if (this.onGround) {
-				this.motionX *= (double) 0.7F;
-				this.motionZ *= (double) 0.7F;
+				this.motionX *= 0.7F;
+				this.motionZ *= 0.7F;
 			}
 
 		}

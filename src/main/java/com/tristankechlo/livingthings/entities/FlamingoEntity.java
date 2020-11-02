@@ -44,8 +44,8 @@ public class FlamingoEntity extends AnimalEntity {
 
 	public FlamingoEntity(EntityType<? extends FlamingoEntity> type, World worldIn) {
 		super(type, worldIn);
-	    this.stepHeight = 1.0F;
-	    this.setPathPriority(PathNodeType.WATER, 1.0F);
+		this.stepHeight = 1.0F;
+		this.setPathPriority(PathNodeType.WATER, 1.0F);
 	}
 
 	@Override
@@ -58,11 +58,11 @@ public class FlamingoEntity extends AnimalEntity {
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.randomWalkingGoal = new FlamingoEntity.DeepWaterAvoidingRandomWalkingGoal(this, 1.0D, 50);
-		
+
 		this.goalSelector.addGoal(0, new FlamingoEntity.SwimInDeepWaterGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.1D));
@@ -74,34 +74,34 @@ public class FlamingoEntity extends AnimalEntity {
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, FlamingoEntity.class, 8.0F));
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(LEFT_LEG_UP, false);
 		this.dataManager.register(RIGHT_LEG_UP, false);
 	}
-			
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return TEMPTATION_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? 0.6F : 1.2F;
+		return this.isChild() ? 0.6F : 1.2F;
 	}
-	
+
 	@Override
 	protected float getWaterSlowDown() {
 		return 0.98F;
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.FLAMINGO.maxSpawns.get();
 	}
-	
+
 	public boolean isLeftLegUp() {
 		return this.dataManager.get(LEFT_LEG_UP);
 	}
@@ -109,41 +109,41 @@ public class FlamingoEntity extends AnimalEntity {
 	public boolean isRightLegUp() {
 		return this.dataManager.get(RIGHT_LEG_UP);
 	}
-	
+
 	public void setLeftLegUp(boolean up) {
 		this.dataManager.set(LEFT_LEG_UP, up);
 	}
-	
+
 	public void setRightLegUp(boolean up) {
 		this.dataManager.set(RIGHT_LEG_UP, up);
 	}
-		
+
 	static class LiftLegsGoal extends Goal {
-		
+
 		private final FlamingoEntity flamingo;
 		private final int chance;
 		private int rightLegCounter;
 		private int leftLegCounter;
-		
+
 		public LiftLegsGoal(FlamingoEntity flamingo, int chance) {
 			this.flamingo = flamingo;
 			this.chance = chance;
-		    this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
 		public boolean shouldExecute() {
-			if(this.flamingo.getRNG().nextInt(this.chance) != 0) {
+			if (this.flamingo.getRNG().nextInt(this.chance) != 0) {
 				return false;
 			}
 			return !this.flamingo.isRightLegUp() && !this.flamingo.isLeftLegUp() && this.flamingo.getNavigator().noPath();
 		}
-		
+
 		@Override
 		public boolean shouldContinueExecuting() {
 			return this.flamingo.getNavigator().noPath() && (this.flamingo.isRightLegUp() || this.flamingo.isLeftLegUp());
 		}
-		
+
 		@Override
 		public void resetTask() {
 			this.leftLegCounter = 0;
@@ -151,25 +151,25 @@ public class FlamingoEntity extends AnimalEntity {
 			this.flamingo.setLeftLegUp(false);
 			this.flamingo.setRightLegUp(false);
 		}
-		
+
 		@Override
 		public void tick() {
-			if(this.leftLegCounter > 0) {
+			if (this.leftLegCounter > 0) {
 				this.leftLegCounter--;
-			} else if(this.leftLegCounter <= 0) {
+			} else if (this.leftLegCounter <= 0) {
 				this.leftLegCounter = 0;
 				this.flamingo.setLeftLegUp(false);
 			}
-			
-			if(this.rightLegCounter > 0) {
+
+			if (this.rightLegCounter > 0) {
 				this.rightLegCounter--;
-			} else if(this.rightLegCounter <= 0) {
+			} else if (this.rightLegCounter <= 0) {
 				this.rightLegCounter = 0;
 				this.flamingo.setRightLegUp(false);
 			}
-						
-			if(this.rightLegCounter == 0 && this.leftLegCounter == 0 && Math.random() < 0.1F) {
-				if(Math.random() < 0.5F) {
+
+			if (this.rightLegCounter == 0 && this.leftLegCounter == 0 && Math.random() < 0.1F) {
+				if (Math.random() < 0.5F) {
 					this.leftLegCounter = 500;
 					this.flamingo.setLeftLegUp(true);
 				} else {
@@ -177,54 +177,54 @@ public class FlamingoEntity extends AnimalEntity {
 					this.flamingo.setRightLegUp(true);
 				}
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	static class SwimInDeepWaterGoal extends SwimGoal {
-		
+
 		private final FlamingoEntity flamingo;
 
 		public SwimInDeepWaterGoal(FlamingoEntity entityIn) {
 			super(entityIn);
 			this.flamingo = entityIn;
 		}
-		
+
 		@Override
 		public boolean shouldExecute() {
-			return this.flamingo.eyesInWater ? super.shouldExecute() : false;
+			return this.flamingo.eyesInWater && super.shouldExecute();
 		}
-		
+
 		@Override
 		public void tick() {
-			//find a new position on land
+			// find a new position on land
 			this.flamingo.randomWalkingGoal.makeUpdate();
-			//start swimming
+			// start swimming
 			super.tick();
 		}
-				
+
 	}
-	
+
 	static class DeepWaterAvoidingRandomWalkingGoal extends RandomWalkingGoal {
-		
+
 		private final FlamingoEntity flamingo;
 
 		public DeepWaterAvoidingRandomWalkingGoal(FlamingoEntity creatureIn, double speedIn, int chance) {
 			super(creatureIn, speedIn, chance);
 			this.flamingo = creatureIn;
 		}
-		
+
 		@Override
 		protected Vector3d getPosition() {
-		      if (this.flamingo.eyesInWater) {
-		          Vector3d vector3d = RandomPositionGenerator.getLandPos(this.creature, 15, 7);
-		          return vector3d == null ? super.getPosition() : vector3d;
-		       } else {
-		    	      return RandomPositionGenerator.findRandomTarget(this.creature, 10, 7);
-		       }
+			if (this.flamingo.eyesInWater) {
+				Vector3d vector3d = RandomPositionGenerator.getLandPos(this.creature, 15, 7);
+				return vector3d == null ? super.getPosition() : vector3d;
+			} else {
+				return RandomPositionGenerator.findRandomTarget(this.creature, 10, 7);
+			}
 		}
-		
+
 	}
-	
+
 }

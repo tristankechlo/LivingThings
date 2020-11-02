@@ -62,7 +62,7 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.RACCOON.damage.get());
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
@@ -79,41 +79,41 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		this.writeAngerNBT(compound);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if(this.world instanceof ServerWorld) {
+		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.RACCOON_AMBIENT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return ModSounds.RACCOON_HURT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.RACCOON_DEATH.get();
 	}
-	
+
 	@Override
 	public int getTalkInterval() {
 		return 300;
@@ -123,12 +123,12 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return this.isChild() ? 0.35F : 0.7F;
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.RACCOON.maxSpawns.get();
 	}
-	
+
 	@Override
 	public int getAngerTime() {
 		return this.angerTime;
@@ -137,7 +137,6 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public void setAngerTime(int time) {
 		this.angerTime = time;
-		
 	}
 
 	@Override
@@ -148,7 +147,6 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable {
 	@Override
 	public void setAngerTarget(UUID target) {
 		this.angerTarget = target;
-		
 	}
 
 	@Override

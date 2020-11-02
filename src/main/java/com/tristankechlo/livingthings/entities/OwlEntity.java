@@ -68,12 +68,12 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	public float oFlapSpeed;
 	public float oFlap;
 	private float flapping = 1.0F;
-	
+
 	public OwlEntity(EntityType<? extends OwlEntity> type, World worldIn) {
 		super(type, worldIn);
-	      this.moveController = new FlyingMovementController(this, 10, false);
-	      this.setPathPriority(PathNodeType.DANGER_FIRE, -1.0F);
-	      this.setPathPriority(PathNodeType.DAMAGE_FIRE, -1.0F);
+		this.moveController = new FlyingMovementController(this, 10, false);
+		this.setPathPriority(PathNodeType.DANGER_FIRE, -1.0F);
+		this.setPathPriority(PathNodeType.DAMAGE_FIRE, -1.0F);
 	}
 
 	@Override
@@ -89,27 +89,27 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.FLYING_SPEED, 0.5D);
 	}
-	
+
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
+
 	public static byte getWeightedRandomColorVariant(Random random) {
 		int colorBrownWeight = LivingThingsConfig.OWL.colorBrownWeight.get();
 		int colorWhiteWeight = LivingThingsConfig.OWL.colorWhiteWeight.get();
 		int colorBlackWeight = LivingThingsConfig.OWL.colorBlackWeight.get();
-		if(colorBrownWeight <= 0 && colorWhiteWeight <= 0 && colorBlackWeight <= 0) {
+		if (colorBrownWeight <= 0 && colorWhiteWeight <= 0 && colorBlackWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobVariant(Math.max(0, colorBrownWeight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, colorWhiteWeight), (byte) 1),
-				new WeightedMobVariant(Math.max(0, colorBlackWeight), (byte) 2)));
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobVariant(Math.max(0, colorBrownWeight), (byte) 0),
+						new WeightedMobVariant(Math.max(0, colorWhiteWeight), (byte) 1),
+						new WeightedMobVariant(Math.max(0, colorBlackWeight), (byte) 2)));
 		return variant.variant;
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
@@ -123,13 +123,13 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(OWL_VARIANT, (byte)0);
+		this.dataManager.register(OWL_VARIANT, (byte) 0);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
@@ -139,19 +139,19 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 			this.setVariant((byte) 0);
 		}
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("OwlVariant", this.getVariant());
 	}
-	
+
 	@Override
 	public void livingTick() {
 		super.livingTick();
 		this.calculateFlapping();
 	}
-	
+
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
@@ -168,14 +168,14 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 				}
 			}
 			return ActionResultType.func_233537_a_(this.world.isRemote);
-			
-		} else if(this.isBreedingItem(itemstack)) {
+
+		} else if (this.isBreedingItem(itemstack)) {
 			if (!player.isCreative()) {
 				itemstack.shrink(1);
 			}
-			if(!this.world.isRemote && this.canBreed() && this.getGrowingAge() == 0){
+			if (!this.world.isRemote && this.canBreed() && this.getGrowingAge() == 0) {
 				this.setInLove(player);
-	            return ActionResultType.SUCCESS;
+				return ActionResultType.SUCCESS;
 			}
 			return ActionResultType.func_233537_a_(this.world.isRemote);
 		} else if (!this.isFlying() && this.isTamed() && this.isOwner(player)) {
@@ -192,8 +192,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	private void calculateFlapping() {
 		this.oFlap = this.flap;
 		this.oFlapSpeed = this.flapSpeed;
-		this.flapSpeed = (float) ((double) this.flapSpeed
-				+ (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
+		this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
 		this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
 		if (!this.onGround && this.flapping < 1.0F) {
 			this.flapping = 1.0F;
@@ -210,11 +209,9 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
 		BlockState blockstate = worldIn.getBlockState(pos.down());
-		return (blockstate.isIn(BlockTags.LEAVES) || blockstate.isIn(Blocks.GRASS_BLOCK)
-				|| blockstate.isIn(BlockTags.LOGS) || blockstate.isIn(Blocks.AIR))
-				&& worldIn.getLightSubtracted(pos, 0) > 8;
+		return (blockstate.isIn(BlockTags.LEAVES) || blockstate.isIn(Blocks.GRASS_BLOCK) || blockstate.isIn(BlockTags.LOGS) || blockstate.isIn(Blocks.AIR)) && worldIn.getLightSubtracted(pos, 0) > 8;
 	}
-	
+
 	@Override
 	protected PathNavigator createNavigator(World worldIn) {
 		FlyingPathNavigator flyingpathnavigator = new FlyingPathNavigator(this, worldIn);
@@ -223,57 +220,57 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 		flyingpathnavigator.setCanEnterDoors(true);
 		return flyingpathnavigator;
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.OWL.maxSpawns.get();
 	}
-	
+
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? 0.45F : 0.9F;
+		return this.isChild() ? 0.45F : 0.9F;
 	}
-	
+
 	@Override
 	public boolean onLivingFall(float distance, float damageMultiplier) {
 		return false;
 	}
-	
+
 	@Override
 	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.OWL_AMBIENT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return ModSounds.OWL_HURT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.OWL_DEATH.get();
 	}
-	
+
 	@Override
 	protected float playFlySound(float volume) {
 		this.playSound(ModSounds.OWL_FLY.get(), 0.15F, 1.0F);
-	    return volume + this.flapSpeed / 2.0F;
+		return volume + this.flapSpeed / 2.0F;
 	}
-	
+
 	@Override
 	protected boolean makeFlySound() {
 		return true;
 	}
-	
+
 	@Override
 	protected void collideWithEntity(Entity entityIn) {
 		if (!(entityIn instanceof PlayerEntity)) {

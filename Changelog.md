@@ -1,6 +1,7 @@
 # Changelog
 
 ### Version 1.16.3 - 1.2.3
+ - added koala entity
  - temporarily disabling custom particles
 
 ### Version 1.16.3 - 1.2.2

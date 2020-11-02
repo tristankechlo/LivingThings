@@ -32,6 +32,7 @@ public class BiomeLoadingEventHandler {
 		List<? extends String> MantaraySpawnBiomes = LivingThingsConfig.MANTARAY.spawnBiomes.get();
 		List<? extends String> RaccoonSpawnBiomes = LivingThingsConfig.RACCOON.spawnBiomes.get();
 		List<? extends String> OwlSpawnBiomes = LivingThingsConfig.OWL.spawnBiomes.get();
+		List<? extends String> KoalaSpawnBiomes = LivingThingsConfig.KOALA.spawnBiomes.get();
 
 		if (ElephantSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
@@ -51,7 +52,7 @@ public class BiomeLoadingEventHandler {
 
 		if (LionSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.LION_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.LION_ENTITY.get(),
 							LivingThingsConfig.LION.weight.get(),
 							LivingThingsConfig.LION.minSpawns.get(),
 							LivingThingsConfig.LION.maxSpawns.get()));
@@ -59,7 +60,7 @@ public class BiomeLoadingEventHandler {
 
 		if (SharkSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE)
-					.add(new Spawners(ModEntityTypes.SHARK_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.SHARK_ENTITY.get(),
 							LivingThingsConfig.SHARK.weight.get(),
 							LivingThingsConfig.SHARK.minSpawns.get(),
 							LivingThingsConfig.SHARK.maxSpawns.get()));
@@ -75,31 +76,31 @@ public class BiomeLoadingEventHandler {
 
 		if (OstrichSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OSTRICH_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.OSTRICH_ENTITY.get(),
 							LivingThingsConfig.OSTRICH.weight.get(),
-							LivingThingsConfig.OSTRICH.minSpawns.get(), 
+							LivingThingsConfig.OSTRICH.minSpawns.get(),
 							LivingThingsConfig.OSTRICH.maxSpawns.get()));
 		}
 
 		if (FlamingoSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTITY.get(),
 							LivingThingsConfig.FLAMINGO.weight.get(),
-							LivingThingsConfig.FLAMINGO.minSpawns.get(), 
+							LivingThingsConfig.FLAMINGO.minSpawns.get(),
 							LivingThingsConfig.FLAMINGO.maxSpawns.get()));
 		}
 
 		if (CrabSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.CRAB_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.CRAB_ENTITY.get(),
 							LivingThingsConfig.CRAB.weight.get(),
-							LivingThingsConfig.CRAB.minSpawns.get(), 
+							LivingThingsConfig.CRAB.minSpawns.get(),
 							LivingThingsConfig.CRAB.maxSpawns.get()));
 		}
 
 		if (MantaraySpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT)
-					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY.get(),
 							LivingThingsConfig.MANTARAY.weight.get(),
 							LivingThingsConfig.MANTARAY.minSpawns.get(),
 							LivingThingsConfig.MANTARAY.maxSpawns.get()));
@@ -107,19 +108,26 @@ public class BiomeLoadingEventHandler {
 
 		if (RaccoonSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY.get(),
 							LivingThingsConfig.RACCOON.weight.get(),
-							LivingThingsConfig.RACCOON.minSpawns.get(), 
+							LivingThingsConfig.RACCOON.minSpawns.get(),
 							LivingThingsConfig.RACCOON.maxSpawns.get()));
 		}
 
 		if (OwlSpawnBiomes.contains(currentBiome)) {
 			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OWL_ENTITY.get(), 
+					.add(new Spawners(ModEntityTypes.OWL_ENTITY.get(),
 							LivingThingsConfig.OWL.weight.get(),
-							LivingThingsConfig.OWL.minSpawns.get(), 
+							LivingThingsConfig.OWL.minSpawns.get(),
 							LivingThingsConfig.OWL.maxSpawns.get()));
 		}
 
+		if (KoalaSpawnBiomes.contains(currentBiome)) {
+			event.getSpawns().getSpawner(EntityClassification.CREATURE)
+					.add(new Spawners(ModEntityTypes.KOALA_ENTITY.get(),
+							LivingThingsConfig.KOALA.weight.get(),
+							LivingThingsConfig.KOALA.minSpawns.get(),
+							LivingThingsConfig.KOALA.maxSpawns.get()));
+		}
 	}
 }

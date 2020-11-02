@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
+public class FlamingoModel<T extends FlamingoEntity> extends EntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Back1;
@@ -37,7 +37,7 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 	private final ModelRenderer Wings;
 	private final ModelRenderer LeftWing;
 	private final ModelRenderer RightWing;
-	
+
 	public FlamingoModel() {
 		textureWidth = 64;
 		textureHeight = 64;
@@ -66,7 +66,6 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 		Legs = new ModelRenderer(this);
 		Legs.setRotationPoint(0.0F, -9.9F, 0.0F);
 		Body.addChild(Legs);
-		
 
 		LeftLegTop = new ModelRenderer(this);
 		LeftLegTop.setRotationPoint(2.0F, 1.0F, 0.0F);
@@ -167,7 +166,6 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 		Wings = new ModelRenderer(this);
 		Wings.setRotationPoint(0.0F, 3.1F, 0.0F);
 		Body.addChild(Wings);
-		
 
 		LeftWing = new ModelRenderer(this);
 		LeftWing.setRotationPoint(3.0F, -15.5F, -3.0F);
@@ -183,36 +181,36 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T flamingo, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T flamingo, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
 		this.Head.rotateAngleX = 0.2617993875F + (headPitch * 0.0174532925F);
-	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
-	    
-		if(flamingo.isLeftLegUp()) {
-			//values are defined by: ((Math.PI / 180) * AngleIn�)
+		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+
+		if (flamingo.isLeftLegUp()) {
+			// values are defined by: ((Math.PI / 180) * AngleIn�)
 			this.LeftLegTop.rotateAngleX = 1.3089969389F;
 			this.LeftLegBottom.rotateAngleX = -2.7052603405F;
 			this.LeftFoot.rotateAngleX = 0.174532925F;
-			
+
 			this.RightLegTop.rotateAngleX = 0.1308996938F;
 			this.RightLegBottom.rotateAngleX = -0.174532925F;
 			this.RightFoot.rotateAngleX = 0.0436332312F;
-			
+
 		} else if (flamingo.isRightLegUp()) {
 
 			this.LeftLegTop.rotateAngleX = 0.1308996938F;
 			this.LeftLegBottom.rotateAngleX = -0.174532925F;
 			this.LeftFoot.rotateAngleX = 0.0436332312F;
-			
+
 			this.RightLegTop.rotateAngleX = 1.3089969389F;
 			this.RightLegBottom.rotateAngleX = -2.7052603405F;
 			this.RightFoot.rotateAngleX = 0.174532925F;
-			
+
 		} else {
 			this.LeftLegTop.rotateAngleX = 0.1308996937F + (MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount);
 			this.LeftLegBottom.rotateAngleX = -0.174532925F;
 			this.LeftFoot.rotateAngleX = 0.0436332312F;
-			
+
 			this.RightLegTop.rotateAngleX = 0.1308996937F + (MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount);
 			this.RightLegBottom.rotateAngleX = -0.174532925F;
 			this.RightFoot.rotateAngleX = 0.0436332312F;
@@ -221,13 +219,12 @@ public class FlamingoModel <T extends FlamingoEntity> extends EntityModel<T> {
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		if(this.isChild) {
+		if (this.isChild) {
 			matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 			matrixStackIn.translate(0, 1.5D, 0);
 		}
 		Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 	}
-	
 
 	private void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.rotateAngleX = x;

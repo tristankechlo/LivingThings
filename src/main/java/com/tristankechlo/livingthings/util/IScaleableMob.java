@@ -8,14 +8,14 @@ public interface IScaleableMob {
 
 	void setScaling(byte scaling);
 
-	static class WeightedMobScaling extends WeightedRandom.Item {
-		
+	class WeightedMobScaling extends WeightedRandom.Item {
+
 		public final byte scaling;
 
 		public WeightedMobScaling(int weight, byte scaling) {
 			super(weight);
 			this.scaling = scaling;
 		}
-		
+
 	}
 }

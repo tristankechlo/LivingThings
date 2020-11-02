@@ -20,7 +20,7 @@ public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, Ancien
 		super(renderManagerIn, new AncientBlazeModel<>(), 0.5F);
 		this.addLayer(new AncientBlazeChargedLayer(this));
 	}
-	
+
 	@Override
 	protected int getBlockLight(AncientBlazeEntity entityIn, BlockPos partialTicks) {
 		return 15;

@@ -25,35 +25,35 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod(LivingThings.MOD_ID)
 public class LivingThings {
-	
-    public static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "livingthings";
-    public static boolean patchouliLoaded = false;
-    
-    public LivingThings() {    	
-    	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, LivingThingsConfig.spec);
-    	
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        
-        ModItems.ITEMS.register(modEventBus);
-        ModBlocks.BLOCKS.register(modEventBus);
-        ModSounds.SOUNDS.register(modEventBus);
-        ModParticle.PARTICLES.register(modEventBus);
-        ModEntityTypes.ENTITY_TYPES.register(modEventBus);
-		
-        modEventBus.addListener(this::ClientSetup);
-        modEventBus.addListener(this::CommonSetup);
-        
-        MinecraftForge.EVENT_BUS.register(new PlaceBlockEventHandler());
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-    
-    public void ClientSetup(final FMLClientSetupEvent event) {
-    	RenderHandler.registerEntityRenders();
-    }
-    
-    public void CommonSetup(final FMLCommonSetupEvent event) {
-    	LivingThings.patchouliLoaded = ModList.get().isLoaded("patchouli");
-    }
-                    
+
+	public static final Logger LOGGER = LogManager.getLogger();
+	public static final String MOD_ID = "livingthings";
+	public static boolean patchouliLoaded = false;
+
+	public LivingThings() {
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, LivingThingsConfig.spec);
+
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+		ModItems.ITEMS.register(modEventBus);
+		ModBlocks.BLOCKS.register(modEventBus);
+		ModSounds.SOUNDS.register(modEventBus);
+		ModParticle.PARTICLES.register(modEventBus);
+		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+
+		modEventBus.addListener(this::ClientSetup);
+		modEventBus.addListener(this::CommonSetup);
+
+		MinecraftForge.EVENT_BUS.register(new PlaceBlockEventHandler());
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	public void ClientSetup(final FMLClientSetupEvent event) {
+		RenderHandler.registerEntityRenders();
+	}
+
+	public void CommonSetup(final FMLCommonSetupEvent event) {
+		LivingThings.patchouliLoaded = ModList.get().isLoaded("patchouli");
+	}
+
 }

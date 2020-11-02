@@ -13,43 +13,43 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.Difficulty;
 
 public class BetterMeleeAttackGoal extends MeleeAttackGoal {
-	
+
 	public BetterMeleeAttackGoal(CreatureEntity creature, double speedIn, boolean useLongMemory) {
 		super(creature, speedIn, useLongMemory);
 	}
-	
+
 	@Override
 	public boolean shouldExecute() {
-		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
+		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL);
 		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
-		if (peaceful || ambientMode || this.canEntityAttack() == false) {
+		if (peaceful || ambientMode || !this.canEntityAttack()) {
 			return false;
 		}
 		return super.shouldExecute();
 	}
-	
+
 	@Override
 	public boolean shouldContinueExecuting() {
-		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
+		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL);
 		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
-		if (peaceful || ambientMode || this.canEntityAttack() == false) {
+		if (peaceful || ambientMode || !this.canEntityAttack()) {
 			return false;
 		}
 		return super.shouldContinueExecuting();
 	}
-		
+
 	private boolean canEntityAttack() {
-		if(this.attacker instanceof ElephantEntity) {
+		if (this.attacker instanceof ElephantEntity) {
 			return LivingThingsConfig.ELEPHANT.canAttack.get();
-		} else if(this.attacker instanceof GiraffeEntity) {
+		} else if (this.attacker instanceof GiraffeEntity) {
 			return LivingThingsConfig.GIRAFFE.canAttack.get();
-		} else if(this.attacker instanceof LionEntity) {
+		} else if (this.attacker instanceof LionEntity) {
 			return LivingThingsConfig.LION.canAttack.get();
-		} else if(this.attacker instanceof SharkEntity) {
+		} else if (this.attacker instanceof SharkEntity) {
 			return LivingThingsConfig.SHARK.canAttack.get();
-		} else if(this.attacker instanceof CrabEntity) {
+		} else if (this.attacker instanceof CrabEntity) {
 			return LivingThingsConfig.CRAB.canAttack.get();
-		} else if(this.attacker instanceof RaccoonEntity) {
+		} else if (this.attacker instanceof RaccoonEntity) {
 			return LivingThingsConfig.RACCOON.canAttack.get();
 		}
 		return false;

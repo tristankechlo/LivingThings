@@ -11,8 +11,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
-	
+public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
+
 	private final ModelRenderer Body;
 	private final ModelRenderer Legs;
 	private final ModelRenderer FrontRightLeg;
@@ -32,7 +32,7 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 	private final ModelRenderer RightEar;
 	private final ModelRenderer TailTop;
 	private final ModelRenderer TailBottom;
-	
+
 	public GiraffeModel() {
 		textureWidth = 128;
 		textureHeight = 64;
@@ -45,7 +45,6 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 		Legs = new ModelRenderer(this);
 		Legs.setRotationPoint(0.0F, -7.5F, -0.6F);
 		Body.addChild(Legs);
-		
 
 		FrontRightLeg = new ModelRenderer(this);
 		FrontRightLeg.setRotationPoint(-4.0F, -1.0F, -10.0F);
@@ -103,7 +102,6 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 		Horns = new ModelRenderer(this);
 		Horns.setRotationPoint(0.0F, 0.0F, 0.0F);
 		Head.addChild(Horns);
-		
 
 		LeftHorn = new ModelRenderer(this);
 		LeftHorn.setRotationPoint(1.0F, -6.0F, 0.0F);
@@ -120,7 +118,6 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 		Ears = new ModelRenderer(this);
 		Ears.setRotationPoint(0.0F, 0.0F, 0.0F);
 		Head.addChild(Ears);
-		
 
 		LeftEar = new ModelRenderer(this);
 		LeftEar.setRotationPoint(3.0F, -4.0F, 0.0F);
@@ -147,34 +144,34 @@ public class GiraffeModel <T extends GiraffeEntity> extends EntityModel<T>{
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		if(this.isChild) {
+		if (this.isChild) {
 			matrixStackIn.scale(0.6F, 0.6F, 0.6F);
 			matrixStackIn.translate(0, 1, 0);
 		}
 		Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-		
+
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
-		this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.Head.rotateAngleX = headPitch * 0.0174532925F;
 		this.NeckTop.rotateAngleX = (float) (this.NeckMiddle.rotateAngleX / 1);
 		this.NeckMiddle.rotateAngleX = (float) (this.Head.rotateAngleX / 2);
 
-	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
-		this.NeckTop.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
-		this.NeckMiddle.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
-		this.NeckBottom.rotateAngleY = (netHeadYaw / 5F) * ((float) Math.PI / 180F);
-		
-		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F	* limbSwingAmount;
+		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+		this.NeckTop.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+		this.NeckMiddle.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+		this.NeckBottom.rotateAngleY = (netHeadYaw / 5F) * 0.0174532925F;
+
+		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 		this.BackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.FrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.BackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		
-		this.TailTop.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F	* limbSwingAmount;
-		this.TailBottom.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F	* limbSwingAmount;		
+
+		this.TailTop.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
+		this.TailBottom.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
-		
+
 	private void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;

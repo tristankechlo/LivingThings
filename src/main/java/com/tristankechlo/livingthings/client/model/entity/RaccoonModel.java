@@ -11,8 +11,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RaccoonModel <T extends RaccoonEntity> extends EntityModel<T> {
-	
+public class RaccoonModel<T extends RaccoonEntity> extends EntityModel<T> {
+
 	private final ModelRenderer Body;
 	private final ModelRenderer LegFrontLeft;
 	private final ModelRenderer LegBackLeft;
@@ -80,21 +80,21 @@ public class RaccoonModel <T extends RaccoonEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
-		
-		this.LegBackRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F	* limbSwingAmount;
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.Head.rotateAngleX = headPitch * 0.0174532925F;
+		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+
+		this.LegBackRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 		this.LegBackLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.LegFrontRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.LegFrontLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 
-		this.Tail.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F	* limbSwingAmount;
+		this.Tail.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		if(this.isChild) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		if (this.isChild) {
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
 			matrixStack.translate(0, 1.5D, 0);
 		}

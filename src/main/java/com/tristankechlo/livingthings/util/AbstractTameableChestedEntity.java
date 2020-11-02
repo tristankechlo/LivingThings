@@ -58,14 +58,14 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		this.initInventory();
 		this.tameAmount = 0;
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(IS_SADDLED, false);
 		this.dataManager.register(HAS_CHEST, false);
 		this.dataManager.register(IS_TAMED, false);
-	    this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
+		this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
 	}
 
 	@Override
@@ -75,20 +75,20 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		this.setHasChest(compound.getBoolean("Chested"));
 		this.setTame(compound.getBoolean("Tamed"));
 		this.setTameAmount(compound.getInt("TameAmount"));
-		
+
 		this.entityInventory.read(compound.getList("Inventory", 10));
 		this.initInventory();
 
-	    UUID uuid;
-	    if (compound.hasUniqueId("Owner")) {
-	       uuid = compound.getUniqueId("Owner");
-	    } else {
-	       String string = compound.getString("Owner");
-	       uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), string);
-	    }
-	    if (uuid != null) {
-	       this.setOwnerUniqueId(uuid);
-	    }
+		UUID uuid;
+		if (compound.hasUniqueId("Owner")) {
+			uuid = compound.getUniqueId("Owner");
+		} else {
+			String string = compound.getString("Owner");
+			uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), string);
+		}
+		if (uuid != null) {
+			this.setOwnerUniqueId(uuid);
+		}
 	}
 
 	@Override
@@ -99,9 +99,9 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		compound.putBoolean("Tamed", this.isTame());
 		compound.putInt("TameAmount", this.getTameAmount());
 		compound.put("Inventory", this.entityInventory.write());
-	    if (this.getOwnerUniqueId() != null) {
-	    	compound.putUniqueId("Owner", this.getOwnerUniqueId());
-	    }
+		if (this.getOwnerUniqueId() != null) {
+			compound.putUniqueId("Owner", this.getOwnerUniqueId());
+		}
 	}
 
 	protected void initInventory() {
@@ -118,9 +118,9 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			}
 		}
 	}
-	
+
 	public void openInventory(PlayerEntity player) {
-		//elephant inv is a generic chest
+		// elephant inv is a generic chest
 		player.openContainer(new SimpleNamedContainerProvider((id, playerInv, playerIn) -> {
 			return new ChestContainer(ContainerType.GENERIC_9X3, id, player.inventory, this.entityInventory, 3);
 		}, CONTAINER_NAME));
@@ -128,132 +128,133 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		if(hand == Hand.OFF_HAND) { //prevent offhand use
+		if (hand == Hand.OFF_HAND) { // prevent offhand use
 			return ActionResultType.PASS;
 		}
 		ItemStack stack = player.getHeldItemMainhand();
 
 		if (stack.isEmpty() && this.isTame() && !this.isChild()) {
 
-			if(player.isSneaking() && this.hasChest()) {
-				//open inv
+			if (player.isSneaking() && this.hasChest()) {
+				// open inv
 				this.openInventory(player);
-				
-			} else if(this.getPassengers().isEmpty() && this.isSaddled()) {
-				//start riding
-				this.mountRider(player);;
-			}
-            return ActionResultType.func_233537_a_(this.world.isRemote);
-			
-		} else if (this.isBreedingItem(stack)) {
-			
-			if(this.isChild()) {
-				//age up
-		        int age = this.getGrowingAge();
-	            this.consumeItemFromStack(player, stack);
-	            this.ageUp((int)((float)(-age / 20) * 0.1F), true);
-	            return ActionResultType.func_233537_a_(this.world.isRemote);
-			}
-			
-			if(this.isTame()) {
 
-				//if needs health
-				if(this.getHealth() < this.getMaxHealth()) {
-					
-					//heal entity
-					if(!this.world.isRemote) {
+			} else if (this.getPassengers().isEmpty() && this.isSaddled()) {
+				// start riding
+				this.mountRider(player);
+			}
+			return ActionResultType.func_233537_a_(this.world.isRemote);
+
+		} else if (this.isBreedingItem(stack)) {
+
+			if (this.isChild()) {
+				// age up
+				int age = this.getGrowingAge();
+				this.consumeItemFromStack(player, stack);
+				this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
+				return ActionResultType.func_233537_a_(this.world.isRemote);
+			}
+
+			if (this.isTame()) {
+
+				// if needs health
+				if (this.getHealth() < this.getMaxHealth()) {
+
+					// heal entity
+					if (!this.world.isRemote) {
 						float healAmount = this.getHealingAmount(stack.getItem());
 						this.heal(healAmount);
 						this.consumeItemFromStack(player, stack);
 						return ActionResultType.SUCCESS;
 					}
-				
-				//if already full health
+
+					// if already full health
 				} else {
-					//set in love
+					// set in love
 					if (!this.world.isRemote && !this.isChild() && this.canBreed()) {
 						this.consumeItemFromStack(player, stack);
 						this.setInLove(player);
 						return ActionResultType.SUCCESS;
-					}					
+					}
 				}
-				
+
 			}
-			
+
 		} else if (this.isTamingItem(stack) && !this.isChild() && !this.isTame()) {
-			
-			//progress taming
-			if(!this.world.isRemote) {
+
+			// progress taming
+			if (!this.world.isRemote) {
 				this.addTameAmount(this.getTameAmountPerItem(stack.getItem()));
 				this.consumeItemFromStack(player, stack);
-				//if entity shall be set as tamed now
-				if(this.getTameAmount() >= this.getMaxTameAmount()) {
+				// if entity shall be set as tamed now
+				if (this.getTameAmount() >= this.getMaxTameAmount()) {
 					this.setTame(true);
 					this.setOwnerUniqueId(player.getUniqueID());
-				    if (player instanceof ServerPlayerEntity) {
-				        CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayerEntity)player, this);
-				    }
-				    this.world.setEntityState(this, (byte)6);
+					if (player instanceof ServerPlayerEntity) {
+						CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayerEntity) player, this);
+					}
+					this.world.setEntityState(this, (byte) 6);
 				} else {
-				    this.world.setEntityState(this, (byte)7);
+					this.world.setEntityState(this, (byte) 7);
 				}
 			}
 			return ActionResultType.SUCCESS;
-			
-		} else if(this.isTame() && isSaddleItem(stack) && !this.isChild()) {
-			
-			//saddle entity
-			if(!this.world.isRemote && !this.isSaddled()) {
+
+		} else if (this.isTame() && isSaddleItem(stack) && !this.isChild()) {
+
+			// saddle entity
+			if (!this.world.isRemote && !this.isSaddled()) {
 				this.consumeItemFromStack(player, stack);
 				this.setSaddled(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
 			}
-			
-		} else if(this.isTame() && this.isSaddled() && isChestItem(stack) && !this.isChild()) {
 
-			//add chest to entity
-			if(!this.world.isRemote && !this.hasChest()) {
+		} else if (this.isTame() && this.isSaddled() && isChestItem(stack) && !this.isChild()) {
+
+			// add chest to entity
+			if (!this.world.isRemote && !this.hasChest()) {
 				this.consumeItemFromStack(player, stack);
 				this.setHasChest(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
 			}
 		}
-		
+
 		return ActionResultType.PASS;
 	}
-	
+
 	@OnlyIn(Dist.CLIENT)
 	public void handleStatusUpdate(byte id) {
 		switch (id) {
-			case 6: //entity tamed
-				this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
-				this.spawnParticle(ParticleTypes.FIREWORK);
-				break;
-			case 7: //progress while taming
-				//this.spawnParticle(ModParticle.ARROW_UP_GREEN.get());
-				this.spawnParticle(ParticleTypes.COMPOSTER);
-				break;
-	
-			default:
-				super.handleStatusUpdate(id);
-				break;
+		case 6: // entity tamed
+			this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
+			this.spawnParticle(ParticleTypes.FIREWORK);
+			break;
+		case 7: // progress while taming
+			// this.spawnParticle(ModParticle.ARROW_UP_GREEN.get());
+			this.spawnParticle(ParticleTypes.COMPOSTER);
+			break;
+
+		default:
+			super.handleStatusUpdate(id);
+			break;
 		}
 	}
-	
+
 	@OnlyIn(Dist.CLIENT)
 	private void spawnParticle(IParticleData particle) {
-		if(particle != null) {
+		if (particle != null) {
 			for (int i = 0; i < 7; ++i) {
 				double d0 = this.rand.nextGaussian() * 0.03D;
 				double d1 = this.rand.nextGaussian() * 0.03D;
 				double d2 = this.rand.nextGaussian() * 0.03D;
-				this.world.addParticle(particle, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D,	this.getPosZRandom(1.0D), d0, d1, d2);
+				this.world.addParticle(particle, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D,
+						this.getPosZRandom(1.0D), d0, d1, d2);
 			}
 		}
 	}
-	
+
 	protected void mountRider(PlayerEntity player) {
 		if (!this.world.isRemote) {
 			player.rotationYaw = this.rotationYaw;
@@ -261,12 +262,12 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			player.startRiding(this);
 		}
 	}
-	
+
 	@Override
 	protected boolean isMovementBlocked() {
 		return super.isMovementBlocked() && this.isBeingRidden();
 	}
-	
+
 	@Override
 	protected void dropInventory() {
 		super.dropInventory();
@@ -278,19 +279,19 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				}
 			}
 		}
-		if(this.isSaddled() && this.rand.nextBoolean()) {
+		if (this.isSaddled() && this.rand.nextBoolean()) {
 			this.entityDropItem(this.getSaddleItem());
 		}
-		if(this.hasChest() && this.rand.nextBoolean()) {
+		if (this.hasChest() && this.rand.nextBoolean()) {
 			this.entityDropItem(this.getChestItem());
 		}
 	}
-		
+
 	@Override
 	public boolean canBeSteered() {
 		return this.getControllingPassenger() instanceof PlayerEntity;
 	}
-		
+
 	@Override
 	public void travel(Vector3d travelVector) {
 		if (this.isAlive()) {
@@ -298,14 +299,14 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
 				this.rotationYaw = livingentity.rotationYaw;
 				this.prevRotationYaw = this.rotationYaw;
-				this.rotationPitch =  -0.0436332312F;
+				this.rotationPitch = -0.0436332312F;
 				this.setRotation(this.rotationYaw, this.rotationPitch);
 				this.renderYawOffset = this.rotationYaw;
 				this.rotationYawHead = this.renderYawOffset;
 				float sideSpeed = livingentity.moveStrafing * 0.4F;
 				float forwardSpeed = livingentity.moveForward * 0.7F;
-				
-				//if moving backwards -> move slower
+
+				// if moving backwards -> move slower
 				if (forwardSpeed <= 0.0F) {
 					forwardSpeed *= 0.2F;
 				}
@@ -313,7 +314,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
 				if (this.canPassengerSteer()) {
 					this.setAIMoveSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-					super.travel(new Vector3d((double) sideSpeed, travelVector.y, (double) forwardSpeed));
+					super.travel(new Vector3d(sideSpeed, travelVector.y, forwardSpeed));
 				} else if (livingentity instanceof PlayerEntity) {
 					this.setMotion(Vector3d.ZERO);
 				}
@@ -330,7 +331,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	public boolean isTamingItem(ItemStack stack) {
 		return TAMING_ITEMS.test(stack);
 	}
@@ -347,11 +348,11 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	public void setSaddled(boolean saddled) {
 		this.dataManager.set(IS_SADDLED, saddled);
 	}
-	
+
 	public boolean hasChest() {
 		return this.dataManager.get(HAS_CHEST);
 	}
-	
+
 	public void setHasChest(boolean chested) {
 		this.dataManager.set(HAS_CHEST, chested);
 	}
@@ -365,62 +366,64 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 
 	@Nullable
-    public UUID getOwnerUniqueId() {
-		return this.dataManager.get(OWNER_UNIQUE_ID).orElse((UUID)null);
-    }
+	public UUID getOwnerUniqueId() {
+		return this.dataManager.get(OWNER_UNIQUE_ID).orElse(null);
+	}
 
-    public void setOwnerUniqueId(@Nullable UUID uniqueId) {
-       this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
-    }
-	
+	public void setOwnerUniqueId(@Nullable UUID uniqueId) {
+		this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
+	}
+
 	/** how much the entity shall be healed */
 	protected float getHealingAmount(Item item) {
 		return 3.0F;
 	}
-	
-	/**if current taming amount is higher than this, entity is considered as tamed*/
+
+	/**
+	 * if current taming amount is higher than this, entity is considered as tamed
+	 */
 	protected int getMaxTameAmount() {
 		return 1000;
 	}
-	
+
 	/** how much the taming shall progress */
 	protected int getTameAmountPerItem(Item item) {
 		return 200;
 	}
-	
-	/** get the current taming amount*/
+
+	/** get the current taming amount */
 	public int getTameAmount() {
 		return this.tameAmount;
 	}
-	
-	/**override the taming progress*/
+
+	/** override the taming progress */
 	public void setTameAmount(int amount) {
 		this.tameAmount = amount;
 	}
-	
-	/**add to the current taming amount*/
+
+	/** add to the current taming amount */
 	public void addTameAmount(int amount) {
 		this.tameAmount = this.getTameAmount() + amount;
 	}
-	
-	/**which item is considered the saddle item when used*/
+
+	/** which item is considered the saddle item when used */
 	protected Item getSaddleItem() {
 		return Items.SADDLE;
 	}
 
-	/**which item is considered the chest item when used*/
+	/** which item is considered the chest item when used */
 	protected Item getChestItem() {
 		return Items.CHEST;
 	}
 
-	/**check if item is correct saddle item*/
+	/** check if item is correct saddle item */
 	protected boolean isSaddleItem(ItemStack stack) {
 		return stack.getItem() == this.getSaddleItem();
 	}
 
-	/**check if item is correct chest item*/
+	/** check if item is correct chest item */
 	protected boolean isChestItem(ItemStack stack) {
 		return stack.getItem() == this.getChestItem();
 	}
-	
+
 }

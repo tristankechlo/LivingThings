@@ -27,32 +27,32 @@ public class ModArmorItem extends ArmorItem {
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 		if (!player.isInLava()) {
 			EffectInstance effect = new EffectInstance(Effects.FIRE_RESISTANCE, 2400, 0, false, false, true);
-			if(stack.getItem() == ModItems.ANCIENT_HELMET.get()) {
+			if (stack.getItem() == ModItems.ANCIENT_HELMET.get()) {
 				player.addPotionEffect(effect);
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-    @OnlyIn(Dist.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
 		AncientArmorModel model = new AncientArmorModel(2.0F);
-		
-        model.bipedHead.showModel = (armorSlot == EquipmentSlotType.HEAD);
 
-        model.isChild = _default.isChild;
-        model.isSneak = _default.isSneak;
-        model.isSitting = _default.isSitting;
-        model.rightArmPose = _default.rightArmPose;
-        model.leftArmPose = _default.leftArmPose;
+		model.bipedHead.showModel = (armorSlot == EquipmentSlotType.HEAD);
 
-        return (A) model;
+		model.isChild = _default.isChild;
+		model.isSneak = _default.isSneak;
+		model.isSitting = _default.isSitting;
+		model.rightArmPose = _default.rightArmPose;
+		model.leftArmPose = _default.leftArmPose;
+
+		return (A) model;
 	}
-	
+
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "livingthings:textures/models/armor/ancient_layer_1.png";
+		return "livingthings:textures/models/armor/ancient_layer_1.png";
 	}
-	
+
 }

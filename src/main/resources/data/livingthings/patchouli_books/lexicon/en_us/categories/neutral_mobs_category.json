@@ -1,6 +1,6 @@
 {
-	"name": "Neutral Mobs",
-	"description": "These mobs will only defend themselves, if you attack them first!",
-	"icon": "minecraft:writable_book",
+	"name" : "Neutral Mobs",
+	"description" : "These mobs will only defend themselves, if you attack them first!",
+	"icon" : "minecraft:writable_book",
 	"sortnum" : 1
 }

@@ -30,7 +30,7 @@ public class GiraffeConfig {
 	public GiraffeConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Giraffe").push("Giraffe");
-		
+
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 30.0D, 1.0D, Short.MAX_VALUE);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 4.0D, 1.0D, Short.MAX_VALUE);
@@ -52,8 +52,8 @@ public class GiraffeConfig {
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 5, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

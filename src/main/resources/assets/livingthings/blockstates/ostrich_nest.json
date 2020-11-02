@@ -15,7 +15,6 @@
 				"model" : "livingthings:block/ostrich_nest_very_cracked"
 			}
 		],
-		
 		"egg=false,hatch=0" : [
 			{
 				"model" : "livingthings:block/ostrich_nest_empty"

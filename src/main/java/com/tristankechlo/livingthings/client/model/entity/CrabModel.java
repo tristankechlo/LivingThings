@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
+public class CrabModel<T extends CrabEntity> extends EntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Shear1;
@@ -66,7 +66,6 @@ public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
 		Shear1UpperBottom.setRotationPoint(0.102F, -0.0247F, -0.7323F);
 		Shear1Arm.addChild(Shear1UpperBottom);
 		setRotationAngle(Shear1UpperBottom, 0.0F, 0.2618F, 0.0F);
-		
 
 		Shear1Upper = new ModelRenderer(this);
 		Shear1Upper.setRotationPoint(0.0031F, 0.0494F, -0.0074F);
@@ -98,7 +97,6 @@ public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
 		Shear2UpperBottom.setRotationPoint(-0.4926F, -0.4745F, -0.6809F);
 		Shear2Arm.addChild(Shear2UpperBottom);
 		setRotationAngle(Shear2UpperBottom, 0.0F, -0.2618F, 0.0F);
-		
 
 		Shear2Upper = new ModelRenderer(this);
 		Shear2Upper.setRotationPoint(0.0031F, 0.0537F, -0.0074F);
@@ -211,37 +209,36 @@ public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
 		Leg88.setTextureOffset(23, 21).addBox(-0.3012F, -0.45F, -0.5066F, 2.0F, 1.0F, 1.0F, 0.0F, false);
 	}
 
-
 	@Override
 	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		
-		//set all legs to default {angle * (PI / 180)}
+
+		// set all legs to default {angle * (PI / 180)}
 		this.Leg1.rotateAngleY = 0.174532925F;
-		this.Leg1.rotateAngleZ = 0.47996554375F;		
+		this.Leg1.rotateAngleZ = 0.47996554375F;
 		this.Leg2.rotateAngleY = 0.04363323125F;
-		this.Leg2.rotateAngleZ = 0.47996554375F;		
+		this.Leg2.rotateAngleZ = 0.47996554375F;
 		this.Leg3.rotateAngleY = -0.04363323125F;
-		this.Leg3.rotateAngleZ = 0.47996554375F;		
+		this.Leg3.rotateAngleZ = 0.47996554375F;
 		this.Leg4.rotateAngleY = -0.174532925F;
-		this.Leg4.rotateAngleZ = 0.47996554375F;		
+		this.Leg4.rotateAngleZ = 0.47996554375F;
 		this.Leg5.rotateAngleY = -2.967059725F;
-		this.Leg5.rotateAngleZ = -0.47996554375F;		
+		this.Leg5.rotateAngleZ = -0.47996554375F;
 		this.Leg6.rotateAngleY = -3.09795941875F;
-		this.Leg6.rotateAngleZ = -0.47996554375F;		
+		this.Leg6.rotateAngleZ = -0.47996554375F;
 		this.Leg7.rotateAngleY = 3.09795941875F;
-		this.Leg7.rotateAngleZ = -0.47996554375F;		
-		this.Leg8.rotateAngleY = 2.967059725F;		
+		this.Leg7.rotateAngleZ = -0.47996554375F;
+		this.Leg8.rotateAngleY = 2.967059725F;
 		this.Leg8.rotateAngleZ = -0.47996554375F;
-		
-		//walking animation for legs
+
+		// walking animation for legs
 		float f1 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + 0.0F) * 0.4F) * limbSwingAmount;
-		float f2 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + (float)Math.PI) * 0.4F) * limbSwingAmount;
-		float f3 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * limbSwingAmount;
-		float f4 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float)Math.PI * 1.5F)) * 0.4F) * limbSwingAmount;
+		float f2 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * limbSwingAmount;
+		float f3 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float) Math.PI / 2F)) * 0.4F) * limbSwingAmount;
+		float f4 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float) Math.PI * 1.5F)) * 0.4F) * limbSwingAmount;
 		float f5 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + 0.0F) * 0.4F) * limbSwingAmount;
-		float f6 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + (float)Math.PI) * 0.4F) * limbSwingAmount;
-		float f7 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * limbSwingAmount;
-		float f8 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI * 1.5F)) * 0.4F) * limbSwingAmount;
+		float f6 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + (float) Math.PI) * 0.4F) * limbSwingAmount;
+		float f7 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float) Math.PI / 2F)) * 0.4F) * limbSwingAmount;
+		float f8 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float) Math.PI * 1.5F)) * 0.4F) * limbSwingAmount;
 		this.Leg1.rotateAngleY += f1;
 		this.Leg2.rotateAngleY += -f1;
 		this.Leg3.rotateAngleY += f2;
@@ -258,26 +255,21 @@ public class CrabModel <T extends CrabEntity> extends EntityModel<T> {
 		this.Leg6.rotateAngleZ += -f7;
 		this.Leg7.rotateAngleZ += f8;
 		this.Leg8.rotateAngleZ += -f8;
-		
-		//set shears default angles
+
+		// set shears default angles
 		this.Shear1.rotateAngleX = -0.08726646259F;
 		this.Shear1.rotateAngleY = -0.78539816339F;
 		this.Shear2.rotateAngleX = -0.08726646259F;
 		this.Shear2.rotateAngleY = 0.78539816339F;
-		
-		//shears walking animation
+
+		// shears walking animation
 		this.Shear1.rotateAngleX += -(MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
 		this.Shear2.rotateAngleX += (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
 	}
-	
-	@Override
-	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-		
-	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		if(this.isChild) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		if (this.isChild) {
 			matrixStack.scale(0.6F, 0.6F, 0.6F);
 			matrixStack.translate(0, 1, 0);
 		}

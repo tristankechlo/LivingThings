@@ -52,10 +52,7 @@ import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(
-   value = Dist.CLIENT,
-   _interface = IChargeableMob.class
-)
+@OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
 public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob {
 
 	private static final DataParameter<Byte> SHOOTS = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.BYTE);
@@ -78,7 +75,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 48.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ANCIENT_BLAZE.damage.get());
 	}
-	
+
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
@@ -88,44 +85,44 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new AncientBlazeEntity.ChargeUpGoal(this));
-	    this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 30, 20.0F));
-	    this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0D));
-	    this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
-	    this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-	    this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-	    
-	    this.targetSelector.addGoal(0, new HurtByTargetGoal(this));		
-	    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, true));
+		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 30, 20.0F));
+		this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0D));
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
+		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+
+		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, true));
 	}
 
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(INVULNERABLE_TIME, 0);
-		this.dataManager.register(SHOOTS, (byte)0);
+		this.dataManager.register(SHOOTS, (byte) 0);
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putInt("ChargedTime", this.getInvulnerableTime());
 		compound.putByte("Shoots", this.getShoots());
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.setInvulnerableTime(compound.getInt("ChargedTime"));
 		this.setShoots(compound.getByte("Shoots"));
-	    if (this.hasCustomName()) {
-	        this.bossInfo.setName(this.getDisplayName());
-	    }
+		if (this.hasCustomName()) {
+			this.bossInfo.setName(this.getDisplayName());
+		}
 	}
-	
+
 	@Override
 	public void setCustomName(ITextComponent name) {
 		super.setCustomName(name);
-	    this.bossInfo.setName(this.getDisplayName());
+		this.bossInfo.setName(this.getDisplayName());
 	}
 
 	@Override
@@ -134,10 +131,10 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		if (!this.onGround && this.getMotion().y < 0.0D) {
 			this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
 		}
-		
+
 		if (this.world.isRemote && this.getInvulnerableTime() == 0) {
 
-			//burn sound
+			// burn sound
 			if (this.rand.nextInt(24) == 0 && !this.isSilent()) {
 				this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), ModSounds.ANCIENT_BLAZE_BURN.get(), this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
 			}
@@ -149,13 +146,13 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		}
 		super.livingTick();
 	}
-	
+
 	@Override
 	protected void updateAITasks() {
 		super.updateAITasks();
-        this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
 	}
-	
+
 	@Override
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
@@ -165,42 +162,42 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 			itementity.isImmuneToFire();
 		}
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.ANCIENT_BLAZE_AMBIENT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return ModSounds.ANCIENT_BLAZE_HURT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.ANCIENT_BLAZE_DEATH.get();
 	}
-	
+
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		//dont get damaged while charging up
+		// dont get damaged while charging up
 		if (this.getInvulnerableTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
 			return false;
-			
-		//catch large fireballs
+
+			// catch large fireballs
 		} else if (source.getImmediateSource() instanceof FireballEntity && source.getTrueSource() instanceof PlayerEntity) {
 			int shoots = this.getShoots();
-			if(shoots < LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()) {
+			if (shoots < LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()) {
 				this.setShoots((byte) (shoots + 1));
 				return false;
 			}
 			return true;
-	      
-		//random chance for arrows, tridents,.. to be blocked
+
+			// random chance for arrows, tridents,.. to be blocked
 		} else if (source instanceof IndirectEntityDamageSource) {
 			return this.rand.nextInt(4) != 0 && super.attackEntityFrom(source, amount);
-			
-		//normal damage handling
+
+			// normal damage handling
 		} else {
 			return super.attackEntityFrom(source, amount);
 		}
@@ -208,46 +205,46 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 
 	@Override
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		//don't attack if disabled in config
-		boolean peaceful = (this.world.getDifficulty() == Difficulty.PEACEFUL) ? true : false;
+		// don't attack if disabled in config
+		boolean peaceful = (this.world.getDifficulty() == Difficulty.PEACEFUL);
 		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
 		if (peaceful || ambientMode || !LivingThingsConfig.ANCIENT_BLAZE.canAttack.get()) {
 			return;
 		}
-		
-        double d1 = target.getPosX() - this.getPosX();
-        double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
-        double d3 = target.getPosZ() - this.getPosZ();
-        
-        int shoots = this.getShoots();
-        double chance = (double)LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100.0D;
-        
-        if(this.rand.nextDouble() < chance && shoots > 0) {
-        	this.setShoots((byte) (shoots - 1));
-            FireballEntity fireballentity = new FireballEntity(this.world, this, d1, d2, d3);
-            fireballentity.setPosition(fireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ());
-            fireballentity.explosionPower = 1;
-            this.world.addEntity(fireballentity);
-        } else {
-            SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.world, this, d1, d2, d3);
-            smallfireballentity.setPosition(smallfireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
-            this.world.addEntity(smallfireballentity);
-        }
-        if(!this.world.isRemote) {
-            this.world.playSound(null, this.getPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundCategory.HOSTILE, 2.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-        }
+
+		double d1 = target.getPosX() - this.getPosX();
+		double d2 = target.getPosYHeight(0.5D) - this.getPosYHeight(0.5D);
+		double d3 = target.getPosZ() - this.getPosZ();
+
+		int shoots = this.getShoots();
+		double chance = (double) LivingThingsConfig.ANCIENT_BLAZE.largeFireballChance.get() / 100.0D;
+
+		if (this.rand.nextDouble() < chance && shoots > 0) {
+			this.setShoots((byte) (shoots - 1));
+			FireballEntity fireballentity = new FireballEntity(this.world, this, d1, d2, d3);
+			fireballentity.setPosition(fireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ());
+			fireballentity.explosionPower = 1;
+			this.world.addEntity(fireballentity);
+		} else {
+			SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.world, this, d1, d2, d3);
+			smallfireballentity.setPosition(smallfireballentity.getPosX(), this.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
+			this.world.addEntity(smallfireballentity);
+		}
+		if (!this.world.isRemote) {
+			this.world.playSound(null, this.getPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundCategory.HOSTILE, 2.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+		}
 	}
-		
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void remove(boolean keepData) {
-		
+
 		int amount = LivingThingsConfig.ANCIENT_BLAZE.blazeSpawnCount.get();
-		
+
 		if (!this.world.isRemote && amount >= 1 && this.getShouldBeDead() && !this.removed) {
 
 			for (int i = 0; i < amount; i++) {
-								
+
 				BlazeEntity blaze = new BlazeEntity(EntityType.BLAZE, this.world);
 				if (this.isNoDespawnRequired()) {
 					blaze.enablePersistence();
@@ -267,7 +264,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public float getBrightness() {
 		return 1.0F;
 	}
-	
+
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return LivingThingsConfig.ANCIENT_BLAZE.peacefulDespawn.get() && super.isDespawnPeaceful();
@@ -282,41 +279,41 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public boolean onLivingFall(float distance, float damageMultiplier) {
 		return false;
 	}
-	
+
 	@Override
 	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
 	}
-	
+
 	@Override
 	public boolean isOnLadder() {
 		return false;
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}
-	
+
 	@Override
 	public void addTrackingPlayer(ServerPlayerEntity player) {
 		super.addTrackingPlayer(player);
-	    this.bossInfo.addPlayer(player);
+		this.bossInfo.addPlayer(player);
 	}
-	
+
 	@Override
 	public void removeTrackingPlayer(ServerPlayerEntity player) {
 		super.removeTrackingPlayer(player);
-	    this.bossInfo.removePlayer(player);
+		this.bossInfo.removePlayer(player);
 	}
-	
+
 	public int getInvulnerableTime() {
 		return this.dataManager.get(INVULNERABLE_TIME);
 	}
-	
+
 	public void setInvulnerableTime(int time) {
 		this.dataManager.set(INVULNERABLE_TIME, time);
 	}
-	
+
 	public byte getShoots() {
 		return this.dataManager.get(SHOOTS);
 	}
@@ -324,60 +321,62 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	public void setShoots(byte shoots) {
 		this.dataManager.set(SHOOTS, shoots);
 	}
-	
+
 	@Override
 	public boolean isCharged() {
 		return this.dataManager.get(INVULNERABLE_TIME) > 0;
 	}
 
 	class ChargeUpGoal extends Goal {
-		
-		private AncientBlazeEntity blaze;
-		
+
+		private final AncientBlazeEntity blaze;
+
 		public ChargeUpGoal(AncientBlazeEntity entity) {
 			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
 			this.blaze = entity;
 		}
+
 		@Override
 		public boolean shouldExecute() {
 			return this.blaze.getInvulnerableTime() > 0;
 		}
+
 		@Override
 		public void tick() {
 			int chargedtime = this.blaze.getInvulnerableTime();
 			int targetShoots = LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get();
-			if(chargedtime > 0) {
+			if (chargedtime > 0) {
 				chargedtime--;
 				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / targetShoots;
-				if(chargedtime % divider < 1 && this.blaze.getShoots() < targetShoots) {
+				if (chargedtime % divider < 1 && this.blaze.getShoots() < targetShoots) {
 					this.blaze.setShoots((byte) (this.blaze.getShoots() + 1));
-					if(!this.blaze.world.isRemote) {
-				        this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+					if (!this.blaze.world.isRemote) {
+						this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
 					}
 				}
 			}
-			if(chargedtime == 0) {
+			if (chargedtime == 0) {
 				this.blaze.setHealth(this.blaze.getMaxHealth());
-				this.blaze.setShoots((byte)targetShoots);
+				this.blaze.setShoots((byte) targetShoots);
 
-				if(!this.blaze.world.isRemote) {
-			        this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+				if (!this.blaze.world.isRemote) {
+					this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
 				}
-				
+
 				for (int i = 0; i < 4; i++) {
 					double accelX = Math.pow(-1, i) * 90;
-					double accelZ =  (i < 2) ? 90: -90;
-			        SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
-			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D), smallfireballentity.getPosZ());
-			        this.blaze.world.addEntity(smallfireballentity);
+					double accelZ = (i < 2) ? 90 : -90;
+					SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
+					smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D), smallfireballentity.getPosZ());
+					this.blaze.world.addEntity(smallfireballentity);
 				}
 
 				for (int i = 0; i < 4; i++) {
 					double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
-					double accelZ =  (i < 2) ? Math.pow(-1, i) * 90 : 0;
-			        FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
-			        smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
-			        this.blaze.world.addEntity(smallfireballentity);
+					double accelZ = (i < 2) ? Math.pow(-1, i) * 90 : 0;
+					FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
+					smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
+					this.blaze.world.addEntity(smallfireballentity);
 				}
 			}
 			this.blaze.setInvulnerableTime(chargedtime);

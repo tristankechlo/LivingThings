@@ -27,7 +27,7 @@ public class OwlConfig {
 	public OwlConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Owl").push("Owl");
-		
+
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
 
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
@@ -56,8 +56,8 @@ public class OwlConfig {
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

@@ -55,25 +55,25 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.COD);
 	private int angerTime;
 	private UUID angerTarget;
-	
+
 	public CrabEntity(EntityType<? extends CrabEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.stepHeight = 1.0F;
-	    this.setPathPriority(PathNodeType.WATER, 1.0F);
+		this.setPathPriority(PathNodeType.WATER, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {	
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
 		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.get().create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
 		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
 
 		double health = LivingThingsConfig.CRAB.health.get();
-		if(health > 0.0D) {
+		if (health > 0.0D) {
 			entityChild.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + entityChild.getScaling());
-		    entityChild.setHealth(entityChild.getMaxHealth());
+			entityChild.setHealth(entityChild.getMaxHealth());
 		}
-        
+
 		return entityChild;
 	}
 
@@ -84,7 +84,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.CRAB.damage.get());
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new BetterMeleeAttackGoal(this, 1.05D, false));
@@ -92,7 +92,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
-		
+
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
@@ -101,32 +101,32 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		BlockState state = world.getBlockState(pos.down());
 		return (world.hasWater(pos)) || (state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.SAND) || state.isIn(Blocks.GRAVEL));
 	}
-	
+
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
 		this.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
-		
+
 		double health = LivingThingsConfig.CRAB.health.get();
-		if(health > 0.0D) {
-		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + this.getScaling());
-	        this.setHealth(this.getMaxHealth());
+		if (health > 0.0D) {
+			this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + this.getScaling());
+			this.setHealth(this.getMaxHealth());
 		}
-        
+
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
+
 	public static byte getWeightedRandomColorVariant(Random random) {
 		int color1Weight = LivingThingsConfig.CRAB.color1Weight.get();
 		int color2Weight = LivingThingsConfig.CRAB.color2Weight.get();
 		int albinoWeight = LivingThingsConfig.CRAB.colorAlbinoWeight.get();
-		if(color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
+		if (color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
-				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
+						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
+						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
 		return variant.variant;
 	}
 
@@ -138,33 +138,33 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
 			return 0;
 		}
-		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
-				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 2),
-				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) -2),
-				new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
+		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
+						new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 2),
+						new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) -2),
+						new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
 		return scaling.scaling;
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(CRAB_VARIANT, (byte)0);
-		this.dataManager.register(CRAB_SCALING, (byte)0);
+		this.dataManager.register(CRAB_VARIANT, (byte) 0);
+		this.dataManager.register(CRAB_SCALING, (byte) 0);
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("CrabVariant", this.getVariant());
 		compound.putByte("CrabScaling", this.getScaling());
-	    this.writeAngerNBT(compound);
+		this.writeAngerNBT(compound);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		
+
 		if (compound.contains("CrabVariant")) {
 			this.setVariant(compound.getByte("CrabVariant"));
 		} else {
@@ -176,17 +176,17 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		} else {
 			this.setScaling((byte) 0);
 		}
-		
-		if(this.world instanceof ServerWorld) {
-		    this.readAngerNBT((ServerWorld)this.world, compound);
+
+		if (this.world instanceof ServerWorld) {
+			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.CRAB.maxSpawns.get();
@@ -194,27 +194,17 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		if(this.isChild()) {
+		if (this.isChild()) {
 			return 0.175F;
 		}
 		return this.getSize(poseIn).height * 0.9F;
 	}
-	
+
 	@Override
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
-	
-	@Override
-	public boolean canBeLeashedTo(PlayerEntity player) {
-		return true;
-	}
-	
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return false;
-	}
-	
+
 	@Override
 	protected float getWaterSlowDown() {
 		return 0.98F;
@@ -238,9 +228,9 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void setScaling(byte scaling) {
 		this.dataManager.set(CRAB_SCALING, scaling);
-	    this.recenterBoundingBox();
-	    this.recalculateSize();
-	    this.experienceValue = Math.abs(scaling) * this.rand.nextInt(2);
+		this.recenterBoundingBox();
+		this.recalculateSize();
+		this.experienceValue = Math.abs(scaling) * this.rand.nextInt(2);
 	}
 
 	@Override
@@ -262,12 +252,12 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		if(this.isChild()) {
+		if (this.isChild()) {
 			return super.getSize(poseIn);
 		}
 		return super.getSize(poseIn).scale(0.85F + (0.1F * this.getScaling()));
 	}
-	
+
 	@Override
 	public int getAngerTime() {
 		return this.angerTime;
@@ -276,7 +266,6 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void setAngerTime(int time) {
 		this.angerTime = time;
-		
 	}
 
 	@Override
@@ -287,12 +276,11 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void setAngerTarget(UUID target) {
 		this.angerTarget = target;
-		
 	}
 
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
-	
+
 }

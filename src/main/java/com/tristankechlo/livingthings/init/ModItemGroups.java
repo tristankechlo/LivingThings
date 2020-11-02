@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItemGroups {
 
 	public static final ItemGroup General = new ItemGroup("LivingThings") {
-		
+
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(ModItems.SHARK_TOOTH.get());
@@ -23,8 +23,8 @@ public class ModItemGroups {
 		public void fill(NonNullList<ItemStack> items) {
 			NonNullList<ItemStack> spawneggsItems = NonNullList.create();
 			for (Item item : ForgeRegistries.ITEMS) {
-				if(!(item instanceof SpawnEggItem)) {
-					item.fillItemGroup(this, items);					
+				if (!(item instanceof SpawnEggItem)) {
+					item.fillItemGroup(this, items);
 				} else {
 					if (item.getGroup() == this) {
 						spawneggsItems.add(new ItemStack(item));

@@ -25,7 +25,7 @@ public class OstrichConfig {
 	public OstrichConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Ostrich").push("Ostrich");
-		
+
 		canBeRidden = builder.define("CanBeRidden", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 20.0D, 1.0D, Short.MAX_VALUE);
 
@@ -40,8 +40,8 @@ public class OstrichConfig {
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 5, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

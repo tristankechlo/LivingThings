@@ -28,15 +28,15 @@ public class LexiconItem extends Item {
 	public LexiconItem(Properties properties) {
 		super(properties);
 	}
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (playerIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
-			if(LivingThings.patchouliLoaded) {
+			if (LivingThings.patchouliLoaded) {
 				vazkii.patchouli.api.PatchouliAPI.instance.openBookGUI(player, ForgeRegistries.ITEMS.getKey(this));
 			} else {
-				//send error messages
+				// send error messages
 				player.connection.sendPacket(new STitlePacket(STitlePacket.Type.TITLE, new TranslationTextComponent("messages.livingthings.nopatchouli.title"), 10, 100, 10));
 				player.connection.sendPacket(new STitlePacket(STitlePacket.Type.SUBTITLE, new TranslationTextComponent("messages.livingthings.nopatchouli.subtitle"), 10, 100, 10));
 			}
@@ -44,18 +44,18 @@ public class LexiconItem extends Item {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}
-	
+
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		//add the subtitle for the item
+		// add the subtitle for the item
 		tooltip.add(getEdition().deepCopy().mergeStyle(TextFormatting.GRAY));
 	}
 
 	public static ITextComponent getEdition() {
-		if(LivingThings.patchouliLoaded) {
-			return vazkii.patchouli.api.PatchouliAPI.instance.getSubtitle(ForgeRegistries.ITEMS.getKey(ModItems.LEXICON.get()));
+		if (LivingThings.patchouliLoaded) {
+			return vazkii.patchouli.api.PatchouliAPI.instance .getSubtitle(ForgeRegistries.ITEMS.getKey(ModItems.LEXICON.get()));
 		}
 		return new StringTextComponent("2nd Edition");
 	}

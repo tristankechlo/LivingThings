@@ -245,11 +245,11 @@ public class ElephantModel<T extends ElephantEntity> extends EntityModel<T> {
 	public void setRotationAngles(T elephant, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
 	    int i = elephant.getAttackTimer();
 	    if (i == 0) {
-			this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-			this.Tusks.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+			this.Head.rotateAngleX = headPitch * 0.0174532925F;
+			this.Tusks.rotateAngleX = headPitch * 0.0174532925F;
 	    }
-		this.Head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
-		this.Tusks.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
+		this.Head.rotateAngleY = netHeadYaw * 0.0174532925F;
+		this.Tusks.rotateAngleY = netHeadYaw * 0.0174532925F;
 		
 		this.RightFrontLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F	* limbSwingAmount;
 		this.RightBackLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;

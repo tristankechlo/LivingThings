@@ -64,30 +64,30 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false) {
-				@Override
-				public double getAttackReachSqr(LivingEntity attackTarget) {
-				      return (double)(this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());
-				}
-			});
+			@Override
+			public double getAttackReachSqr(LivingEntity attackTarget) {
+				return (this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());
+			}
+		});
 		this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 1));
 		this.goalSelector.addGoal(3, new FollowBoatGoal(this));
-	    this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		this.writeAngerNBT(compound);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if(this.world instanceof ServerWorld) {
+		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
@@ -96,17 +96,17 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	public void tick() {
 		super.tick();
 
-		//random moving when on land
+		// random moving when on land
 		if (!this.isInWaterRainOrBubbleColumn()) {
 			if (this.onGround) {
-				this.setMotion(this.getMotion().add((double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
+				this.setMotion(this.getMotion().add(((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
 				this.rotationYaw = this.rand.nextFloat() * 360.0F;
 				this.onGround = false;
 				this.isAirBorne = true;
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return true;
@@ -116,7 +116,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.SHARK.maxSpawns.get();
 	}
-	
+
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
@@ -142,7 +142,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	}
 
 	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-	      return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
+		return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
 	}
 
 	@Override
@@ -158,7 +158,6 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	public void setAngerTime(int time) {
 		this.angerTime = time;
-		
 	}
 
 	@Override
@@ -169,12 +168,11 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	public void setAngerTarget(UUID target) {
 		this.angerTarget = target;
-		
 	}
 
 	@Override
 	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));		
+		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
 
 	static class MoveHelperController extends MovementController {
@@ -206,7 +204,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 					float f1 = (float) (this.speed * this.shark.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					if (this.shark.isInWater()) {
 						this.shark.setAIMoveSpeed(f1 * 0.02F);
-						float f2 = -((float) (MathHelper.atan2(d1, (double) MathHelper.sqrt(d0 * d0 + d2 * d2))	* (double) (180F / (float) Math.PI)));
+						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2)) * (double) (180F / (float) Math.PI)));
 						f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
 						this.shark.rotationPitch = this.limitAngle(this.shark.rotationPitch, f2, 5.0F);
 						float f3 = MathHelper.cos(this.shark.rotationPitch * ((float) Math.PI / 180F));

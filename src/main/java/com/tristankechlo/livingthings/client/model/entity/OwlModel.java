@@ -118,8 +118,7 @@ public class OwlModel<T extends OwlEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
-			float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		if (this.isChild) {
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
 			matrixStack.translate(0, 1.5D, 0);
@@ -128,8 +127,8 @@ public class OwlModel<T extends OwlEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,	float headPitch) {
-		this.setRotationAngles(getOwlState(entity), entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw,	headPitch);
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.setRotationAngles(getOwlState(entity), limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	@Override
@@ -137,66 +136,67 @@ public class OwlModel<T extends OwlEntity> extends EntityModel<T> {
 		this.setLivingAnimations(getOwlState(entity), entity);
 	}
 
-	public void setRotationAngles(OwlState state, T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(OwlState state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.Head.rotateAngleX = -0.174532F + headPitch * ((float) Math.PI / 180F);
 		this.Head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
-	    this.Head.rotateAngleZ = 0.0F;
-	    this.Head.rotationPointX = 0.0F;
-	    this.Body.rotationPointX = 0.0F;
-	    this.Tail.rotationPointX = 0.0F;
-	    this.RightWing.rotationPointX = -3.5F;
-	    this.LeftWing.rotationPointX = 3.5F;
+		this.Head.rotateAngleZ = 0.0F;
+		this.Head.rotationPointX = 0.0F;
+		this.Body.rotationPointX = 0.0F;
+		this.Tail.rotationPointX = 0.0F;
+		this.RightWing.rotationPointX = -3.5F;
+		this.LeftWing.rotationPointX = 3.5F;
 		switch (state) {
-			case SITTING:
-				break;				
-			case STANDING:
-		         this.LeftLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		         this.RightLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-				break;				
-			case FLYING:
-			default:
-		         this.Tail.rotateAngleX = -0.959931F + MathHelper.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
-		         this.LeftWing.rotateAngleZ = -0.0873F - ageInTicks;
-		         this.RightWing.rotateAngleZ = 0.0873F + ageInTicks;
-		         break;
+		case SITTING:
+			break;
+		case STANDING:
+			this.LeftLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+			this.RightLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F
+					* limbSwingAmount;
+			break;
+		case FLYING:
+		default:
+			this.Tail.rotateAngleX = -0.959931F + MathHelper.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
+			this.LeftWing.rotateAngleZ = -0.0873F - ageInTicks;
+			this.RightWing.rotateAngleZ = 0.0873F + ageInTicks;
+			break;
 		}
 
 	}
 
 	public void setLivingAnimations(OwlState state, OwlEntity owl) {
-	    this.Body.rotateAngleX = 0.174532F;
-	    
-	    this.LeftWing.rotateAngleX = 0F;
-	    this.LeftWing.rotateAngleY = 0F;
-	    this.LeftWing.rotateAngleZ = -0.130899F;
-	    
-	    this.RightWing.rotateAngleX = 0F;
-	    this.RightWing.rotateAngleY = 0F;
-	    this.RightWing.rotateAngleZ = 0.130899F;
-	    
-	    this.LeftLeg.rotateAngleX = -0.261799F;
-	    this.LeftLeg.rotationPointY = -1.9107F;
-	    this.LeftLeg.rotateAngleZ = 0F;
-	    
-	    this.RightLeg.rotateAngleX = -0.261799F;
-	    this.RightLeg.rotationPointY = -1.9107F;
-	    this.RightLeg.rotateAngleZ = 0F;	    
-	    
+		this.Body.rotateAngleX = 0.174532F;
+
+		this.LeftWing.rotateAngleX = 0F;
+		this.LeftWing.rotateAngleY = 0F;
+		this.LeftWing.rotateAngleZ = -0.130899F;
+
+		this.RightWing.rotateAngleX = 0F;
+		this.RightWing.rotateAngleY = 0F;
+		this.RightWing.rotateAngleZ = 0.130899F;
+
+		this.LeftLeg.rotateAngleX = -0.261799F;
+		this.LeftLeg.rotationPointY = -1.9107F;
+		this.LeftLeg.rotateAngleZ = 0F;
+
+		this.RightLeg.rotateAngleX = -0.261799F;
+		this.RightLeg.rotationPointY = -1.9107F;
+		this.RightLeg.rotateAngleZ = 0F;
+
 		switch (state) {
-			case SITTING:
-				this.Body.rotateAngleX = 0F;
-			    this.LeftLeg.rotateAngleX = 0F;
-			    this.RightLeg.rotateAngleX = 0F;
-				break;
-			case FLYING:
-				if (Entity.horizontalMag(owl.getMotion()) > 1.0E-7D) {
-			        this.LeftLeg.rotateAngleX += 0.6981317F;
-			        this.RightLeg.rotateAngleX += 0.6981317F;
-				}
-				break;
-			case STANDING:	
-			default:
-				break;
+		case SITTING:
+			this.Body.rotateAngleX = 0F;
+			this.LeftLeg.rotateAngleX = 0F;
+			this.RightLeg.rotateAngleX = 0F;
+			break;
+		case FLYING:
+			if (Entity.horizontalMag(owl.getMotion()) > 1.0E-7D) {
+				this.LeftLeg.rotateAngleX += 0.6981317F;
+				this.RightLeg.rotateAngleX += 0.6981317F;
+			}
+			break;
+		case STANDING:
+		default:
+			break;
 		}
 	}
 

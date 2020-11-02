@@ -55,7 +55,6 @@ public class SharkModel<T extends SharkEntity> extends EntityModel<T> {
 		Head = new ModelRenderer(this);
 		Head.setRotationPoint(0.0F, 7.0F, 0.0F);
 		Body.addChild(Head);
-		
 
 		HeadTop = new ModelRenderer(this);
 		HeadTop.setRotationPoint(0.0F, -9.5F, -24.0F);
@@ -93,18 +92,18 @@ public class SharkModel<T extends SharkEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		LeftFin.rotateAngleY = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
 		RightFin.rotateAngleY = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
-		
-		this.Body.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-		this.Body.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
-		
+
+		this.Body.rotateAngleX = headPitch * 0.0174532925F;
+		this.Body.rotateAngleY = netHeadYaw * 0.0174532925F;
+
 		if (Entity.horizontalMag(entityIn.getMotion()) > 1.0E-7D) {
 			this.Body.rotateAngleX += -0.05F + -0.05F * MathHelper.cos(ageInTicks * 0.3F);
 			Tail.rotateAngleY = -0.15F * MathHelper.cos(ageInTicks * 0.3F);
 			Tail2.rotateAngleY = -0.25F * MathHelper.cos(ageInTicks * 0.3F);
-		} else {			
+		} else {
 			Tail.rotateAngleY = -0.05F * MathHelper.cos(ageInTicks * 0.3F);
 			Tail2.rotateAngleY = -0.1F * MathHelper.cos(ageInTicks * 0.3F);
 		}

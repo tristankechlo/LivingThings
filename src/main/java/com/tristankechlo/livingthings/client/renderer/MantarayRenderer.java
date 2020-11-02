@@ -12,8 +12,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<MantarayEntity>>{
-	
+public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<MantarayEntity>> {
+
 	protected static final ResourceLocation TEXTURE_1 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/mantaray/mantaray.png");
 	protected static final ResourceLocation TEXTURE_2 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/mantaray/mantaray_2.png");
 
@@ -23,12 +23,12 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<
 
 	@Override
 	public ResourceLocation getEntityTexture(MantarayEntity entity) {
-		if(entity.getVariant() == 1) {
+		if (entity.getVariant() == 1) {
 			return TEXTURE_2;
 		}
 		return TEXTURE_1;
 	}
-	
+
 	@Override
 	protected void preRenderCallback(MantarayEntity mantaray, MatrixStack matrixStackIn, float partialTickTime) {
 		float scale = 1.0F + (mantaray.getScaling() * 0.1F);

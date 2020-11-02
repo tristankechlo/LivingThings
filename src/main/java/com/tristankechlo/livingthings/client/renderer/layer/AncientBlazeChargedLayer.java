@@ -13,22 +13,26 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class AncientBlazeChargedLayer extends EnergyLayer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> {
-   private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/ancient_blaze/ancient_blaze_charge.png");
-   private final AncientBlazeModel<AncientBlazeEntity> model = new AncientBlazeModel<>();
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/ancient_blaze/ancient_blaze_charge.png");
+	private final AncientBlazeModel<AncientBlazeEntity> model = new AncientBlazeModel<>();
 
-   public AncientBlazeChargedLayer(IEntityRenderer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> entityRenderer) {
-      super(entityRenderer);
-   }
+	public AncientBlazeChargedLayer(IEntityRenderer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> entityRenderer) {
+		super(entityRenderer);
+	}
 
-   protected float func_225634_a_(float speed) {
-      return speed * 0.005F;
-   }
+	@Override
+	protected float func_225634_a_(float speed) {
+		return speed * 0.005F;
+	}
 
-   protected ResourceLocation func_225633_a_() {
-      return TEXTURE;
-   }
+	@Override
+	protected ResourceLocation func_225633_a_() {
+		return TEXTURE;
+	}
 
-   protected EntityModel<AncientBlazeEntity> func_225635_b_() {
-      return this.model;
-   }
+	@Override
+	protected EntityModel<AncientBlazeEntity> func_225635_b_() {
+		return this.model;
+	}
 }

@@ -50,38 +50,38 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
-	
+
 	public GiraffeEntity(EntityType<? extends GiraffeEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
-	
+
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {	
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {
 		GiraffeEntity entityChild = ModEntityTypes.GIRAFFE_ENTITY.get().create(this.world);
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;
 	}
-	
+
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setVariant(GiraffeEntity.getWeightedRandomColorVariant(this.rand));
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
+
 	public static byte getWeightedRandomColorVariant(Random random) {
 		int color1Weight = LivingThingsConfig.GIRAFFE.color1Weight.get();
 		int color2Weight = LivingThingsConfig.GIRAFFE.color2Weight.get();
 		int albinoWeight = LivingThingsConfig.GIRAFFE.colorAlbinoWeight.get();
-		if(color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
+		if (color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
-				new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
+						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
+						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
 		return variant.variant;
 	}
-	
+
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.GIRAFFE.health.get())
@@ -89,7 +89,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.GIRAFFE.damage.get());
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
@@ -103,20 +103,20 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(GIRAFFE_VARIANT, (byte)0);
+		this.dataManager.register(GIRAFFE_VARIANT, (byte) 0);
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putByte("GiraffeVariant", this.getVariant());
 		this.writeAngerNBT(compound);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
@@ -125,25 +125,25 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 		} else {
 			this.setVariant((byte) 0);
 		}
-		
-		if(this.world instanceof ServerWorld) {
+
+		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.GIRAFFE.maxSpawns.get();
 	}
-	
+
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? 1.55F : 3.15F;
+		return this.isChild() ? 1.55F : 3.15F;
 	}
 
 	@Override
@@ -154,7 +154,6 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	@Override
 	public void setAngerTime(int time) {
 		this.angerTime = time;
-		
 	}
 
 	@Override
@@ -165,12 +164,11 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	@Override
 	public void setAngerTarget(UUID target) {
 		this.angerTarget = target;
-		
 	}
 
 	@Override
 	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));		
+		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
 
 	@Override
@@ -180,7 +178,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 
 	@Override
 	public void setVariant(byte variant) {
-		this.getDataManager().set(GIRAFFE_VARIANT, variant);		
+		this.getDataManager().set(GIRAFFE_VARIANT, variant);
 	}
-		
+
 }

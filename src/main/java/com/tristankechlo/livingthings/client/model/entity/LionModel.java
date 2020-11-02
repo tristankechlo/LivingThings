@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class LionModel<T extends LionEntity> extends EntityModel<T> {
-	
+
 	private final ModelRenderer Body;
 	private final ModelRenderer Legs;
 	private final ModelRenderer FrontLeftLeg;
@@ -26,7 +26,7 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 	private final ModelRenderer LeftEar;
 	private final ModelRenderer RightEar;
 	private final ModelRenderer Mane;
-	
+
 	public LionModel() {
 		textureWidth = 128;
 		textureHeight = 64;
@@ -38,7 +38,6 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		Legs = new ModelRenderer(this);
 		Legs.setRotationPoint(0.0F, 18.0F, 0.0F);
 		Body.addChild(Legs);
-		
 
 		FrontLeftLeg = new ModelRenderer(this);
 		FrontLeftLeg.setRotationPoint(4.0F, -10.0F, -12.0F);
@@ -75,7 +74,6 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		Ears = new ModelRenderer(this);
 		Ears.setRotationPoint(0.0F, -7.0F, -1.0F);
 		Head.addChild(Ears);
-		
 
 		LeftEar = new ModelRenderer(this);
 		LeftEar.setRotationPoint(5.0F, 0.0F, -1.0F);
@@ -96,7 +94,7 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		if(this.isChild) {
+		if (this.isChild) {
 			matrixStackIn.scale(0.6F, 0.6F, 0.6F);
 			matrixStackIn.translate(0, 1, 0);
 		} else {
@@ -104,30 +102,30 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		}
 		Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 	}
-	
+
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,	float netHeadYaw, float headPitch) {
-		this.Head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * ((float) Math.PI / 180F);
-		
-		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F	* limbSwingAmount;
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.Head.rotateAngleX = headPitch * 0.0174532925F;
+		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+
+		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 		this.BackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.FrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.BackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 
-		this.Tail.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F	* limbSwingAmount;
+		this.Tail.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
-	
+
 	@Override
 	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
 		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
-		if(entityIn.getGender() == Gender.MALE) {
+		if (entityIn.getGender() == Gender.MALE) {
 			this.Mane.showModel = true;
 		} else {
 			this.Mane.showModel = false;
 		}
 	}
-	
+
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;

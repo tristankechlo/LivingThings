@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class LionConfig {
-	
+
 	public final DoubleValue health;
 	public final DoubleValue damage;
 	public final BooleanValue canAttack;
@@ -32,7 +32,7 @@ public class LionConfig {
 	public LionConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Lion").push("Lion");
-		
+
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 20.0D, 1.0D, Short.MAX_VALUE);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 5.0D, 1.0D, Short.MAX_VALUE);
@@ -58,8 +58,8 @@ public class LionConfig {
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 4, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

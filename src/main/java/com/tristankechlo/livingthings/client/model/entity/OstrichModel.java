@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class OstrichModel  <T extends OstrichEntity> extends EntityModel<T> {
+public class OstrichModel<T extends OstrichEntity> extends EntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Neck;
@@ -36,7 +36,7 @@ public class OstrichModel  <T extends OstrichEntity> extends EntityModel<T> {
 	private final ModelRenderer add3;
 	private final ModelRenderer add3Left;
 	private final ModelRenderer add3Right;
-	
+
 	private boolean islayingEgg;
 	private boolean isbuildingNest;
 
@@ -188,53 +188,53 @@ public class OstrichModel  <T extends OstrichEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.islayingEgg = entity.isLayingEgg();
 		this.isbuildingNest = entity.isBuildingNest();
-		
+
 		this.Head.rotateAngleX = headPitch * 0.0174532925F;
-	    this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
-	    
+		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
+
 		this.NeckTop.rotateAngleX = (float) (this.Head.rotateAngleX / 1.75F);
 		this.Neck.rotateAngleY = (float) (this.Head.rotateAngleY / 1.75F);
-		
-		if(this.islayingEgg) {
-			
+
+		if (this.islayingEgg) {
+
 			this.LeftLegTop.rotateAngleX = 1.17809724375F;
 			this.LeftLegBottom.rotateAngleX = -2.5743606466F;
 			this.LeftFoot.rotateAngleX = 0.6108652381F;
-			
+
 			this.RightLegTop.rotateAngleX = 1.17809724375F;
 			this.RightLegBottom.rotateAngleX = -2.5743606466F;
 			this.RightFoot.rotateAngleX = 0.6108652381F;
-			
+
 		} else if (this.isbuildingNest) {
-			
+
 			this.LeftLegTop.rotateAngleX = 0.3926990812F;
 			this.LeftLegBottom.rotateAngleX = -0.523598775F;
 			this.LeftFoot.rotateAngleX = 0.174532925F;
-			
+
 			this.RightLegTop.rotateAngleX = 0.3926990812F + (MathHelper.cos(ageInTicks * 0.45F));
 			this.RightLegBottom.rotateAngleX = -0.523598775F;
-			this.RightFoot.rotateAngleX = 0.174532925F;	
-			
+			this.RightFoot.rotateAngleX = 0.174532925F;
+
 		} else {
-			
-			this.LeftLegTop.rotateAngleX = 0.3926990812F + (MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount);
+
+			this.LeftLegTop.rotateAngleX = 0.3926990812F
+					+ (MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount);
 			this.LeftLegBottom.rotateAngleX = -0.523598775F;
 			this.LeftFoot.rotateAngleX = 0.174532925F;
-			
+
 			this.RightLegTop.rotateAngleX = 0.3926990812F + (MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount);
 			this.RightLegBottom.rotateAngleX = -0.523598775F;
-			this.RightFoot.rotateAngleX = 0.174532925F;	
-			
+			this.RightFoot.rotateAngleX = 0.174532925F;
+
 		}
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		if(this.isChild) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		if (this.isChild) {
 			matrixStack.scale(0.6F, 0.6F, 0.6F);
 			matrixStack.translate(0, 1, 0);
 		} else if (this.islayingEgg) {

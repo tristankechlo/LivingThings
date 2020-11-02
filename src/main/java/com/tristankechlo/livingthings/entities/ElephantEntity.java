@@ -53,16 +53,16 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		super(entityType, worldIn);
 		this.stepHeight = 1.0F;
 	}
-		
+
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
 		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.get().create(this.world);
-		if(this.isTame() || ((ElephantEntity)parent).isTame()) {
+		if (this.isTame() || ((ElephantEntity) parent).isTame()) {
 			child.setTame(true);
 		}
 		return child;
 	}
-	
+
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
@@ -84,39 +84,39 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		this.targetSelector.addGoal(0, new ElephantEntity.NewHurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if(this.world instanceof ServerWorld) {
+		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		this.writeAngerNBT(compound);
 	}
-			
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
-	
+
 	@Override
 	public boolean attackEntityAsMob(Entity target) {
 		this.attackTimer = 10;
-	    this.world.setEntityState(this, (byte)4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+		this.world.setEntityState(this, (byte) 4);
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		if (flag) {
-			//throw target in the air
-	        target.setMotion(target.getMotion().add(0.0D, 0.7D, 0.0D));
+			// throw target in the air
+			target.setMotion(target.getMotion().add(0.0D, 0.7D, 0.0D));
 			this.applyEnchantments(this, target);
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public void livingTick() {
 		super.livingTick();
@@ -124,32 +124,32 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 			--this.attackTimer;
 		}
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.ELEPHANT.maxSpawns.get();
 	}
-	
+
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? 1.3F : 2.25F;
+		return this.isChild() ? 1.3F : 2.25F;
 	}
-	
+
 	@Override
 	public double getMountedYOffset() {
 		return 2.45D;
 	}
-		
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.ELEPHANT_AMBIENT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return ModSounds.ELEPHANT_HURT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.ELEPHANT_DEATH.get();
@@ -178,7 +178,6 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	@Override
 	public void setAngerTime(int time) {
 		this.angerTime = time;
-		
 	}
 
 	@Override
@@ -189,34 +188,33 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	@Override
 	public void setAngerTarget(UUID target) {
 		this.angerTarget = target;
-		
 	}
 
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
-	
+
 	static class NewHurtByTargetGoal extends HurtByTargetGoal {
 
 		public NewHurtByTargetGoal(CreatureEntity creatureIn) {
 			super(creatureIn);
 		}
-		
+
 		@Override
 		public boolean shouldExecute() {
-		    LivingEntity livingentity = this.goalOwner.getRevengeTarget();
-			if(livingentity instanceof PlayerEntity) {
-				UUID ownerID = ((AbstractTameableChestedEntity)this.goalOwner).getOwnerUniqueId();
-				if(ownerID != null) {
-					if(ownerID == ((PlayerEntity)livingentity).getUniqueID()) {
+			LivingEntity livingentity = this.goalOwner.getRevengeTarget();
+			if (livingentity instanceof PlayerEntity) {
+				UUID ownerID = ((AbstractTameableChestedEntity) this.goalOwner).getOwnerUniqueId();
+				if (ownerID != null) {
+					if (ownerID == ((PlayerEntity) livingentity).getUniqueID()) {
 						return false;
 					}
 				}
 			}
 			return super.shouldExecute();
 		}
-		
+
 	}
-		
+
 }

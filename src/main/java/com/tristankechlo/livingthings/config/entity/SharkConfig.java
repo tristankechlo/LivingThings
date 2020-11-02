@@ -26,14 +26,14 @@ public class SharkConfig {
 	public SharkConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Shark").push("Shark");
-		
+
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 22.0D, 1.0D, Short.MAX_VALUE);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 6.0D, 1.0D, Short.MAX_VALUE);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-					Arrays.asList(Biomes.OCEAN.getLocation().toString(),
+				Arrays.asList(Biomes.OCEAN.getLocation().toString(),
 						Biomes.DEEP_OCEAN.getLocation().toString(),
 						Biomes.FROZEN_OCEAN.getLocation().toString(),
 						Biomes.DEEP_FROZEN_OCEAN.getLocation().toString(),
@@ -43,13 +43,13 @@ public class SharkConfig {
 						Biomes.DEEP_WARM_OCEAN.getLocation().toString(),
 						Biomes.LUKEWARM_OCEAN.getLocation().toString(),
 						Biomes.DEEP_LUKEWARM_OCEAN.getLocation().toString()),
-					biome -> LivingThingsConfig.checkBiome("Shark", biome));
+				biome -> LivingThingsConfig.checkBiome("Shark", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 13, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 3, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

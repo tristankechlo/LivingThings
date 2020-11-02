@@ -16,12 +16,12 @@ public class CrabConfig {
 
 	public final BooleanValue canAttack;
 	public final DoubleValue health;
-	public final DoubleValue damage;	
-	
+	public final DoubleValue damage;
+
 	public final ConfigValue<Integer> color1Weight;
 	public final ConfigValue<Integer> color2Weight;
 	public final ConfigValue<Integer> colorAlbinoWeight;
-	
+
 	public final ConfigValue<Integer> scaling1Weight;
 	public final ConfigValue<Integer> scaling2Weight;
 	public final ConfigValue<Integer> scaling3Weight;
@@ -35,17 +35,17 @@ public class CrabConfig {
 	public CrabConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Crab").push("Crab");
-		
+
 		canAttack = builder.define("CanAttack", true);
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 8.0D, 1.0D, Short.MAX_VALUE);
 		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 1.0D, 1.0D, Short.MAX_VALUE);
-		
+
 		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);
 		color2Weight = builder.define("Color2Weight", 50);
 		colorAlbinoWeight = builder.define("AlbinoWeight", 1);
 		builder.pop();
-		
+
 		builder.comment(LivingThingsConfig.weightedRandom).push("ScalingWeights");
 		scaling1Weight = builder.define("Scaling1Weight", 30);
 		scaling2Weight = builder.define("Scaling2Weight", 30);
@@ -65,8 +65,8 @@ public class CrabConfig {
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 5, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 8, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

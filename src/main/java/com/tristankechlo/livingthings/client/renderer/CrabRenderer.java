@@ -24,17 +24,17 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
 	@Override
 	public ResourceLocation getEntityTexture(CrabEntity entity) {
 		byte variant = entity.getVariant();
-		if(variant == 15) {
-			return TEXTURE_ALBINO;			
-		} else if(variant == 1) {
+		if (variant == 15) {
+			return TEXTURE_ALBINO;
+		} else if (variant == 1) {
 			return TEXTURE_2;
 		}
-		return TEXTURE_1;			
+		return TEXTURE_1;
 	}
-	
+
 	@Override
 	protected void preRenderCallback(CrabEntity crab, MatrixStack matrixStackIn, float partialTickTime) {
-		if(!crab.isChild()) {
+		if (!crab.isChild()) {
 			float scale = 1.0F + (crab.getScaling() * 0.1F);
 			matrixStackIn.scale(scale, scale, scale);
 		}

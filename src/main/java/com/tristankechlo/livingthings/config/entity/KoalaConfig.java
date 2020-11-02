@@ -11,7 +11,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class FlamingoConfig {
+public class KoalaConfig {
 
 	public final DoubleValue health;
 
@@ -20,21 +20,25 @@ public class FlamingoConfig {
 	public final IntValue minSpawns;
 	public final IntValue maxSpawns;
 
-	public FlamingoConfig(ForgeConfigSpec.Builder builder) {
+	public KoalaConfig(ForgeConfigSpec.Builder builder) {
 
-		builder.comment("Mob-Config for Flamingo").push("Flamingo");
+		builder.comment("Mob-Config for Koala").push("Koala");
 
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.SWAMP.getLocation().toString(),
-						Biomes.SWAMP_HILLS.getLocation().toString(),
-						Biomes.RIVER.getLocation().toString()),
-				biome -> LivingThingsConfig.checkBiome("Flamingo", biome));
-		weight = builder.worldRestart().defineInRange("SpawnWeight", 24, 1, Short.MAX_VALUE);
-		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
-		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);
+				Arrays.asList(Biomes.JUNGLE.getLocation().toString(),
+						Biomes.JUNGLE_EDGE.getLocation().toString(),
+						Biomes.JUNGLE_HILLS.getLocation().toString(),
+						Biomes.BAMBOO_JUNGLE.getLocation().toString(),
+						Biomes.BAMBOO_JUNGLE_HILLS.getLocation().toString(),
+						Biomes.MODIFIED_JUNGLE.getLocation().toString(),
+						Biomes.MODIFIED_JUNGLE_EDGE.getLocation().toString()),
+				biome -> LivingThingsConfig.checkBiome("Koala", biome));
+		weight = builder.worldRestart().defineInRange("SpawnWeight", 50, 1, Short.MAX_VALUE);
+		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
+		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 4, 1, Short.MAX_VALUE);
 		builder.pop();
 
 		builder.pop();

@@ -23,24 +23,24 @@ public class PenguinConfig {
 	public PenguinConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Penguin").push("Penguin");
-		
+
 		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
 
 		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-					Arrays.asList(Biomes.SNOWY_TUNDRA.getLocation().toString(),
+				Arrays.asList(Biomes.SNOWY_TUNDRA.getLocation().toString(),
 						Biomes.SNOWY_MOUNTAINS.getLocation().toString(),
 						Biomes.SNOWY_BEACH.getLocation().toString(),
 						Biomes.SNOWY_TAIGA.getLocation().toString(),
 						Biomes.SNOWY_TAIGA_HILLS.getLocation().toString(),
 						Biomes.SNOWY_TAIGA_MOUNTAINS.getLocation().toString()),
-					biome -> LivingThingsConfig.checkBiome("Penguin", biome));
+				biome -> LivingThingsConfig.checkBiome("Penguin", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 12, 1, Short.MAX_VALUE);
 		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
 		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 6, 1, Short.MAX_VALUE);
 		builder.pop();
-		
+
 		builder.pop();
-		
+
 	}
 }

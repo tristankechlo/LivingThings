@@ -1,15 +1,15 @@
 {
 	"itemGroup.LivingThings" : "Seres Vivos",
-	
-	
+
+
 	"__comment1" : "inventorys",
 	"container.livingthings.elephant" : "Invent\u00e1rio do Elefante",
-	
-	
+
+
 	"__comment2" : "blocks",
 	"block.livingthings.ostrich_nest" : "Ninho de Avestruz",
-	
-	
+
+
 	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Dente de Tubar\u00e3o",
 	"item.livingthings.ostrich_egg" : "Ovo de Avestruz",
@@ -17,8 +17,8 @@
 	"item.livingthings.cooked_crab" : "Caranguejo Cozido",
 	"item.livingthings.crab_shell" : "Carapa\u00e7a de Caranguejo",
 	"item.livingthings.lexicon" : "L\u00e9xico de Seres Vivos",
-	
-	
+
+
 	"__comment4" : "spawn eggs",
 	"item.livingthings.elephant_spawn_egg" : "Ovo de Gerador de Elefante",
 	"item.livingthings.giraffe_spawn_egg" : "Ovo de Gerador de Girafa",
@@ -45,8 +45,8 @@
 	"entity.livingthings.mantaray" : "Arraia",
 	"entity.livingthings.raccoon" : "Guaxinim",
 	"entity.livingthings.owl" : "Coruja",
-	
-	
+
+
 	"__comment6" : "subtitles",
 	"subtitles.livingthings.lion.ambient" : "Le\u00e3o ruge",
 	"subtitles.livingthings.lion.hurt" : "Le\u00e3o ferido",
@@ -69,10 +69,10 @@
 	"subtitles.livingthings.owl.hurt" : "Coruja ferido",
 	"subtitles.livingthings.owl.death" : "Coruja morre",
 	"subtitles.livingthings.owl.fly" : "Coruja bata asas",
-	
-	
+
+
 	"__comment7" : "messages",
 	"messages.livingthings.nopatchouli.title" : "Voc\u00ea n\u00e3o pode usar isso!",
 	"messages.livingthings.nopatchouli.subtitle" : "O mod Patchouli n\u00e3o est\u00e1 instalado."
-	
+
 }

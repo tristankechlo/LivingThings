@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PenguinModel <T extends PenguinEntity> extends EntityModel<T> {
+public class PenguinModel<T extends PenguinEntity> extends EntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer RightFeet;
@@ -69,21 +69,20 @@ public class PenguinModel <T extends PenguinEntity> extends EntityModel<T> {
 		this.Head.rotateAngleX = headPitch * 0.0174532925F;
 		this.Head.rotateAngleY = netHeadYaw * 0.0174532925F;
 
-		//wobbling effect
+		// wobbling effect
 		this.Body.rotateAngleZ = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
-			
-		//animate penguin swinging wings
- 		this.RightWing.rotateAngleZ = (0.1308996938F) + ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F ) * limbSwingAmount);
-		this.LeftWing.rotateAngleZ = (-0.1308996938F) + ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F )* limbSwingAmount);
-		
+
+		// animate penguin swinging wings
+		this.RightWing.rotateAngleZ = (0.1308996938F) + ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F) * limbSwingAmount);
+		this.LeftWing.rotateAngleZ = (-0.1308996938F) + ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
 		this.RightFeet.rotateAngleX = -((MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
 		this.LeftFeet.rotateAngleX = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
-		
+
 	}
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		if(this.isChild) {
+		if (this.isChild) {
 			matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 			matrixStackIn.translate(0, 1.5D, 0);
 		}

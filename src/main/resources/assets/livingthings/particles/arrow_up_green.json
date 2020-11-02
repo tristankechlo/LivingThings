@@ -1,1 +1,5 @@
-{ "textures" : [ "livingthings:arrow_up" ] }
+{
+	"textures" : [
+		"livingthings:arrow_up"
+	]
+}

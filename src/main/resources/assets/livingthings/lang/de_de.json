@@ -1,15 +1,15 @@
 {
 	"itemGroup.LivingThings" : "Living Things",
-	
-	
+
+
 	"__comment1" : "inventorys",
 	"container.livingthings.elephant" : "Elefant Inventar",
-	
-	
+
+
 	"__comment2" : "blocks",
 	"block.livingthings.ostrich_nest" : "Strau\u00dfen Nest",
-	
-	
+
+
 	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Haifischzahn",
 	"item.livingthings.ostrich_egg" : "Strau\u00dfen Ei",
@@ -18,8 +18,8 @@
 	"item.livingthings.crab_shell" : "Krabben Panzer",
 	"item.livingthings.lexicon" : "LivingThings Lexikon",
 	"item.livingthings.ancient_helmet" : "Antiker Helm",
-	
-	
+
+
 	"__comment4" : "spawn eggs",
 	"item.livingthings.elephant_spawn_egg" : "Elefanten-Spawn-Ei",
 	"item.livingthings.giraffe_spawn_egg" : "Giraffen-Spawn-Ei",
@@ -33,6 +33,7 @@
 	"item.livingthings.raccoon_spawn_egg" : "Waschb\u00e4ren-Spawn-Ei",
 	"item.livingthings.owl_spawn_egg" : "Eulen-Spawn-Ei",
 	"item.livingthings.ancient_blaze_spawn_egg" : "Antike-Lohe-Spawn-Ei",
+	"item.livingthings.koala_spawn_egg" : "Koala-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -48,8 +49,9 @@
 	"entity.livingthings.raccoon" : "Waschb\u00e4r",
 	"entity.livingthings.owl" : "Eule",
 	"entity.livingthings.ancient_blaze" : "Antike Lohe",
-	
-	
+	"entity.livingthings.koala" : "Koala",
+
+
 	"__comment6" : "subtitles",
 	"subtitles.livingthings.lion.ambient" : "L\u00f6we br\u00fcllt",
 	"subtitles.livingthings.lion.hurt" : "L\u00f6we nimmt Schaden",
@@ -79,10 +81,10 @@
     "subtitles.livingthings.ancient_blaze.shoot": "Antike Lohe schie\u00dft",
     "subtitles.livingthings.ancient_blaze.spawn": "Antike Lohe entfesselt",
     "subtitles.livingthings.ancient_blaze.charge_up": "Antike Lohe l\u00e4dt sich auf",
-	
-	
+
+
 	"__comment7" : "messages",
 	"messages.livingthings.nopatchouli.title" : "Fehler!",
 	"messages.livingthings.nopatchouli.subtitle" : "Mod Patchouli ist nicht installiert."
-	
+
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityModel<T> {
+public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Head;
@@ -91,19 +91,19 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 		Shields.setRotationPoint(0.0F, -22.0F, 0.0F);
 		Body.addChild(Shields);
 		setRotationAngle(Shields, 0.0F, -0.7854F, 0.0F);
-		
+
 		for (int i = 0; i < this.shields.length; i++) {
 			this.shields[i] = new ModelRenderer(this, 0, 43);
 			this.shields[i].addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
 			this.shields[i].setRotationPoint(i * 7.5F, 0.0F, i * 7.5F);
-			setRotationAngle(this.shields[i], -0.3491F, ((-1)^i) * 1.570796F, 0.0F);
+			setRotationAngle(this.shields[i], -0.3491F, ((-1) ^ i) * 1.570796F, 0.0F);
 			this.Shields.addChild(this.shields[i]);
 		}
 
 		Sticks = new ModelRenderer(this);
 		Sticks.setRotationPoint(0.0F, 5.0F, 0.0F);
 		Body.addChild(Sticks);
-		
+
 		for (int i = 0; i < this.sticks.length; i++) {
 			this.sticks[i] = new ModelRenderer(this, 0, 18);
 			this.sticks[i].addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
@@ -114,40 +114,40 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 	@Override
 	public void setRotationAngles(T blaze, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.Head.rotateAngleY = netHeadYaw * 0.017453F;
-	    this.Head.rotateAngleX = headPitch * 0.017453F;
+		this.Head.rotateAngleX = headPitch * 0.017453F;
 
-	    float f = 0.785398F + ageInTicks * -0.094247F;
-	    for(int i = 0; i < this.sticks.length; i++) {
-	    	this.sticks[i].showModel = (blaze.getShoots() > i);
-	    	this.sticks[i].rotationPointY = MathHelper.cos((i * 3F + ageInTicks) * 0.3F) - 1.0F;
-	        this.sticks[i].rotationPointX = MathHelper.cos(f) * 9.0F;
-	        this.sticks[i].rotationPointZ = MathHelper.sin(f) * 9.0F;
-	        f++;
-	    }
-	    	    
-	    if(blaze.isCharged()) {
-		    this.Shields.rotateAngleY = 0.785398F;
-		    this.Head.rotationPointY = -22.5F;
+		float f = 0.785398F + ageInTicks * -0.094247F;
+		for (int i = 0; i < this.sticks.length; i++) {
+			this.sticks[i].showModel = (blaze.getShoots() > i);
+			this.sticks[i].rotationPointY = MathHelper.cos((i * 3F + ageInTicks) * 0.3F) - 1.0F;
+			this.sticks[i].rotationPointX = MathHelper.cos(f) * 9.0F;
+			this.sticks[i].rotationPointZ = MathHelper.sin(f) * 9.0F;
+			f++;
+		}
 
-		    for(int i = 0; i < this.shields.length; i++) {
-		    	this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 6.0F;
-		    	this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 6.0F;
-		    	this.shields[i].rotateAngleX = 0F;
-		    }
-	         
-	    } else {
-		    this.Shields.rotateAngleY = -ageInTicks / 50;
-		    this.Head.rotationPointY = -24.5F;
+		if (blaze.isCharged()) {
+			this.Shields.rotateAngleY = 0.785398F;
+			this.Head.rotationPointY = -22.5F;
 
-		    for(int i = 0; i < this.shields.length; i++) {
-		    	this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 7.5F;
-		    	this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 7.5F;
-		    	this.shields[i].rotateAngleX = -0.349065F;
-		    }
-		    
-	    }
+			for (int i = 0; i < this.shields.length; i++) {
+				this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 6.0F;
+				this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 6.0F;
+				this.shields[i].rotateAngleX = 0F;
+			}
+
+		} else {
+			this.Shields.rotateAngleY = -ageInTicks / 50;
+			this.Head.rotationPointY = -24.5F;
+
+			for (int i = 0; i < this.shields.length; i++) {
+				this.shields[i].rotationPointX = MathHelper.cos(i * 1.570796F) * 7.5F;
+				this.shields[i].rotationPointZ = MathHelper.sin(i * 1.570796F) * 7.5F;
+				this.shields[i].rotateAngleX = -0.349065F;
+			}
+
+		}
 	}
-	
+
 	@Override
 	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
 		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
@@ -155,9 +155,9 @@ public class AncientBlazeModel <T extends AncientBlazeEntity> extends EntityMode
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		Body.render(matrixStack, buffer, packedLight, packedOverlay);		
+		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
-	
+
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;

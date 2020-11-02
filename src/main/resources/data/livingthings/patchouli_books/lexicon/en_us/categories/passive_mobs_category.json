@@ -1,6 +1,6 @@
 {
-	"name": "Passive Mobs",
-	"description": "These mobs will never hurt anyone!",
-	"icon": "minecraft:writable_book",
+	"name" : "Passive Mobs",
+	"description" : "These mobs will never hurt anyone!",
+	"icon" : "minecraft:writable_book",
 	"sortnum" : 0
 }

@@ -89,13 +89,12 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		
 		if (compound.contains("MantarayVariant")) {
 			this.setVariant(compound.getByte("MantarayVariant"));
 		} else {
 			this.setVariant((byte) 0);
 		}
-		
+
 		if (compound.contains("MantarayScaling")) {
 			this.setScaling(compound.getByte("MantarayScaling"));
 		} else {
@@ -116,9 +115,9 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		if (color1Weight <= 0 && color2Weight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
-				new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1)));
+		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
+						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1)));
 		return variant.variant;
 	}
 
@@ -130,16 +129,16 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
 			return 0;
 		}
-		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random, ImmutableList.of(
-				new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
-				new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 0),
-				new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 2),
-				new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
+		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random,
+				ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
+						new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 0),
+						new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 2),
+						new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
 		return scaling.scaling;
 	}
 
-	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason,	BlockPos pos, Random random) {
-	      return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
+	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+		return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
 	}
 
 	@Override
@@ -149,7 +148,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		// random moving when on land
 		if (!this.isInWaterRainOrBubbleColumn()) {
 			if (this.onGround) {
-				this.setMotion(this.getMotion().add((double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
+				this.setMotion(this.getMotion().add(((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
 				this.rotationYaw = this.rand.nextFloat() * 360.0F;
 				this.onGround = false;
 				this.isAirBorne = true;
@@ -166,7 +165,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return LivingThingsConfig.MANTARAY.maxSpawns.get();
@@ -214,7 +213,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		// required by AbstractFishEntity
 		return null;
 	}
-	
+
 	static class SwimGoal extends RandomSwimmingGoal {
 		private final MantarayEntity fish;
 
@@ -261,12 +260,11 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 					float f1 = (float) (this.speed * this.mantaray.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					if (this.mantaray.isInWater()) {
 						this.mantaray.setAIMoveSpeed(f1 * 0.02F);
-						float f2 = -((float) (MathHelper.atan2(d1, (double) MathHelper.sqrt(d0 * d0 + d2 * d2))
-								* (double) (180F / (float) Math.PI)));
+						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2)) * 0.0174532925F));
 						f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
 						this.mantaray.rotationPitch = this.limitAngle(this.mantaray.rotationPitch, f2, 5.0F);
-						float f3 = MathHelper.cos(this.mantaray.rotationPitch * ((float) Math.PI / 180F));
-						float f4 = MathHelper.sin(this.mantaray.rotationPitch * ((float) Math.PI / 180F));
+						float f3 = MathHelper.cos(this.mantaray.rotationPitch * 0.0174532925F);
+						float f4 = MathHelper.sin(this.mantaray.rotationPitch * 0.0174532925F);
 						this.mantaray.moveForward = f3 * f1;
 						this.mantaray.moveVertical = -f4 * f1;
 					} else {

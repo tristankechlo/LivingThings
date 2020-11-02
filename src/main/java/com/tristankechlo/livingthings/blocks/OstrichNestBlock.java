@@ -46,7 +46,8 @@ public class OstrichNestBlock extends Block {
 	public OstrichNestBlock() {
 		super(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.BROWN)
 				.hardnessAndResistance(0.5F)
-				.notSolid().tickRandomly());
+				.notSolid()
+				.tickRandomly());
 		this.setDefaultState(this.getDefaultState().with(HATCH, 0).with(EGG, false));
 	}
 
@@ -84,16 +85,16 @@ public class OstrichNestBlock extends Block {
 		if (this.canGrow(worldIn)) {
 			int i = state.get(HATCH);
 			if (i < 2) {
-				worldIn.setBlockState(pos, state.with(HATCH, Integer.valueOf(i + 1)), 2);
-	            worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
+				worldIn.setBlockState(pos, state.with(HATCH, i + 1), 2);
+				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
 			} else {
 				worldIn.setBlockState(pos, state.with(EGG, false).with(HATCH, 0), 2);
-	            worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
+				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
 
-				OstrichEntity turtleentity = ModEntityTypes.OSTRICH_ENTITY.get().create(worldIn);
-				turtleentity.setGrowingAge(-24000);
-				turtleentity.setLocationAndAngles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0F, 0.0F);
-				worldIn.addEntity(turtleentity);
+				OstrichEntity ostrichEntity = ModEntityTypes.OSTRICH_ENTITY.get().create(worldIn);
+				ostrichEntity.setGrowingAge(-24000);
+				ostrichEntity.setLocationAndAngles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0F, 0.0F);
+				worldIn.addEntity(ostrichEntity);
 			}
 		}
 	}

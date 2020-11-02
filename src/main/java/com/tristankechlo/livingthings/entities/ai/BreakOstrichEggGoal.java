@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ItemParticleData;
@@ -53,10 +52,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 			return false;
 		} else if (this.shouldMoveToDestination()) {
 			this.runDelay = 20;
-			if(this.entity.getRNG().nextInt(this.chance) == 0) {
-				return true;
-			}
-			return false;
+			return this.entity.getRNG().nextInt(this.chance) == 0;
 		} else {
 			this.runDelay = this.getRunDelay(this.creature);
 			return false;
@@ -80,11 +76,11 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 	}
 
 	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
-        worldIn.playSound((PlayerEntity)null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.HOSTILE, 0.5F, 0.9F + this.entity.getRNG().nextFloat() * 0.2F);
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.HOSTILE, 0.5F, 0.9F + this.entity.getRNG().nextFloat() * 0.2F);
 	}
 
 	public void playBrokenSound(World worldIn, BlockPos pos) {
-        worldIn.playSound((PlayerEntity)null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
 	}
 
 	@Override
@@ -99,7 +95,9 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 				Vector3d vector3d = this.entity.getMotion();
 				this.entity.setMotion(vector3d.x, 0.3D, vector3d.z);
 				if (!world.isRemote) {
-					((ServerWorld) world).spawnParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.EGG)),	(double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.7D, (double) blockpos1.getZ() + 0.5D, 3, ((double) random.nextFloat() - 0.5D) * 0.08D, ((double) random.nextFloat() - 0.5D) * 0.08D, ((double) random.nextFloat() - 0.5D) * 0.08D,	(double) 0.15F);
+					((ServerWorld) world).spawnParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.EGG)),
+							blockpos1.getX() + 0.5D, blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3,
+							(random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, 0.15F);
 				}
 			}
 
@@ -112,11 +110,11 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 			}
 
 			if (this.breakingTime > 60) {
-				if(this.destroyNestComplete) {
-					//destroy nest complete
+				if (this.destroyNestComplete) {
+					// destroy nest complete
 					world.removeBlock(blockpos1, false);
 				} else {
-					//remove only the egg
+					// remove only the egg
 					world.setBlockState(blockpos1, world.getBlockState(blockpos1).with(OstrichNestBlock.EGG, false));
 				}
 				if (!world.isRemote) {
@@ -124,7 +122,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 						double d3 = random.nextGaussian() * 0.02D;
 						double d1 = random.nextGaussian() * 0.02D;
 						double d2 = random.nextGaussian() * 0.02D;
-						((ServerWorld) world).spawnParticle(ParticleTypes.POOF, (double) blockpos1.getX() + 0.5D, (double) blockpos1.getY(), (double) blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double) 0.15F);
+						((ServerWorld) world).spawnParticle(ParticleTypes.POOF, blockpos1.getX() + 0.5D, blockpos1.getY(), blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double) 0.15F);
 					}
 
 					this.playBrokenSound(world, blockpos1);
@@ -139,7 +137,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 	@Nullable
 	private BlockPos findTarget(BlockPos pos, IBlockReader worldIn) {
 		if (worldIn.getBlockState(pos).isIn(this.block)) {
-			if(worldIn.getBlockState(pos).get(OstrichNestBlock.EGG)) {
+			if (worldIn.getBlockState(pos).get(OstrichNestBlock.EGG)) {
 				return pos;
 			}
 			return null;
@@ -148,7 +146,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
 			for (BlockPos blockpos : ablockpos) {
 				if (worldIn.getBlockState(blockpos).isIn(this.block)) {
-					if(worldIn.getBlockState(blockpos).get(OstrichNestBlock.EGG)) {
+					if (worldIn.getBlockState(blockpos).get(OstrichNestBlock.EGG)) {
 						return blockpos;
 					}
 				}
@@ -165,16 +163,17 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 		if (ichunk == null) {
 			return false;
 		} else {
-			if(ichunk.getBlockState(pos).isIn(this.block)) {
-				return ichunk.getBlockState(pos).get(OstrichNestBlock.EGG) && ichunk.getBlockState(pos.up()).isAir() && ichunk.getBlockState(pos.up(2)).isAir();
+			if (ichunk.getBlockState(pos).isIn(this.block)) {
+				return ichunk.getBlockState(pos).get(OstrichNestBlock.EGG) && ichunk.getBlockState(pos.up()).isAir()
+						&& ichunk.getBlockState(pos.up(2)).isAir();
 			}
 			return false;
 		}
 	}
-	
+
 	@Override
 	public double getTargetDistanceSq() {
-        return 1.25D;
+		return 1.25D;
 	}
 
 }
