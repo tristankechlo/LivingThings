@@ -4,9 +4,11 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IScaleableMob;
 import net.minecraft.block.BlockState;
@@ -38,6 +40,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -47,10 +50,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable, IScaleableMob {
+public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable, IScaleableMob, ILexiconEntry {
 
 	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
 	private static final DataParameter<Byte> CRAB_SCALING = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/crab");
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.COD);
 	private int angerTime;
@@ -281,6 +285,11 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 }

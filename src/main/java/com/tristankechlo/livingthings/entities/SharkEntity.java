@@ -3,8 +3,10 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 import java.util.UUID;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -31,6 +33,7 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -39,8 +42,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class SharkEntity extends WaterMobEntity implements IAngerable {
+public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconEntry {
 
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "hostile_mobs/shark");
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
@@ -173,6 +177,11 @@ public class SharkEntity extends WaterMobEntity implements IAngerable {
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	static class MoveHelperController extends MovementController {

@@ -2,12 +2,14 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.Random;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -46,6 +48,7 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -56,13 +59,14 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class OstrichEntity extends AnimalEntity implements IRideable {
+public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEntry {
 
 	private static final DataParameter<Boolean> HAS_EGG = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_BUILDING_NEST = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_LAYING_EGG = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.VARINT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/ostrich");
 	private final BoostHelper boostHelper = new BoostHelper(this.dataManager, BOOST_TIME, SADDLED);
 	private int nestBuildingCounter;
 	private int layingEggCounter;
@@ -214,7 +218,8 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		boolean breedingItem = this.isBreedingItem(player.getHeldItem(hand));
-		if (!breedingItem && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive()) {
+		boolean isLexicon = player.getHeldItemMainhand().getItem() == ModItems.LEXICON.get();
+		if (!breedingItem && !isLexicon && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive()) {
 			if (!this.world.isRemote && LivingThingsConfig.OSTRICH.canBeRidden.get()) {
 				player.startRiding(this);
 			}
@@ -247,6 +252,11 @@ public class OstrichEntity extends AnimalEntity implements IRideable {
 	@Override
 	public double getMountedYOffset() {
 		return 1.0D;
+	}
+	
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	static class BreedGoal extends net.minecraft.entity.ai.goal.BreedGoal {

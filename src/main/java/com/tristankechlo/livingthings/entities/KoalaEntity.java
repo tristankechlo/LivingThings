@@ -1,7 +1,9 @@
 package com.tristankechlo.livingthings.entities;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -23,12 +25,20 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class KoalaEntity extends AnimalEntity {
+public class KoalaEntity extends AnimalEntity implements ILexiconEntry {
 
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(KoalaEntity.class, DataSerializers.BYTE);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/koala");
 
 	public KoalaEntity(EntityType<? extends KoalaEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -58,6 +68,25 @@ public class KoalaEntity extends AnimalEntity {
 	}
 
 	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(CLIMBING, (byte) 0);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (!this.world.isRemote) {
+			this.setBesideClimbableBlock(this.collidedHorizontally);
+		}
+	}
+
+	@Override
+	public boolean isOnLadder() {
+		return this.isBesideClimbableBlock();
+	}
+
+	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
@@ -70,6 +99,30 @@ public class KoalaEntity extends AnimalEntity {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return this.isChild() ? 0.35F : 0.73F;
+	}
+
+	@Override
+	protected PathNavigator createNavigator(World worldIn) {
+		return new ClimberPathNavigator(this, worldIn);
+	}
+
+	public boolean isBesideClimbableBlock() {
+		return (this.dataManager.get(CLIMBING) & 1) != 0;
+	}
+
+	public void setBesideClimbableBlock(boolean climbing) {
+		byte b0 = this.dataManager.get(CLIMBING);
+		if (climbing) {
+			b0 = (byte) (b0 | 1);
+		} else {
+			b0 = (byte) (b0 & -2);
+		}
+		this.dataManager.set(CLIMBING, b0);
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 }

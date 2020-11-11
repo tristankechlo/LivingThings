@@ -2,11 +2,13 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.UUID;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.AbstractTameableChestedEntity;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureEntity;
@@ -34,6 +36,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.world.World;
@@ -41,9 +44,10 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ElephantEntity extends AbstractTameableChestedEntity implements IAngerable {
+public class ElephantEntity extends AbstractTameableChestedEntity implements IAngerable, ILexiconEntry {
 
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/elephant");
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
 	private int attackTimer;
@@ -193,6 +197,11 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	static class NewHurtByTargetGoal extends HurtByTargetGoal {

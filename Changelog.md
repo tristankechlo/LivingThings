@@ -3,6 +3,7 @@
 ### Version 1.16.4 - 1.2.3
  - port to 1.16.4
  - added koala entity
+ - rightclick mobs with the lexicon to open the corresponding page
  - temporarily disabling custom particles
 
 ### Version 1.16.3 - 1.2.2

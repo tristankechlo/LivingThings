@@ -4,9 +4,11 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -36,6 +38,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
@@ -43,9 +46,10 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVariants {
+public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVariants, ILexiconEntry {
 
 	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.createKey(GiraffeEntity.class, DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/giraffe");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
@@ -179,6 +183,11 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	@Override
 	public void setVariant(byte variant) {
 		this.getDataManager().set(GIRAFFE_VARIANT, variant);
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -144,6 +145,11 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				this.mountRider(player);
 			}
 			return ActionResultType.func_233537_a_(this.world.isRemote);
+
+		} else if (player.getHeldItemMainhand().getItem() == ModItems.LEXICON.get()) {
+
+			//prevent any use when item is lexicon
+			return ActionResultType.PASS;
 
 		} else if (this.isBreedingItem(stack)) {
 

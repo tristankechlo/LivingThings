@@ -3,7 +3,9 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IScaleableMob;
 
@@ -35,6 +37,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -44,10 +47,11 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants, IScaleableMob {
+public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants, IScaleableMob, ILexiconEntry {
 
 	private static final DataParameter<Byte> MANTARAY_VARIANT = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
 	private static final DataParameter<Byte> MANTARAY_SCALING = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/mantaray");
 
 	public MantarayEntity(EntityType<? extends MantarayEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -212,6 +216,11 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	protected SoundEvent getFlopSound() {
 		// required by AbstractFishEntity
 		return null;
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	static class SwimGoal extends RandomSwimmingGoal {

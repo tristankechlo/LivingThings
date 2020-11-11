@@ -2,8 +2,10 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -31,14 +33,16 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class FlamingoEntity extends AnimalEntity {
+public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
 	private static final DataParameter<Boolean> LEFT_LEG_UP = EntityDataManager.createKey(FlamingoEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> RIGHT_LEG_UP = EntityDataManager.createKey(FlamingoEntity.class, DataSerializers.BOOLEAN);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/flamingo");
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON);
 	protected DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
 
@@ -116,6 +120,11 @@ public class FlamingoEntity extends AnimalEntity {
 
 	public void setRightLegUp(boolean up) {
 		this.dataManager.set(RIGHT_LEG_UP, up);
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	static class LiftLegsGoal extends Goal {

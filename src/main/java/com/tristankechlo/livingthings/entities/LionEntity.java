@@ -6,12 +6,15 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import com.tristankechlo.livingthings.util.IGenderedMob;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -43,6 +46,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.WeightedRandom;
@@ -51,10 +55,11 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants, IGenderedMob {
+public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants, IGenderedMob, ILexiconEntry {
 
 	private static final DataParameter<Boolean> MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.createKey(LionEntity.class, DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "hostile_mobs/lion");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
 	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
 	private int angerTime;
@@ -270,5 +275,10 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 }

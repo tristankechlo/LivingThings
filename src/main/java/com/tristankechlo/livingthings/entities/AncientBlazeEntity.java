@@ -2,9 +2,11 @@ package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -39,6 +41,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -53,10 +56,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
-public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob {
+public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob, ILexiconEntry {
 
 	private static final DataParameter<Byte> SHOOTS = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.BYTE);
 	private static final DataParameter<Integer> INVULNERABLE_TIME = EntityDataManager.createKey(AncientBlazeEntity.class, DataSerializers.VARINT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "hostile_mobs/ancient_blaze");
 	private final ServerBossInfo bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.YELLOW, BossInfo.Overlay.PROGRESS);
 
 	public AncientBlazeEntity(EntityType<? extends AncientBlazeEntity> type, World world) {
@@ -325,6 +329,11 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@Override
 	public boolean isCharged() {
 		return this.dataManager.get(INVULNERABLE_TIME) > 0;
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 	class ChargeUpGoal extends Goal {

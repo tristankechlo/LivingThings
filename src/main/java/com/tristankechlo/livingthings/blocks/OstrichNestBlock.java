@@ -2,10 +2,12 @@ package com.tristankechlo.livingthings.blocks;
 
 import java.util.Random;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -24,6 +26,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -36,18 +39,17 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class OstrichNestBlock extends Block {
+public class OstrichNestBlock extends Block implements ILexiconEntry {
 
 	public static final BooleanProperty EGG = BooleanProperty.create("egg");
 	public static final IntegerProperty HATCH = BlockStateProperties.HATCH_0_2;
 	private static final VoxelShape EGG_SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 8, 12);
 	private static final VoxelShape NEST_SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 4, 14);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "items/ostrich_nest");
 
 	public OstrichNestBlock() {
-		super(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.BROWN)
-				.hardnessAndResistance(0.5F)
-				.notSolid()
-				.tickRandomly());
+		super(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.BROWN).hardnessAndResistance(0.5F)
+				.notSolid().tickRandomly());
 		this.setDefaultState(this.getDefaultState().with(HATCH, 0).with(EGG, false));
 	}
 
@@ -59,19 +61,25 @@ public class OstrichNestBlock extends Block {
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (!worldIn.isRemote && handIn == Hand.MAIN_HAND && player.getHeldItemMainhand().getItem() == Items.AIR) {
-			Block block = state.getBlock();
-			if (!(block instanceof OstrichNestBlock)) {
-				return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
-			}
-			if (state.get(OstrichNestBlock.EGG)) {
-				worldIn.setBlockState(pos, state.with(OstrichNestBlock.EGG, false).with(OstrichNestBlock.HATCH, 0), 2);
-				worldIn.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F);
+		if (player.getHeldItemMainhand().getItem() == ModItems.LEXICON.get()) {
+			//prevent any use when rightclicked with lexicon
+			return ActionResultType.PASS;
+		}
+		if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+			if (player.getHeldItemMainhand().getItem() == Items.AIR) {
+				Block block = state.getBlock();
+				if (!(block instanceof OstrichNestBlock)) {
+					return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+				}
+				if (state.get(OstrichNestBlock.EGG)) {
+					worldIn.setBlockState(pos, state.with(OstrichNestBlock.EGG, false).with(OstrichNestBlock.HATCH, 0), 2);
+					worldIn.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F);
 
-				ItemEntity entity = new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5D, pos.getZ(), new ItemStack(ModItems.OSTRICH_EGG.get(), 1));
-				entity.setDefaultPickupDelay();
-				worldIn.addEntity(entity);
-				return ActionResultType.SUCCESS;
+					ItemEntity entity = new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5D, pos.getZ(), new ItemStack(ModItems.OSTRICH_EGG.get(), 1));
+					entity.setDefaultPickupDelay();
+					worldIn.addEntity(entity);
+					return ActionResultType.SUCCESS;
+				}
 			}
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
@@ -124,6 +132,11 @@ public class OstrichNestBlock extends Block {
 	@Override
 	public PushReaction getPushReaction(BlockState state) {
 		return PushReaction.DESTROY;
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 }

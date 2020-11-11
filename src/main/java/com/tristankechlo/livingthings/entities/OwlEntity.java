@@ -3,9 +3,11 @@ package com.tristankechlo.livingthings.entities;
 import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.IMobVariants;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -47,6 +49,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -58,9 +61,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVariants {
+public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVariants, ILexiconEntry {
 
 	private static final DataParameter<Byte> OWL_VARIANT = EntityDataManager.createKey(OwlEntity.class, DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/owl");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
 	private static final Ingredient TAMING_ITEMS = Ingredient.fromItems(Items.WHEAT_SEEDS);
 	public float flap;
@@ -300,6 +304,11 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	@Override
 	public void setVariant(byte variant) {
 		this.dataManager.set(OWL_VARIANT, variant);
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
 	}
 
 }
