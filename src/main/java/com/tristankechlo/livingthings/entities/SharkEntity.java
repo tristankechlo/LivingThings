@@ -59,7 +59,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.05F)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SHARK.speed.get())
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.damage.get());
 	}

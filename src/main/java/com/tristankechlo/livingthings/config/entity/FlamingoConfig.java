@@ -14,6 +14,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class FlamingoConfig {
 
 	public final DoubleValue health;
+	public final DoubleValue speed;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final IntValue weight;
@@ -24,9 +25,13 @@ public class FlamingoConfig {
 
 		builder.comment("Mob-Config for Flamingo").push("Flamingo");
 
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 10.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 0.25D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_VANILLA).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SWAMP.getLocation().toString(),
 						Biomes.SWAMP_HILLS.getLocation().toString(),

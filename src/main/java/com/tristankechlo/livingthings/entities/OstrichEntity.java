@@ -84,7 +84,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.OSTRICH.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OSTRICH.speed.get());
 	}
 
 	@Override

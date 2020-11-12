@@ -62,7 +62,7 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.RACCOON.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.RACCOON.speed.get())
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.RACCOON.damage.get());
 	}

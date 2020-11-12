@@ -70,7 +70,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.ELEPHANT.speed.get())
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
 	}

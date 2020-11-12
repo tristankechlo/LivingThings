@@ -14,9 +14,10 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class SharkConfig {
 
-	public final DoubleValue health;
-	public final DoubleValue damage;
 	public final BooleanValue canAttack;
+	public final DoubleValue health;
+	public final DoubleValue speed;
+	public final DoubleValue damage;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final IntValue weight;
@@ -28,10 +29,16 @@ public class SharkConfig {
 		builder.comment("Mob-Config for Shark").push("Shark");
 
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 22.0D, 1.0D, Short.MAX_VALUE);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 6.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 22.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningWater).push("Spawns");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 1.05D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		damage = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("AttackDamage", 6.0D, LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
+
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_WATER).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.OCEAN.getLocation().toString(),
 						Biomes.DEEP_OCEAN.getLocation().toString(),

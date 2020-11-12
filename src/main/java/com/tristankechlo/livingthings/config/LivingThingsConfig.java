@@ -27,11 +27,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber
 public class LivingThingsConfig {
 
-	public static final String requiresRestart = "requires Client and Server restart";
-	public static final String disableSpawning = "to disable Spawning leave the array SpawnBoimes empty";
-	public static final String spawningVanilla = "can spawn on grass-blocks where lightlevel is higher than 8";
-	public static final String spawningWater = "can spawn in water";
-	public static final String weightedRandom = "the values are considered as weighted-random items";
+	public static final String REQUIRES_RESTART = "requires Client and Server restart";
+	public static final String DISABLE_SPAWNING = "to disable spawning, leave the array SpawnBoimes empty";
+	public static final String SPAWNING_VANILLA = "can spawn on grass-blocks where lightlevel is higher than 8";
+	public static final String SPAWNING_WATER = "can spawn in water";
+	public static final String WEIGHTED_RANDOM = "the values are considered as weighted-random";
+	public static final String HIGH_IMPACT = "be careful, even small changes can have high a impact";
+	
+	public static final double MIN_HEALTH = 1.0D;
+	public static final double MAX_HEALTH = Short.MAX_VALUE;
+	public static final double MIN_SPEED = 0.05D;
+	public static final double MAX_SPEED = 10.0D;
+	public static final double MIN_DAMAGE = 1.0D;
+	public static final double MAX_DAMAGE = Short.MAX_VALUE;
 
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
@@ -68,7 +76,6 @@ public class LivingThingsConfig {
 
 	public static boolean checkBiome(String name, Object test) {
 		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
-			// LivingThings.LOGGER.log(Level.INFO, name + " " + String.valueOf(test));
 			return true;
 		}
 		LivingThings.LOGGER.log(Level.INFO, "Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");

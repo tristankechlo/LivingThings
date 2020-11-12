@@ -111,7 +111,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.33D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.LION.speed.get())
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
 	}

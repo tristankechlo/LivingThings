@@ -63,7 +63,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.0D);
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MANTARAY.speed.get());
 	}
 
 	@Override

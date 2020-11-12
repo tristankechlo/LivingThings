@@ -14,9 +14,10 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class LionConfig {
 
-	public final DoubleValue health;
-	public final DoubleValue damage;
 	public final BooleanValue canAttack;
+	public final DoubleValue health;
+	public final DoubleValue speed;
+	public final DoubleValue damage;
 
 	public final ConfigValue<Integer> genderMaleWeight;
 	public final ConfigValue<Integer> genderFemaleWeight;
@@ -34,20 +35,26 @@ public class LionConfig {
 		builder.comment("Mob-Config for Lion").push("Lion");
 
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 20.0D, 1.0D, Short.MAX_VALUE);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 5.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 20.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.weightedRandom).push("GenderWeights");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 0.33D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		damage = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("AttackDamage", 5.0D, LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
+
+		builder.comment(LivingThingsConfig.WEIGHTED_RANDOM).push("GenderWeights");
 		genderMaleWeight = builder.define("GenderMaleWeight", 50);
 		genderFemaleWeight = builder.define("GenderFemaleWeight", 50);
 		builder.pop();
 
-		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
+		builder.comment(LivingThingsConfig.WEIGHTED_RANDOM).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 99);
 		colorAlbinoWeight = builder.define("AlbinoWeight", 1);
 		builder.pop();
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_VANILLA).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.getLocation().toString(),
 						Biomes.SAVANNA_PLATEAU.getLocation().toString(),

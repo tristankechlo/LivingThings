@@ -4,6 +4,7 @@
  - port to 1.16.4
  - added koala entity
  - rightclick mobs with the lexicon to open the corresponding page
+ - movement speed now changeable for all mobs through config
  - temporarily disabling custom particles
 
 ### Version 1.16.3 - 1.2.2

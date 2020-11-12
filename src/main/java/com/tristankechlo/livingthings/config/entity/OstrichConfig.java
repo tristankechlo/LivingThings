@@ -15,6 +15,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class OstrichConfig {
 
 	public final DoubleValue health;
+	public final DoubleValue speed;
 	public final BooleanValue canBeRidden;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
@@ -27,9 +28,13 @@ public class OstrichConfig {
 		builder.comment("Mob-Config for Ostrich").push("Ostrich");
 
 		canBeRidden = builder.define("CanBeRidden", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 20.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 20.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 0.25D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_VANILLA).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.getLocation().toString(),
 						Biomes.SAVANNA_PLATEAU.getLocation().toString(),

@@ -14,6 +14,8 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class OwlConfig {
 
 	public final DoubleValue health;
+	public final DoubleValue speed;
+	public final DoubleValue flyingSpeed;
 
 	public final ConfigValue<Integer> colorBrownWeight;
 	public final ConfigValue<Integer> colorWhiteWeight;
@@ -28,15 +30,22 @@ public class OwlConfig {
 
 		builder.comment("Mob-Config for Owl").push("Owl");
 
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 10.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 10.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.weightedRandom).push("ColorVariantWeights");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 0.25D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		flyingSpeed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("FlyingSpeed", 0.5D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		builder.comment(LivingThingsConfig.WEIGHTED_RANDOM).push("ColorVariantWeights");
 		colorBrownWeight = builder.define("colorBrownWeight", 33);
 		colorWhiteWeight = builder.define("colorWhiteWeight", 33);
 		colorBlackWeight = builder.define("colorBlackWeight", 33);
 		builder.pop();
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_VANILLA).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.FOREST.getLocation().toString(),
 						Biomes.BIRCH_FOREST.getLocation().toString(),

@@ -14,9 +14,10 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ElephantConfig {
 
-	public final DoubleValue health;
-	public final DoubleValue damage;
 	public final BooleanValue canAttack;
+	public final DoubleValue health;
+	public final DoubleValue speed;
+	public final DoubleValue damage;
 
 	public final ConfigValue<List<? extends String>> spawnBiomes;
 	public final IntValue weight;
@@ -28,10 +29,16 @@ public class ElephantConfig {
 		builder.comment("Mob-Config for Elephant").push("Elephant");
 
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("Health", 60.0D, 1.0D, Short.MAX_VALUE);
-		damage = builder.comment(LivingThingsConfig.requiresRestart).worldRestart().defineInRange("AttackDamage", 7.0D, 1.0D, Short.MAX_VALUE);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("Health", 60.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		builder.comment(LivingThingsConfig.requiresRestart + " | " + LivingThingsConfig.disableSpawning + " | " + LivingThingsConfig.spawningVanilla).push("Spawns");
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+				.defineInRange("MovementSpeed", 0.25D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
+
+		damage = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("AttackDamage", 7.0D, LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
+
+		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | " + LivingThingsConfig.SPAWNING_VANILLA).push("Spawns");
 		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
 				Arrays.asList(Biomes.SAVANNA.getLocation().toString(),
 						Biomes.SAVANNA_PLATEAU.getLocation().toString(),

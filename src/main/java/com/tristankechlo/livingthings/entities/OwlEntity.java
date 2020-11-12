@@ -90,8 +90,8 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	public static AttributeModifierMap.MutableAttribute getAttributes() {
 		return MobEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.OWL.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.FLYING_SPEED, 0.5D);
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OWL.speed.get())
+				.createMutableAttribute(Attributes.FLYING_SPEED, LivingThingsConfig.OWL.flyingSpeed.get());
 	}
 
 	@Override
