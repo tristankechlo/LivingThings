@@ -71,7 +71,7 @@ public class RegistryEventHandler {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.RACCOON_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.OWL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.KOALA_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.KOALA_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, KoalaEntity::canKoalaSpawn);
 	}
 
 }

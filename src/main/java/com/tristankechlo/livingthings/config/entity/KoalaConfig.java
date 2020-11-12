@@ -34,11 +34,12 @@ public class KoalaConfig {
 						Biomes.BAMBOO_JUNGLE.getLocation().toString(),
 						Biomes.BAMBOO_JUNGLE_HILLS.getLocation().toString(),
 						Biomes.MODIFIED_JUNGLE.getLocation().toString(),
-						Biomes.MODIFIED_JUNGLE_EDGE.getLocation().toString()),
+						Biomes.MODIFIED_JUNGLE_EDGE.getLocation().toString(),
+						Biomes.SAVANNA_PLATEAU.getLocation().toString()),
 				biome -> LivingThingsConfig.checkBiome("Koala", biome));
 		weight = builder.worldRestart().defineInRange("SpawnWeight", 50, 1, Short.MAX_VALUE);
-		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 2, 1, Short.MAX_VALUE);
-		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 4, 1, Short.MAX_VALUE);
+		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 3, 1, Short.MAX_VALUE);
+		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 5, 1, Short.MAX_VALUE);
 		builder.pop();
 
 		builder.pop();
