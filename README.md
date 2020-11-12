@@ -15,15 +15,16 @@
   - Raccoon
   - Owl
   - Ancient Blaze
-   
-  
-  
+  - Koala
+
+
 more Mobs will be added soon
 <br/>
 <br/>
 <br/>
-[Download the mod here](https://www.curseforge.com/minecraft/mc-mods/living-things)
 <br/>
+<br/>
+[Download the mod here](https://www.curseforge.com/minecraft/mc-mods/living-things)
 <br/>
 <br/>
 ##### Translations:
