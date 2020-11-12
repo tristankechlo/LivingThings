@@ -24,8 +24,10 @@ more Mobs will be added soon
 <br/>
 <br/>
 <br/>
-[Download the mod here](https://www.curseforge.com/minecraft/mc-mods/living-things)
 <br/>
-<br/>
-##### Translations:
- - *pt_br* by [Mikeliro](https://github.com/Mikeliro)
+#### Translations:
+| Language | Translator |
+|:--------:|:----------:|
+| **en_us** | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **pt_br** | Mikeliro ([Github](https://github.com/Mikeliro)) | 
+| **de_de** | tristankechlo ([Github](https://github.com/tristankechlo)) |
