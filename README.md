@@ -31,3 +31,4 @@ more Mobs will be added soon
 | **en_us** | tristankechlo ([Github](https://github.com/tristankechlo)) |
 | **pt_br** | Mikeliro ([Github](https://github.com/Mikeliro)) | 
 | **de_de** | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **ru_ru** | Intaria ([Github](https://github.com/Intaria)) |
