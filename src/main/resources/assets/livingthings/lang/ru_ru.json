@@ -1,0 +1,90 @@
+{
+	"itemGroup.LivingThings" : "Living Things",
+
+
+	"__comment1" : "inventorys",
+	"container.livingthings.elephant" : "Инвентарь слона",
+
+
+	"__comment2" : "blocks",
+	"block.livingthings.ostrich_nest" : "Гнездо страуса",
+
+
+	"__comment3" : "items",
+	"item.livingthings.shark_tooth" : "Зуб акулы",
+	"item.livingthings.ostrich_egg" : "Яйцо страуса",
+	"item.livingthings.raw_crab" : "Мясо краба",
+	"item.livingthings.cooked_crab" : "Жареный краб",
+	"item.livingthings.crab_shell" : "Панцирь краба",
+	"item.livingthings.lexicon" : "LivingThings Lexicon",
+	"item.livingthings.ancient_helmet" : "Древний шлем",
+
+
+	"__comment4" : "spawn eggs",
+	"item.livingthings.elephant_spawn_egg" : "Яйцо призывания слона",
+	"item.livingthings.giraffe_spawn_egg" : "Яйцо призывания жирафа",
+	"item.livingthings.lion_spawn_egg" : "Яйцо призывания льва",
+	"item.livingthings.shark_spawn_egg" : "Яйцо призывания акулы",
+	"item.livingthings.penguin_spawn_egg" : "Яйцо призывания пингвина",
+	"item.livingthings.ostrich_spawn_egg" : "Яйцо призывания страуса",
+	"item.livingthings.flamingo_spawn_egg" : "Яйцо призывания фламинго",
+ "item.livingthings.crab_spawn_egg" : "Яйцо призывания краба",
+ "item.livingthings.mantaray_spawn_egg" : "Яйцо призывания ската",
+	"item.livingthings.raccoon_spawn_egg" : "Яйцо призывания енота",
+	"item.livingthings.owl_spawn_egg" : "Яйцо призывания совы",
+ "item.livingthings.ancient_blaze_spawn_egg" : "Яйцо призывания древнего ифрита",
+	"item.livingthings.koala_spawn_egg" : "Яйцо призывания коалы",
+
+
+	"__comment5" : "entity names",
+ 	"entity.livingthings.elephant" : "Слон",
+	"entity.livingthings.giraffe" : "Жираф",
+	"entity.livingthings.lion" : "Лев",
+	"entity.livingthings.shark" : "Акула",
+	"entity.livingthings.penguin" : "Пингвин",
+	"entity.livingthings.ostrich" : "Страус",
+	"entity.livingthings.flamingo" : "Фламинго",
+ "entity.livingthings.crab" : "Краб",
+	"entity.livingthings.mantaray" : "Скат",
+	"entity.livingthings.raccoon" : "Енот",
+	"entity.livingthings.owl" : "Сова",
+ "entity.livingthings.ancient_blaze" : "Древний инфрит",
+	"entity.livingthings.koala" : "Коала",
+
+
+	"__comment6" : "subtitles",
+	"subtitles.livingthings.lion.ambient" : "Крик льва",
+	"subtitles.livingthings.lion.hurt" : "Лев ранен",
+	"subtitles.livingthings.lion.death" : "Лев умер",
+	"subtitles.livingthings.penguin.ambient" : "Пингвин щебечет",
+	"subtitles.livingthings.penguin.hurt" : "Пингвин ранен",
+	"subtitles.livingthings.penguin.death" : "Пингвин умер",
+	"subtitles.livingthings.elephant.ambient" : "Слон трубит",
+	"subtitles.livingthings.elephant.hurt" : "Слон ранен",
+	"subtitles.livingthings.elephant.death" : "Слон умер",
+	"subtitles.livingthings.elephant.chest" : "Слон экипирован сундуком",
+	"subtitles.livingthings.elephant.saddle" : "Слон экипирован седлом",
+	"subtitles.livingthings.ostrich.egg.cracks" : "Яйцо страуса трескается",
+	"subtitles.livingthings.ostrich.egg.laying" : "Страус отложил яйцо",
+	"subtitles.livingthings.ostrich.ambient" : "Звуки страуса",
+	"subtitles.livingthings.raccoon.ambient" : "Звуки енота",
+	"subtitles.livingthings.raccoon.hurt" : "Енот ранен",
+	"subtitles.livingthings.raccoon.death" : "Енот умер",
+	"subtitles.livingthings.owl.ambient" : "Уханье совы",
+	"subtitles.livingthings.owl.hurt" : "Сова ранена",
+	"subtitles.livingthings.owl.death" : "Сова умерла",
+	"subtitles.livingthings.owl.fly" : "Сова ласкается",
+    "subtitles.livingthings.ancient_blaze.ambient": "Древний ифрит вдыхает",
+    "subtitles.livingthings.ancient_blaze.burn": "Древний ифрит потрескивает",
+    "subtitles.livingthings.ancient_blaze.death": "Древний ифрит умирает",
+    "subtitles.livingthings.ancient_blaze.hurt": "Древний ифрит ранен",
+    "subtitles.livingthings.ancient_blaze.shoot": "Древний ифрит стреляет",
+    "subtitles.livingthings.ancient_blaze.spawn": "Древний ифрит появился",
+    "subtitles.livingthings.ancient_blaze.charge_up": "Древний ифрит заряжается",
+	
+
+	"__comment7" : "messages",
+	"messages.livingthings.nopatchouli.title" : "Нельзя это использовать!",
+	"messages.livingthings.nopatchouli.subtitle" : "Модификация Patchouli не установлена."
+
+}
