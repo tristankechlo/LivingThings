@@ -13,11 +13,14 @@
 	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Haifischzahn",
 	"item.livingthings.ostrich_egg" : "Strau\u00dfen Ei",
-	"item.livingthings.raw_crab" : "Rohes Krabben Fleisch",
+	"item.livingthings.crab" : "Rohes Krabben Fleisch",
 	"item.livingthings.cooked_crab" : "Krabben Fleisch",
 	"item.livingthings.crab_shell" : "Krabben Panzer",
 	"item.livingthings.lexicon" : "LivingThings Lexikon",
 	"item.livingthings.ancient_helmet" : "Antiker Helm",
+	"item.livingthings.ostrich" : "Rohes Straußen Fleisch",
+	"item.livingthings.cooked_ostrich" : "Straußen Fleisch",
+	"item.livingthings.banana" : "Banane",
 
 
 	"__comment4" : "spawn eggs",
@@ -34,6 +37,8 @@
 	"item.livingthings.owl_spawn_egg" : "Eulen-Spawn-Ei",
 	"item.livingthings.ancient_blaze_spawn_egg" : "Antike-Lohe-Spawn-Ei",
 	"item.livingthings.koala_spawn_egg" : "Koala-Spawn-Ei",
+	"item.livingthings.snail_spawn_egg" : "Schnecken-Spawn-Ei",
+	"item.livingthings.monkey_spawn_egg" : "Affen-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -50,6 +55,8 @@
 	"entity.livingthings.owl" : "Eule",
 	"entity.livingthings.ancient_blaze" : "Antike Lohe",
 	"entity.livingthings.koala" : "Koala",
+	"entity.livingthings.snail" : "Schnecke",
+	"entity.livingthings.monkey" : "Affe",
 
 
 	"__comment6" : "subtitles",

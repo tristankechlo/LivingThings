@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PenguinRenderer extends MobRenderer<PenguinEntity, PenguinModel<PenguinEntity>> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/penguin.png");
+	protected static final ResourceLocation TEXTURE_CHILD = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/penguin_baby.png");
 
 	public PenguinRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PenguinModel<>(), 0.45F);
@@ -21,7 +22,7 @@ public class PenguinRenderer extends MobRenderer<PenguinEntity, PenguinModel<Pen
 
 	@Override
 	public ResourceLocation getEntityTexture(PenguinEntity entity) {
-		return TEXTURE;
+		return (entity.isChild()) ? TEXTURE_CHILD : TEXTURE;
 	}
 
 }

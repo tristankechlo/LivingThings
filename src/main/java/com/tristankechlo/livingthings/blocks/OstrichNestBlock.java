@@ -7,7 +7,7 @@ import com.tristankechlo.livingthings.entities.OstrichEntity;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

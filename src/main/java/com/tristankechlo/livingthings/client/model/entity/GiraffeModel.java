@@ -2,16 +2,16 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
+public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Legs;
@@ -73,25 +73,25 @@ public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
 		NeckBottom = new ModelRenderer(this);
 		NeckBottom.setRotationPoint(0.0F, -21.5F, -13.6F);
 		Body.addChild(NeckBottom);
-		setRotationAngle(NeckBottom, 0.5236F, 0.0F, 0.0F);
+		this.setRotationAngle(NeckBottom, 0.5236F, 0.0F, 0.0F);
 		NeckBottom.setTextureOffset(0, 46).addBox(-4.5F, -2.0F, -3.5F, 9.0F, 9.0F, 9.0F, 0.0F, false);
 
 		NeckMiddle = new ModelRenderer(this);
 		NeckMiddle.setRotationPoint(0.0F, -2.0F, 1.0F);
 		NeckBottom.addChild(NeckMiddle);
-		setRotationAngle(NeckMiddle, -0.1309F, 0.0F, 0.0F);
+		this.setRotationAngle(NeckMiddle, -0.1309F, 0.0F, 0.0F);
 		NeckMiddle.setTextureOffset(0, 22).addBox(-3.5F, -10.0F, -3.5F, 7.0F, 11.0F, 7.0F, 0.0F, false);
 
 		NeckTop = new ModelRenderer(this);
 		NeckTop.setRotationPoint(0.0F, -10.0F, 0.0F);
 		NeckMiddle.addChild(NeckTop);
-		setRotationAngle(NeckTop, -0.1309F, 0.0F, 0.0F);
+		this.setRotationAngle(NeckTop, -0.1309F, 0.0F, 0.0F);
 		NeckTop.setTextureOffset(0, 0).addBox(-2.5F, -10.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, false);
 
 		Head = new ModelRenderer(this);
 		Head.setRotationPoint(0.0F, -8.0F, 0.0F);
 		NeckTop.addChild(Head);
-		setRotationAngle(Head, -0.1309F, 0.0F, 0.0F);
+		this.setRotationAngle(Head, -0.1309F, 0.0F, 0.0F);
 		Head.setTextureOffset(41, 52).addBox(-3.0F, -6.0F, -4.0F, 6.0F, 6.0F, 6.0F, 0.0F, false);
 
 		FrontHead = new ModelRenderer(this);
@@ -106,13 +106,13 @@ public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
 		LeftHorn = new ModelRenderer(this);
 		LeftHorn.setRotationPoint(1.0F, -6.0F, 0.0F);
 		Horns.addChild(LeftHorn);
-		setRotationAngle(LeftHorn, -0.0873F, 0.0F, 0.0F);
+		this.setRotationAngle(LeftHorn, -0.0873F, 0.0F, 0.0F);
 		LeftHorn.setTextureOffset(30, 15).addBox(0.5F, -2.5F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 
 		RightHorn = new ModelRenderer(this);
 		RightHorn.setRotationPoint(-2.0F, -6.0F, 0.0F);
 		Horns.addChild(RightHorn);
-		setRotationAngle(RightHorn, -0.0873F, 0.0F, 0.0F);
+		this.setRotationAngle(RightHorn, -0.0873F, 0.0F, 0.0F);
 		RightHorn.setTextureOffset(30, 15).addBox(-0.5F, -2.5F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 
 		Ears = new ModelRenderer(this);
@@ -132,18 +132,20 @@ public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
 		TailTop = new ModelRenderer(this);
 		TailTop.setRotationPoint(0.0F, -16.5F, 12.4F);
 		Body.addChild(TailTop);
-		setRotationAngle(TailTop, 0.1745F, 0.0F, 0.0F);
+		this.setRotationAngle(TailTop, 0.1745F, 0.0F, 0.0F);
 		TailTop.setTextureOffset(48, 4).addBox(-1.0F, 0.0F, -0.5F, 1.0F, 9.0F, 1.0F, 0.0F, false);
 
 		TailBottom = new ModelRenderer(this);
 		TailBottom.setRotationPoint(0.0F, 9.0F, 0.0F);
 		TailTop.addChild(TailBottom);
-		setRotationAngle(TailBottom, -0.1309F, 0.0F, 0.0F);
+		this.setRotationAngle(TailBottom, -0.1309F, 0.0F, 0.0F);
 		TailBottom.setTextureOffset(53, 4).addBox(-1.0F, 0.0F, -0.5F, 1.0F, 7.0F, 1.0F, 0.0F, false);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
+
 		if (this.isChild) {
 			matrixStackIn.scale(0.6F, 0.6F, 0.6F);
 			matrixStackIn.translate(0, 1, 0);
@@ -153,7 +155,9 @@ public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(GiraffeEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+			float netHeadYaw, float headPitch) {
+
 		this.Head.rotateAngleX = headPitch * 0.0174532925F;
 		this.NeckTop.rotateAngleX = (float) (this.NeckMiddle.rotateAngleX / 1);
 		this.NeckMiddle.rotateAngleX = (float) (this.Head.rotateAngleX / 2);
@@ -163,19 +167,10 @@ public class GiraffeModel<T extends GiraffeEntity> extends EntityModel<T> {
 		this.NeckMiddle.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
 		this.NeckBottom.rotateAngleY = (netHeadYaw / 5F) * 0.0174532925F;
 
-		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.BackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.FrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.BackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+		this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
 
 		this.TailTop.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 		this.TailBottom.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
-	}
-
-	private void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 
 }

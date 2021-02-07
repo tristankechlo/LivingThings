@@ -13,11 +13,14 @@
 	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Shark Tooth",
 	"item.livingthings.ostrich_egg" : "Ostrich Egg",
-	"item.livingthings.raw_crab" : "Raw Crab",
-	"item.livingthings.cooked_crab" : "Cooked Crab",
+	"item.livingthings.crab" : "Raw Crab Meat",
+	"item.livingthings.cooked_crab" : "Cooked Crab Meat",
 	"item.livingthings.crab_shell" : "Crab Shell",
 	"item.livingthings.lexicon" : "LivingThings Lexicon",
 	"item.livingthings.ancient_helmet" : "Ancient Helmet",
+	"item.livingthings.ostrich" : "Raw Ostrich Meat",
+	"item.livingthings.cooked_ostrich" : "Cooked Ostrich Meat",
+	"item.livingthings.banana" : "Banana",
 
 
 	"__comment4" : "spawn eggs",
@@ -34,6 +37,8 @@
 	"item.livingthings.owl_spawn_egg" : "Owl Spawn Egg",
 	"item.livingthings.ancient_blaze_spawn_egg" : "Ancient Blaze Spawn Egg",
 	"item.livingthings.koala_spawn_egg" : "Koala Spawn Egg",
+	"item.livingthings.snail_spawn_egg" : "Snail Spawn Egg",
+	"item.livingthings.monkey_spawn_egg" : "Monkey Spawn Egg",
 
 
 	"__comment5" : "entity names",
@@ -50,6 +55,8 @@
 	"entity.livingthings.owl" : "Owl",
 	"entity.livingthings.ancient_blaze" : "Ancient Blaze",
 	"entity.livingthings.koala" : "Koala",
+	"entity.livingthings.snail" : "Snail",
+	"entity.livingthings.monkey" : "Monkey",
 
 
 	"__comment6" : "subtitles",

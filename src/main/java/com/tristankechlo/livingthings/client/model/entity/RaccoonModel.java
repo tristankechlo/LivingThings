@@ -2,16 +2,16 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RaccoonModel<T extends RaccoonEntity> extends EntityModel<T> {
+public class RaccoonModel<T extends RaccoonEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer LegFrontLeft;
@@ -55,7 +55,7 @@ public class RaccoonModel<T extends RaccoonEntity> extends EntityModel<T> {
 		Tail = new ModelRenderer(this);
 		Tail.setRotationPoint(0.0F, -8.95F, 4.65F);
 		Body.addChild(Tail);
-		setRotationAngle(Tail, -0.4363F, 0.0F, 0.0F);
+		this.setRotationAngle(Tail, -0.4363F, 0.0F, 0.0F);
 		Tail.setTextureOffset(36, 20).addBox(-2.0F, -2.0F, 0.0F, 4.0F, 4.0F, 8.0F, 0.0F, false);
 
 		Head = new ModelRenderer(this);
@@ -80,30 +80,23 @@ public class RaccoonModel<T extends RaccoonEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+			float headPitch) {
+
 		this.Head.rotateAngleX = headPitch * 0.0174532925F;
 		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
-
-		this.LegBackRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.LegBackLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.LegFrontRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.LegFrontLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-
+		this.walk(LegFrontRight, LegFrontLeft, LegBackRight, LegBackLeft, limbSwing, limbSwingAmount);
 		this.Tail.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
+			float green, float blue, float alpha) {
+
 		if (this.isChild) {
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
 			matrixStack.translate(0, 1.5D, 0);
 		}
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
-	}
-
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 }

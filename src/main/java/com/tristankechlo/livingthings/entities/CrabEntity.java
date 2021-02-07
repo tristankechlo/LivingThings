@@ -7,10 +7,11 @@ import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.entities.misc.IMobVariants;
+import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.IMobVariants;
-import com.tristankechlo.livingthings.util.IScaleableMob;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -168,19 +169,8 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-
-		if (compound.contains("CrabVariant")) {
-			this.setVariant(compound.getByte("CrabVariant"));
-		} else {
-			this.setVariant((byte) 0);
-		}
-
-		if (compound.contains("CrabScaling")) {
-			this.setScaling(compound.getByte("CrabScaling"));
-		} else {
-			this.setScaling((byte) 0);
-		}
-
+		this.setVariant(compound.getByte("CrabVariant"));
+		this.setScaling(compound.getByte("CrabScaling"));
 		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
@@ -193,7 +183,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.CRAB.maxSpawns.get();
+		return LivingThingsConfig.CRAB.maxSpawnedInChunk.get();
 	}
 
 	@Override

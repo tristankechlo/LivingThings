@@ -1,27 +1,27 @@
 package com.tristankechlo.livingthings;
 
 import org.apache.logging.log4j.LogManager;
-
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Logger;
 
 import com.tristankechlo.livingthings.client.RenderHandler;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.events.PlaceBlockEventHandler;
+import com.tristankechlo.livingthings.config.misc.ConfigManager;
+import com.tristankechlo.livingthings.events.BlockEventHandler;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModParticle;
 import com.tristankechlo.livingthings.init.ModSounds;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(LivingThings.MOD_ID)
 public class LivingThings {
@@ -31,7 +31,8 @@ public class LivingThings {
 	public static boolean patchouliLoaded = false;
 
 	public LivingThings() {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, LivingThingsConfig.spec);
+		ModLoadingContext.get().registerConfig(Type.COMMON, LivingThingsConfig.spec, "livingthings/livingthings.toml");
+		ConfigManager.setup();
 
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -44,7 +45,7 @@ public class LivingThings {
 		modEventBus.addListener(this::ClientSetup);
 		modEventBus.addListener(this::CommonSetup);
 
-		MinecraftForge.EVENT_BUS.register(new PlaceBlockEventHandler());
+		MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 

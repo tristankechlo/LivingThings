@@ -1,18 +1,19 @@
 {
 	"type" : "minecraft:crafting_shaped",
+	"group" : "arrow",
 	"pattern" : [
-		"X",
-		"#",
-		"Y"
+		"T",
+		"I",
+		"F"
 	],
 	"key" : {
-		"#" : {
-			"tag" : "forge:rods/wooden"
-		},
-		"X" : {
+		"T" : {
 			"item" : "livingthings:shark_tooth"
 		},
-		"Y" : {
+		"I" : {
+			"tag" : "forge:rods/wooden"
+		},
+		"F" : {
 			"item" : "minecraft:feather"
 		}
 	},

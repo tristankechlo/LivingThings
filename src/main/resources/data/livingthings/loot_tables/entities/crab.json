@@ -6,7 +6,7 @@
 			"entries" : [
 				{
 					"type" : "minecraft:item",
-					"name" : "livingthings:raw_crab",
+					"name" : "livingthings:crab",
 					"functions" : [
 						{
 							"function" : "minecraft:set_count",

@@ -1,7 +1,7 @@
 {
 	"type" : "minecraft:smelting",
 	"ingredient" : {
-		"item" : "livingthings:raw_crab"
+		"item" : "livingthings:crab"
 	},
 	"result" : "livingthings:cooked_crab",
 	"experience" : 0.3,

@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "$(br)$(bold)Obtaining:$()$(br)Can be dropped by Crabs."
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be dropped by Crabs"
 		},
 		{
 			"type" : "spotlight",

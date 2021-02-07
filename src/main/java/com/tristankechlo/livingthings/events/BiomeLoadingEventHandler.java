@@ -1,12 +1,13 @@
 package com.tristankechlo.livingthings.events;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.config.BiomeSpawnConfig;
 
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -16,118 +17,34 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = LivingThings.MOD_ID)
 public class BiomeLoadingEventHandler {
 
+	private static Map<ResourceLocation, Map<EntityClassification, List<Spawners>>> biomeSpawnMap;
+
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onBiomeLoading(BiomeLoadingEvent event) {
 
-		String currentBiome = event.getName().toString();
-
-		List<? extends String> ElephantSpawnBiomes = LivingThingsConfig.ELEPHANT.spawnBiomes.get();
-		List<? extends String> GiraffeSpawnBiomes = LivingThingsConfig.GIRAFFE.spawnBiomes.get();
-		List<? extends String> LionSpawnBiomes = LivingThingsConfig.LION.spawnBiomes.get();
-		List<? extends String> SharkSpawnBiomes = LivingThingsConfig.SHARK.spawnBiomes.get();
-		List<? extends String> PenguinSpawnBiomes = LivingThingsConfig.PENGUIN.spawnBiomes.get();
-		List<? extends String> OstrichSpawnBiomes = LivingThingsConfig.OSTRICH.spawnBiomes.get();
-		List<? extends String> FlamingoSpawnBiomes = LivingThingsConfig.FLAMINGO.spawnBiomes.get();
-		List<? extends String> CrabSpawnBiomes = LivingThingsConfig.CRAB.spawnBiomes.get();
-		List<? extends String> MantaraySpawnBiomes = LivingThingsConfig.MANTARAY.spawnBiomes.get();
-		List<? extends String> RaccoonSpawnBiomes = LivingThingsConfig.RACCOON.spawnBiomes.get();
-		List<? extends String> OwlSpawnBiomes = LivingThingsConfig.OWL.spawnBiomes.get();
-		List<? extends String> KoalaSpawnBiomes = LivingThingsConfig.KOALA.spawnBiomes.get();
-
-		if (ElephantSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY.get(),
-							LivingThingsConfig.ELEPHANT.weight.get(),
-							LivingThingsConfig.ELEPHANT.minSpawns.get(),
-							LivingThingsConfig.ELEPHANT.maxSpawns.get()));
+		if (biomeSpawnMap == null) {
+			biomeSpawnMap = BiomeSpawnConfig.getBiomeSpawnMap();
 		}
 
-		if (GiraffeSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.GIRAFFE_ENTITY.get(),
-							LivingThingsConfig.GIRAFFE.weight.get(),
-							LivingThingsConfig.GIRAFFE.minSpawns.get(),
-							LivingThingsConfig.GIRAFFE.maxSpawns.get()));
+		if (biomeSpawnMap.containsKey(event.getName())) {
+			Map<EntityClassification, List<Spawners>> classificationMap = biomeSpawnMap.get(event.getName());
+			for (Map.Entry<EntityClassification, List<Spawners>> entry : classificationMap.entrySet()) {
+				EntityClassification classification = entry.getKey();
+				for (Spawners spawner : entry.getValue()) {
+					event.getSpawns().getSpawner(classification).add(spawner);
+				}
+			}
 		}
 
-		if (LionSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.LION_ENTITY.get(),
-							LivingThingsConfig.LION.weight.get(),
-							LivingThingsConfig.LION.minSpawns.get(),
-							LivingThingsConfig.LION.maxSpawns.get()));
-		}
-
-		if (SharkSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE)
-					.add(new Spawners(ModEntityTypes.SHARK_ENTITY.get(),
-							LivingThingsConfig.SHARK.weight.get(),
-							LivingThingsConfig.SHARK.minSpawns.get(),
-							LivingThingsConfig.SHARK.maxSpawns.get()));
-		}
-
-		if (PenguinSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.PENGUIN_ENTITY.get(),
-							LivingThingsConfig.PENGUIN.weight.get(),
-							LivingThingsConfig.PENGUIN.minSpawns.get(),
-							LivingThingsConfig.PENGUIN.maxSpawns.get()));
-		}
-
-		if (OstrichSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OSTRICH_ENTITY.get(),
-							LivingThingsConfig.OSTRICH.weight.get(),
-							LivingThingsConfig.OSTRICH.minSpawns.get(),
-							LivingThingsConfig.OSTRICH.maxSpawns.get()));
-		}
-
-		if (FlamingoSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.FLAMINGO_ENTITY.get(),
-							LivingThingsConfig.FLAMINGO.weight.get(),
-							LivingThingsConfig.FLAMINGO.minSpawns.get(),
-							LivingThingsConfig.FLAMINGO.maxSpawns.get()));
-		}
-
-		if (CrabSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.CRAB_ENTITY.get(),
-							LivingThingsConfig.CRAB.weight.get(),
-							LivingThingsConfig.CRAB.minSpawns.get(),
-							LivingThingsConfig.CRAB.maxSpawns.get()));
-		}
-
-		if (MantaraySpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT)
-					.add(new Spawners(ModEntityTypes.MANTARAY_ENTITY.get(),
-							LivingThingsConfig.MANTARAY.weight.get(),
-							LivingThingsConfig.MANTARAY.minSpawns.get(),
-							LivingThingsConfig.MANTARAY.maxSpawns.get()));
-		}
-
-		if (RaccoonSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.RACCOON_ENTITY.get(),
-							LivingThingsConfig.RACCOON.weight.get(),
-							LivingThingsConfig.RACCOON.minSpawns.get(),
-							LivingThingsConfig.RACCOON.maxSpawns.get()));
-		}
-
-		if (OwlSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.OWL_ENTITY.get(),
-							LivingThingsConfig.OWL.weight.get(),
-							LivingThingsConfig.OWL.minSpawns.get(),
-							LivingThingsConfig.OWL.maxSpawns.get()));
-		}
-
-		if (KoalaSpawnBiomes.contains(currentBiome)) {
-			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-					.add(new Spawners(ModEntityTypes.KOALA_ENTITY.get(),
-							LivingThingsConfig.KOALA.weight.get(),
-							LivingThingsConfig.KOALA.minSpawns.get(),
-							LivingThingsConfig.KOALA.maxSpawns.get()));
-		}
+//		String currentBiome = event.getName().toString();
+//		List<? extends String> ElephantSpawnBiomes = LivingThingsConfig.ELEPHANT.spawnBiomes.get();
+//
+//		if (ElephantSpawnBiomes.contains(currentBiome)) {
+//			event.getSpawns().getSpawner(EntityClassification.CREATURE)
+//					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY.get(),
+//							LivingThingsConfig.ELEPHANT.weight.get(),
+//							LivingThingsConfig.ELEPHANT.minSpawns.get(),
+//							LivingThingsConfig.ELEPHANT.maxSpawns.get()));
+//		}
 	}
 }

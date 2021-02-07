@@ -5,10 +5,10 @@ import java.util.UUID;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.entities.misc.AbstractTameableChestedEntity;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.AbstractTameableChestedEntity;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureEntity;
@@ -131,7 +131,7 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.ELEPHANT.maxSpawns.get();
+		return LivingThingsConfig.ELEPHANT.maxSpawnedInChunk.get();
 	}
 
 	@Override

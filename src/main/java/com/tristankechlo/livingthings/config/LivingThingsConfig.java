@@ -11,11 +11,13 @@ import com.tristankechlo.livingthings.config.entity.GiraffeConfig;
 import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
+import com.tristankechlo.livingthings.config.entity.MonkeyConfig;
 import com.tristankechlo.livingthings.config.entity.OstrichConfig;
 import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
+import com.tristankechlo.livingthings.config.entity.SnailConfig;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -32,7 +34,7 @@ public class LivingThingsConfig {
 	public static final String SPAWNING_VANILLA = "can spawn on grass-blocks where lightlevel is higher than 8";
 	public static final String SPAWNING_WATER = "can spawn in water";
 	public static final String WEIGHTED_RANDOM = "the values are considered as weighted-random";
-	public static final String HIGH_IMPACT = "be careful, even small changes can have high a impact";
+	public static final String HIGH_IMPACT = "be careful, even small changes can have a high impact";
 	
 	public static final double MIN_HEALTH = 1.0D;
 	public static final double MAX_HEALTH = Short.MAX_VALUE;
@@ -57,6 +59,8 @@ public class LivingThingsConfig {
 	public static final OwlConfig OWL = new OwlConfig(BUILDER);
 	public static final AncientBlazeConfig ANCIENT_BLAZE = new AncientBlazeConfig(BUILDER);
 	public static final KoalaConfig KOALA = new KoalaConfig(BUILDER);
+	public static final SnailConfig SNAIL = new SnailConfig(BUILDER);
+	public static final MonkeyConfig MONKEY = new MonkeyConfig(BUILDER);
 
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

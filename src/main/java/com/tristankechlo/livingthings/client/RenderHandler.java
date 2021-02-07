@@ -8,11 +8,13 @@ import com.tristankechlo.livingthings.client.renderer.GiraffeRenderer;
 import com.tristankechlo.livingthings.client.renderer.KoalaRenderer;
 import com.tristankechlo.livingthings.client.renderer.LionRenderer;
 import com.tristankechlo.livingthings.client.renderer.MantarayRenderer;
+import com.tristankechlo.livingthings.client.renderer.MonkeyRenderer;
 import com.tristankechlo.livingthings.client.renderer.OstrichRenderer;
 import com.tristankechlo.livingthings.client.renderer.OwlRenderer;
 import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
 import com.tristankechlo.livingthings.client.renderer.RaccoonRenderer;
 import com.tristankechlo.livingthings.client.renderer.SharkRenderer;
+import com.tristankechlo.livingthings.client.renderer.SnailRenderer;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -33,5 +35,7 @@ public class RenderHandler {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.OWL_ENTITY.get(), OwlRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), AncientBlazeRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KOALA_ENTITY.get(), KoalaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SNAIL_ENTITY.get(), SnailRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyRenderer::new);
 	}
 }

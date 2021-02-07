@@ -6,12 +6,12 @@
 		]
 	},
 	"criteria" : {
-		"has_raw_crab" : {
+		"has_crab" : {
 			"trigger" : "minecraft:inventory_changed",
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:raw_crab"
+						"item" : "livingthings:crab"
 					}
 				]
 			}
@@ -35,7 +35,7 @@
 	},
 	"requirements" : [
 		 [
-			"has_raw_crab",
+			"has_crab",
 			"has_cooked_crab",
 			"has_the_recipe"
 		]

@@ -1,12 +1,11 @@
 package com.tristankechlo.livingthings.entities;
 
-import java.util.EnumSet;
-
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.entities.ai.AncientBlazeChargeUpGoal;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -18,7 +17,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -88,7 +86,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new AncientBlazeEntity.ChargeUpGoal(this));
+		this.goalSelector.addGoal(0, new AncientBlazeChargeUpGoal(this));
 		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 30, 20.0F));
 		this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
@@ -135,14 +133,11 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		if (!this.onGround && this.getMotion().y < 0.0D) {
 			this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
 		}
-
 		if (this.world.isRemote && this.getInvulnerableTime() == 0) {
-
 			// burn sound
 			if (this.rand.nextInt(24) == 0 && !this.isSilent()) {
 				this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), ModSounds.ANCIENT_BLAZE_BURN.get(), this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
 			}
-
 			// smoke particles
 			for (int i = 0; i < 2; ++i) {
 				this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
@@ -187,7 +182,6 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		// dont get damaged while charging up
 		if (this.getInvulnerableTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
 			return false;
-
 			// catch large fireballs
 		} else if (source.getImmediateSource() instanceof FireballEntity && source.getTrueSource() instanceof PlayerEntity) {
 			int shoots = this.getShoots();
@@ -196,13 +190,11 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				return false;
 			}
 			return true;
-
 			// random chance for arrows, tridents,.. to be blocked
 		} else if (source instanceof IndirectEntityDamageSource) {
 			return this.rand.nextInt(4) != 0 && super.attackEntityFrom(source, amount);
-
-			// normal damage handling
 		} else {
+			// normal damage handling
 			return super.attackEntityFrom(source, amount);
 		}
 	}
@@ -242,18 +234,13 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@SuppressWarnings("deprecation")
 	@Override
 	public void remove(boolean keepData) {
-
 		int amount = LivingThingsConfig.ANCIENT_BLAZE.blazeSpawnCount.get();
-
 		if (!this.world.isRemote && amount >= 1 && this.getShouldBeDead() && !this.removed) {
-
 			for (int i = 0; i < amount; i++) {
-
 				BlazeEntity blaze = new BlazeEntity(EntityType.BLAZE, this.world);
 				if (this.isNoDespawnRequired()) {
 					blaze.enablePersistence();
 				}
-
 				blaze.setCustomName(this.getCustomName());
 				blaze.setNoAI(this.isAIDisabled());
 				blaze.setInvulnerable(this.isInvulnerable());
@@ -334,62 +321,6 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@Override
 	public ResourceLocation getLexiconEntry() {
 		return LEXICON_ENTRY;
-	}
-
-	class ChargeUpGoal extends Goal {
-
-		private final AncientBlazeEntity blaze;
-
-		public ChargeUpGoal(AncientBlazeEntity entity) {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
-			this.blaze = entity;
-		}
-
-		@Override
-		public boolean shouldExecute() {
-			return this.blaze.getInvulnerableTime() > 0;
-		}
-
-		@Override
-		public void tick() {
-			int chargedtime = this.blaze.getInvulnerableTime();
-			int targetShoots = LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get();
-			if (chargedtime > 0) {
-				chargedtime--;
-				int divider = LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get() / targetShoots;
-				if (chargedtime % divider < 1 && this.blaze.getShoots() < targetShoots) {
-					this.blaze.setShoots((byte) (this.blaze.getShoots() + 1));
-					if (!this.blaze.world.isRemote) {
-						this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
-					}
-				}
-			}
-			if (chargedtime == 0) {
-				this.blaze.setHealth(this.blaze.getMaxHealth());
-				this.blaze.setShoots((byte) targetShoots);
-
-				if (!this.blaze.world.isRemote) {
-					this.blaze.world.playSound(null, this.blaze.getPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
-				}
-
-				for (int i = 0; i < 4; i++) {
-					double accelX = Math.pow(-1, i) * 90;
-					double accelZ = (i < 2) ? 90 : -90;
-					SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
-					smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D), smallfireballentity.getPosZ());
-					this.blaze.world.addEntity(smallfireballentity);
-				}
-
-				for (int i = 0; i < 4; i++) {
-					double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
-					double accelZ = (i < 2) ? Math.pow(-1, i) * 90 : 0;
-					FireballEntity smallfireballentity = new FireballEntity(this.blaze.world, this.blaze, accelX, -15D, accelZ);
-					smallfireballentity.setPosition(smallfireballentity.getPosX(), this.blaze.getPosYHeight(0.5D) + 0.5D, smallfireballentity.getPosZ());
-					this.blaze.world.addEntity(smallfireballentity);
-				}
-			}
-			this.blaze.setInvulnerableTime(chargedtime);
-		}
 	}
 
 }

@@ -2,17 +2,17 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.LionEntity;
-import com.tristankechlo.livingthings.util.IGenderedMob.Gender;
+import com.tristankechlo.livingthings.entities.misc.IGenderedMob.Gender;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class LionModel<T extends LionEntity> extends EntityModel<T> {
+public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Legs;
@@ -62,7 +62,7 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		Tail = new ModelRenderer(this);
 		Tail.setRotationPoint(0.0F, -4.0F, 14.5F);
 		Body.addChild(Tail);
-		setRotationAngle(Tail, -2.7489F, 0.0F, 0.0F);
+		this.setRotationAngle(Tail, -2.7489F, 0.0F, 0.0F);
 		Tail.setTextureOffset(61, 21).addBox(-1.0F, -12.5F, 0.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
 
 		Head = new ModelRenderer(this);
@@ -78,13 +78,13 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		LeftEar = new ModelRenderer(this);
 		LeftEar.setRotationPoint(5.0F, 0.0F, -1.0F);
 		Ears.addChild(LeftEar);
-		setRotationAngle(LeftEar, 0.0F, 0.0F, 0.1745F);
+		this.setRotationAngle(LeftEar, 0.0F, 0.0F, 0.1745F);
 		LeftEar.setTextureOffset(11, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
 
 		RightEar = new ModelRenderer(this);
 		RightEar.setRotationPoint(-5.0F, 0.0F, -1.0F);
 		Ears.addChild(RightEar);
-		setRotationAngle(RightEar, 0.0F, 0.0F, -0.1745F);
+		this.setRotationAngle(RightEar, 0.0F, 0.0F, -0.1745F);
 		RightEar.setTextureOffset(0, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
 
 		Mane = new ModelRenderer(this);
@@ -93,7 +93,9 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
+
 		if (this.isChild) {
 			matrixStackIn.scale(0.6F, 0.6F, 0.6F);
 			matrixStackIn.translate(0, 1, 0);
@@ -104,14 +106,13 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+			float netHeadYaw, float headPitch) {
+
 		this.Head.rotateAngleX = headPitch * 0.0174532925F;
 		this.Head.rotateAngleY = (netHeadYaw / 3.75F) * 0.0174532925F;
 
-		this.FrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.BackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.FrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.BackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+		this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
 
 		this.Tail.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
@@ -124,12 +125,6 @@ public class LionModel<T extends LionEntity> extends EntityModel<T> {
 		} else {
 			this.Mane.showModel = false;
 		}
-	}
-
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 
 }

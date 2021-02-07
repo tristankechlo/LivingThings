@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:ostrich_nest",
-			"text" : "$(br)$(bold)Usage:$()$(br)can be placed$(br)ostrichs can lay an eggs into"
+			"text" : "$(br)$(bold)Usage:$()$(br)can be placed$(br)an ostrichs might lay an egg into it"
 		}
 	]
 }

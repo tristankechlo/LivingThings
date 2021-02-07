@@ -5,9 +5,9 @@ import java.util.Random;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.IMobVariants;
-import com.tristankechlo.livingthings.util.IScaleableMob;
+import com.tristankechlo.livingthings.entities.misc.IMobVariants;
+import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntitySize;
@@ -93,17 +93,8 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if (compound.contains("MantarayVariant")) {
-			this.setVariant(compound.getByte("MantarayVariant"));
-		} else {
-			this.setVariant((byte) 0);
-		}
-
-		if (compound.contains("MantarayScaling")) {
-			this.setScaling(compound.getByte("MantarayScaling"));
-		} else {
-			this.setScaling((byte) 0);
-		}
+		this.setVariant(compound.getByte("MantarayVariant"));
+		this.setScaling(compound.getByte("MantarayScaling"));
 	}
 
 	@Override
@@ -148,7 +139,6 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	public void tick() {
 		super.tick();
-
 		// random moving when on land
 		if (!this.isInWaterRainOrBubbleColumn()) {
 			if (this.onGround) {
@@ -172,7 +162,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.MANTARAY.maxSpawns.get();
+		return LivingThingsConfig.MANTARAY.maxSpawnedInChunk.get();
 	}
 
 	@Override
@@ -208,7 +198,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	@Override
 	protected ItemStack getFishBucket() {
 		// required by AbstractFishEntity
-		// not used, because of we're overriding the rightclick method
+		// not used, because we are overriding the rightclick method
 		return new ItemStack(Items.BUCKET);
 	}
 

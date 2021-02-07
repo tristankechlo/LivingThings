@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.init.ModItems;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;

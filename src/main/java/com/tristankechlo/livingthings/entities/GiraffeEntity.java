@@ -7,9 +7,10 @@ import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.IMobVariants;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
+
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -124,12 +125,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if (compound.contains("GiraffeVariant")) {
-			this.setVariant(compound.getByte("GiraffeVariant"));
-		} else {
-			this.setVariant((byte) 0);
-		}
-
+		this.setVariant(compound.getByte("GiraffeVariant"));
 		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
@@ -142,7 +138,7 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.GIRAFFE.maxSpawns.get();
+		return LivingThingsConfig.GIRAFFE.maxSpawnedInChunk.get();
 	}
 
 	@Override

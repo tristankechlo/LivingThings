@@ -2,9 +2,9 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.MantarayEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
+public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Tail;
@@ -47,13 +47,13 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 		LeftFlipper = new ModelRenderer(this);
 		LeftFlipper.setRotationPoint(3.5F, -2.5F, -0.25F);
 		Body.addChild(LeftFlipper);
-		setRotationAngle(LeftFlipper, 0.0F, 0.0F, -0.0873F);
+		this.setRotationAngle(LeftFlipper, 0.0F, 0.0F, -0.0873F);
 		LeftFlipper.setTextureOffset(0, 1).addBox(0.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F, 0.0F, false);
 
 		LeftFlipper2 = new ModelRenderer(this);
 		LeftFlipper2.setRotationPoint(4.0F, 0.0F, 0.0F);
 		LeftFlipper.addChild(LeftFlipper2);
-		setRotationAngle(LeftFlipper2, 0.0F, 0.0F, -0.0873F);
+		this.setRotationAngle(LeftFlipper2, 0.0F, 0.0F, -0.0873F);
 		LeftFlipper2.setTextureOffset(27, 3).addBox(0.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, false);
 		LeftFlipper2.setTextureOffset(0, 13).addBox(0.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, false);
 		LeftFlipper2.setTextureOffset(0, 23).addBox(2.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, 0.0F, false);
@@ -65,13 +65,13 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 		RightFlipper = new ModelRenderer(this);
 		RightFlipper.setRotationPoint(-3.5F, -2.5F, -0.25F);
 		Body.addChild(RightFlipper);
-		setRotationAngle(RightFlipper, 0.0F, 0.0F, 0.0873F);
+		this.setRotationAngle(RightFlipper, 0.0F, 0.0F, 0.0873F);
 		RightFlipper.setTextureOffset(0, 1).addBox(-4.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F, 0.0F, true);
 
 		RightFlipper2 = new ModelRenderer(this);
 		RightFlipper2.setRotationPoint(-4.0F, 0.0F, 0.0F);
 		RightFlipper.addChild(RightFlipper2);
-		setRotationAngle(RightFlipper2, 0.0F, 0.0F, 0.0873F);
+		this.setRotationAngle(RightFlipper2, 0.0F, 0.0F, 0.0873F);
 		RightFlipper2.setTextureOffset(27, 3).addBox(-2.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, true);
 		RightFlipper2.setTextureOffset(0, 13).addBox(-2.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, true);
 		RightFlipper2.setTextureOffset(0, 23).addBox(-5.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, 0.0F, true);
@@ -89,7 +89,7 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 		eyes = new ModelRenderer(this);
 		eyes.setRotationPoint(0.0F, 0.0131F, -0.8491F);
 		Head.addChild(eyes);
-		setRotationAngle(eyes, 0.1309F, 0.0F, 0.0F);
+		this.setRotationAngle(eyes, 0.1309F, 0.0F, 0.0F);
 		eyes.setTextureOffset(22, 33).addBox(-2.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
 		eyes.setTextureOffset(15, 33).addBox(-2.6F, -0.75F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
 		eyes.setTextureOffset(8, 33).addBox(1.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
@@ -97,7 +97,9 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+			float headPitch) {
+
 		this.Body.rotateAngleX = headPitch * 0.0174532925F;
 		this.Body.rotateAngleY = netHeadYaw * 0.0174532925F;
 
@@ -122,14 +124,9 @@ public class MantarayModel<T extends MantarayEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
+			float green, float blue, float alpha) {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
-	}
-
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 
 }

@@ -9,7 +9,7 @@ import com.tristankechlo.livingthings.entities.ai.BreakOstrichEggGoal;
 import com.tristankechlo.livingthings.entities.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -130,7 +130,7 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.RACCOON.maxSpawns.get();
+		return LivingThingsConfig.RACCOON.maxSpawnedInChunk.get();
 	}
 
 	@Override
@@ -156,6 +156,11 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	@Override
 	public void func_230258_H__() {
 		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	}
+
+	@Override
+	protected int calculateFallDamage(float distance, float damageMultiplier) {
+		return super.calculateFallDamage(distance, (damageMultiplier * 0.3F));
 	}
 
 	@Override

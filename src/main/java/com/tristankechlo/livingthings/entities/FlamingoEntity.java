@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -103,7 +103,7 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.FLAMINGO.maxSpawns.get();
+		return LivingThingsConfig.FLAMINGO.maxSpawnedInChunk.get();
 	}
 
 	public boolean isLeftLegUp() {

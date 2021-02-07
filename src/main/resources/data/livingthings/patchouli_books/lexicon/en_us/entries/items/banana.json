@@ -1,0 +1,16 @@
+{
+	"name" : "Banana",
+	"icon" : "livingthings:banana",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be obtained by breaking jungle leaves"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:banana",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten"
+		}
+	]
+}

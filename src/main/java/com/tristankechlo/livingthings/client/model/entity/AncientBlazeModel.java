@@ -2,17 +2,16 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel<T> {
+public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer Head;
@@ -21,7 +20,7 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel
 	private final ModelRenderer Shields;
 	private final ModelRenderer[] shields = new ModelRenderer[4];
 	private final ModelRenderer Sticks;
-	private final ModelRenderer[] sticks = new ModelRenderer[LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()];
+	private final ModelRenderer[] sticks = new ModelRenderer[10];
 
 	public AncientBlazeModel() {
 		textureWidth = 64;
@@ -90,13 +89,13 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel
 		Shields = new ModelRenderer(this);
 		Shields.setRotationPoint(0.0F, -22.0F, 0.0F);
 		Body.addChild(Shields);
-		setRotationAngle(Shields, 0.0F, -0.7854F, 0.0F);
+		this.setRotationAngle(Shields, 0.0F, -0.7854F, 0.0F);
 
 		for (int i = 0; i < this.shields.length; i++) {
 			this.shields[i] = new ModelRenderer(this, 0, 43);
 			this.shields[i].addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
 			this.shields[i].setRotationPoint(i * 7.5F, 0.0F, i * 7.5F);
-			setRotationAngle(this.shields[i], -0.3491F, ((-1) ^ i) * 1.570796F, 0.0F);
+			this.setRotationAngle(this.shields[i], -0.3491F, ((-1) ^ i) * 1.570796F, 0.0F);
 			this.Shields.addChild(this.shields[i]);
 		}
 
@@ -112,7 +111,9 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel
 	}
 
 	@Override
-	public void setRotationAngles(T blaze, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(AncientBlazeEntity blaze, float limbSwing, float limbSwingAmount, float ageInTicks,
+			float netHeadYaw, float headPitch) {
+
 		this.Head.rotateAngleY = netHeadYaw * 0.017453F;
 		this.Head.rotateAngleX = headPitch * 0.017453F;
 
@@ -149,19 +150,10 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends EntityModel
 	}
 
 	@Override
-	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
-	}
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
+			float green, float blue, float alpha) {
 
-	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
-	}
-
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 
 }

@@ -9,11 +9,11 @@ import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.entities.misc.IGenderedMob;
+import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.IMobVariants;
-import com.tristankechlo.livingthings.util.IGenderedMob;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -161,11 +161,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		} else {
 			this.setGender(Gender.FEMALE);
 		}
-		if (compound.contains("LionVariant")) {
-			this.setVariant(compound.getByte("LionVariant"));
-		} else {
-			this.setVariant((byte) 0);
-		}
+		this.setVariant(compound.getByte("LionVariant"));
 		if (this.world instanceof ServerWorld) {
 			this.readAngerNBT((ServerWorld) this.world, compound);
 		}
@@ -217,7 +213,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.LION.maxSpawns.get();
+		return LivingThingsConfig.LION.maxSpawnedInChunk.get();
 	}
 
 	@Override

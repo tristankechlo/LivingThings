@@ -6,7 +6,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
@@ -95,7 +95,7 @@ public class PenguinEntity extends AnimalEntity implements ILexiconEntry {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.PENGUIN.maxSpawns.get();
+		return LivingThingsConfig.PENGUIN.maxSpawnedInChunk.get();
 	}
 
 	@Override

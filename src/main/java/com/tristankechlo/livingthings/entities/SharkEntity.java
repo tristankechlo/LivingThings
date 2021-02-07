@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -99,7 +99,6 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	@Override
 	public void tick() {
 		super.tick();
-
 		// random moving when on land
 		if (!this.isInWaterRainOrBubbleColumn()) {
 			if (this.onGround) {
@@ -118,7 +117,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.SHARK.maxSpawns.get();
+		return LivingThingsConfig.SHARK.maxSpawnedInChunk.get();
 	}
 
 	@Override

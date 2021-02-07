@@ -1,9 +1,10 @@
 package com.tristankechlo.livingthings.config.entity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.config.misc.SpawnData;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -18,6 +19,7 @@ public class CrabConfig {
 	public final DoubleValue health;
 	public final DoubleValue speed;
 	public final DoubleValue damage;
+	public final IntValue maxSpawnedInChunk;
 
 	public final ConfigValue<Integer> color1Weight;
 	public final ConfigValue<Integer> color2Weight;
@@ -28,24 +30,23 @@ public class CrabConfig {
 	public final ConfigValue<Integer> scaling3Weight;
 	public final ConfigValue<Integer> scaling4Weight;
 
-	public final ConfigValue<List<? extends String>> spawnBiomes;
-	public final IntValue weight;
-	public final IntValue minSpawns;
-	public final IntValue maxSpawns;
-
 	public CrabConfig(ForgeConfigSpec.Builder builder) {
 
 		builder.comment("Mob-Config for Crab").push("Crab");
 
 		canAttack = builder.define("CanAttack", true);
-		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
-				.defineInRange("Health", 8.0D, LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
+		health = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart().defineInRange("Health", 8.0D,
+				LivingThingsConfig.MIN_HEALTH, LivingThingsConfig.MAX_HEALTH);
 
-		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT).worldRestart()
+		speed = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.HIGH_IMPACT)
+				.worldRestart()
 				.defineInRange("MovementSpeed", 0.2D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
 
-		damage = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
-				.defineInRange("AttackDamage", 1.0D, LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
+		damage = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart().defineInRange("AttackDamage", 1.0D,
+				LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
+
+		maxSpawnedInChunk = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
+				.defineInRange("MaxSpawnedInChunk", 8, 1, 15);
 
 		builder.comment(LivingThingsConfig.WEIGHTED_RANDOM).push("ColorVariantWeights");
 		color1Weight = builder.define("Color1Weight", 50);
@@ -60,20 +61,15 @@ public class CrabConfig {
 		scaling4Weight = builder.define("Scaling4Weight", 15);
 		builder.pop();
 
-		builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | " + LivingThingsConfig.DISABLE_SPAWNING + " | can spawn on grass/dirt and sand blocks").push("Spawns");
-		spawnBiomes = builder.worldRestart().defineList("SpawnBoimes",
-				Arrays.asList(Biomes.RIVER.getLocation().toString(),
-						Biomes.BEACH.getLocation().toString(),
-						Biomes.DESERT_LAKES.getLocation().toString(),
-						Biomes.SWAMP_HILLS.getLocation().toString(),
-						Biomes.SWAMP.getLocation().toString()),
-				biome -> LivingThingsConfig.checkBiome("Crab", biome));
-		weight = builder.worldRestart().defineInRange("SpawnWeight", 50, 1, Short.MAX_VALUE);
-		minSpawns = builder.worldRestart().defineInRange("MinSpawns", 5, 1, Short.MAX_VALUE);
-		maxSpawns = builder.worldRestart().defineInRange("MaxSpawns", 8, 1, Short.MAX_VALUE);
 		builder.pop();
-
-		builder.pop();
-
 	}
+
+	@SuppressWarnings("unchecked")
+	public static List<SpawnData> getDefaultSpawns() {
+		List<SpawnData> spawns = new ArrayList<SpawnData>();
+		spawns.add(new SpawnData(50, 5, 8, Biomes.RIVER, Biomes.BEACH, Biomes.DESERT_LAKES, Biomes.SWAMP_HILLS,
+				Biomes.SWAMP));
+		return spawns;
+	}
+
 }

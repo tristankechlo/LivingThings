@@ -19,6 +19,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModArmorItem extends ArmorItem {
 
+	private BipedModel<?> model;
+
 	public ModArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
 		super(materialIn, slot, builderIn);
 	}
@@ -37,15 +39,17 @@ public class ModArmorItem extends ArmorItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-		AncientArmorModel model = new AncientArmorModel(2.0F);
+		if(this.model == null) {
+			this.model = new AncientArmorModel(2.0F);
+		}
 
-		model.bipedHead.showModel = (armorSlot == EquipmentSlotType.HEAD);
+		this.model.bipedHead.showModel = (armorSlot == EquipmentSlotType.HEAD);
 
-		model.isChild = _default.isChild;
-		model.isSneak = _default.isSneak;
-		model.isSitting = _default.isSitting;
-		model.rightArmPose = _default.rightArmPose;
-		model.leftArmPose = _default.leftArmPose;
+		this.model.isChild = _default.isChild;
+		this.model.isSneak = _default.isSneak;
+		this.model.isSitting = _default.isSitting;
+		this.model.rightArmPose = _default.rightArmPose;
+		this.model.leftArmPose = _default.leftArmPose;
 
 		return (A) model;
 	}

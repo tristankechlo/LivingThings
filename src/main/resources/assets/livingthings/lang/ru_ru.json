@@ -13,7 +13,7 @@
 	"__comment3" : "items",
 	"item.livingthings.shark_tooth" : "Зуб акулы",
 	"item.livingthings.ostrich_egg" : "Яйцо страуса",
-	"item.livingthings.raw_crab" : "Мясо краба",
+	"item.livingthings.crab" : "Мясо краба",
 	"item.livingthings.cooked_crab" : "Жареный краб",
 	"item.livingthings.crab_shell" : "Панцирь краба",
 	"item.livingthings.lexicon" : "LivingThings Lexicon",
@@ -28,11 +28,11 @@
 	"item.livingthings.penguin_spawn_egg" : "Яйцо призывания пингвина",
 	"item.livingthings.ostrich_spawn_egg" : "Яйцо призывания страуса",
 	"item.livingthings.flamingo_spawn_egg" : "Яйцо призывания фламинго",
- "item.livingthings.crab_spawn_egg" : "Яйцо призывания краба",
- "item.livingthings.mantaray_spawn_egg" : "Яйцо призывания ската",
+ 	"item.livingthings.crab_spawn_egg" : "Яйцо призывания краба",
+ 	"item.livingthings.mantaray_spawn_egg" : "Яйцо призывания ската",
 	"item.livingthings.raccoon_spawn_egg" : "Яйцо призывания енота",
 	"item.livingthings.owl_spawn_egg" : "Яйцо призывания совы",
- "item.livingthings.ancient_blaze_spawn_egg" : "Яйцо призывания древнего ифрита",
+ 	"item.livingthings.ancient_blaze_spawn_egg" : "Яйцо призывания древнего ифрита",
 	"item.livingthings.koala_spawn_egg" : "Яйцо призывания коалы",
 
 
@@ -44,11 +44,11 @@
 	"entity.livingthings.penguin" : "Пингвин",
 	"entity.livingthings.ostrich" : "Страус",
 	"entity.livingthings.flamingo" : "Фламинго",
- "entity.livingthings.crab" : "Краб",
+ 	"entity.livingthings.crab" : "Краб",
 	"entity.livingthings.mantaray" : "Скат",
 	"entity.livingthings.raccoon" : "Енот",
 	"entity.livingthings.owl" : "Сова",
- "entity.livingthings.ancient_blaze" : "Древний инфрит",
+ 	"entity.livingthings.ancient_blaze" : "Древний инфрит",
 	"entity.livingthings.koala" : "Коала",
 
 

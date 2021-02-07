@@ -1,17 +1,15 @@
 package com.tristankechlo.livingthings.entities;
 
-import java.util.Random;
-
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.entities.ai.OstrichBreedGoal;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,10 +31,8 @@ import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -45,7 +41,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -54,7 +49,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -91,7 +85,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4D));
-		this.goalSelector.addGoal(2, new OstrichEntity.BreedGoal(this, 1.0D));
+		this.goalSelector.addGoal(2, new OstrichBreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new OstrichEntity.LayEggGoal(this, 1.1D));
 		this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, false, TEMPTATION_ITEMS));
 		this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
@@ -136,7 +130,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.OSTRICH.maxSpawns.get();
+		return LivingThingsConfig.OSTRICH.maxSpawnedInChunk.get();
 	}
 
 	@Override
@@ -253,49 +247,10 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	public double getMountedYOffset() {
 		return 1.0D;
 	}
-	
+
 	@Override
 	public ResourceLocation getLexiconEntry() {
 		return LEXICON_ENTRY;
-	}
-
-	static class BreedGoal extends net.minecraft.entity.ai.goal.BreedGoal {
-
-		private final OstrichEntity ostrich;
-
-		public BreedGoal(OstrichEntity animal, double moveSpeed) {
-			super(animal, moveSpeed);
-			this.ostrich = animal;
-		}
-
-		@Override
-		public boolean shouldExecute() {
-			return super.shouldExecute() && !this.ostrich.hasEgg();
-		}
-
-		@Override
-		protected void spawnBaby() {
-			ServerPlayerEntity serverplayerentity = this.animal.getLoveCause();
-			if (serverplayerentity == null && this.targetMate.getLoveCause() != null) {
-				serverplayerentity = this.targetMate.getLoveCause();
-			}
-
-			if (serverplayerentity != null) {
-				serverplayerentity.addStat(Stats.ANIMALS_BRED);
-				CriteriaTriggers.BRED_ANIMALS.trigger(serverplayerentity, this.animal, this.targetMate, null);
-			}
-
-			this.ostrich.setHasEgg(true);
-			this.animal.resetInLove();
-			this.targetMate.resetInLove();
-			this.animal.setGrowingAge(6000);
-			this.targetMate.setGrowingAge(6000);
-			Random random = this.animal.getRNG();
-			if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-				this.world.addEntity(new ExperienceOrbEntity(this.world, this.animal.getPosX(), this.animal.getPosY(), this.animal.getPosZ(), random.nextInt(7) + 1));
-			}
-		}
-
 	}
 
 	static class LayEggGoal extends MoveToBlockGoal {
@@ -347,15 +302,11 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 				this.isAboveDestination = true;
 				--this.timeoutCounter;
 			}
-
 			if (!this.ostrich.isInWater() && this.getIsAboveDestination()) {
 				World world = this.ostrich.world;
 				if (world.getBlockState(this.destinationBlock).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
-
 					BlockState state = world.getBlockState(this.destinationBlock);
-
 					if (!state.get(OstrichNestBlock.EGG)) {
-
 						// lay egg animation
 						if (this.ostrich.layingEggCounter < 1) {
 							this.ostrich.setLayingEgg(true);
@@ -368,7 +319,6 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 						if (this.ostrich.isLayingEgg()) {
 							this.ostrich.layingEggCounter++;
 						}
-
 					}
 				} else {
 					// nest building animation
@@ -404,15 +354,10 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 
 		@Override
 		protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
-
 			if (worldIn.getBlockState(pos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
-
 				return !worldIn.getBlockState(pos).get(OstrichNestBlock.EGG);
-
 			} else if (worldIn.getBlockState(pos).getBlock() == Blocks.SAND) {
-
 				return worldIn.isAirBlock(pos.up());
-
 			}
 			return false;
 		}

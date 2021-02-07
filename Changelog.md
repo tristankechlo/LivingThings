@@ -1,5 +1,27 @@
 # Changelog
 
+### Version 1.16.4 - 1.3.0
+ - added snail entity
+     - will spawn in different variations
+     - can be dyed
+ - added monkey entity
+     - can be tamed
+     - will "party" near jukeboxes
+ - retextured some item textures
+     - crab
+     - cooked_crab
+     - crab_shell
+     - shark_tooth
+     - ostrich_egg
+ - renamed item *livingthings:raw_crab* to *livingthings:crab* to match vanilla namings
+     - might produce some errors on the first world load with this version
+     - will definitly delete all raw_crab items in chests/inventories etc.
+ - added raw and cooked ostrich meat
+ - added banana item
+ - added a new config for entity spawn biomes, which allows more customisation
+ - removed custom particles completely
+ - translation to *ru_ru* by [Intaria](https://github.com/Intaria) for version 1.2.3
+
 ### Version 1.16.4 - 1.2.3
  - port to 1.16.4
  - added koala entity

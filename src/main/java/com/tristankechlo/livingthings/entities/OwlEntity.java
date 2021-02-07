@@ -5,10 +5,11 @@ import java.util.Random;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
+import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.IMobVariants;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -60,6 +61,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVariants, ILexiconEntry {
 
@@ -158,13 +160,11 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	@Override
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getHeldItem(hand);
-		if (!this.isTamed() && TAMING_ITEMS.test(itemstack)) {
-			if (!player.isCreative()) {
-				itemstack.shrink(1);
-			}
+		ItemStack stack = player.getHeldItem(hand);
+		if (!this.isTamed() && TAMING_ITEMS.test(stack)) {
 			if (!this.world.isRemote) {
-				if (this.rand.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
+				this.consumeItemFromStack(player, stack);
+				if (this.rand.nextInt(5) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
 					this.setTamedBy(player);
 					this.world.setEntityState(this, (byte) 7);
 				} else {
@@ -173,21 +173,11 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 			}
 			return ActionResultType.func_233537_a_(this.world.isRemote);
 
-		} else if (this.isBreedingItem(itemstack)) {
-			if (!player.isCreative()) {
-				itemstack.shrink(1);
-			}
-			if (!this.world.isRemote && this.canBreed() && this.getGrowingAge() == 0) {
-				this.setInLove(player);
-				return ActionResultType.SUCCESS;
-			}
-			return ActionResultType.func_233537_a_(this.world.isRemote);
-		} else if (!this.isFlying() && this.isTamed() && this.isOwner(player)) {
-			if (!this.world.isRemote) {
-				this.func_233687_w_(!this.isSitting());
-			}
+		} else if (!this.isFlying() && this.isTamed() && this.isOwner(player) && TAMING_ITEMS.test(stack)) {
 
+			this.func_233687_w_(!this.isSitting());
 			return ActionResultType.func_233537_a_(this.world.isRemote);
+
 		} else {
 			return super.func_230254_b_(player, hand);
 		}
@@ -232,7 +222,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.OWL.maxSpawns.get();
+		return LivingThingsConfig.OWL.maxSpawnedInChunk.get();
 	}
 
 	@Override

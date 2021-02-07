@@ -5,7 +5,7 @@ import java.util.Random;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -106,7 +106,7 @@ public class KoalaEntity extends AnimalEntity implements ILexiconEntry {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return LivingThingsConfig.KOALA.maxSpawns.get();
+		return LivingThingsConfig.KOALA.maxSpawnedInChunk.get();
 	}
 
 	@Override

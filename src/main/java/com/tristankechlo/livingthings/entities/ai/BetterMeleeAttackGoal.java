@@ -5,6 +5,7 @@ import com.tristankechlo.livingthings.entities.CrabEntity;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 import com.tristankechlo.livingthings.entities.LionEntity;
+import com.tristankechlo.livingthings.entities.MonkeyEntity;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
 
@@ -51,6 +52,8 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 			return LivingThingsConfig.CRAB.canAttack.get();
 		} else if (this.attacker instanceof RaccoonEntity) {
 			return LivingThingsConfig.RACCOON.canAttack.get();
+		} else if(this.attacker instanceof MonkeyEntity) {
+			return LivingThingsConfig.MONKEY.canAttack.get();
 		}
 		return false;
 	}

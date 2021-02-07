@@ -2,16 +2,16 @@ package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PenguinModel<T extends PenguinEntity> extends EntityModel<T> {
+public class PenguinModel<T extends PenguinEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelRenderer Body;
 	private final ModelRenderer RightFeet;
@@ -54,8 +54,7 @@ public class PenguinModel<T extends PenguinEntity> extends EntityModel<T> {
 		RightWing.setTextureOffset(46, 23).addBox(-1.0F, 0.0F, -4.5F, 1.0F, 11.0F, 8.0F, 0.0F, true);
 
 		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, -16.0F, 0.0833F);
-		Body.addChild(Head);
+		Head.setRotationPoint(0.0F, 8.0F, -1.0F);
 		Head.setTextureOffset(0, 27).addBox(-4.0F, -7.0F, -3.75F, 8.0F, 7.0F, 8.0F, 0.0F, false);
 
 		Beak = new ModelRenderer(this);
@@ -65,34 +64,48 @@ public class PenguinModel<T extends PenguinEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.Head.rotateAngleX = headPitch * 0.0174532925F;
-		this.Head.rotateAngleY = netHeadYaw * 0.0174532925F;
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+			float netHeadYaw, float headPitch) {
 
-		// wobbling effect
+		this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
+
+		// wobbling effect while walking
 		this.Body.rotateAngleZ = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
 
 		// animate penguin swinging wings
-		this.RightWing.rotateAngleZ = (0.1308996938F) + ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F) * limbSwingAmount);
-		this.LeftWing.rotateAngleZ = (-0.1308996938F) + ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
+		this.RightWing.rotateAngleZ = (0.1308996938F)
+				+ ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F) * limbSwingAmount);
+		this.LeftWing.rotateAngleZ = (-0.1308996938F)
+				+ ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
 		this.RightFeet.rotateAngleX = -((MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
 		this.LeftFeet.rotateAngleX = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
 
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		if (this.isChild) {
-			matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-			matrixStackIn.translate(0, 1.5D, 0);
-		}
-		Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-	}
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
 
-	private void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		if (this.isChild) {
+			matrixStackIn.push();
+			this.Beak.setRotationPoint(0.0F, -2.25F, -3.75F);
+			float f = 0.55F;
+			matrixStackIn.scale(f, f, f);
+			matrixStackIn.translate(0.0D, 1.32D, 0.02D);
+			this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+			matrixStackIn.pop();
+
+			matrixStackIn.push();
+			float f1 = 0.5F;
+			matrixStackIn.scale(f1, f1, f1);
+			matrixStackIn.translate(0.0D, 1.5D, 0.0D);
+			this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+			matrixStackIn.pop();
+		} else {
+			this.Beak.setRotationPoint(0.0F, -1.75F, -3.75F);
+			this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+			this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		}
 	}
 
 }
