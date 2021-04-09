@@ -4,12 +4,13 @@
 
 ### currently added Mobs:
 
-  - Elephants
-  - Giraffes
-  - Lions
+  - Elephant
+  - Giraffe
+  - Lion
   - Shark
   - Penguin
   - Ostrich
+  - Flamingo
   - Crab
   - Mantaray
   - Raccoon
