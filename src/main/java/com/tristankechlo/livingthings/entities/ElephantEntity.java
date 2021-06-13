@@ -46,33 +46,33 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ElephantEntity extends AbstractTameableChestedEntity implements IAngerable, ILexiconEntry {
 
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/elephant");
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"neutral_mobs/elephant");
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private int attackTimer;
 	private UUID angerTarget;
 
 	public ElephantEntity(EntityType<? extends ElephantEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-		this.stepHeight = 1.0F;
+		this.maxUpStep = 1.0F;
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
-		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.get().create(this.world);
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity parent) {
+		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.get().create(this.level);
 		if (this.isTame() || ((ElephantEntity) parent).isTame()) {
 			child.setTame(true);
 		}
 		return child;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.ELEPHANT.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.ELEPHANT.speed.get())
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
 	}
 
 	@Override
@@ -90,57 +90,58 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		this.writeAngerNBT(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity target) {
+	public boolean doHurtTarget(Entity target) {
 		this.attackTimer = 10;
-		this.world.setEntityState(this, (byte) 4);
-		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
+		this.level.broadcastEntityEvent(this, (byte) 4);
+		boolean flag = target.hurt(DamageSource.mobAttack(this),
+				(float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		if (flag) {
 			// throw target in the air
-			target.setMotion(target.getMotion().add(0.0D, 0.7D, 0.0D));
-			this.applyEnchantments(this, target);
+			target.setDeltaMovement(target.getDeltaMovement().add(0.0D, 0.7D, 0.0D));
+			this.doEnchantDamageEffects(this, target);
 		}
 		return flag;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void tick() {
+		super.tick();
 		if (this.attackTimer > 0) {
 			--this.attackTimer;
 		}
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.ELEPHANT.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 1.3F : 2.25F;
+		return this.isBaby() ? 1.3F : 2.25F;
 	}
 
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 2.45D;
 	}
 
@@ -161,11 +162,11 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
+	public void handleEntityEvent(byte id) {
 		if (id == 4) {
 			this.attackTimer = 10;
 		} else {
-			super.handleStatusUpdate(id);
+			super.handleEntityEvent(id);
 		}
 	}
 
@@ -175,28 +176,28 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	}
 
 	@Override
-	public int getAngerTime() {
+	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setAngerTime(int time) {
+	public void setRemainingPersistentAngerTime(int time) {
 		this.angerTime = time;
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.angerTarget;
 	}
 
 	@Override
-	public void setAngerTarget(UUID target) {
+	public void setPersistentAngerTarget(UUID target) {
 		this.angerTarget = target;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 
 	@Override
@@ -211,17 +212,17 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			LivingEntity livingentity = this.goalOwner.getRevengeTarget();
+		public boolean canUse() {
+			LivingEntity livingentity = this.mob.getLastHurtByMob();
 			if (livingentity instanceof PlayerEntity) {
-				UUID ownerID = ((AbstractTameableChestedEntity) this.goalOwner).getOwnerUniqueId();
+				UUID ownerID = ((AbstractTameableChestedEntity) this.mob).getOwnerUniqueId();
 				if (ownerID != null) {
-					if (ownerID == ((PlayerEntity) livingentity).getUniqueID()) {
+					if (ownerID == ((PlayerEntity) livingentity).getUUID()) {
 						return false;
 					}
 				}
 			}
-			return super.shouldExecute();
+			return super.canUse();
 		}
 
 	}

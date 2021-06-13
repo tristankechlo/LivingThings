@@ -21,6 +21,8 @@
 	"item.livingthings.ostrich" : "Rohes Straußen Fleisch",
 	"item.livingthings.cooked_ostrich" : "Straußen Fleisch",
 	"item.livingthings.banana" : "Banane",
+	"item.livingthings.elephant" : "Rohes Elefanten Fleisch",
+	"item.livingthings.cooked_elephant" : "Elefanten Fleisch",
 
 
 	"__comment4" : "spawn eggs",
@@ -92,6 +94,7 @@
 
 	"__comment7" : "messages",
 	"messages.livingthings.nopatchouli.title" : "Fehler!",
-	"messages.livingthings.nopatchouli.subtitle" : "Mod Patchouli ist nicht installiert."
+	"messages.livingthings.nopatchouli.subtitle" : "Mod Patchouli ist nicht installiert.",
+	"messages.livingthings.nopatchouli.wiki" : "Mehr Information \u00fcber den Mod findest du hier: %s"
 
 }

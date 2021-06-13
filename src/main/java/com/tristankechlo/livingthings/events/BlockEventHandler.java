@@ -40,18 +40,18 @@ public class BlockEventHandler {
 		if (world == null || state == null || player == null || pos == null) {
 			return;
 		}
-		if (world.isRemote() || player.isSpectator() || player.isCreative()) {
+		if (world.isClientSide() || player.isSpectator() || player.isCreative()) {
 			return;
 		}
 		if (droppingBananaBlocks == null) {
-			droppingBananaBlocks = BlockTags.getCollection().get(LivingThingsTags.DROPS_BANANAS);
+			droppingBananaBlocks = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.DROPS_BANANAS);
 		}
 		if (!droppingBananaBlocks.contains(state.getBlock())) {
 			return;
 		}
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getMainHandItem();
 		if (!stack.isEmpty()) {
-			int silktouchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack);
+			int silktouchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack);
 			if (silktouchLevel > 0 || stack.getItem() instanceof ShearsItem) {
 				return;
 			}
@@ -60,7 +60,7 @@ public class BlockEventHandler {
 		if (world.getRandom().nextDouble() < dropChance) {
 			ItemStack loot = new ItemStack(ModItems.BANANA.get());
 			ItemEntity entity = new ItemEntity((World) world, pos.getX(), pos.getY(), pos.getZ(), loot);
-			world.addEntity(entity);
+			world.addFreshEntity(entity);
 		}
 	}
 
@@ -78,22 +78,22 @@ public class BlockEventHandler {
 			return;
 		}
 		final PlayerEntity player = (PlayerEntity) entity;
-		if (world.isRemote() || player.isSpectator()) {
+		if (world.isClientSide() || player.isSpectator()) {
 			return;
 		}
 		final BlockPos pos = event.getPos();
 		final BlockState placedBlock = event.getPlacedBlock();
-		if (placedBlock.isIn(Blocks.JACK_O_LANTERN) && world.getBlockState(pos.down()).isIn(Blocks.GLOWSTONE)
-				&& world.getBlockState(pos.down(2)).isIn(Blocks.GLOWSTONE)) {
+		if (placedBlock.is(Blocks.JACK_O_LANTERN) && world.getBlockState(pos.below()).is(Blocks.GLOWSTONE)
+				&& world.getBlockState(pos.below(2)).is(Blocks.GLOWSTONE)) {
 
-			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
-			world.setBlockState(pos.down(), Blocks.AIR.getDefaultState(), 3);
-			world.setBlockState(pos.down(2), Blocks.AIR.getDefaultState(), 3);
+			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+			world.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), 3);
+			world.setBlock(pos.below(2), Blocks.AIR.defaultBlockState(), 3);
 
 			AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE_ENTITY.get().create((World) world);
 			blaze.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
-			blaze.setPosition(pos.getX() + 0.5D, pos.down(2).getY() + 0.2D, pos.getZ() + 0.5D);
-			world.addEntity(blaze);
+			blaze.setPos(pos.getX() + 0.5D, pos.below(2).getY() + 0.2D, pos.getZ() + 0.5D);
+			world.addFreshEntity(blaze);
 			return;
 
 		}

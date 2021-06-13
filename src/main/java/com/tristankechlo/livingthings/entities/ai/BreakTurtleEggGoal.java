@@ -16,17 +16,19 @@ public class BreakTurtleEggGoal extends BreakBlockGoal {
 	}
 
 	@Override
-	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_DESTROY_EGG, SoundCategory.HOSTILE, 0.5F, 0.9F + this.creature.getRNG().nextFloat() * 0.2F);
+	public void playDestroyProgressSound(IWorld worldIn, BlockPos pos) {
+		worldIn.playSound(null, pos, SoundEvents.ZOMBIE_DESTROY_EGG, SoundCategory.HOSTILE, 0.5F,
+				0.9F + this.mob.getRandom().nextFloat() * 0.2F);
 	}
 
 	@Override
-	public void playBrokenSound(World worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, SoundEvents.ENTITY_TURTLE_EGG_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+	public void playBreakSound(World worldIn, BlockPos pos) {
+		worldIn.playSound(null, pos, SoundEvents.TURTLE_EGG_BREAK, SoundCategory.BLOCKS, 0.7F,
+				0.9F + worldIn.random.nextFloat() * 0.2F);
 	}
 
 	@Override
-	public double getTargetDistanceSq() {
+	public double acceptedDistance() {
 		return 1.25D;
 	}
 }

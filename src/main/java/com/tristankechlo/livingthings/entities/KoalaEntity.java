@@ -44,23 +44,24 @@ import net.minecraft.world.server.ServerWorld;
 
 public class KoalaEntity extends AnimalEntity implements ILexiconEntry {
 
-	private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(KoalaEntity.class, DataSerializers.BYTE);
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/koala");
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.defineId(KoalaEntity.class,
+			DataSerializers.BYTE);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/koala");
 
 	public KoalaEntity(EntityType<? extends KoalaEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		return ModEntityTypes.KOALA_ENTITY.get().create(world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.KOALA.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.KOALA.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.KOALA.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.KOALA.speed.get());
 	}
 
 	@Override
@@ -76,61 +77,63 @@ public class KoalaEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(CLIMBING, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CLIMBING, (byte) 0);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (!this.world.isRemote) {
-			this.setBesideClimbableBlock(this.collidedHorizontally);
+		if (!this.level.isClientSide()) {
+			this.setBesideClimbableBlock(this.horizontalCollision);
 		}
 	}
 
-	public static boolean canKoalaSpawn(EntityType<KoalaEntity> koala, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		BlockState blockstate = world.getBlockState(pos.down());
-		return (blockstate.isIn(BlockTags.LEAVES) || blockstate.isIn(Blocks.GRASS_BLOCK) || blockstate.isIn(BlockTags.LOGS)) && world.getLightSubtracted(pos, 0) > 8;
+	public static boolean canKoalaSpawn(EntityType<KoalaEntity> koala, IWorld world, SpawnReason reason, BlockPos pos,
+			Random random) {
+		BlockState blockstate = world.getBlockState(pos.below());
+		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS))
+				&& world.getRawBrightness(pos, 0) > 8;
 	}
 
 	@Override
-	public boolean isOnLadder() {
+	public boolean onClimbable() {
 		return this.isBesideClimbableBlock();
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.KOALA.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.35F : 0.73F;
+		return this.isBaby() ? 0.35F : 0.73F;
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
+	protected PathNavigator createNavigation(World worldIn) {
 		return new ClimberPathNavigator(this, worldIn);
 	}
 
 	public boolean isBesideClimbableBlock() {
-		return (this.dataManager.get(CLIMBING) & 1) != 0;
+		return (this.entityData.get(CLIMBING) & 1) != 0;
 	}
 
 	public void setBesideClimbableBlock(boolean climbing) {
-		byte b0 = this.dataManager.get(CLIMBING);
+		byte b0 = this.entityData.get(CLIMBING);
 		if (climbing) {
 			b0 = (byte) (b0 | 1);
 		} else {
 			b0 = (byte) (b0 & -2);
 		}
-		this.dataManager.set(CLIMBING, b0);
+		this.entityData.set(CLIMBING, b0);
 	}
 
 	@Override

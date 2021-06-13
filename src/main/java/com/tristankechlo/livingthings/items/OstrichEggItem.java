@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.items;
 
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -19,26 +20,26 @@ public class OstrichEggItem extends Item {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+	public ActionResultType useOn(ItemUseContext context) {
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 		if (context.getHand() != Hand.MAIN_HAND) {
-			return super.onItemUse(context);
+			return super.useOn(context);
 		}
-		if (!world.isRemote) {
+		if (!world.isClientSide()) {
 			BlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
 			if (!(block instanceof OstrichNestBlock)) {
-				return super.onItemUse(context);
+				return super.useOn(context);
 			}
-			if (!state.get(OstrichNestBlock.EGG)) {
-				world.setBlockState(pos, state.with(OstrichNestBlock.EGG, true).with(OstrichNestBlock.HATCH, 0), 2);
-				world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PLACE, SoundCategory.BLOCKS, 0.7F, 0.9F);
-				context.getItem().shrink(1);
+			if (!state.getValue(OstrichNestBlock.EGG)) {
+				world.setBlock(pos, state.setValue(OstrichNestBlock.EGG, true).setValue(OstrichNestBlock.HATCH, 0), 2);
+				world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundCategory.BLOCKS, 0.7F, 0.9F);
+				context.getItemInHand().shrink(1);
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 
 }

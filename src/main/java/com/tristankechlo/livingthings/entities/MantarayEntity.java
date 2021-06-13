@@ -49,21 +49,23 @@ import net.minecraft.world.World;
 
 public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants, IScaleableMob, ILexiconEntry {
 
-	private static final DataParameter<Byte> MANTARAY_VARIANT = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> MANTARAY_SCALING = EntityDataManager.createKey(MantarayEntity.class, DataSerializers.BYTE);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/mantaray");
+	private static final DataParameter<Byte> MANTARAY_VARIANT = EntityDataManager.defineId(MantarayEntity.class,
+			DataSerializers.BYTE);
+	private static final DataParameter<Byte> MANTARAY_SCALING = EntityDataManager.defineId(MantarayEntity.class,
+			DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/mantaray");
 
 	public MantarayEntity(EntityType<? extends MantarayEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPathPriority(PathNodeType.WATER, 0.0F);
-		this.moveController = new MantarayEntity.MoveHelperController(this);
-		this.lookController = new DolphinLookController(this, 10);
+		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
+		this.moveControl = new MantarayEntity.MoveHelperController(this);
+		this.lookControl = new DolphinLookController(this, 10);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MANTARAY.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MANTARAY.speed.get());
 	}
 
 	@Override
@@ -77,31 +79,32 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(MANTARAY_VARIANT, (byte) 0);
-		this.dataManager.register(MANTARAY_SCALING, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(MANTARAY_VARIANT, (byte) 0);
+		this.entityData.define(MANTARAY_SCALING, (byte) 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putByte("MantarayVariant", this.getVariant());
 		compound.putByte("MantarayScaling", this.getScaling());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("MantarayVariant"));
 		this.setScaling(compound.getByte("MantarayScaling"));
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.setVariant(MantarayEntity.getWeightedRandomColorVariant(this.rand));
-		this.setScaling(MantarayEntity.getWeightedRandomScaling(this.rand));
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		this.setVariant(MantarayEntity.getWeightedRandomColorVariant(this.random));
+		this.setScaling(MantarayEntity.getWeightedRandomScaling(this.random));
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
@@ -132,36 +135,39 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		return scaling.scaling;
 	}
 
-	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
+	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason,
+			BlockPos pos, Random random) {
+		return world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 		// random moving when on land
-		if (!this.isInWaterRainOrBubbleColumn()) {
+		if (!this.isInWaterRainOrBubble()) {
 			if (this.onGround) {
-				this.setMotion(this.getMotion().add(((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-				this.rotationYaw = this.rand.nextFloat() * 360.0F;
+				this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F),
+						0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
+				this.yRot = this.random.nextFloat() * 360.0F;
 				this.onGround = false;
-				this.isAirBorne = true;
+				this.hasImpulse = true;
 			}
 		}
 	}
 
 	@Override
-	public boolean canBeLeashedTo(PlayerEntity player) {
+	public boolean canBeLeashed(PlayerEntity player) {
 		return true;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
+	
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.MANTARAY.maxSpawnedInChunk.get();
 	}
 
@@ -171,32 +177,32 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		return ActionResultType.PASS;
 	}
 
 	@Override
 	public byte getVariant() {
-		return this.dataManager.get(MANTARAY_VARIANT);
+		return this.entityData.get(MANTARAY_VARIANT);
 	}
 
 	@Override
 	public void setVariant(byte variant) {
-		this.dataManager.set(MANTARAY_VARIANT, variant);
+		this.entityData.set(MANTARAY_VARIANT, variant);
 	}
 
 	@Override
 	public byte getScaling() {
-		return this.dataManager.get(MANTARAY_SCALING);
+		return this.entityData.get(MANTARAY_SCALING);
 	}
 
 	@Override
 	public void setScaling(byte scaling) {
-		this.dataManager.set(MANTARAY_SCALING, scaling);
+		this.entityData.set(MANTARAY_SCALING, scaling);
 	}
 
 	@Override
-	protected ItemStack getFishBucket() {
+	protected ItemStack getBucketItemStack() {
 		// required by AbstractFishEntity
 		// not used, because we are overriding the rightclick method
 		return new ItemStack(Items.BUCKET);
@@ -225,8 +231,9 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		 * Returns whether execution should begin. You can also read and cache any state
 		 * necessary for execution in this method as well.
 		 */
-		public boolean shouldExecute() {
-			return this.fish.func_212800_dy() && super.shouldExecute();
+		@Override
+		public boolean canUse() {
+			return this.fish.canRandomSwim() && super.canUse();
 		}
 	}
 
@@ -241,41 +248,42 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		@Override
 		public void tick() {
 			if (this.mantaray.isInWater()) {
-				this.mantaray.setMotion(this.mantaray.getMotion().add(0.0D, 0.005D, 0.0D));
+				this.mantaray.setDeltaMovement(this.mantaray.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
 			}
 
-			if (this.action == MovementController.Action.MOVE_TO && !this.mantaray.getNavigator().noPath()) {
-				double d0 = this.posX - this.mantaray.getPosX();
-				double d1 = this.posY - this.mantaray.getPosY();
-				double d2 = this.posZ - this.mantaray.getPosZ();
+			if (this.operation == MovementController.Action.MOVE_TO && !this.mantaray.getNavigation().isDone()) {
+				double d0 = this.wantedX - this.mantaray.getX();
+				double d1 = this.wantedY - this.mantaray.getY();
+				double d2 = this.wantedZ - this.mantaray.getZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				if (d3 < (double) 2.5000003E-7F) {
-					this.mob.setMoveForward(0.0F);
+					this.mob.setZza(0.0F);
 				} else {
 					float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-					this.mantaray.rotationYaw = this.limitAngle(this.mantaray.rotationYaw, f, 10.0F);
-					this.mantaray.renderYawOffset = this.mantaray.rotationYaw;
-					this.mantaray.rotationYawHead = this.mantaray.rotationYaw;
-					float f1 = (float) (this.speed * this.mantaray.getAttributeValue(Attributes.MOVEMENT_SPEED));
+					this.mantaray.yRot = this.rotlerp(this.mantaray.yRot, f, 10.0F);
+					this.mantaray.yBodyRot = this.mantaray.yRot;
+					this.mantaray.yHeadRot = this.mantaray.yRot;
+					float f1 = (float) (this.speedModifier * this.mantaray.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					if (this.mantaray.isInWater()) {
-						this.mantaray.setAIMoveSpeed(f1 * 0.02F);
-						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2)) * 0.0174532925F));
+						this.mantaray.setSpeed(f1 * 0.02F);
+						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2))
+								* 0.0174532925F));
 						f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
-						this.mantaray.rotationPitch = this.limitAngle(this.mantaray.rotationPitch, f2, 5.0F);
-						float f3 = MathHelper.cos(this.mantaray.rotationPitch * 0.0174532925F);
-						float f4 = MathHelper.sin(this.mantaray.rotationPitch * 0.0174532925F);
-						this.mantaray.moveForward = f3 * f1;
-						this.mantaray.moveVertical = -f4 * f1;
+						this.mantaray.xRot = this.rotlerp(this.mantaray.xRot, f2, 5.0F);
+						float f3 = MathHelper.cos(this.mantaray.xRot * 0.0174532925F);
+						float f4 = MathHelper.sin(this.mantaray.xRot * 0.0174532925F);
+						this.mantaray.zza = f3 * f1;
+						this.mantaray.yya = -f4 * f1;
 					} else {
-						this.mantaray.setAIMoveSpeed(f1 * 0.1F);
+						this.mantaray.setSpeed(f1 * 0.1F);
 					}
 
 				}
 			} else {
-				this.mantaray.setAIMoveSpeed(0.0F);
-				this.mantaray.setMoveStrafing(0.0F);
-				this.mantaray.setMoveVertical(0.0F);
-				this.mantaray.setMoveForward(0.0F);
+				this.mantaray.setSpeed(0.0F);
+				this.mantaray.setXxa(0.0F);
+				this.mantaray.setYya(0.0F);
+				this.mantaray.setZza(0.0F);
 			}
 		}
 	}

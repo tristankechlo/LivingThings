@@ -19,7 +19,8 @@ public class SnailShellPatternLayer extends LayerRenderer<SnailEntity, EntityMod
 	private final SnailModel<SnailEntity> model;
 	private PatternType patternType;
 
-	public SnailShellPatternLayer(IEntityRenderer<SnailEntity, EntityModel<SnailEntity>> entityRendererIn, PatternType type) {
+	public SnailShellPatternLayer(IEntityRenderer<SnailEntity, EntityModel<SnailEntity>> entityRendererIn,
+			PatternType type) {
 		super(entityRendererIn);
 		this.patternType = type;
 		float scale = (type == PatternType.FOREGROUND) ? 0.016F : 0.008F;
@@ -35,8 +36,9 @@ public class SnailShellPatternLayer extends LayerRenderer<SnailEntity, EntityMod
 		float[] colors = snail.getShellColorScheme(this.patternType);
 		ResourceLocation texture = snail.getShellPatternTexture(this.patternType);
 
-		renderCopyCutoutModel(this.getEntityModel(), snailModel, texture, matrixStack, buffer, packedLight, snail,
-				limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, colors[0], colors[1], colors[2]);
+		coloredCutoutModelCopyLayerRender(this.getParentModel(), snailModel, texture, matrixStack, buffer, packedLight,
+				snail, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, colors[0],
+				colors[1], colors[2]);
 	}
 
 }

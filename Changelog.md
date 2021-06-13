@@ -1,5 +1,10 @@
 # Changelog
 
+### Versiov 1.16.5 - 1.3.1
+ - added loot for snail/monkey/mantaray/kaola
+ - added more items
+     - raw/cooked elephant meat
+
 ### Version 1.16.4 - 1.3.0
  - added snail entity
      - will spawn in different variations

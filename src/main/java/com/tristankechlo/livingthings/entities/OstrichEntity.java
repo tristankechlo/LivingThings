@@ -55,30 +55,35 @@ import net.minecraft.world.server.ServerWorld;
 
 public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEntry {
 
-	private static final DataParameter<Boolean> HAS_EGG = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_BUILDING_NEST = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_LAYING_EGG = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(OstrichEntity.class, DataSerializers.VARINT);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/ostrich");
-	private final BoostHelper boostHelper = new BoostHelper(this.dataManager, BOOST_TIME, SADDLED);
+	private static final DataParameter<Boolean> HAS_EGG = EntityDataManager.defineId(OstrichEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_BUILDING_NEST = EntityDataManager.defineId(OstrichEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_LAYING_EGG = EntityDataManager.defineId(OstrichEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SADDLED = EntityDataManager.defineId(OstrichEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(OstrichEntity.class,
+			DataSerializers.INT);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/ostrich");
+	private final BoostHelper boostHelper = new BoostHelper(this.entityData, BOOST_TIME, SADDLED);
 	private int nestBuildingCounter;
 	private int layingEggCounter;
-	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.WHEAT);
+	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.WHEAT);
 
 	public OstrichEntity(EntityType<? extends OstrichEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity parent) {
 		return ModEntityTypes.OSTRICH_ENTITY.get().create(world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.OSTRICH.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OSTRICH.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.OSTRICH.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OSTRICH.speed.get());
 	}
 
 	@Override
@@ -96,40 +101,41 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HAS_EGG, false);
-		this.dataManager.register(IS_BUILDING_NEST, false);
-		this.dataManager.register(IS_LAYING_EGG, false);
-		this.dataManager.register(SADDLED, false);
-		this.dataManager.register(BOOST_TIME, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(HAS_EGG, false);
+		this.entityData.define(IS_BUILDING_NEST, false);
+		this.entityData.define(IS_LAYING_EGG, false);
+		this.entityData.define(SADDLED, false);
+		this.entityData.define(BOOST_TIME, 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("HasEgg", this.hasEgg());
-		this.boostHelper.setSaddledToNBT(compound);
+		this.boostHelper.addAdditionalSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setHasEgg(compound.getBoolean("HasEgg"));
-		this.boostHelper.setSaddledFromNBT(compound);
+		this.boostHelper.readAdditionalSaveData(compound);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if (this.isAlive() && this.isBuildingNest() && this.nestBuildingCounter >= 1 && this.nestBuildingCounter % 7 == 0) {
-			BlockPos pos = this.getPosition();
-			this.world.playEvent(2001, pos, Block.getStateId(Blocks.SAND.getDefaultState()));
+	public void aiStep() {
+		super.aiStep();
+		if (this.isAlive() && this.isBuildingNest() && this.nestBuildingCounter >= 1
+				&& this.nestBuildingCounter % 7 == 0) {
+			BlockPos pos = this.blockPosition();
+			this.level.levelEvent(2001, pos, Block.getId(Blocks.SAND.defaultBlockState()));
 		}
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.OSTRICH.maxSpawnedInChunk.get();
 	}
 
@@ -139,7 +145,7 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	}
 
 	@Override
-	public boolean canBeSteered() {
+	public boolean canBeControlledByRider() {
 		if (LivingThingsConfig.OSTRICH.canBeRidden.get()) {
 			Entity entity = this.getControllingPassenger();
 			return (entity instanceof PlayerEntity);
@@ -148,29 +154,29 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		if (BOOST_TIME.equals(key) && this.world.isRemote) {
-			this.boostHelper.updateData();
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		if (BOOST_TIME.equals(key) && this.level.isClientSide) {
+			this.boostHelper.onSynced();
 		}
-		super.notifyDataManagerChange(key);
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return TEMPTATION_ITEMS.test(stack);
 	}
 
 	@Override
-	protected void dropInventory() {
-		super.dropInventory();
+	protected void dropEquipment() {
+		super.dropEquipment();
 		if (this.hasEgg()) {
-			this.entityDropItem(ModItems.OSTRICH_EGG.get());
+			this.spawnAtLocation(ModItems.OSTRICH_EGG.get());
 		}
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return (this.isChild()) ? 0.8F : 1.75F;
+		return (this.isBaby()) ? 0.8F : 1.75F;
 	}
 
 	@Override
@@ -179,29 +185,29 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	}
 
 	public boolean isBuildingNest() {
-		return this.dataManager.get(IS_BUILDING_NEST);
+		return this.entityData.get(IS_BUILDING_NEST);
 	}
 
 	public void setBuildingNest(boolean building) {
 		this.nestBuildingCounter = building ? 1 : 0;
-		this.dataManager.set(IS_BUILDING_NEST, building);
+		this.entityData.set(IS_BUILDING_NEST, building);
 	}
 
 	public boolean isLayingEgg() {
-		return this.dataManager.get(IS_LAYING_EGG);
+		return this.entityData.get(IS_LAYING_EGG);
 	}
 
 	public void setLayingEgg(boolean layingEgg) {
 		this.layingEggCounter = layingEgg ? 1 : 0;
-		this.dataManager.set(IS_LAYING_EGG, layingEgg);
+		this.entityData.set(IS_LAYING_EGG, layingEgg);
 	}
 
 	public boolean hasEgg() {
-		return this.dataManager.get(HAS_EGG);
+		return this.entityData.get(HAS_EGG);
 	}
 
 	public void setHasEgg(boolean hasEgg) {
-		this.dataManager.set(HAS_EGG, hasEgg);
+		this.entityData.set(HAS_EGG, hasEgg);
 	}
 
 	@Override
@@ -210,41 +216,41 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 	}
 
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		boolean breedingItem = this.isBreedingItem(player.getHeldItem(hand));
-		boolean isLexicon = player.getHeldItemMainhand().getItem() == ModItems.LEXICON.get();
-		if (!breedingItem && !isLexicon && !this.isBeingRidden() && !this.isChild() && !player.isSecondaryUseActive()) {
-			if (!this.world.isRemote && LivingThingsConfig.OSTRICH.canBeRidden.get()) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		boolean breedingItem = this.isFood(player.getItemInHand(hand));
+		boolean isLexicon = player.getMainHandItem().getItem() == ModItems.LEXICON.get();
+		if (!breedingItem && !isLexicon && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
+			if (!this.level.isClientSide && LivingThingsConfig.OSTRICH.canBeRidden.get()) {
 				player.startRiding(this);
 			}
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			return ActionResultType.sidedSuccess(this.level.isClientSide);
 		} else {
-			return super.func_230254_b_(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
 	@Override
 	public void travel(Vector3d travelVector) {
-		this.ride(this, this.boostHelper, travelVector);
+		this.travel(this, this.boostHelper, travelVector);
 	}
 
 	@Override
 	public boolean boost() {
-		return this.boostHelper.boost(this.getRNG());
+		return this.boostHelper.boost(this.getRandom());
 	}
 
 	@Override
-	public void travelTowards(Vector3d travelVec) {
+	public void travelWithInput(Vector3d travelVec) {
 		super.travel(travelVec);
 	}
 
 	@Override
-	public float getMountedSpeed() {
+	public float getSteeringSpeed() {
 		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.9F;
 	}
 
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 1.0D;
 	}
 
@@ -264,55 +270,60 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return (this.ostrich.hasEgg() || this.ostrich.isBuildingNest() || this.ostrich.isLayingEgg()) && super.shouldExecute();
+		public boolean canUse() {
+			return (this.ostrich.hasEgg() || this.ostrich.isBuildingNest() || this.ostrich.isLayingEgg())
+					&& super.canUse();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			return super.shouldContinueExecuting() && (this.ostrich.hasEgg() || this.ostrich.isBuildingNest() || this.ostrich.isLayingEgg());
+		public boolean canContinueToUse() {
+			return super.canContinueToUse()
+					&& (this.ostrich.hasEgg() || this.ostrich.isBuildingNest() || this.ostrich.isLayingEgg());
 		}
 
 		@Override
-		protected void func_220725_g() {
-			BlockPos blockpos = this.func_241846_j();
-			Path path = this.creature.getNavigator().getPathToPos(blockpos.getX() + 0.5D, blockpos.getY(), blockpos.getZ() + 0.5D, 0);
-			this.creature.getNavigator().setPath(path, this.movementSpeed);
+		protected void moveMobToBlock() {
+			BlockPos blockpos = this.getMoveToTarget();
+			Path path = this.mob.getNavigation().createPath(blockpos.getX() + 0.5D, blockpos.getY(),
+					blockpos.getZ() + 0.5D, 0);
+			this.mob.getNavigation().moveTo(path, this.speedModifier);
 		}
 
 		@Override
-		protected BlockPos func_241846_j() {
-			if (this.ostrich.world.getBlockState(this.destinationBlock).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
-				return this.destinationBlock;
+		protected BlockPos getMoveToTarget() {
+			if (this.ostrich.level.getBlockState(this.blockPos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
+				return this.blockPos;
 			}
-			return this.destinationBlock.up();
+			return this.blockPos.above();
 		}
 
 		@Override
 		public void tick() {
-			BlockPos blockpos = this.func_241846_j();
-			if (!blockpos.withinDistance(this.creature.getPositionVec(), this.getTargetDistanceSq())) {
+			BlockPos blockpos = this.getMoveToTarget();
+			if (!blockpos.closerThan(this.mob.position(), this.acceptedDistance())) {
 				this.isAboveDestination = false;
-				++this.timeoutCounter;
-				if (this.shouldMove()) {
-					Path path = this.creature.getNavigator().getPathToPos(blockpos.getX() + 0.5D, blockpos.getY(), blockpos.getZ() + 0.5D, 0);
-					this.creature.getNavigator().setPath(path, this.movementSpeed);
+				++this.tryTicks;
+				if (this.shouldRecalculatePath()) {
+					Path path = this.mob.getNavigation().createPath(blockpos.getX() + 0.5D, blockpos.getY(),
+							blockpos.getZ() + 0.5D, 0);
+					this.mob.getNavigation().moveTo(path, this.speedModifier);
 				}
 			} else {
 				this.isAboveDestination = true;
-				--this.timeoutCounter;
+				--this.tryTicks;
 			}
-			if (!this.ostrich.isInWater() && this.getIsAboveDestination()) {
-				World world = this.ostrich.world;
-				if (world.getBlockState(this.destinationBlock).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
-					BlockState state = world.getBlockState(this.destinationBlock);
-					if (!state.get(OstrichNestBlock.EGG)) {
+			if (!this.ostrich.isInWater() && this.isReachedTarget()) {
+				World world = this.ostrich.level;
+				if (world.getBlockState(this.blockPos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
+					BlockState state = world.getBlockState(this.blockPos);
+					if (!state.getValue(OstrichNestBlock.EGG)) {
 						// lay egg animation
 						if (this.ostrich.layingEggCounter < 1) {
 							this.ostrich.setLayingEgg(true);
 						} else if (this.ostrich.layingEggCounter > 150) {
-							world.playSound(null, this.destinationBlock, ModSounds.OSTRICH_EGG_LAYING.get(), SoundCategory.BLOCKS, 0.5F, 0.9F);
-							world.setBlockState(this.destinationBlock, state.with(OstrichNestBlock.EGG, true), 3);
+							world.playSound(null, this.blockPos, ModSounds.OSTRICH_EGG_LAYING.get(),
+									SoundCategory.BLOCKS, 0.5F, 0.9F);
+							world.setBlock(this.blockPos, state.setValue(OstrichNestBlock.EGG, true), 3);
 							this.ostrich.setHasEgg(false);
 							this.ostrich.setLayingEgg(false);
 						}
@@ -325,9 +336,10 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 					if (this.ostrich.nestBuildingCounter < 1) {
 						this.ostrich.setBuildingNest(true);
 					} else if (this.ostrich.nestBuildingCounter > 100) {
-						world.playSound(null, this.destinationBlock, SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.BLOCKS, 0.9F, 0.9F);
-						world.setBlockState(this.destinationBlock.up(), ModBlocks.OSTRICH_NEST.get().getDefaultState(), 3);
-						this.destinationBlock = this.destinationBlock.up();
+						world.playSound(null, this.blockPos, SoundEvents.LILY_PAD_PLACE, SoundCategory.BLOCKS, 0.9F,
+								0.9F);
+						world.setBlock(this.blockPos.above(), ModBlocks.OSTRICH_NEST.get().defaultBlockState(), 3);
+						this.blockPos = this.blockPos.above();
 						this.ostrich.setBuildingNest(false);
 					}
 					if (ostrich.isBuildingNest()) {
@@ -341,23 +353,23 @@ public class OstrichEntity extends AnimalEntity implements IRideable, ILexiconEn
 		}
 
 		@Override
-		public void resetTask() {
-			super.resetTask();
+		public void stop() {
+			super.stop();
 			this.ostrich.setLayingEgg(false);
 			this.ostrich.setBuildingNest(false);
 		}
 
 		@Override
-		protected boolean getIsAboveDestination() {
+		protected boolean isReachedTarget() {
 			return this.isAboveDestination;
 		}
 
 		@Override
-		protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
+		protected boolean isValidTarget(IWorldReader worldIn, BlockPos pos) {
 			if (worldIn.getBlockState(pos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
-				return !worldIn.getBlockState(pos).get(OstrichNestBlock.EGG);
+				return !worldIn.getBlockState(pos).getValue(OstrichNestBlock.EGG);
 			} else if (worldIn.getBlockState(pos).getBlock() == Blocks.SAND) {
-				return worldIn.isAirBlock(pos.up());
+				return worldIn.isEmptyBlock(pos.above());
 			}
 			return false;
 		}

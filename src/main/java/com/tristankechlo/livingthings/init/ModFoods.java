@@ -4,10 +4,12 @@ import net.minecraft.item.Food;
 
 public class ModFoods {
 
-	public static final Food CRAB = (new Food.Builder()).hunger(2).saturation(0.2F).build();
-	public static final Food COOKED_CRAB = (new Food.Builder()).hunger(5).saturation(0.5F).build();
-	public static final Food OSTRICH = (new Food.Builder()).hunger(3).saturation(0.4F).build();
-	public static final Food COOKED_OSTRICH = (new Food.Builder()).hunger(6).saturation(0.7F).build();
-	public static final Food BANANA = (new Food.Builder()).hunger(4).saturation(0.3F).build();
+	public static final Food CRAB = (new Food.Builder()).nutrition(2).saturationMod(0.2F).build();
+	public static final Food COOKED_CRAB = (new Food.Builder()).nutrition(5).saturationMod(0.5F).build();
+	public static final Food OSTRICH = (new Food.Builder()).nutrition(3).saturationMod(0.4F).build();
+	public static final Food COOKED_OSTRICH = (new Food.Builder()).nutrition(6).saturationMod(0.7F).build();
+	public static final Food BANANA = (new Food.Builder()).nutrition(4).saturationMod(0.3F).build();
+	public static final Food ELEPHANT = (new Food.Builder()).nutrition(4).saturationMod(0.6F).build();
+	public static final Food COOKED_ELEPHANT = (new Food.Builder()).nutrition(7).saturationMod(0.9F).build();
 
 }

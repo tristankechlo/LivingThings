@@ -17,7 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<MonkeyEntity>> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/monkey.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/monkey.png");
 	private final MonkeyModel<MonkeyEntity> modelNormal = new MonkeyModel<>();
 	private final MonkeySittingModel<MonkeyEntity> modelSitting = new MonkeySittingModel<>();
 	private byte lastAction;
@@ -27,7 +28,7 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<Monkey
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MonkeyEntity entity) {
+	public ResourceLocation getTextureLocation(MonkeyEntity entity) {
 		return TEXTURE;
 	}
 
@@ -35,12 +36,12 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<Monkey
 	public void render(MonkeyEntity monkey, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 
-		byte monkeyAction = (byte) ((monkey.isSitting()) ? 1 : 0);
+		byte monkeyAction = (byte) ((monkey.isCrouching()) ? 1 : 0);
 		if (monkeyAction != this.lastAction) {
 			if (monkeyAction == 1) {
-				this.entityModel = this.modelSitting;
+				this.model = this.modelSitting;
 			} else {
-				this.entityModel = modelNormal;
+				this.model = modelNormal;
 			}
 		}
 		this.lastAction = monkeyAction;

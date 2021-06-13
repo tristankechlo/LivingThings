@@ -47,15 +47,15 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent(
 			"container." + LivingThings.MOD_ID + ".elephant");
 	private static final DataParameter<Boolean> IS_SADDLED = EntityDataManager
-			.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+			.defineId(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> HAS_CHEST = EntityDataManager
-			.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+			.defineId(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_TAMED = EntityDataManager
-			.createKey(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
+			.defineId(AbstractTameableChestedEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager
-			.createKey(AbstractTameableChestedEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
-	private static final Ingredient TAMING_ITEMS = Ingredient.fromItems(Items.APPLE);
+			.defineId(AbstractTameableChestedEntity.class, DataSerializers.OPTIONAL_UUID);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
+	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.APPLE);
 	protected Inventory entityInventory;
 	private int tameAmount;
 
@@ -66,31 +66,31 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(IS_SADDLED, false);
-		this.dataManager.register(HAS_CHEST, false);
-		this.dataManager.register(IS_TAMED, false);
-		this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.getEntityData().define(IS_SADDLED, false);
+		this.getEntityData().define(HAS_CHEST, false);
+		this.getEntityData().define(IS_TAMED, false);
+		this.getEntityData().define(OWNER_UNIQUE_ID, Optional.empty());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setSaddled(compound.getBoolean("Saddled"));
 		this.setHasChest(compound.getBoolean("Chested"));
 		this.setTame(compound.getBoolean("Tamed"));
 		this.setTameAmount(compound.getInt("TameAmount"));
 
-		this.entityInventory.read(compound.getList("Inventory", 10));
+		this.entityInventory.fromTag(compound.getList("Inventory", 10));
 		this.initInventory();
 
 		UUID uuid;
-		if (compound.hasUniqueId("Owner")) {
-			uuid = compound.getUniqueId("Owner");
+		if (compound.hasUUID("Owner")) {
+			uuid = compound.getUUID("Owner");
 		} else {
 			String string = compound.getString("Owner");
-			uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), string);
+			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), string);
 		}
 		if (uuid != null) {
 			this.setOwnerUniqueId(uuid);
@@ -98,15 +98,15 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
 		compound.putBoolean("Chested", this.hasChest());
 		compound.putBoolean("Tamed", this.isTame());
 		compound.putInt("TameAmount", this.getTameAmount());
-		compound.put("Inventory", this.entityInventory.write());
+		compound.put("Inventory", this.entityInventory.createTag());
 		if (this.getOwnerUniqueId() != null) {
-			compound.putUniqueId("Owner", this.getOwnerUniqueId());
+			compound.putUUID("Owner", this.getOwnerUniqueId());
 		}
 	}
 
@@ -114,12 +114,12 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		Inventory inventory = this.entityInventory;
 		this.entityInventory = new Inventory(27);
 		if (inventory != null) {
-			int invSize = Math.min(inventory.getSizeInventory(), this.entityInventory.getSizeInventory());
+			int invSize = Math.min(inventory.getContainerSize(), this.entityInventory.getContainerSize());
 
 			for (int i = 0; i < invSize; ++i) {
-				ItemStack itemstack = inventory.getStackInSlot(i);
+				ItemStack itemstack = inventory.getItem(i);
 				if (!itemstack.isEmpty()) {
-					this.entityInventory.setInventorySlotContents(i, itemstack.copy());
+					this.entityInventory.setItem(i, itemstack.copy());
 				}
 			}
 		}
@@ -127,43 +127,43 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 
 	public void openInventory(PlayerEntity player) {
 		// elephant inv is a generic chest
-		player.openContainer(new SimpleNamedContainerProvider((id, playerInv, playerIn) -> {
-			return new ChestContainer(ContainerType.GENERIC_9X3, id, player.inventory, this.entityInventory, 3);
+		player.openMenu(new SimpleNamedContainerProvider((id, playerInv, playerIn) -> {
+			return new ChestContainer(ContainerType.GENERIC_9x3, id, player.inventory, this.entityInventory, 3);
 		}, CONTAINER_NAME));
 	}
 
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		if (hand == Hand.OFF_HAND) { // prevent offhand use
 			return ActionResultType.PASS;
 		}
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getMainHandItem();
 
-		if (stack.isEmpty() && this.isTame() && !this.isChild()) {
+		if (stack.isEmpty() && this.isTame() && !this.isBaby()) {
 
-			if (player.isSneaking() && this.hasChest()) {
+			if (player.isCrouching() && this.hasChest()) {
 				// open inv
 				this.openInventory(player);
 
 			} else if (this.getPassengers().isEmpty() && this.isSaddled()) {
 				// start riding
-				this.mountRider(player);
+				this.doPlayerRide(player);
 			}
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			return ActionResultType.sidedSuccess(this.level.isClientSide());
 
-		} else if (player.getHeldItemMainhand().getItem() == ModItems.LEXICON.get()) {
+		} else if (stack.getItem() == ModItems.LEXICON.get()) {
 
 			// prevent any use when item is lexicon
 			return ActionResultType.PASS;
 
-		} else if (this.isBreedingItem(stack)) {
+		} else if (this.isFood(stack)) {
 
-			if (this.isChild()) {
+			if (this.isBaby()) {
 				// age up
-				int age = this.getGrowingAge();
-				this.consumeItemFromStack(player, stack);
+				int age = this.getAge();
+				this.usePlayerItem(player, stack);
 				this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
-				return ActionResultType.func_233537_a_(this.world.isRemote);
+				return ActionResultType.sidedSuccess(this.level.isClientSide());
 			}
 
 			if (this.isTame()) {
@@ -172,18 +172,18 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 				if (this.getHealth() < this.getMaxHealth()) {
 
 					// heal entity
-					if (!this.world.isRemote) {
+					if (!this.level.isClientSide()) {
 						float healAmount = this.getHealingAmount(stack.getItem());
 						this.heal(healAmount);
-						this.consumeItemFromStack(player, stack);
+						this.usePlayerItem(player, stack);
 						return ActionResultType.SUCCESS;
 					}
 
 					// if already full health
 				} else {
 					// set in love
-					if (!this.world.isRemote && !this.isChild() && this.canBreed()) {
-						this.consumeItemFromStack(player, stack);
+					if (!this.level.isClientSide() && !this.isBaby() && this.canBreed()) {
+						this.usePlayerItem(player, stack);
 						this.setInLove(player);
 						return ActionResultType.SUCCESS;
 					}
@@ -191,41 +191,41 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 
 			}
 
-		} else if (this.isTamingItem(stack) && !this.isChild() && !this.isTame()) {
+		} else if (this.isTamingItem(stack) && !this.isBaby() && !this.isTame()) {
 
 			// progress taming
-			if (!this.world.isRemote) {
+			if (!this.level.isClientSide()) {
 				this.addTameAmount(this.getTameAmountPerItem(stack.getItem()));
-				this.consumeItemFromStack(player, stack);
+				this.usePlayerItem(player, stack);
 				// if entity shall be set as tamed now
 				if (this.getTameAmount() >= this.getMaxTameAmount()) {
 					this.setTame(true);
-					this.setOwnerUniqueId(player.getUniqueID());
+					this.setOwnerUniqueId(player.getUUID());
 					if (player instanceof ServerPlayerEntity) {
 						CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayerEntity) player, this);
 					}
-					this.world.setEntityState(this, (byte) 6);
+					this.level.broadcastEntityEvent(this, (byte) 6);
 				} else {
-					this.world.setEntityState(this, (byte) 7);
+					this.level.broadcastEntityEvent(this, (byte) 7);
 				}
 			}
 			return ActionResultType.SUCCESS;
 
-		} else if (this.isTame() && isSaddleItem(stack) && !this.isChild()) {
+		} else if (this.isTame() && isSaddleItem(stack) && !this.isBaby()) {
 
 			// saddle entity
-			if (!this.world.isRemote && !this.isSaddled()) {
-				this.consumeItemFromStack(player, stack);
+			if (!this.level.isClientSide() && !this.isSaddled()) {
+				this.usePlayerItem(player, stack);
 				this.setSaddled(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
 			}
 
-		} else if (this.isTame() && this.isSaddled() && isChestItem(stack) && !this.isChild()) {
+		} else if (this.isTame() && this.isSaddled() && isChestItem(stack) && !this.isBaby()) {
 
 			// add chest to entity
-			if (!this.world.isRemote && !this.hasChest()) {
-				this.consumeItemFromStack(player, stack);
+			if (!this.level.isClientSide() && !this.hasChest()) {
+				this.usePlayerItem(player, stack);
 				this.setHasChest(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
 				return ActionResultType.SUCCESS;
@@ -235,8 +235,9 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 		return ActionResultType.PASS;
 	}
 
+	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
+	public void handleEntityEvent(byte id) {
 		switch (id) {
 		case 6: // entity tamed
 			this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
@@ -247,7 +248,7 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 			break;
 
 		default:
-			super.handleStatusUpdate(id);
+			super.handleEntityEvent(id);
 			break;
 		}
 	}
@@ -256,89 +257,89 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	private void spawnParticle(IParticleData particle) {
 		if (particle != null) {
 			for (int i = 0; i < 7; ++i) {
-				double d0 = this.rand.nextGaussian() * 0.03D;
-				double d1 = this.rand.nextGaussian() * 0.03D;
-				double d2 = this.rand.nextGaussian() * 0.03D;
-				this.world.addParticle(particle, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D,
-						this.getPosZRandom(1.0D), d0, d1, d2);
+				double d0 = this.random.nextGaussian() * 0.03D;
+				double d1 = this.random.nextGaussian() * 0.03D;
+				double d2 = this.random.nextGaussian() * 0.03D;
+				this.level.addParticle(particle, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D),
+						d0, d1, d2);
 			}
 		}
 	}
 
-	protected void mountRider(PlayerEntity player) {
-		if (!this.world.isRemote) {
-			player.rotationYaw = this.rotationYaw;
-			player.rotationPitch = this.rotationPitch;
+	protected void doPlayerRide(PlayerEntity player) {
+		if (!this.level.isClientSide()) {
+			player.yRot = this.yRot;
+			player.xRot = this.xRot;
 			player.startRiding(this);
 		}
 	}
 
 	@Override
-	protected boolean isMovementBlocked() {
-		return super.isMovementBlocked() && this.isBeingRidden();
+	protected boolean isImmobile() {
+		return super.isImmobile() && this.isVehicle();
 	}
 
 	@Override
-	protected void dropInventory() {
-		super.dropInventory();
+	protected void dropEquipment() {
+		super.dropEquipment();
 		if (this.entityInventory != null) {
-			for (int i = 0; i < this.entityInventory.getSizeInventory(); ++i) {
-				ItemStack itemstack = this.entityInventory.getStackInSlot(i);
+			for (int i = 0; i < this.entityInventory.getContainerSize(); ++i) {
+				ItemStack itemstack = this.entityInventory.getItem(i);
 				if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
-					this.entityDropItem(itemstack);
+					this.spawnAtLocation(itemstack);
 				}
 			}
 		}
-		if (this.isSaddled() && this.rand.nextBoolean()) {
-			this.entityDropItem(this.getSaddleItem());
+		if (this.isSaddled() && this.random.nextBoolean()) {
+			this.spawnAtLocation(this.getSaddleItem());
 		}
-		if (this.hasChest() && this.rand.nextBoolean()) {
-			this.entityDropItem(this.getChestItem());
+		if (this.hasChest() && this.random.nextBoolean()) {
+			this.spawnAtLocation(this.getChestItem());
 		}
 	}
 
 	@Override
-	public boolean canBeSteered() {
+	public boolean isControlledByLocalInstance() {
 		return this.getControllingPassenger() instanceof PlayerEntity;
 	}
 
 	@Override
 	public void travel(Vector3d travelVector) {
 		if (this.isAlive()) {
-			if (this.isBeingRidden() && this.canBeSteered() && this.isSaddled()) {
+			if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
 				LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
-				this.rotationYaw = livingentity.rotationYaw;
-				this.prevRotationYaw = this.rotationYaw;
-				this.rotationPitch = -0.0436332312F;
-				this.setRotation(this.rotationYaw, this.rotationPitch);
-				this.renderYawOffset = this.rotationYaw;
-				this.rotationYawHead = this.renderYawOffset;
-				float sideSpeed = livingentity.moveStrafing * 0.4F;
-				float forwardSpeed = livingentity.moveForward * 0.7F;
+				this.yRot = livingentity.yRot;
+				this.yRotO = this.yRot;
+				this.xRot = livingentity.xRot * 0.5F;
+				this.setRot(this.yRot, this.xRot);
+				this.yBodyRot = this.yRot;
+				this.yHeadRot = this.yBodyRot;
+				float sideSpeed = livingentity.xxa * 0.4F;
+				float forwardSpeed = livingentity.zza * 0.7F;
 
 				// if moving backwards -> move slower
 				if (forwardSpeed <= 0.0F) {
 					forwardSpeed *= 0.2F;
 				}
 
-				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
-				if (this.canPassengerSteer()) {
-					this.setAIMoveSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+				this.flyingSpeed = this.getSpeed() * 0.1F;
+				if (this.isControlledByLocalInstance()) {
+					this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					super.travel(new Vector3d(sideSpeed, travelVector.y, forwardSpeed));
 				} else if (livingentity instanceof PlayerEntity) {
-					this.setMotion(Vector3d.ZERO);
+					this.setDeltaMovement(Vector3d.ZERO);
 				}
 
-				this.func_233629_a_(this, false);
+				this.calculateEntityAnimation(this, false);
 			} else {
-				this.jumpMovementFactor = 0.02F;
+				this.flyingSpeed = 0.02F;
 				super.travel(travelVector);
 			}
 		}
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
@@ -352,36 +353,36 @@ public abstract class AbstractTameableChestedEntity extends AnimalEntity {
 	}
 
 	public boolean isSaddled() {
-		return this.dataManager.get(IS_SADDLED);
+		return this.getEntityData().get(IS_SADDLED);
 	}
 
 	public void setSaddled(boolean saddled) {
-		this.dataManager.set(IS_SADDLED, saddled);
+		this.getEntityData().set(IS_SADDLED, saddled);
 	}
 
 	public boolean hasChest() {
-		return this.dataManager.get(HAS_CHEST);
+		return this.getEntityData().get(HAS_CHEST);
 	}
 
 	public void setHasChest(boolean chested) {
-		this.dataManager.set(HAS_CHEST, chested);
+		this.getEntityData().set(HAS_CHEST, chested);
 	}
 
 	public boolean isTame() {
-		return this.dataManager.get(IS_TAMED);
+		return this.getEntityData().get(IS_TAMED);
 	}
 
 	public void setTame(boolean tamed) {
-		this.dataManager.set(IS_TAMED, tamed);
+		this.getEntityData().set(IS_TAMED, tamed);
 	}
 
 	@Nullable
 	public UUID getOwnerUniqueId() {
-		return this.dataManager.get(OWNER_UNIQUE_ID).orElse(null);
+		return this.getEntityData().get(OWNER_UNIQUE_ID).orElse(null);
 	}
 
 	public void setOwnerUniqueId(@Nullable UUID uniqueId) {
-		this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
+		this.getEntityData().set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
 	}
 
 	/** how much the entity shall be healed */

@@ -39,11 +39,9 @@ public final class BiomeSpawnConfig {
 
 	private static Map<String, List<SpawnData>> entityBasedSpawnData;
 	private static Map<String, Supplier<List<SpawnData>>> entityConfigEntries = getEntityConfigEntries();
-	private static Type type = new TypeToken<Map<String, List<SpawnData>>>() {
-	}.getType();
+	private static Type type = new TypeToken<Map<String, List<SpawnData>>>() {}.getType();
 
-	private BiomeSpawnConfig() {
-	}
+	private BiomeSpawnConfig() {}
 
 	public static void setToDefault() {
 		entityBasedSpawnData = new HashMap<>();
@@ -100,7 +98,7 @@ public final class BiomeSpawnConfig {
 					if (classificationMap == null) {
 						classificationMap = new HashMap<>();
 					}
-					EntityClassification entityClassification = entityType.getClassification();
+					EntityClassification entityClassification = entityType.getCategory();
 					List<Spawners> spawnersMap = classificationMap.get(entityClassification);
 					if (spawnersMap == null) {
 						spawnersMap = new ArrayList<>();

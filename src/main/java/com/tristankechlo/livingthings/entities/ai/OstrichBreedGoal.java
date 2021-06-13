@@ -21,28 +21,29 @@ public class OstrichBreedGoal extends BreedGoal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		return super.shouldExecute() && !this.ostrich.hasEgg();
+	public boolean canUse() {
+		return super.canUse() && !this.ostrich.hasEgg();
 	}
 
 	@Override
-	protected void spawnBaby() {
+	protected void breed() {
 		ServerPlayerEntity serverplayerentity = this.animal.getLoveCause();
-		if (serverplayerentity == null && this.targetMate.getLoveCause() != null) {
-			serverplayerentity = this.targetMate.getLoveCause();
+		if (serverplayerentity == null && this.partner.getLoveCause() != null) {
+			serverplayerentity = this.partner.getLoveCause();
 		}
 		if (serverplayerentity != null) {
-			serverplayerentity.addStat(Stats.ANIMALS_BRED);
-			CriteriaTriggers.BRED_ANIMALS.trigger(serverplayerentity, this.animal, this.targetMate, null);
+			serverplayerentity.awardStat(Stats.ANIMALS_BRED);
+			CriteriaTriggers.BRED_ANIMALS.trigger(serverplayerentity, this.animal, this.partner, null);
 		}
 		this.ostrich.setHasEgg(true);
-		this.animal.resetInLove();
-		this.targetMate.resetInLove();
-		this.animal.setGrowingAge(6000);
-		this.targetMate.setGrowingAge(6000);
-		Random random = this.animal.getRNG();
-		if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-			this.world.addEntity(new ExperienceOrbEntity(this.world, this.animal.getPosX(), this.animal.getPosY(), this.animal.getPosZ(), random.nextInt(7) + 1));
+		this.animal.resetLove();
+		this.partner.resetLove();
+		this.animal.setAge(6000);
+		this.partner.setAge(6000);
+		Random random = this.animal.getRandom();
+		if (this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+			this.level.addFreshEntity(new ExperienceOrbEntity(this.level, this.animal.getX(), this.animal.getY(),
+					this.animal.getZ(), random.nextInt(7) + 1));
 		}
 	}
 

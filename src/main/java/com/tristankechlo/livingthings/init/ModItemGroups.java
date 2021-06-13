@@ -14,25 +14,26 @@ public class ModItemGroups {
 	public static final ItemGroup General = new ItemGroup("LivingThings") {
 
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(ModItems.SHARK_TOOTH.get());
 		}
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public void fill(NonNullList<ItemStack> items) {
+		public void fillItemList(NonNullList<ItemStack> items) {
 			NonNullList<ItemStack> spawneggsItems = NonNullList.create();
 			for (Item item : ForgeRegistries.ITEMS) {
 				if (!(item instanceof SpawnEggItem)) {
-					item.fillItemGroup(this, items);
+					item.fillItemCategory(this, items);
 				} else {
-					if (item.getGroup() == this) {
+					if (item.getItemCategory() == this) {
 						spawneggsItems.add(new ItemStack(item));
 					}
 				}
 			}
 			items.addAll(spawneggsItems);
 		}
+
 	};
 
 }

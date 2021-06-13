@@ -51,181 +51,181 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 	private final ModelRenderer SaddleLeft;
 
 	public ElephantModel() {
-		textureWidth = 256;
-		textureHeight = 128;
+		texWidth = 256;
+		texHeight = 128;
 
 		Tusks = new ModelRenderer(this);
-		Tusks.setRotationPoint(0.0F, -12.0F, -19.0F);
+		Tusks.setPos(0.0F, -12.0F, -19.0F);
 
 		LeftTusk = new ModelRenderer(this);
-		LeftTusk.setRotationPoint(7.0F, 6.0F, -10.0F);
+		LeftTusk.setPos(7.0F, 6.0F, -10.0F);
 		Tusks.addChild(LeftTusk);
 
 		LeftTuskTop = new ModelRenderer(this);
-		LeftTuskTop.setRotationPoint(0.0F, 0.0F, 0.0F);
+		LeftTuskTop.setPos(0.0F, 0.0F, 0.0F);
 		LeftTusk.addChild(LeftTuskTop);
-		LeftTuskTop.setTextureOffset(192, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
+		LeftTuskTop.texOffs(192, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
 
 		LeftTuskMiddle = new ModelRenderer(this);
-		LeftTuskMiddle.setRotationPoint(0.0F, 10.0F, 0.0F);
+		LeftTuskMiddle.setPos(0.0F, 10.0F, 0.0F);
 		LeftTuskTop.addChild(LeftTuskMiddle);
 		this.setRotationAngle(LeftTuskMiddle, -0.3054F, 0.0F, 0.0F);
-		LeftTuskMiddle.setTextureOffset(204, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		LeftTuskMiddle.texOffs(204, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
 
 		LeftTuskBottom = new ModelRenderer(this);
-		LeftTuskBottom.setRotationPoint(0.0F, 6.0F, 0.0F);
+		LeftTuskBottom.setPos(0.0F, 6.0F, 0.0F);
 		LeftTuskMiddle.addChild(LeftTuskBottom);
 		this.setRotationAngle(LeftTuskBottom, -0.6545F, 0.0F, 0.0F);
-		LeftTuskBottom.setTextureOffset(215, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+		LeftTuskBottom.texOffs(215, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
 
 		RightTusk = new ModelRenderer(this);
-		RightTusk.setRotationPoint(-7.0F, 6.0F, -10.0F);
+		RightTusk.setPos(-7.0F, 6.0F, -10.0F);
 		Tusks.addChild(RightTusk);
 
 		RightTuskTop = new ModelRenderer(this);
-		RightTuskTop.setRotationPoint(14.0F, 0.0F, 0.0F);
+		RightTuskTop.setPos(14.0F, 0.0F, 0.0F);
 		RightTusk.addChild(RightTuskTop);
-		RightTuskTop.setTextureOffset(228, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
+		RightTuskTop.texOffs(228, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
 
 		RightTuskMiddle = new ModelRenderer(this);
-		RightTuskMiddle.setRotationPoint(0.0F, 10.0F, 0.0F);
+		RightTuskMiddle.setPos(0.0F, 10.0F, 0.0F);
 		RightTuskTop.addChild(RightTuskMiddle);
 		this.setRotationAngle(RightTuskMiddle, -0.3054F, 0.0F, 0.0F);
-		RightTuskMiddle.setTextureOffset(238, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		RightTuskMiddle.texOffs(238, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
 
 		RightTuskBottom = new ModelRenderer(this);
-		RightTuskBottom.setRotationPoint(0.0F, 6.0F, 0.0F);
+		RightTuskBottom.setPos(0.0F, 6.0F, 0.0F);
 		RightTuskMiddle.addChild(RightTuskBottom);
 		this.setRotationAngle(RightTuskBottom, -0.6545F, 0.0F, 0.0F);
-		RightTuskBottom.setTextureOffset(248, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+		RightTuskBottom.texOffs(248, 0).addBox(-15.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
-		Body.setRotationPoint(0.0F, 24.0F, 0.0F);
-		Body.setTextureOffset(0, 64).addBox(-11.0F, -42.0F, -20.0F, 22.0F, 24.0F, 40.0F, 0.0F, false);
-		Body.setTextureOffset(156, 93).addBox(-8.0F, -43.0F, -17.0F, 16.0F, 1.0F, 34.0F, 0.0F, false);
+		Body.setPos(0.0F, 24.0F, 0.0F);
+		Body.texOffs(0, 64).addBox(-11.0F, -42.0F, -20.0F, 22.0F, 24.0F, 40.0F, 0.0F, false);
+		Body.texOffs(156, 93).addBox(-8.0F, -43.0F, -17.0F, 16.0F, 1.0F, 34.0F, 0.0F, false);
 
 		Legs = new ModelRenderer(this);
-		Legs.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Legs.setPos(0.0F, 0.0F, 0.0F);
 		Body.addChild(Legs);
 
 		Front = new ModelRenderer(this);
-		Front.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Front.setPos(0.0F, 0.0F, 0.0F);
 		Legs.addChild(Front);
 
 		RightFrontLeg = new ModelRenderer(this);
-		RightFrontLeg.setRotationPoint(-8.0F, -19.0F, -16.0F);
+		RightFrontLeg.setPos(-8.0F, -19.0F, -16.0F);
 		Front.addChild(RightFrontLeg);
-		RightFrontLeg.setTextureOffset(68, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
+		RightFrontLeg.texOffs(68, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
 
 		LeftFrontLeg = new ModelRenderer(this);
-		LeftFrontLeg.setRotationPoint(8.0F, -19.0F, -16.0F);
+		LeftFrontLeg.setPos(8.0F, -19.0F, -16.0F);
 		Front.addChild(LeftFrontLeg);
-		LeftFrontLeg.setTextureOffset(95, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
+		LeftFrontLeg.texOffs(95, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
 
 		Back = new ModelRenderer(this);
-		Back.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Back.setPos(0.0F, 0.0F, 0.0F);
 		Legs.addChild(Back);
 
 		RightBackLeg = new ModelRenderer(this);
-		RightBackLeg.setRotationPoint(-8.0F, -19.0F, 16.0F);
+		RightBackLeg.setPos(-8.0F, -19.0F, 16.0F);
 		Back.addChild(RightBackLeg);
-		RightBackLeg.setTextureOffset(122, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
+		RightBackLeg.texOffs(122, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
 
 		LeftBackLeg = new ModelRenderer(this);
-		LeftBackLeg.setRotationPoint(8.0F, -19.0F, 16.0F);
+		LeftBackLeg.setPos(8.0F, -19.0F, 16.0F);
 		Back.addChild(LeftBackLeg);
-		LeftBackLeg.setTextureOffset(149, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
+		LeftBackLeg.texOffs(149, 0).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 18.0F, 6.0F, 0.0F, false);
 
 		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, -36.0F, -20.0F);
+		Head.setPos(0.0F, -36.0F, -20.0F);
 		Body.addChild(Head);
 		this.setRotationAngle(Head, -0.0436F, 0.0F, 0.0F);
-		Head.setTextureOffset(123, 45).addBox(-9.0F, -9.0F, -12.0F, 18.0F, 16.0F, 13.0F, 0.0F, false);
+		Head.texOffs(123, 45).addBox(-9.0F, -9.0F, -12.0F, 18.0F, 16.0F, 13.0F, 0.0F, false);
 
 		TrunkTop = new ModelRenderer(this);
-		TrunkTop.setRotationPoint(0.0F, 7.0F, -8.0F);
+		TrunkTop.setPos(0.0F, 7.0F, -8.0F);
 		Head.addChild(TrunkTop);
 		this.setRotationAngle(TrunkTop, 0.0436F, 0.0F, 0.0F);
-		TrunkTop.setTextureOffset(0, 0).addBox(-4.0F, -0.1F, -4.0F, 8.0F, 10.0F, 8.0F, 0.0F, false);
+		TrunkTop.texOffs(0, 0).addBox(-4.0F, -0.1F, -4.0F, 8.0F, 10.0F, 8.0F, 0.0F, false);
 
 		TrunkMiddle = new ModelRenderer(this);
-		TrunkMiddle.setRotationPoint(0.0F, 10.0F, 0.0F);
+		TrunkMiddle.setPos(0.0F, 10.0F, 0.0F);
 		TrunkTop.addChild(TrunkMiddle);
 		this.setRotationAngle(TrunkMiddle, 0.0436F, 0.0F, 0.0F);
-		TrunkMiddle.setTextureOffset(0, 26).addBox(-3.0F, -0.2F, -3.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
+		TrunkMiddle.texOffs(0, 26).addBox(-3.0F, -0.2F, -3.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
 
 		TrunkBottom = new ModelRenderer(this);
-		TrunkBottom.setRotationPoint(0.0F, 7.0F, 0.0F);
+		TrunkBottom.setPos(0.0F, 7.0F, 0.0F);
 		TrunkMiddle.addChild(TrunkBottom);
 		this.setRotationAngle(TrunkBottom, 0.0873F, 0.0F, 0.0F);
-		TrunkBottom.setTextureOffset(0, 44).addBox(-2.0F, 0.7F, -2.0F, 4.0F, 7.0F, 4.0F, 0.0F, false);
+		TrunkBottom.texOffs(0, 44).addBox(-2.0F, 0.7F, -2.0F, 4.0F, 7.0F, 4.0F, 0.0F, false);
 
 		Ears = new ModelRenderer(this);
-		Ears.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Ears.setPos(0.0F, 0.0F, 0.0F);
 		Head.addChild(Ears);
 
 		LeftEar = new ModelRenderer(this);
-		LeftEar.setRotationPoint(9.0F, -1.0F, -6.0F);
+		LeftEar.setPos(9.0F, -1.0F, -6.0F);
 		Ears.addChild(LeftEar);
 		this.setRotationAngle(LeftEar, 0.1309F, 0.48F, 0.0F);
-		LeftEar.setTextureOffset(200, 37).addBox(0.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
+		LeftEar.texOffs(200, 37).addBox(0.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
 
 		RightEar = new ModelRenderer(this);
-		RightEar.setRotationPoint(-9.0F, -1.0F, -6.0F);
+		RightEar.setPos(-9.0F, -1.0F, -6.0F);
 		Ears.addChild(RightEar);
 		this.setRotationAngle(RightEar, 0.1309F, -0.48F, 0.0F);
-		RightEar.setTextureOffset(200, 37).addBox(-1.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
+		RightEar.texOffs(200, 37).addBox(-1.0F, -8.0F, 0.0F, 1.0F, 12.0F, 8.0F, 0.0F, false);
 
 		Chests = new ModelRenderer(this);
-		Chests.setRotationPoint(0.0F, 24.0F, 0.0F);
-		Chests.setTextureOffset(54, 38).addBox(11.0F, -37.0F, 9.5F, 2.0F, 8.0F, 8.0F, 0.0F, false);
-		Chests.setTextureOffset(54, 38).addBox(-13.0F, -37.0F, 9.5F, 2.0F, 8.0F, 8.0F, 0.0F, true);
-		Chests.setTextureOffset(136, 85).addBox(10.2F, -42.475F, 11.5F, 1.0F, 6.0F, 4.0F, 0.0F, false);
-		Chests.setTextureOffset(136, 85).addBox(-11.2F, -42.475F, 11.5F, 1.0F, 6.0F, 4.0F, 0.0F, false);
-		Chests.setTextureOffset(125, 92).addBox(-8.5F, -43.475F, 11.5F, 17.0F, 1.0F, 4.0F, 0.0F, false);
+		Chests.setPos(0.0F, 24.0F, 0.0F);
+		Chests.texOffs(54, 38).addBox(11.0F, -37.0F, 9.5F, 2.0F, 8.0F, 8.0F, 0.0F, false);
+		Chests.texOffs(54, 38).addBox(-13.0F, -37.0F, 9.5F, 2.0F, 8.0F, 8.0F, 0.0F, true);
+		Chests.texOffs(136, 85).addBox(10.2F, -42.475F, 11.5F, 1.0F, 6.0F, 4.0F, 0.0F, false);
+		Chests.texOffs(136, 85).addBox(-11.2F, -42.475F, 11.5F, 1.0F, 6.0F, 4.0F, 0.0F, false);
+		Chests.texOffs(125, 92).addBox(-8.5F, -43.475F, 11.5F, 17.0F, 1.0F, 4.0F, 0.0F, false);
 
 		HolderLeft = new ModelRenderer(this);
-		HolderLeft.setRotationPoint(9.6F, -42.5F, 13.5F);
+		HolderLeft.setPos(9.6F, -42.5F, 13.5F);
 		Chests.addChild(HolderLeft);
 		this.setRotationAngle(HolderLeft, 0.0F, 0.0F, 0.3491F);
-		HolderLeft.setTextureOffset(134, 89).addBox(-1.5F, -0.5F, -2.0F, 3.0F, 2.0F, 4.0F, 0.0F, false);
+		HolderLeft.texOffs(134, 89).addBox(-1.5F, -0.5F, -2.0F, 3.0F, 2.0F, 4.0F, 0.0F, false);
 
 		HolderRight = new ModelRenderer(this);
-		HolderRight.setRotationPoint(-9.6F, -42.5F, 13.5F);
+		HolderRight.setPos(-9.6F, -42.5F, 13.5F);
 		Chests.addChild(HolderRight);
 		this.setRotationAngle(HolderRight, 0.0F, 0.0F, -0.3491F);
-		HolderRight.setTextureOffset(134, 89).addBox(-1.5F, -0.5F, -2.0F, 3.0F, 2.0F, 4.0F, 0.0F, false);
+		HolderRight.texOffs(134, 89).addBox(-1.5F, -0.5F, -2.0F, 3.0F, 2.0F, 4.0F, 0.0F, false);
 
 		Saddle = new ModelRenderer(this);
-		Saddle.setRotationPoint(0.0F, 24.0F, 0.0F);
-		Saddle.setTextureOffset(114, 84).addBox(-6.5F, -44.0F, -7.0F, 13.0F, 1.0F, 12.0F, 0.0F, false);
-		Saddle.setTextureOffset(124, 96).addBox(-6.0F, -45.0F, 3.0F, 12.0F, 1.0F, 2.0F, 0.0F, false);
-		Saddle.setTextureOffset(136, 85).addBox(-11.2F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
-		Saddle.setTextureOffset(136, 85).addBox(10.2F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
-		Saddle.setTextureOffset(144, 90).addBox(-1.5F, -46.0F, -7.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
-		Saddle.setTextureOffset(245, 43).addBox(10.4F, -32.5F, -2.5F, 1.0F, 1.0F, 3.0F, 0.0F, false);
-		Saddle.setTextureOffset(245, 43).addBox(-11.4F, -32.5F, -2.5F, 1.0F, 1.0F, 3.0F, 0.0F, false);
-		Saddle.setTextureOffset(245, 43).addBox(10.4F, -32.0F, -2.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		Saddle.setTextureOffset(245, 43).addBox(-11.4F, -32.0F, -2.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
+		Saddle.setPos(0.0F, 24.0F, 0.0F);
+		Saddle.texOffs(114, 84).addBox(-6.5F, -44.0F, -7.0F, 13.0F, 1.0F, 12.0F, 0.0F, false);
+		Saddle.texOffs(124, 96).addBox(-6.0F, -45.0F, 3.0F, 12.0F, 1.0F, 2.0F, 0.0F, false);
+		Saddle.texOffs(136, 85).addBox(-11.2F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
+		Saddle.texOffs(136, 85).addBox(10.2F, -42.475F, -2.0F, 1.0F, 10.0F, 2.0F, 0.0F, false);
+		Saddle.texOffs(144, 90).addBox(-1.5F, -46.0F, -7.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
+		Saddle.texOffs(245, 43).addBox(10.4F, -32.5F, -2.5F, 1.0F, 1.0F, 3.0F, 0.0F, false);
+		Saddle.texOffs(245, 43).addBox(-11.4F, -32.5F, -2.5F, 1.0F, 1.0F, 3.0F, 0.0F, false);
+		Saddle.texOffs(245, 43).addBox(10.4F, -32.0F, -2.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
+		Saddle.texOffs(245, 43).addBox(-11.4F, -32.0F, -2.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 
 		SaddleRight = new ModelRenderer(this);
-		SaddleRight.setRotationPoint(-8.625F, -43.175F, -1.5F);
+		SaddleRight.setPos(-8.625F, -43.175F, -1.5F);
 		Saddle.addChild(SaddleRight);
 		this.setRotationAngle(SaddleRight, 0.0F, 0.0F, -0.3054F);
-		SaddleRight.setTextureOffset(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
+		SaddleRight.texOffs(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
 
 		SaddleLeft = new ModelRenderer(this);
-		SaddleLeft.setRotationPoint(8.725F, -43.15F, -1.5F);
+		SaddleLeft.setPos(8.725F, -43.15F, -1.5F);
 		Saddle.addChild(SaddleLeft);
 		this.setRotationAngle(SaddleLeft, 0.0F, 0.0F, 0.3054F);
-		SaddleLeft.setTextureOffset(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
+		SaddleLeft.texOffs(130, 84).addBox(-2.5492F, -0.0726F, -0.5F, 5.0F, 1.0F, 2.0F, 0.0F, false);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
-			float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay,
+			float red, float green, float blue, float alpha) {
 
-		if (this.isChild) {
+		if (this.young) {
 			matrixStack.scale(0.6F, 0.6F, 0.6F);
 			matrixStack.translate(0, 1, 0);
 		} else {
@@ -237,42 +237,42 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 	}
 
 	@Override
-	public void setRotationAngles(ElephantEntity elephant, float limbSwing, float limbSwingAmount, float ageInTicks,
+	public void setupAnim(ElephantEntity elephant, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 
-		this.Head.rotateAngleX = headPitch * 0.0174532925F;
-		this.Tusks.rotateAngleX = headPitch * 0.0174532925F;
-		this.Head.rotateAngleY = netHeadYaw * 0.0174532925F;
-		this.Tusks.rotateAngleY = netHeadYaw * 0.0174532925F;
+		this.Head.xRot = headPitch * 0.0174532925F;
+		this.Tusks.xRot = headPitch * 0.0174532925F;
+		this.Head.yRot = netHeadYaw * 0.0174532925F;
+		this.Tusks.yRot = netHeadYaw * 0.0174532925F;
 
 		this.walk(RightFrontLeg, LeftFrontLeg, RightBackLeg, LeftBackLeg, limbSwing, limbSwingAmount);
 
-		this.TrunkTop.rotateAngleX = this.currentTrunkAngle[0][0];
-		this.TrunkTop.rotateAngleY = this.currentTrunkAngle[0][1];
-		this.TrunkTop.rotateAngleZ = this.currentTrunkAngle[0][2];
+		this.TrunkTop.xRot = this.currentTrunkAngle[0][0];
+		this.TrunkTop.yRot = this.currentTrunkAngle[0][1];
+		this.TrunkTop.zRot = this.currentTrunkAngle[0][2];
 
-		this.TrunkMiddle.rotateAngleX = this.currentTrunkAngle[1][0];
-		this.TrunkMiddle.rotateAngleY = this.currentTrunkAngle[1][1];
-		this.TrunkMiddle.rotateAngleZ = this.currentTrunkAngle[1][2];
+		this.TrunkMiddle.xRot = this.currentTrunkAngle[1][0];
+		this.TrunkMiddle.yRot = this.currentTrunkAngle[1][1];
+		this.TrunkMiddle.zRot = this.currentTrunkAngle[1][2];
 
-		this.TrunkBottom.rotateAngleX = this.currentTrunkAngle[2][0];
-		this.TrunkBottom.rotateAngleY = this.currentTrunkAngle[2][1];
-		this.TrunkBottom.rotateAngleZ = this.currentTrunkAngle[2][2];
+		this.TrunkBottom.xRot = this.currentTrunkAngle[2][0];
+		this.TrunkBottom.yRot = this.currentTrunkAngle[2][1];
+		this.TrunkBottom.zRot = this.currentTrunkAngle[2][2];
 
 	}
 
 	@Override
-	public void setLivingAnimations(T elephant, float limbSwing, float limbSwingAmount, float partialTick) {
+	public void prepareMobModel(ElephantEntity elephant, float limbSwing, float limbSwingAmount, float partialTick) {
 		if (partialTick > 0.5F) {
 			setTrunkAngle();
 		}
 		int i = elephant.getAttackTimer();
 		if (i > 0) {
-			this.Head.rotateAngleX = 1.7F * MathHelper.func_233021_e_((float) i - partialTick, 10.0F);
-			this.Tusks.rotateAngleX = 1.7F * MathHelper.func_233021_e_((float) i - partialTick, 10.0F);
+			this.Head.xRot = 1.7F * MathHelper.triangleWave((float) i - partialTick, 10.0F);
+			this.Tusks.xRot = 1.7F * MathHelper.triangleWave((float) i - partialTick, 10.0F);
 		}
-		this.Chests.showModel = elephant.hasChest();
-		this.Saddle.showModel = elephant.isSaddled();
+		this.Chests.visible = elephant.hasChest();
+		this.Saddle.visible = elephant.isSaddled();
 
 	}
 

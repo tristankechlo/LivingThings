@@ -20,7 +20,7 @@ public final class SpawnData {
 		this.maxCount = max;
 		this.biomes = new ArrayList<>();
 		for (int i = 0; i < biomes.length; i++) {
-			this.biomes.add(biomes[i].getLocation().toString());
+			this.biomes.add(biomes[i].location().toString());
 		}
 	}
 

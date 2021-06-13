@@ -40,27 +40,29 @@ import net.minecraft.world.server.ServerWorld;
 
 public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
-	private static final DataParameter<Boolean> LEFT_LEG_UP = EntityDataManager.createKey(FlamingoEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> RIGHT_LEG_UP = EntityDataManager.createKey(FlamingoEntity.class, DataSerializers.BOOLEAN);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/flamingo");
-	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON);
+	private static final DataParameter<Boolean> LEFT_LEG_UP = EntityDataManager.defineId(FlamingoEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> RIGHT_LEG_UP = EntityDataManager.defineId(FlamingoEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/flamingo");
+	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON);
 	protected DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
 
 	public FlamingoEntity(EntityType<? extends FlamingoEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.stepHeight = 1.0F;
-		this.setPathPriority(PathNodeType.WATER, 1.0F);
+		this.maxUpStep = 1.0F;
+		this.setPathfindingMalus(PathNodeType.WATER, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		return ModEntityTypes.FLAMINGO_ENTITY.get().create(world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.FLAMINGO.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.FLAMINGO.speed.get());
 	}
 
 	@Override
@@ -80,20 +82,20 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(LEFT_LEG_UP, false);
-		this.dataManager.register(RIGHT_LEG_UP, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(LEFT_LEG_UP, false);
+		this.entityData.define(RIGHT_LEG_UP, false);
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return TEMPTATION_ITEMS.test(stack);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.6F : 1.2F;
+		return this.isBaby() ? 0.6F : 1.2F;
 	}
 
 	@Override
@@ -102,24 +104,24 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.FLAMINGO.maxSpawnedInChunk.get();
 	}
 
 	public boolean isLeftLegUp() {
-		return this.dataManager.get(LEFT_LEG_UP);
+		return this.entityData.get(LEFT_LEG_UP);
 	}
 
 	public boolean isRightLegUp() {
-		return this.dataManager.get(RIGHT_LEG_UP);
+		return this.entityData.get(RIGHT_LEG_UP);
 	}
 
 	public void setLeftLegUp(boolean up) {
-		this.dataManager.set(LEFT_LEG_UP, up);
+		this.entityData.set(LEFT_LEG_UP, up);
 	}
 
 	public void setRightLegUp(boolean up) {
-		this.dataManager.set(RIGHT_LEG_UP, up);
+		this.entityData.set(RIGHT_LEG_UP, up);
 	}
 
 	@Override
@@ -137,24 +139,26 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 		public LiftLegsGoal(FlamingoEntity flamingo, int chance) {
 			this.flamingo = flamingo;
 			this.chance = chance;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			if (this.flamingo.getRNG().nextInt(this.chance) != 0) {
+		public boolean canUse() {
+			if (this.flamingo.getRandom().nextInt(this.chance) != 0) {
 				return false;
 			}
-			return !this.flamingo.isRightLegUp() && !this.flamingo.isLeftLegUp() && this.flamingo.getNavigator().noPath();
+			return !this.flamingo.isRightLegUp() && !this.flamingo.isLeftLegUp()
+					&& this.flamingo.getNavigation().isDone();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.flamingo.getNavigator().noPath() && (this.flamingo.isRightLegUp() || this.flamingo.isLeftLegUp());
+		public boolean canContinueToUse() {
+			return this.flamingo.getNavigation().isDone()
+					&& (this.flamingo.isRightLegUp() || this.flamingo.isLeftLegUp());
 		}
 
 		@Override
-		public void resetTask() {
+		public void stop() {
 			this.leftLegCounter = 0;
 			this.rightLegCounter = 0;
 			this.flamingo.setLeftLegUp(false);
@@ -201,14 +205,14 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return this.flamingo.eyesInWater && super.shouldExecute();
+		public boolean canUse() {
+			return this.flamingo.wasEyeInWater && super.canUse();
 		}
 
 		@Override
 		public void tick() {
 			// find a new position on land
-			this.flamingo.randomWalkingGoal.makeUpdate();
+			this.flamingo.randomWalkingGoal.trigger();
 			// start swimming
 			super.tick();
 		}
@@ -226,11 +230,11 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
 		@Override
 		protected Vector3d getPosition() {
-			if (this.flamingo.eyesInWater) {
-				Vector3d vector3d = RandomPositionGenerator.getLandPos(this.creature, 15, 7);
+			if (this.flamingo.wasEyeInWater) {
+				Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 15, 7);
 				return vector3d == null ? super.getPosition() : vector3d;
 			} else {
-				return RandomPositionGenerator.findRandomTarget(this.creature, 10, 7);
+				return RandomPositionGenerator.getLandPos(this.mob, 10, 7);
 			}
 		}
 

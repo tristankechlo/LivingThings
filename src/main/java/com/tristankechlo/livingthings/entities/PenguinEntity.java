@@ -37,22 +37,22 @@ import net.minecraft.world.server.ServerWorld;
 
 public class PenguinEntity extends AnimalEntity implements ILexiconEntry {
 
-	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON, Items.TROPICAL_FISH);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/penguin");
+	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON, Items.TROPICAL_FISH);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/penguin");
 
 	public PenguinEntity(EntityType<? extends PenguinEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld worldIn, AgeableEntity parent) {
+	public AgeableEntity getBreedOffspring(ServerWorld worldIn, AgeableEntity parent) {
 		return ModEntityTypes.PENGUIN_ENTITY.get().create(worldIn);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.PENGUIN.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.PENGUIN.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.PENGUIN.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.PENGUIN.speed.get());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class PenguinEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return TEMPTATION_ITEMS.test(stack);
 	}
 
@@ -84,17 +84,17 @@ public class PenguinEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public int getTalkInterval() {
+	public int getAmbientSoundInterval() {
 		return 180;
 	}
 
 	@Override
 	protected float getStandingEyeHeight(@Nonnull Pose pose, @Nonnull EntitySize size) {
-		return this.isChild() ? 0.6F : 1.3F;
+		return this.isBaby() ? 0.6F : 1.3F;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.PENGUIN.maxSpawnedInChunk.get();
 	}
 

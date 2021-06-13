@@ -50,17 +50,21 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 
-	private static final DataParameter<Integer> VARIANT = EntityDataManager.createKey(SnailEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> SHELL_COLOR_F = EntityDataManager.createKey(SnailEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> SHELL_COLOR_B = EntityDataManager.createKey(SnailEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(SnailEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> SHELL_COLOR_F = EntityDataManager.defineId(SnailEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> SHELL_COLOR_B = EntityDataManager.defineId(SnailEntity.class,
+			DataSerializers.INT);
 	private static final ResourceLocation[] BODY_TEXTURES = new ResourceLocation[] {
 			textureLocation("snail_body_1.png") };
 	private static final ResourceLocation[] SHELL_TEXTURES_B = new ResourceLocation[] {
 			textureLocation("snail_shell_b1.png"), textureLocation("snail_shell_b2.png") };
 	private static final ResourceLocation[] SHELL_TEXTURES_F = new ResourceLocation[] {
 			textureLocation("snail_shell_f1.png"), textureLocation("snail_shell_f2.png") };
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.CARROT, Items.APPLE);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/snail");
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.CARROT, Items.APPLE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"passive_mobs/snail");
 
 	public SnailEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -71,7 +75,7 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		SnailEntity snailChild = ModEntityTypes.SNAIL_ENTITY.get().create(world);
 		if (entity == this) {
 			// make copy of current snail
@@ -88,16 +92,16 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 			colors.add(this.getShellColor(PatternType.BACKGROUND));
 			colors.add(parentSnail.getShellColor(PatternType.FOREGROUND));
 			colors.add(parentSnail.getShellColor(PatternType.BACKGROUND));
-			Collections.shuffle(colors, world.rand);
+			Collections.shuffle(colors, world.random);
 			snailChild.setShellColor(PatternType.FOREGROUND, colors.get(colors.size() - 1));
 			snailChild.setShellColor(PatternType.BACKGROUND, colors.get(colors.size() - 1));
 
-			short bodyVariant = world.rand.nextBoolean() ? this.getBodyVariant() : parentSnail.getBodyVariant();
-			short shellVariant = !world.rand.nextBoolean() ? this.getShellVariant() : parentSnail.getShellVariant();
+			short bodyVariant = world.random.nextBoolean() ? this.getBodyVariant() : parentSnail.getBodyVariant();
+			short shellVariant = !world.random.nextBoolean() ? this.getShellVariant() : parentSnail.getShellVariant();
 			snailChild.setVariant(bodyVariant, shellVariant);
 		} else {
 			// use a random preset
-			SnailVariants snailPreset = SnailVariants.values()[world.rand.nextInt(SnailVariants.values().length)];
+			SnailVariants snailPreset = SnailVariants.values()[world.random.nextInt(SnailVariants.values().length)];
 			snailChild.setShellColor(PatternType.FOREGROUND, snailPreset.getForegroundColor());
 			snailChild.setShellColor(PatternType.BACKGROUND, snailPreset.getBackgroundColor());
 			snailChild.setVariant(snailPreset.getVariant());
@@ -105,21 +109,20 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 		return snailChild;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.SNAIL.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SNAIL.speed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SNAIL.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SNAIL.speed.get());
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		// select randomly a preset
-		SnailVariants data = SnailVariants.values()[world.getRandom().nextInt(SnailVariants.values().length)];
+		SnailVariants data = SnailVariants.values()[level.getRandom().nextInt(SnailVariants.values().length)];
 		this.setVariant(data.getVariant());
 		this.setShellColor(PatternType.FOREGROUND, data.getForegroundColor());
 		this.setShellColor(PatternType.BACKGROUND, data.getBackgroundColor());
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
@@ -135,53 +138,53 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(VARIANT, SnailVariants.NORMAL.getVariant());
-		this.dataManager.register(SHELL_COLOR_F, SnailVariants.NORMAL.getForegroundColor());
-		this.dataManager.register(SHELL_COLOR_B, SnailVariants.NORMAL.getBackgroundColor());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, SnailVariants.NORMAL.getVariant());
+		this.entityData.define(SHELL_COLOR_F, SnailVariants.NORMAL.getForegroundColor());
+		this.entityData.define(SHELL_COLOR_B, SnailVariants.NORMAL.getBackgroundColor());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("SnailVariant"));
 		this.setShellColor(PatternType.FOREGROUND, compound.getInt("ShellColorF"));
 		this.setShellColor(PatternType.BACKGROUND, compound.getInt("ShellColorB"));
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("SnailVariant", this.getVariant());
 		compound.putInt("ShellColorF", this.getShellColor(PatternType.FOREGROUND));
 		compound.putInt("ShellColorB", this.getShellColor(PatternType.BACKGROUND));
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof DyeItem) {
 			DyeColor color = DyeColor.getColor(stack);
-			if (player.isSneaking()) {
+			if (player.isCrouching()) {
 				this.setShellColor(PatternType.FOREGROUND, color.getColorValue());
 			} else {
 				this.setShellColor(PatternType.BACKGROUND, color.getColorValue());
 			}
-			this.consumeItemFromStack(player, stack);
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			this.usePlayerItem(player, stack);
+			return ActionResultType.sidedSuccess(this.level.isClientSide);
 		}
-		return super.func_230254_b_(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.3F : 0.65F;
+		return this.isBaby() ? 0.3F : 0.65F;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -213,11 +216,11 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	public int getVariant() {
-		return this.dataManager.get(VARIANT);
+		return this.entityData.get(VARIANT);
 	}
 
 	public void setVariant(int variant) {
-		this.dataManager.set(VARIANT, variant);
+		this.entityData.set(VARIANT, variant);
 	}
 
 	public void setVariant(short bodyVariant, short shellVariant) {
@@ -225,18 +228,18 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	public int getShellColor(PatternType type) {
-		if(type == PatternType.FOREGROUND) {
-			return this.dataManager.get(SHELL_COLOR_F);
+		if (type == PatternType.FOREGROUND) {
+			return this.entityData.get(SHELL_COLOR_F);
 		} else {
-			return this.dataManager.get(SHELL_COLOR_B);
+			return this.entityData.get(SHELL_COLOR_B);
 		}
 	}
 
 	public void setShellColor(PatternType type, int color) {
 		if (type == PatternType.FOREGROUND) {
-			this.dataManager.set(SHELL_COLOR_F, color);
+			this.entityData.set(SHELL_COLOR_F, color);
 		} else if (type == PatternType.BACKGROUND) {
-			this.dataManager.set(SHELL_COLOR_B, color);
+			this.entityData.set(SHELL_COLOR_B, color);
 		}
 	}
 
@@ -245,7 +248,7 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.SNAIL.maxSpawnedInChunk.get();
 	}
 
@@ -256,12 +259,8 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 
 	static enum SnailVariants {
 
-		NORMAL(0, 0, 11693105, 8209952),
-		GREEN(0, 0, 412975, 2129982),
-		PURPLE(0, 0, 6488099, 10238043),
-		BLUE(0, 0, 4857561, 6447075),
-		RED(0, 0, 10367513, 13586001),
-		NORMAL_2(0, 1, 9847813, 7352576);
+		NORMAL(0, 0, 11693105, 8209952), GREEN(0, 0, 412975, 2129982), PURPLE(0, 0, 6488099, 10238043),
+		BLUE(0, 0, 4857561, 6447075), RED(0, 0, 10367513, 13586001), NORMAL_2(0, 1, 9847813, 7352576);
 
 		private int variant;
 		private int colorForeground;

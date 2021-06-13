@@ -13,16 +13,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class PenguinRenderer extends MobRenderer<PenguinEntity, PenguinModel<PenguinEntity>> {
 
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/penguin.png");
-	protected static final ResourceLocation TEXTURE_CHILD = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/penguin_baby.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/penguin.png");
+	protected static final ResourceLocation TEXTURE_CHILD = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/penguin_baby.png");
 
 	public PenguinRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PenguinModel<>(), 0.45F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PenguinEntity entity) {
-		return (entity.isChild()) ? TEXTURE_CHILD : TEXTURE;
+	public ResourceLocation getTextureLocation(PenguinEntity entity) {
+		return (entity.isBaby()) ? TEXTURE_CHILD : TEXTURE;
 	}
 
 }

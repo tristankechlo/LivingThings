@@ -20,15 +20,15 @@ import com.tristankechlo.livingthings.entities.SnailEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,7 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModEntityTypes {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, LivingThings.MOD_ID);
-	private static final Properties spawn_egg_props = new Item.Properties().group(ModItemGroups.General);
+	private static final Properties spawn_egg_props = new Item.Properties().tab(ModItemGroups.General);
 
 	// create entity types
 	private static final EntityType<ElephantEntity> elephant = createStandardEntityType("elephant", ElephantEntity::new, EntityClassification.CREATURE, 1.85F, 2.7F);
@@ -50,7 +50,7 @@ public class ModEntityTypes {
 	private static final EntityType<MantarayEntity> mantaray = createStandardEntityType("mantaray", MantarayEntity::new, EntityClassification.WATER_AMBIENT, 0.75F, 0.45F);
 	private static final EntityType<RaccoonEntity> raccoon = createStandardEntityType("raccoon", RaccoonEntity::new, EntityClassification.CREATURE, 0.5F, 0.75F);
 	private static final EntityType<OwlEntity> owl = createStandardEntityType("owl", OwlEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F);
-	private static final EntityType<AncientBlazeEntity> ancient_blaze = EntityType.Builder.create(AncientBlazeEntity::new, EntityClassification.MONSTER).size(0.7F, 2.99F).immuneToFire().build(LivingThings.MOD_ID + ":ancient_blaze");
+	private static final EntityType<AncientBlazeEntity> ancient_blaze = EntityType.Builder.of(AncientBlazeEntity::new, EntityClassification.MONSTER).sized(0.7F, 2.99F).fireImmune().build(LivingThings.MOD_ID + ":ancient_blaze");
 	private static final EntityType<KoalaEntity> koala = createStandardEntityType("koala", KoalaEntity::new, EntityClassification.CREATURE, 0.6F, 0.75F);
 	private static final EntityType<SnailEntity> snail = createStandardEntityType("snail", SnailEntity::new, EntityClassification.CREATURE, 0.6F, 0.7F);
 	private static final EntityType<MonkeyEntity> monkey = createStandardEntityType("monkey", MonkeyEntity::new, EntityClassification.CREATURE, 0.6F, 0.7F);
@@ -91,43 +91,44 @@ public class ModEntityTypes {
 
 	// create standard entity type
 	private static <T extends Entity> EntityType<T> createStandardEntityType(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height) {
-		return EntityType.Builder.create(factory, classification).size(width, height).build(LivingThings.MOD_ID + ":" + entity_name);
+		return EntityType.Builder.of(factory, classification).sized(width, height).build(LivingThings.MOD_ID + ":" + entity_name);
 	}
 
 	// add attributes like health to entities
+	@SuppressWarnings("deprecation")
 	public static void registerEntityAttributes() {
-		GlobalEntityTypeAttributes.put(ModEntityTypes.ELEPHANT_ENTITY.get(), ElephantEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.GIRAFFE_ENTITY.get(), GiraffeEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.LION_ENTITY.get(), LionEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SHARK_ENTITY.get(), SharkEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.PENGUIN_ENTITY.get(), PenguinEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.OSTRICH_ENTITY.get(), OstrichEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.FLAMINGO_ENTITY.get(), FlamingoEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.CRAB_ENTITY.get(), CrabEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.MANTARAY_ENTITY.get(), MantarayEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.RACCOON_ENTITY.get(), RaccoonEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.OWL_ENTITY.get(), OwlEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), AncientBlazeEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.KOALA_ENTITY.get(), KoalaEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SNAIL_ENTITY.get(), SnailEntity.getAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyEntity.getAttributes().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ELEPHANT_ENTITY.get(), ElephantEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.GIRAFFE_ENTITY.get(), GiraffeEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.LION_ENTITY.get(), LionEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.SHARK_ENTITY.get(), SharkEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.PENGUIN_ENTITY.get(), PenguinEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.OSTRICH_ENTITY.get(), OstrichEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.FLAMINGO_ENTITY.get(), FlamingoEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.CRAB_ENTITY.get(), CrabEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.MANTARAY_ENTITY.get(), MantarayEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.RACCOON_ENTITY.get(), RaccoonEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.OWL_ENTITY.get(), OwlEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), AncientBlazeEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.KOALA_ENTITY.get(), KoalaEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.SNAIL_ENTITY.get(), SnailEntity.createAttributes().build());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyEntity.createAttributes().build());
 	}
 
 	public static void registerEntitySpawnPlacements() {
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.ELEPHANT_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.GIRAFFE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.LION_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ELEPHANT_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.GIRAFFE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.LION_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHARK_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SharkEntity::canSharkSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.PENGUIN_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.OSTRICH_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.FLAMINGO_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.PENGUIN_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.OSTRICH_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.FLAMINGO_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CRAB_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MANTARAY_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.RACCOON_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.RACCOON_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.OWL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.KOALA_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, KoalaEntity::canKoalaSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SNAIL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SNAIL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MONKEY_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, MonkeyEntity::canMonkeySpawn);
 	}
 

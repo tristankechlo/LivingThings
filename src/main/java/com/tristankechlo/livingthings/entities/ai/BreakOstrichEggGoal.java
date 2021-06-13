@@ -35,7 +35,8 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 	private boolean destroyNestComplete;
 	private int chance;
 
-	public BreakOstrichEggGoal(CreatureEntity creatureIn, double speed, int yMax, int chance, boolean destroyNestComplete) {
+	public BreakOstrichEggGoal(CreatureEntity creatureIn, double speed, int yMax, int chance,
+			boolean destroyNestComplete) {
 		super(creatureIn, speed, 12, yMax);
 		this.block = ModBlocks.OSTRICH_NEST.get();
 		this.entity = creatureIn;
@@ -44,68 +45,72 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.world, this.destinationBlock, this.entity)) {
+	public boolean canUse() {
+		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.level, this.blockPos, this.entity)) {
 			return false;
-		} else if (this.runDelay > 0) {
-			--this.runDelay;
+		} else if (this.nextStartTick > 0) {
+			--this.nextStartTick;
 			return false;
 		} else if (this.shouldMoveToDestination()) {
-			this.runDelay = 20;
-			return this.entity.getRNG().nextInt(this.chance) == 0;
+			this.nextStartTick = 20;
+			return this.entity.getRandom().nextInt(this.chance) == 0;
 		} else {
-			this.runDelay = this.getRunDelay(this.creature);
+			this.nextStartTick = this.nextStartTick(this.mob);
 			return false;
 		}
 	}
 
 	private boolean shouldMoveToDestination() {
-		return this.destinationBlock != null && this.shouldMoveTo(this.creature.world, this.destinationBlock) ? true : this.searchForDestination();
+		return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true
+				: this.findNearestBlock();
 	}
 
 	@Override
-	public void resetTask() {
-		super.resetTask();
+	public void stop() {
+		super.stop();
 		this.entity.fallDistance = 1.0F;
 	}
 
 	@Override
-	public void startExecuting() {
-		super.startExecuting();
+	public void start() {
+		super.start();
 		this.breakingTime = 0;
 	}
 
 	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.HOSTILE, 0.5F, 0.9F + this.entity.getRNG().nextFloat() * 0.2F);
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.HOSTILE, 0.5F,
+				0.9F + this.entity.getRandom().nextFloat() * 0.2F);
 	}
 
 	public void playBrokenSound(World worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F,
+				0.9F + worldIn.random.nextFloat() * 0.2F);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		World world = this.entity.world;
-		BlockPos blockpos = this.entity.getPosition();
+		World world = this.entity.level;
+		BlockPos blockpos = this.entity.blockPosition();
 		BlockPos blockpos1 = this.findTarget(blockpos, world);
-		Random random = this.entity.getRNG();
-		if (this.getIsAboveDestination() && blockpos1 != null) {
+		Random random = this.entity.getRandom();
+		if (this.isReachedTarget() && blockpos1 != null) {
 			if (this.breakingTime > 0) {
-				Vector3d vector3d = this.entity.getMotion();
-				this.entity.setMotion(vector3d.x, 0.3D, vector3d.z);
-				if (!world.isRemote) {
-					((ServerWorld) world).spawnParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.EGG)),
-							blockpos1.getX() + 0.5D, blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3,
-							(random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, 0.15F);
+				Vector3d vector3d = this.entity.getDeltaMovement();
+				this.entity.setDeltaMovement(vector3d.x, 0.3D, vector3d.z);
+				if (!world.isClientSide()) {
+					((ServerWorld) world).sendParticles(
+							new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.EGG)), blockpos1.getX() + 0.5D,
+							blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3, (random.nextFloat() - 0.5D) * 0.08D,
+							(random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, 0.15F);
 				}
 			}
 
 			if (this.breakingTime % 2 == 0) {
-				Vector3d vector3d1 = this.entity.getMotion();
-				this.entity.setMotion(vector3d1.x, -0.3D, vector3d1.z);
+				Vector3d vector3d1 = this.entity.getDeltaMovement();
+				this.entity.setDeltaMovement(vector3d1.x, -0.3D, vector3d1.z);
 				if (this.breakingTime % 6 == 0) {
-					this.playBreakingSound(world, this.destinationBlock);
+					this.playBreakingSound(world, this.blockPos);
 				}
 			}
 
@@ -115,14 +120,16 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 					world.removeBlock(blockpos1, false);
 				} else {
 					// remove only the egg
-					world.setBlockState(blockpos1, world.getBlockState(blockpos1).with(OstrichNestBlock.EGG, false));
+					world.setBlockAndUpdate(blockpos1,
+							world.getBlockState(blockpos1).setValue(OstrichNestBlock.EGG, false));
 				}
-				if (!world.isRemote) {
+				if (!world.isClientSide()) {
 					for (int i = 0; i < 20; ++i) {
 						double d3 = random.nextGaussian() * 0.02D;
 						double d1 = random.nextGaussian() * 0.02D;
 						double d2 = random.nextGaussian() * 0.02D;
-						((ServerWorld) world).spawnParticle(ParticleTypes.POOF, blockpos1.getX() + 0.5D, blockpos1.getY(), blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double) 0.15F);
+						((ServerWorld) world).sendParticles(ParticleTypes.POOF, blockpos1.getX() + 0.5D,
+								blockpos1.getY(), blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double) 0.15F);
 					}
 
 					this.playBrokenSound(world, blockpos1);
@@ -136,17 +143,18 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
 	@Nullable
 	private BlockPos findTarget(BlockPos pos, IBlockReader worldIn) {
-		if (worldIn.getBlockState(pos).isIn(this.block)) {
-			if (worldIn.getBlockState(pos).get(OstrichNestBlock.EGG)) {
+		if (worldIn.getBlockState(pos).is(this.block)) {
+			if (worldIn.getBlockState(pos).getValue(OstrichNestBlock.EGG)) {
 				return pos;
 			}
 			return null;
 		} else {
-			BlockPos[] ablockpos = new BlockPos[] { pos.down(), pos.west(), pos.east(), pos.north(), pos.south(), pos.down().down() };
+			BlockPos[] ablockpos = new BlockPos[] { pos.below(), pos.west(), pos.east(), pos.north(), pos.south(),
+					pos.below().below() };
 
 			for (BlockPos blockpos : ablockpos) {
-				if (worldIn.getBlockState(blockpos).isIn(this.block)) {
-					if (worldIn.getBlockState(blockpos).get(OstrichNestBlock.EGG)) {
+				if (worldIn.getBlockState(blockpos).is(this.block)) {
+					if (worldIn.getBlockState(blockpos).getValue(OstrichNestBlock.EGG)) {
 						return blockpos;
 					}
 				}
@@ -158,21 +166,21 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
+	protected boolean isValidTarget(IWorldReader worldIn, BlockPos pos) {
 		IChunk ichunk = worldIn.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FULL, false);
 		if (ichunk == null) {
 			return false;
 		} else {
-			if (ichunk.getBlockState(pos).isIn(this.block)) {
-				return ichunk.getBlockState(pos).get(OstrichNestBlock.EGG) && ichunk.getBlockState(pos.up()).isAir()
-						&& ichunk.getBlockState(pos.up(2)).isAir();
+			if (ichunk.getBlockState(pos).is(this.block)) {
+				return ichunk.getBlockState(pos).getValue(OstrichNestBlock.EGG)
+						&& ichunk.getBlockState(pos.above()).isAir() && ichunk.getBlockState(pos.above(2)).isAir();
 			}
 			return false;
 		}
 	}
 
 	@Override
-	public double getTargetDistanceSq() {
+	public double acceptedDistance() {
 		return 1.25D;
 	}
 

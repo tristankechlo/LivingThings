@@ -13,16 +13,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class GiraffeRenderer extends MobRenderer<GiraffeEntity, GiraffeModel<GiraffeEntity>> {
 
-	protected static final ResourceLocation TEXTURE_1 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/giraffe/giraffe.png");
-	protected static final ResourceLocation TEXTURE_2 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/giraffe/giraffe_2.png");
-	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/giraffe/giraffe_albino.png");
+	protected static final ResourceLocation TEXTURE_1 = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/giraffe/giraffe.png");
+	protected static final ResourceLocation TEXTURE_2 = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/giraffe/giraffe_2.png");
+	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/giraffe/giraffe_albino.png");
 
 	public GiraffeRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new GiraffeModel<>(), 0.8F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GiraffeEntity entity) {
+	public ResourceLocation getTextureLocation(GiraffeEntity entity) {
 		byte variant = entity.getVariant();
 		if (variant == 15) {
 			return TEXTURE_ALBINO;

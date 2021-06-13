@@ -30,7 +30,7 @@ public class ModArmorItem extends ArmorItem {
 		if (!player.isInLava()) {
 			EffectInstance effect = new EffectInstance(Effects.FIRE_RESISTANCE, 2400, 0, false, false, true);
 			if (stack.getItem() == ModItems.ANCIENT_HELMET.get()) {
-				player.addPotionEffect(effect);
+				player.addEffect(effect);
 			}
 		}
 	}
@@ -38,16 +38,17 @@ public class ModArmorItem extends ArmorItem {
 	@SuppressWarnings("unchecked")
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-		if(this.model == null) {
+	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack,
+			EquipmentSlotType armorSlot, A _default) {
+		if (this.model == null) {
 			this.model = new AncientArmorModel(2.0F);
 		}
 
-		this.model.bipedHead.showModel = (armorSlot == EquipmentSlotType.HEAD);
+		this.model.head.visible = (armorSlot == EquipmentSlotType.HEAD);
 
-		this.model.isChild = _default.isChild;
-		this.model.isSneak = _default.isSneak;
-		this.model.isSitting = _default.isSitting;
+		this.model.young = _default.young;
+		this.model.crouching = _default.crouching;
+		this.model.riding = _default.riding;
 		this.model.rightArmPose = _default.rightArmPose;
 		this.model.leftArmPose = _default.leftArmPose;
 

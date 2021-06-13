@@ -5,7 +5,7 @@ showAsResourcePack=false
 
 [[mods]]
 modId="livingthings"
-version="1.16.5 - 1.3.0"
+version="1.16.5 - 1.3.1"
 displayName="Living Things"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/living-things"
 #logoFile="examplemod.png"

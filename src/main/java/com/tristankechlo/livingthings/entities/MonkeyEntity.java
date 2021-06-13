@@ -63,34 +63,37 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class MonkeyEntity extends TameableEntity implements ILexiconEntry {
 
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/monkey");
-	private static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(MonkeyEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(MonkeyEntity.class, DataSerializers.BYTE);
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.APPLE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"neutral_mobs/monkey");
+	private static final DataParameter<Boolean> SITTING = EntityDataManager.defineId(MonkeyEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.defineId(MonkeyEntity.class,
+			DataSerializers.BYTE);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.APPLE);
 	private BlockPos jukeboxPosition;
 	private boolean partying;
 
 	public MonkeyEntity(EntityType<? extends MonkeyEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	private static final Ingredient getBreedingItems() {
-		Ingredient bananas = Ingredient.fromTag(ItemTags.getCollection().get(LivingThingsTags.BANANAS));
+		Ingredient bananas = Ingredient.of(ItemTags.getAllTags().getTagOrEmpty(LivingThingsTags.BANANAS));
 		return Ingredient.merge(ImmutableList.of(bananas, BREEDING_ITEMS));
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		MonkeyEntity monkey = ModEntityTypes.MONKEY_ENTITY.get().create(world);
-		UUID uuid = this.getOwnerId();
+		UUID uuid = this.getOwnerUUID();
 		if (uuid != null) {
-			monkey.setOwnerId(uuid);
-			monkey.setTamed(true);
+			monkey.setOwnerUUID(uuid);
+			monkey.setTame(true);
 		} else if (entity instanceof TameableEntity) {
-			UUID uuid2 = ((TameableEntity) entity).getOwnerId();
+			UUID uuid2 = ((TameableEntity) entity).getOwnerUUID();
 			if (uuid2 != null) {
-				monkey.setOwnerId(uuid2);
-				monkey.setTamed(true);
+				monkey.setOwnerUUID(uuid2);
+				monkey.setTame(true);
 			}
 		}
 		return monkey;
@@ -111,92 +114,91 @@ public class MonkeyEntity extends TameableEntity implements ILexiconEntry {
 
 		this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
+		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(SITTING, false);
-		this.dataManager.register(CLIMBING, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SITTING, false);
+		this.entityData.define(CLIMBING, (byte) 0);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.MONKEY.health.get())
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.MONKEY.damage.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MONKEY.speed.get());
-	}
-
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		compound.putBoolean("Sitting", this.isSitting());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.MONKEY.health.get())
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.MONKEY.damage.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MONKEY.speed.get());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putBoolean("Sitting", this.isCrouching());
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setSitting(compound.getBoolean("Sitting"));
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (!this.world.isRemote) {
-			this.setBesideClimbableBlock(this.collidedHorizontally);
+		if (!this.level.isClientSide()) {
+			this.setBesideClimbableBlock(this.horizontalCollision);
 		}
 	}
 
 	@Override
-	public void livingTick() {
-		if (this.jukeboxPosition == null || !this.jukeboxPosition.withinDistance(this.getPositionVec(), 3.46D)
-				|| !this.world.getBlockState(this.jukeboxPosition).isIn(Blocks.JUKEBOX)) {
+	public void aiStep() {
+		if (this.jukeboxPosition == null || !this.jukeboxPosition.closerThan(this.position(), 3.46D)
+				|| !this.level.getBlockState(this.jukeboxPosition).is(Blocks.JUKEBOX)) {
 			this.partying = false;
 			this.jukeboxPosition = null;
 		}
-		super.livingTick();
+		super.aiStep();
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return MonkeyEntity.getBreedingItems().test(stack);
 	}
 
-	public static boolean isBananaItem(ItemStack stack){
-    	return ItemTags.getCollection().get(LivingThingsTags.BANANAS).contains(stack.getItem());
+	public static boolean isBananaItem(ItemStack stack) {
+		return ItemTags.getAllTags().getTagOrEmpty(LivingThingsTags.BANANAS).contains(stack.getItem());
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.MONKEY.maxSpawnedInChunk.get();
 	}
 
 	@Override
-	public boolean isOnLadder() {
+	public boolean onClimbable() {
 		return this.isBesideClimbableBlock();
 	}
 
 	@Override
-	public boolean isOnSameTeam(Entity entityIn) {
-		if (this.isTamed()) {
+	public boolean isAlliedTo(Entity entityIn) {
+		if (this.isTame()) {
 			LivingEntity livingentity = this.getOwner();
 			if (entityIn == livingentity) {
 				return true;
 			}
 			if (entityIn instanceof TameableEntity) {
-				return ((TameableEntity) entityIn).isOwner(livingentity);
+				return ((TameableEntity) entityIn).isOwnedBy(livingentity);
 			}
 			if (livingentity != null) {
-				return livingentity.isOnSameTeam(entityIn);
+				return livingentity.isAlliedTo(entityIn);
 			}
 		}
-		return super.isOnSameTeam(entityIn);
+		return super.isAlliedTo(entityIn);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void setPartying(BlockPos pos, boolean isPartying) {
+	public void setRecordPlayingNearby(BlockPos pos, boolean isPartying) {
 		this.jukeboxPosition = pos;
 		this.partying = isPartying;
 	}
@@ -207,45 +209,45 @@ public class MonkeyEntity extends TameableEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public boolean isSitting() {
-		return this.dataManager.get(SITTING);
+	public boolean isCrouching() {
+		return this.entityData.get(SITTING);
 	}
 
 	public void setSitting(boolean sitting) {
-		this.dataManager.set(SITTING, sitting);
-		this.navigator.clearPath();
-		this.setAttackTarget((LivingEntity) null);
+		this.entityData.set(SITTING, sitting);
+		this.navigation.stop();
+		this.setTarget((LivingEntity) null);
 	}
 
 	public boolean isBesideClimbableBlock() {
-		return (this.dataManager.get(CLIMBING) & 1) != 0;
+		return (this.entityData.get(CLIMBING) & 1) != 0;
 	}
 
 	public void setBesideClimbableBlock(boolean climbing) {
-		byte b0 = this.dataManager.get(CLIMBING);
+		byte b0 = this.entityData.get(CLIMBING);
 		if (climbing) {
 			b0 = (byte) (b0 | 1);
 		} else {
 			b0 = (byte) (b0 & -2);
 		}
-		this.dataManager.set(CLIMBING, b0);
+		this.entityData.set(CLIMBING, b0);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.31F : 0.67F;
+		return this.isBaby() ? 0.31F : 0.67F;
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
+	protected PathNavigator createNavigation(World worldIn) {
 		return new ClimberPathNavigator(this, worldIn);
 	}
 
 	@Override
 	public void travel(Vector3d travelVector) {
-		if (this.isSitting()) {
-			if (this.getNavigator().getPath() != null) {
-				this.getNavigator().clearPath();
+		if (this.isCrouching()) {
+			if (this.getNavigation().getPath() != null) {
+				this.getNavigation().stop();
 			}
 			travelVector = Vector3d.ZERO;
 		}
@@ -258,50 +260,49 @@ public class MonkeyEntity extends TameableEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 		Item item = stack.getItem();
-		if (this.world.isRemote) {
+		if (this.level.isClientSide()) {
 			if (isLexicon(stack)) {
 				return ActionResultType.PASS;
 			}
-			boolean flag = this.isOwner(player) || this.isTamed() || this.isBreedingItem(stack) && !this.isTamed();
+			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isFood(stack) && !this.isTame();
 			return flag ? ActionResultType.CONSUME : ActionResultType.PASS;
 		} else {
-			if (this.isTamed()) {
-				if (this.isBreedingItem(stack) && this.getHealth() < this.getMaxHealth()) {
-					if (!player.abilities.isCreativeMode) {
+			if (this.isTame()) {
+				if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
+					if (!player.abilities.instabuild) {
 						stack.shrink(1);
 					}
-					this.heal(item.getFood().getHealing());
+					this.heal(item.getFoodProperties().getNutrition());
 					return ActionResultType.SUCCESS;
 				} else if (stack.isEmpty()) {
-					this.setSitting(!this.isSitting());
+					this.setSitting(!this.isCrouching());
 					return ActionResultType.SUCCESS;
 				}
-			} else if (this.isBreedingItem(stack)) {
-				if (!player.abilities.isCreativeMode) {
+			} else if (this.isFood(stack)) {
+				if (!player.abilities.instabuild) {
 					stack.shrink(1);
 				}
-				if (this.rand.nextInt(4) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
-					this.setTamedBy(player);
+				if (this.random.nextInt(4) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
+					this.tame(player);
 					this.setSitting(true);
-					this.world.setEntityState(this, (byte) 7);
+					this.level.broadcastEntityEvent(this, (byte) 7);
 				} else {
-					this.world.setEntityState(this, (byte) 6);
+					this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 				return ActionResultType.SUCCESS;
 			}
-			return super.func_230254_b_(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
 	public static boolean canMonkeySpawn(EntityType<MonkeyEntity> parrotIn, IWorld worldIn, SpawnReason reason,
 			BlockPos pos, Random random) {
-		BlockState blockstate = worldIn.getBlockState(pos.down());
-		return (blockstate.isIn(BlockTags.LEAVES) || blockstate.isIn(Blocks.GRASS_BLOCK)
-				|| blockstate.isIn(BlockTags.LOGS) || blockstate.isIn(Blocks.AIR))
-				&& worldIn.getLightSubtracted(pos, 0) > 8;
+		BlockState blockstate = worldIn.getBlockState(pos.below());
+		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS)
+				|| blockstate.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
 	}
 
 	@Override

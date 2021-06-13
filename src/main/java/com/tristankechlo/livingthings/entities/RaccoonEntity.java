@@ -44,9 +44,11 @@ import net.minecraft.world.server.ServerWorld;
 
 public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconEntry {
 
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/raccoon");
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT, Items.APPLE, Items.CARROT, Items.POTATO, Items.BEETROOT);
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"neutral_mobs/raccoon");
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT, Items.APPLE, Items.CARROT, Items.POTATO,
+			Items.BEETROOT);
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
@@ -55,16 +57,15 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		return ModEntityTypes.RACCOON_ENTITY.get().create(world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.RACCOON.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.RACCOON.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.RACCOON.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.RACCOON.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.RACCOON.speed.get())
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.RACCOON.damage.get());
 	}
 
 	@Override
@@ -85,21 +86,21 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		this.writeAngerNBT(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
@@ -119,43 +120,18 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	public int getTalkInterval() {
+	public int getAmbientSoundInterval() {
 		return 300;
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.35F : 0.7F;
+		return this.isBaby() ? 0.35F : 0.7F;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.RACCOON.maxSpawnedInChunk.get();
-	}
-
-	@Override
-	public int getAngerTime() {
-		return this.angerTime;
-	}
-
-	@Override
-	public void setAngerTime(int time) {
-		this.angerTime = time;
-	}
-
-	@Override
-	public UUID getAngerTarget() {
-		return this.angerTarget;
-	}
-
-	@Override
-	public void setAngerTarget(UUID target) {
-		this.angerTarget = target;
-	}
-
-	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
 	}
 
 	@Override
@@ -166,6 +142,31 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	@Override
 	public ResourceLocation getLexiconEntry() {
 		return LEXICON_ENTRY;
+	}
+
+	@Override
+	public int getRemainingPersistentAngerTime() {
+		return this.angerTime;
+	}
+
+	@Override
+	public void setRemainingPersistentAngerTime(int time) {
+		this.angerTime = time;
+	}
+
+	@Override
+	public UUID getPersistentAngerTarget() {
+		return this.angerTarget;
+	}
+
+	@Override
+	public void setPersistentAngerTarget(UUID target) {
+		this.angerTarget = target;
+	}
+
+	@Override
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 
 }

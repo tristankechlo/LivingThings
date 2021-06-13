@@ -21,6 +21,8 @@
 	"item.livingthings.ostrich" : "Raw Ostrich Meat",
 	"item.livingthings.cooked_ostrich" : "Cooked Ostrich Meat",
 	"item.livingthings.banana" : "Banana",
+	"item.livingthings.elephant" : "Raw Elephant Meat",
+	"item.livingthings.cooked_elephant" : "Cooked Elephant Meat",
 
 
 	"__comment4" : "spawn eggs",
@@ -92,6 +94,7 @@
 
 	"__comment7" : "messages",
 	"messages.livingthings.nopatchouli.title" : "Can't use this!",
-	"messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed."
+	"messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed.",
+	"messages.livingthings.nopatchouli.wiki" : "More information about the mod can be found here: %s"
 
 }

@@ -44,24 +44,24 @@ import net.minecraft.world.server.ServerWorld;
 
 public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconEntry {
 
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "hostile_mobs/shark");
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"hostile_mobs/shark");
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
 	public SharkEntity(EntityType<? extends SharkEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPathPriority(PathNodeType.WATER, 0.0F);
-		this.moveController = new SharkEntity.MoveHelperController(this);
-		this.lookController = new DolphinLookController(this, 10);
+		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
+		this.moveControl = new SharkEntity.MoveHelperController(this);
+		this.lookControl = new DolphinLookController(this, 10);
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SHARK.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SHARK.speed.get())
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.damage.get());
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false) {
 			@Override
 			public double getAttackReachSqr(LivingEntity attackTarget) {
-				return (this.attacker.getWidth() * 1.25F * this.attacker.getWidth() * 1.25F + attackTarget.getWidth());
+				return (this.mob.getBbWidth() * 1.25F * this.mob.getBbWidth() * 1.25F + attackTarget.getBbWidth());
 			}
 		});
 		this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 1));
@@ -78,21 +78,22 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+		this.targetSelector.addGoal(1,
+				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		this.writeAngerNBT(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
@@ -100,52 +101,54 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	public void tick() {
 		super.tick();
 		// random moving when on land
-		if (!this.isInWaterRainOrBubbleColumn()) {
+		if (!this.isInWaterRainOrBubble()) {
 			if (this.onGround) {
-				this.setMotion(this.getMotion().add(((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-				this.rotationYaw = this.rand.nextFloat() * 360.0F;
+				this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F),
+						0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
+				this.yRot = this.random.nextFloat() * 360.0F;
 				this.onGround = false;
-				this.isAirBorne = true;
+				this.hasImpulse = true;
 			}
 		}
 	}
 
 	@Override
-	public boolean canBeLeashedTo(PlayerEntity player) {
+	public boolean canBeLeashed(PlayerEntity player) {
 		return true;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.SHARK.maxSpawnedInChunk.get();
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
+	protected PathNavigator createNavigation(World worldIn) {
 		return new SwimmerPathNavigator(this, worldIn);
 	}
 
 	@Override
 	public void travel(Vector3d vector) {
-		if (this.isServerWorld() && this.isInWater()) {
-			this.moveRelative(this.getAIMoveSpeed(), vector);
-			this.move(MoverType.SELF, this.getMotion());
-			this.setMotion(this.getMotion().scale(0.9D));
-			if (this.getAttackTarget() == null) {
-				this.setMotion(this.getMotion().add(0.0D, -0.005D, 0.0D));
+		if (this.isEffectiveAi() && this.isInWater()) {
+			this.moveRelative(this.getSpeed(), vector);
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+			if (this.getTarget() == null) {
+				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
 			}
 		} else {
 			super.travel(vector);
 		}
 	}
 
-	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		return world.getBlockState(pos).isIn(Blocks.WATER) && world.getBlockState(pos.up()).isIn(Blocks.WATER);
+	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos,
+			Random random) {
+		return world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
 	}
 
 	@Override
@@ -154,28 +157,28 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	public int getAngerTime() {
+	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setAngerTime(int time) {
+	public void setRemainingPersistentAngerTime(int time) {
 		this.angerTime = time;
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.angerTarget;
 	}
 
 	@Override
-	public void setAngerTarget(UUID target) {
+	public void setPersistentAngerTarget(UUID target) {
 		this.angerTarget = target;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 
 	@Override
@@ -194,41 +197,42 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 		@Override
 		public void tick() {
 			if (this.shark.isInWater()) {
-				this.shark.setMotion(this.shark.getMotion().add(0.0D, 0.005D, 0.0D));
+				this.shark.setDeltaMovement(this.shark.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
 			}
 
-			if (this.action == MovementController.Action.MOVE_TO && !this.shark.getNavigator().noPath()) {
-				double d0 = this.posX - this.shark.getPosX();
-				double d1 = this.posY - this.shark.getPosY();
-				double d2 = this.posZ - this.shark.getPosZ();
+			if (this.operation == MovementController.Action.MOVE_TO && !this.shark.getNavigation().isDone()) {
+				double d0 = this.wantedX - this.shark.getX();
+				double d1 = this.wantedY - this.shark.getY();
+				double d2 = this.wantedZ - this.shark.getZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				if (d3 < (double) 2.5000003E-7F) {
-					this.mob.setMoveForward(0.0F);
+					this.mob.setZza(0.0F);
 				} else {
 					float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-					this.shark.rotationYaw = this.limitAngle(this.shark.rotationYaw, f, 10.0F);
-					this.shark.renderYawOffset = this.shark.rotationYaw;
-					this.shark.rotationYawHead = this.shark.rotationYaw;
-					float f1 = (float) (this.speed * this.shark.getAttributeValue(Attributes.MOVEMENT_SPEED));
+					this.shark.yRot = this.rotlerp(this.shark.yRot, f, 10.0F);
+					this.shark.yBodyRot = this.shark.yRot;
+					this.shark.yHeadRot = this.shark.yRot;
+					float f1 = (float) (this.speedModifier * this.shark.getAttributeValue(Attributes.MOVEMENT_SPEED));
 					if (this.shark.isInWater()) {
-						this.shark.setAIMoveSpeed(f1 * 0.02F);
-						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2)) * (double) (180F / (float) Math.PI)));
+						this.shark.setSpeed(f1 * 0.02F);
+						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2))
+								* (double) (180F / (float) Math.PI)));
 						f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
-						this.shark.rotationPitch = this.limitAngle(this.shark.rotationPitch, f2, 5.0F);
-						float f3 = MathHelper.cos(this.shark.rotationPitch * ((float) Math.PI / 180F));
-						float f4 = MathHelper.sin(this.shark.rotationPitch * ((float) Math.PI / 180F));
-						this.shark.moveForward = f3 * f1;
-						this.shark.moveVertical = -f4 * f1;
+						this.shark.xRot = this.rotlerp(this.shark.xRot, f2, 5.0F);
+						float f3 = MathHelper.cos(this.shark.xRot * ((float) Math.PI / 180F));
+						float f4 = MathHelper.sin(this.shark.xRot * ((float) Math.PI / 180F));
+						this.shark.zza = f3 * f1;
+						this.shark.yya = -f4 * f1;
 					} else {
-						this.shark.setAIMoveSpeed(f1 * 0.1F);
+						this.shark.setSpeed(f1 * 0.1F);
 					}
 
 				}
 			} else {
-				this.shark.setAIMoveSpeed(0.0F);
-				this.shark.setMoveStrafing(0.0F);
-				this.shark.setMoveVertical(0.0F);
-				this.shark.setMoveForward(0.0F);
+				this.shark.setSpeed(0.0F);
+				this.shark.setXxa(0.0F);
+				this.shark.setYya(0.0F);
+				this.shark.setZza(0.0F);
 			}
 		}
 	}

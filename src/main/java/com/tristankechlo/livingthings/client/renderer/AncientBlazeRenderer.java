@@ -4,6 +4,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.client.renderer.layer.AncientBlazeChargedLayer;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
+
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +15,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/ancient_blaze/ancient_blaze.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/ancient_blaze/ancient_blaze.png");
 
 	public AncientBlazeRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new AncientBlazeModel<>(), 0.5F);
@@ -22,12 +24,12 @@ public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, Ancien
 	}
 
 	@Override
-	protected int getBlockLight(AncientBlazeEntity entityIn, BlockPos partialTicks) {
+	protected int getBlockLightLevel(AncientBlazeEntity entityIn, BlockPos partialTicks) {
 		return 15;
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AncientBlazeEntity entity) {
+	public ResourceLocation getTextureLocation(AncientBlazeEntity entity) {
 		return TEXTURE;
 	}
 

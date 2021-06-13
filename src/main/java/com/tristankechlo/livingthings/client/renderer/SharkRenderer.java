@@ -13,14 +13,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SharkRenderer extends MobRenderer<SharkEntity, SharkModel<SharkEntity>> {
 
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/shark.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/shark.png");
 
 	public SharkRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new SharkModel<>(), 0.8F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SharkEntity entity) {
+	public ResourceLocation getTextureLocation(SharkEntity entity) {
 		return TEXTURE;
 	}
 

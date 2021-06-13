@@ -14,15 +14,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<MantarayEntity>> {
 
-	protected static final ResourceLocation TEXTURE_1 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/mantaray/mantaray.png");
-	protected static final ResourceLocation TEXTURE_2 = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/mantaray/mantaray_2.png");
+	protected static final ResourceLocation TEXTURE_1 = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/mantaray/mantaray.png");
+	protected static final ResourceLocation TEXTURE_2 = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/mantaray/mantaray_2.png");
 
 	public MantarayRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new MantarayModel<>(), 0.35F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MantarayEntity entity) {
+	public ResourceLocation getTextureLocation(MantarayEntity entity) {
 		if (entity.getVariant() == 1) {
 			return TEXTURE_2;
 		}
@@ -30,7 +32,7 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<
 	}
 
 	@Override
-	protected void preRenderCallback(MantarayEntity mantaray, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(MantarayEntity mantaray, MatrixStack matrixStackIn, float partialTickTime) {
 		float scale = 1.0F + (mantaray.getScaling() * 0.1F);
 		matrixStackIn.scale(scale, scale, scale);
 	}

@@ -65,10 +65,12 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVariants, ILexiconEntry {
 
-	private static final DataParameter<Byte> OWL_VARIANT = EntityDataManager.createKey(OwlEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> OWL_VARIANT = EntityDataManager.defineId(OwlEntity.class,
+			DataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/owl");
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
-	private static final Ingredient TAMING_ITEMS = Ingredient.fromItems(Items.WHEAT_SEEDS);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS,
+			Items.BEETROOT_SEEDS);
+	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.WHEAT_SEEDS);
 	public float flap;
 	public float flapSpeed;
 	public float oFlapSpeed;
@@ -77,29 +79,29 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	public OwlEntity(EntityType<? extends OwlEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.moveController = new FlyingMovementController(this, 10, false);
-		this.setPathPriority(PathNodeType.DANGER_FIRE, -1.0F);
-		this.setPathPriority(PathNodeType.DAMAGE_FIRE, -1.0F);
+		this.moveControl = new FlyingMovementController(this, 10, false);
+		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, -1.0F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, -1.0F);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
 		OwlEntity child = ModEntityTypes.OWL_ENTITY.get().create(world);
 		child.setVariant(this.getVariantFromParents(this, entity));
 		return child;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.OWL.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OWL.speed.get())
-				.createMutableAttribute(Attributes.FLYING_SPEED, LivingThingsConfig.OWL.flyingSpeed.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.OWL.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OWL.speed.get())
+				.add(Attributes.FLYING_SPEED, LivingThingsConfig.OWL.flyingSpeed.get());
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.rand));
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.random));
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
@@ -131,14 +133,14 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(OWL_VARIANT, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(OWL_VARIANT, (byte) 0);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("OwlVariant")) {
 			this.setVariant(compound.getByte("OwlVariant"));
 		} else {
@@ -147,96 +149,96 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putByte("OwlVariant", this.getVariant());
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 		this.calculateFlapping();
 	}
 
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		if (!this.isTamed() && TAMING_ITEMS.test(stack)) {
-			if (!this.world.isRemote) {
-				this.consumeItemFromStack(player, stack);
-				if (this.rand.nextInt(5) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
-					this.setTamedBy(player);
-					this.world.setEntityState(this, (byte) 7);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		if (!this.isTame() && TAMING_ITEMS.test(stack)) {
+			if (!this.level.isClientSide()) {
+				this.usePlayerItem(player, stack);
+				if (this.random.nextInt(5) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
+					this.tame(player);
+					this.level.broadcastEntityEvent(this, (byte) 7);
 				} else {
-					this.world.setEntityState(this, (byte) 6);
+					this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 			}
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			return ActionResultType.sidedSuccess(this.level.isClientSide());
 
-		} else if (!this.isFlying() && this.isTamed() && this.isOwner(player) && TAMING_ITEMS.test(stack)) {
+		} else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && TAMING_ITEMS.test(stack)) {
 
-			this.func_233687_w_(!this.isSitting());
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			this.setOrderedToSit(!this.isCrouching());
+			return ActionResultType.sidedSuccess(this.level.isClientSide());
 
 		} else {
-			return super.func_230254_b_(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
 	private void calculateFlapping() {
 		this.oFlap = this.flap;
 		this.oFlapSpeed = this.flapSpeed;
-		this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
+		this.flapSpeed = (float) ((double) this.flapSpeed
+				+ (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
 		this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
 		if (!this.onGround && this.flapping < 1.0F) {
 			this.flapping = 1.0F;
 		}
 
 		this.flapping = (float) ((double) this.flapping * 0.9D);
-		Vector3d vector3d = this.getMotion();
+		Vector3d vector3d = this.getDeltaMovement();
 		if (!this.onGround && vector3d.y < 0.0D) {
-			this.setMotion(vector3d.mul(1.0D, 0.6D, 1.0D));
+			this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
 		}
 
 		this.flap += this.flapping * 2.0F;
 	}
 
-	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-		BlockState blockstate = worldIn.getBlockState(pos.down());
-		return (blockstate.isIn(BlockTags.LEAVES) || blockstate.isIn(Blocks.GRASS_BLOCK) || blockstate.isIn(BlockTags.LOGS) || blockstate.isIn(Blocks.AIR)) && worldIn.getLightSubtracted(pos, 0) > 8;
+	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, IWorld worldIn, SpawnReason reason, BlockPos pos,
+			Random random) {
+		BlockState blockstate = worldIn.getBlockState(pos.below());
+		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS)
+				|| blockstate.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
+	protected PathNavigator createNavigation(World worldIn) {
 		FlyingPathNavigator flyingpathnavigator = new FlyingPathNavigator(this, worldIn);
 		flyingpathnavigator.setCanOpenDoors(false);
-		flyingpathnavigator.setCanSwim(true);
-		flyingpathnavigator.setCanEnterDoors(true);
+		flyingpathnavigator.setCanFloat(true);
+		flyingpathnavigator.setCanPassDoors(true);
 		return flyingpathnavigator;
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.OWL.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.45F : 0.9F;
+		return this.isBaby() ? 0.45F : 0.9F;
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
+		super.causeFallDamage(distance, damageMultiplier);
 		return false;
-	}
-
-	@Override
-	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
 	}
 
 	@Override
@@ -266,19 +268,19 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {
+	protected void doPush(Entity entityIn) {
 		if (!(entityIn instanceof PlayerEntity)) {
-			super.collideWithEntity(entityIn);
+			super.doPush(entityIn);
 		}
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source)) {
 			return false;
 		} else {
-			this.func_233687_w_(false);
-			return super.attackEntityFrom(source, amount);
+			this.setOrderedToSit(false);
+			return super.hurt(source, amount);
 		}
 	}
 
@@ -288,12 +290,12 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 
 	@Override
 	public byte getVariant() {
-		return this.dataManager.get(OWL_VARIANT);
+		return this.entityData.get(OWL_VARIANT);
 	}
 
 	@Override
 	public void setVariant(byte variant) {
-		this.dataManager.set(OWL_VARIANT, variant);
+		this.entityData.set(OWL_VARIANT, variant);
 	}
 
 	@Override

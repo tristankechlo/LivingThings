@@ -13,14 +13,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class KoalaRenderer extends MobRenderer<KoalaEntity, KoalaModel<KoalaEntity>> {
 
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID, "textures/entity/koala.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
+			"textures/entity/koala.png");
 
 	public KoalaRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new KoalaModel<>(), 0.4F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(KoalaEntity entity) {
+	public ResourceLocation getTextureLocation(KoalaEntity entity) {
 		return TEXTURE;
 	}
 

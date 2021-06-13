@@ -20,39 +20,39 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL);
+	public boolean canUse() {
+		boolean peaceful = (this.mob.level.getDifficulty() == Difficulty.PEACEFUL);
 		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
 		if (peaceful || ambientMode || !this.canEntityAttack()) {
 			return false;
 		}
-		return super.shouldExecute();
+		return super.canUse();
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		boolean peaceful = (this.attacker.world.getDifficulty() == Difficulty.PEACEFUL);
+	public boolean canContinueToUse() {
+		boolean peaceful = (this.mob.level.getDifficulty() == Difficulty.PEACEFUL);
 		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
 		if (peaceful || ambientMode || !this.canEntityAttack()) {
 			return false;
 		}
-		return super.shouldContinueExecuting();
+		return super.canContinueToUse();
 	}
 
 	private boolean canEntityAttack() {
-		if (this.attacker instanceof ElephantEntity) {
+		if (this.mob instanceof ElephantEntity) {
 			return LivingThingsConfig.ELEPHANT.canAttack.get();
-		} else if (this.attacker instanceof GiraffeEntity) {
+		} else if (this.mob instanceof GiraffeEntity) {
 			return LivingThingsConfig.GIRAFFE.canAttack.get();
-		} else if (this.attacker instanceof LionEntity) {
+		} else if (this.mob instanceof LionEntity) {
 			return LivingThingsConfig.LION.canAttack.get();
-		} else if (this.attacker instanceof SharkEntity) {
+		} else if (this.mob instanceof SharkEntity) {
 			return LivingThingsConfig.SHARK.canAttack.get();
-		} else if (this.attacker instanceof CrabEntity) {
+		} else if (this.mob instanceof CrabEntity) {
 			return LivingThingsConfig.CRAB.canAttack.get();
-		} else if (this.attacker instanceof RaccoonEntity) {
+		} else if (this.mob instanceof RaccoonEntity) {
 			return LivingThingsConfig.RACCOON.canAttack.get();
-		} else if(this.attacker instanceof MonkeyEntity) {
+		} else if (this.mob instanceof MonkeyEntity) {
 			return LivingThingsConfig.MONKEY.canAttack.get();
 		}
 		return false;

@@ -49,10 +49,12 @@ import net.minecraft.world.server.ServerWorld;
 
 public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVariants, ILexiconEntry {
 
-	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.createKey(GiraffeEntity.class, DataSerializers.BYTE);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/giraffe");
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.WHEAT);
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final DataParameter<Byte> GIRAFFE_VARIANT = EntityDataManager.defineId(GiraffeEntity.class,
+			DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"neutral_mobs/giraffe");
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
@@ -61,16 +63,17 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {
-		GiraffeEntity entityChild = ModEntityTypes.GIRAFFE_ENTITY.get().create(this.world);
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entityIn) {
+		GiraffeEntity entityChild = ModEntityTypes.GIRAFFE_ENTITY.get().create(this.level);
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.setVariant(GiraffeEntity.getWeightedRandomColorVariant(this.rand));
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		this.setVariant(GiraffeEntity.getWeightedRandomColorVariant(this.random));
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
@@ -87,12 +90,11 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 		return variant.variant;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.GIRAFFE.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.GIRAFFE.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.GIRAFFE.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.GIRAFFE.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.GIRAFFE.speed.get())
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.GIRAFFE.damage.get());
 	}
 
 	@Override
@@ -110,75 +112,75 @@ public class GiraffeEntity extends AnimalEntity implements IAngerable, IMobVaria
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(GIRAFFE_VARIANT, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(GIRAFFE_VARIANT, (byte) 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putByte("GiraffeVariant", this.getVariant());
-		this.writeAngerNBT(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("GiraffeVariant"));
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.GIRAFFE.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 1.55F : 3.15F;
+		return this.isBaby() ? 1.55F : 3.15F;
 	}
 
 	@Override
-	public int getAngerTime() {
+	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setAngerTime(int time) {
+	public void setRemainingPersistentAngerTime(int time) {
 		this.angerTime = time;
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.angerTarget;
 	}
 
 	@Override
-	public void setAngerTarget(UUID target) {
+	public void setPersistentAngerTarget(UUID target) {
 		this.angerTarget = target;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 
 	@Override
 	public byte getVariant() {
-		return this.getDataManager().get(GIRAFFE_VARIANT);
+		return this.getEntityData().get(GIRAFFE_VARIANT);
 	}
 
 	@Override
 	public void setVariant(byte variant) {
-		this.getDataManager().set(GIRAFFE_VARIANT, variant);
+		this.getEntityData().set(GIRAFFE_VARIANT, variant);
 	}
 
 	@Override

@@ -49,51 +49,7 @@
 							}
 						}
 					],
-					"name" : "minecraft:bone"
-				}
-			],
-			"conditions" : [
-				{
-					"condition" : "minecraft:killed_by_player"
-				}
-			]
-		},
-		{
-			"rolls" : 1,
-			"entries" : [
-				{
-					"type" : "minecraft:item",
-					"name" : "livingthings:elephant",
-					"functions" : [
-						{
-							"function" : "minecraft:furnace_smelt",
-							"conditions" : [
-								{
-									"condition" : "minecraft:entity_properties",
-									"entity" : "this",
-									"predicate" : {
-										"flags" : {
-											"is_on_fire" : true
-										}
-									}
-								}
-							]
-						},
-						{
-							"function" : "minecraft:looting_enchant",
-							"count" : {
-								"min" : 0,
-								"max" : 3
-							}
-						},
-						{
-							"function" : "minecraft:set_count",
-							"count" : {
-								"min" : 1,
-								"max" : 2
-							}
-						}
-					]
+					"name" : "livingthings:banana"
 				}
 			]
 		}

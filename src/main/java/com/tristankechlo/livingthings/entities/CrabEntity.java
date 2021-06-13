@@ -53,25 +53,28 @@ import net.minecraft.world.server.ServerWorld;
 
 public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable, IScaleableMob, ILexiconEntry {
 
-	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> CRAB_SCALING = EntityDataManager.createKey(CrabEntity.class, DataSerializers.BYTE);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "neutral_mobs/crab");
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.COD);
+	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.defineId(CrabEntity.class,
+			DataSerializers.BYTE);
+	private static final DataParameter<Byte> CRAB_SCALING = EntityDataManager.defineId(CrabEntity.class,
+			DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"neutral_mobs/crab");
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.COD);
 	private int angerTime;
 	private UUID angerTarget;
 
 	public CrabEntity(EntityType<? extends CrabEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.stepHeight = 1.0F;
-		this.setPathPriority(PathNodeType.WATER, 1.0F);
+		this.maxUpStep = 1.0F;
+		this.setPathfindingMalus(PathNodeType.WATER, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
-		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.get().create(this.world);
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
+		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.get().create(this.level);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
-		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
+		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
 		double health = LivingThingsConfig.CRAB.health.get();
 		if (health > 0.0D) {
@@ -82,12 +85,10 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		return entityChild;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.CRAB.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.CRAB.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.CRAB.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.CRAB.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.CRAB.speed.get()).add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.CRAB.damage.get());
 	}
 
 	@Override
@@ -102,15 +103,18 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
 	}
 
-	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		BlockState state = world.getBlockState(pos.down());
-		return (world.hasWater(pos)) || (state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.SAND) || state.isIn(Blocks.GRAVEL));
+	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld world, SpawnReason reason, BlockPos pos,
+			Random random) {
+		BlockState state = world.getBlockState(pos.below());
+		return (world.isWaterAt(pos))
+				|| (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.SAND) || state.is(Blocks.GRAVEL));
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.rand));
-		this.setScaling(CrabEntity.getWeightedRandomScaling(this.rand));
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.random));
+		this.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
 		double health = LivingThingsConfig.CRAB.health.get();
 		if (health > 0.0D) {
@@ -118,7 +122,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 			this.setHealth(this.getMaxHealth());
 		}
 
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
@@ -152,46 +156,46 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(CRAB_VARIANT, (byte) 0);
-		this.dataManager.register(CRAB_SCALING, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CRAB_VARIANT, (byte) 0);
+		this.entityData.define(CRAB_SCALING, (byte) 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putByte("CrabVariant", this.getVariant());
 		compound.putByte("CrabScaling", this.getScaling());
-		this.writeAngerNBT(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("CrabVariant"));
 		this.setScaling(compound.getByte("CrabScaling"));
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.CRAB.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		if (this.isChild()) {
+		if (this.isBaby()) {
 			return 0.175F;
 		}
-		return this.getSize(poseIn).height * 0.9F;
+		return this.getDimensions(poseIn).height * 0.9F;
 	}
 
 	@Override
@@ -206,75 +210,75 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	public byte getVariant() {
-		return this.dataManager.get(CRAB_VARIANT);
+		return this.entityData.get(CRAB_VARIANT);
 	}
 
 	@Override
 	public void setVariant(byte variant) {
-		this.dataManager.set(CRAB_VARIANT, variant);
+		this.entityData.set(CRAB_VARIANT, variant);
 	}
 
 	@Override
 	public byte getScaling() {
-		return this.dataManager.get(CRAB_SCALING);
+		return this.entityData.get(CRAB_SCALING);
 	}
 
 	@Override
 	public void setScaling(byte scaling) {
-		this.dataManager.set(CRAB_SCALING, scaling);
-		this.recenterBoundingBox();
-		this.recalculateSize();
-		this.experienceValue = Math.abs(scaling) * this.rand.nextInt(2);
+		this.entityData.set(CRAB_SCALING, scaling);
+		this.setLocationFromBoundingbox();// center bounding box
+		this.refreshDimensions();
+		this.xpReward = Math.abs(scaling) * this.random.nextInt(2);
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
+	public void onSyncedDataUpdated(DataParameter<?> key) {
 		if (CRAB_SCALING.equals(key)) {
-			this.recalculateSize();
+			this.refreshDimensions();
 		}
-		super.notifyDataManagerChange(key);
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override
-	public void recalculateSize() {
-		double d0 = this.getPosX();
-		double d1 = this.getPosY();
-		double d2 = this.getPosZ();
-		super.recalculateSize();
-		this.setPosition(d0, d1, d2);
+	public void refreshDimensions() {
+		double d0 = this.getX();
+		double d1 = this.getY();
+		double d2 = this.getZ();
+		super.refreshDimensions();
+		this.setPos(d0, d1, d2);
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if (this.isChild()) {
-			return super.getSize(poseIn);
+	public EntitySize getDimensions(Pose poseIn) {
+		if (this.isBaby()) {
+			return super.getDimensions(poseIn);
 		}
-		return super.getSize(poseIn).scale(0.85F + (0.1F * this.getScaling()));
+		return super.getDimensions(poseIn).scale(0.85F + (0.1F * this.getScaling()));
 	}
 
 	@Override
-	public int getAngerTime() {
+	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setAngerTime(int time) {
+	public void setRemainingPersistentAngerTime(int time) {
 		this.angerTime = time;
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.angerTarget;
 	}
 
 	@Override
-	public void setAngerTarget(UUID target) {
+	public void setPersistentAngerTarget(UUID target) {
 		this.angerTarget = target;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 
 	@Override

@@ -23,16 +23,16 @@ public class SnailRenderer extends MobRenderer<SnailEntity, EntityModel<SnailEnt
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SnailEntity snail) {
+	public ResourceLocation getTextureLocation(SnailEntity snail) {
 		return snail.getBodyTexture();
 	}
 
 	@Override
-	protected void preRenderCallback(SnailEntity snail, MatrixStack matrixStackIn, float partialTickTime) {
-		if (snail.isChild()) {
+	protected void scale(SnailEntity snail, MatrixStack matrixStackIn, float partialTickTime) {
+		if (snail.isBaby()) {
 			matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 		}
-		super.preRenderCallback(snail, matrixStackIn, partialTickTime);
+		super.scale(snail, matrixStackIn, partialTickTime);
 	}
 
 }

@@ -57,11 +57,14 @@ import net.minecraft.world.server.ServerWorld;
 
 public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants, IGenderedMob, ILexiconEntry {
 
-	private static final DataParameter<Boolean> MALE = EntityDataManager.createKey(LionEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.createKey(LionEntity.class, DataSerializers.BYTE);
-	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "hostile_mobs/lion");
-	private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(Items.BEEF, Items.CHICKEN, Items.RABBIT);
-	private static final RangedInteger rangedInteger = TickRangeConverter.convertRange(20, 39);
+	private static final DataParameter<Boolean> MALE = EntityDataManager.defineId(LionEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.defineId(LionEntity.class,
+			DataSerializers.BYTE);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"hostile_mobs/lion");
+	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.BEEF, Items.CHICKEN, Items.RABBIT);
+	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
@@ -70,18 +73,19 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entityIn) {
-		LionEntity entityChild = ModEntityTypes.LION_ENTITY.get().create(this.world);
-		entityChild.setGender(LionEntity.getWeightedRandomGender(this.rand));
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entityIn) {
+		LionEntity entityChild = ModEntityTypes.LION_ENTITY.get().create(this.level);
+		entityChild.setGender(LionEntity.getWeightedRandomGender(this.random));
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		this.setGender(LionEntity.getWeightedRandomGender(this.rand));
-		this.setVariant(LionEntity.getWeightedRandomColorVariant(this.rand));
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		this.setGender(LionEntity.getWeightedRandomGender(this.random));
+		this.setVariant(LionEntity.getWeightedRandomColorVariant(this.random));
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	public static Gender getWeightedRandomGender(Random random) {
@@ -108,12 +112,10 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		return variant.variant;
 	}
 
-	public static AttributeModifierMap.MutableAttribute getAttributes() {
-		return MobEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, LivingThingsConfig.LION.speed.get())
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.LION.speed.get()).add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
 	}
 
 	@Override
@@ -122,7 +124,8 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false) {
 			@Override
 			public double getAttackReachSqr(LivingEntity attackTarget) {
-				return (double) (this.attacker.getWidth() * 1.8F * this.attacker.getWidth() * 1.8F + attackTarget.getWidth());
+				return (double) (this.mob.getBbWidth() * 1.8F * this.mob.getBbWidth() * 1.8F
+						+ attackTarget.getBbWidth());
 			}
 		});
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.9D));
@@ -131,44 +134,45 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 7.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setCallsForHelp());
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setAlertOthers());
+		this.targetSelector.addGoal(1,
+				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
 		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(MALE, false);
-		this.dataManager.register(LION_VARIANT, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(MALE, false);
+		this.entityData.define(LION_VARIANT, (byte) 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		if (this.getGender() == Gender.MALE) {
 			compound.putBoolean("IsMale", true);
 		}
 		compound.putByte("LionVariant", this.getVariant());
-		this.writeAngerNBT(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.getBoolean("IsMale")) {
 			this.setGender(Gender.MALE);
 		} else {
 			this.setGender(Gender.FEMALE);
 		}
 		this.setVariant(compound.getByte("LionVariant"));
-		if (this.world instanceof ServerWorld) {
-			this.readAngerNBT((ServerWorld) this.world, compound);
+		if (this.level instanceof ServerWorld) {
+			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		}
 	}
 
 	@Override
-	public boolean canMateWith(AnimalEntity otherAnimal) {
+	public boolean canMate(AnimalEntity otherAnimal) {
 		if (otherAnimal == this) {
 			return false;
 		}
@@ -187,7 +191,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return BREEDING_ITEMS.test(stack);
 	}
 
@@ -207,23 +211,23 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	public double getPosYEye() {
-		return this.getPosY() + 1.4D;
+	public double getEyeY() {
+		return this.getY() + 1.4D;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return LivingThingsConfig.LION.maxSpawnedInChunk.get();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return this.isChild() ? 0.7F : 1.45F;
+		return this.isBaby() ? 0.7F : 1.45F;
 	}
 
 	@Override
 	public Gender getGender() {
-		if (this.getDataManager().get(MALE)) {
+		if (this.getEntityData().get(MALE)) {
 			return Gender.MALE;
 		}
 		return Gender.FEMALE;
@@ -232,49 +236,49 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	@Override
 	public void setGender(Gender gender) {
 		if (gender == Gender.MALE) {
-			this.getDataManager().set(MALE, true);
+			this.getEntityData().set(MALE, true);
 		} else {
-			this.getDataManager().set(MALE, false);
+			this.getEntityData().set(MALE, false);
 		}
 	}
 
 	@Override
 	public byte getVariant() {
-		return this.getDataManager().get(LION_VARIANT);
+		return this.getEntityData().get(LION_VARIANT);
 	}
 
 	@Override
 	public void setVariant(byte variant) {
-		this.getDataManager().set(LION_VARIANT, variant);
-	}
-
-	@Override
-	public int getAngerTime() {
-		return this.angerTime;
-	}
-
-	@Override
-	public void setAngerTime(int time) {
-		this.angerTime = time;
-	}
-
-	@Override
-	public UUID getAngerTarget() {
-		return this.angerTarget;
-	}
-
-	@Override
-	public void setAngerTarget(UUID target) {
-		this.angerTarget = target;
-	}
-
-	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(rangedInteger.getRandomWithinRange(this.rand));
+		this.getEntityData().set(LION_VARIANT, variant);
 	}
 
 	@Override
 	public ResourceLocation getLexiconEntry() {
 		return LEXICON_ENTRY;
+	}
+
+	@Override
+	public int getRemainingPersistentAngerTime() {
+		return this.angerTime;
+	}
+
+	@Override
+	public void setRemainingPersistentAngerTime(int time) {
+		this.angerTime = time;
+	}
+
+	@Override
+	public UUID getPersistentAngerTarget() {
+		return this.angerTarget;
+	}
+
+	@Override
+	public void setPersistentAngerTarget(UUID target) {
+		this.angerTarget = target;
+	}
+
+	@Override
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
 	}
 }
