@@ -1,0 +1,43 @@
+{
+	"parent" : "minecraft:recipes/root",
+	"rewards" : {
+		"recipes" : [
+			"livingthings:cooked_elephant"
+		]
+	},
+	"criteria" : {
+		"has_elephant" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:elephant"
+					}
+				]
+			}
+		},
+		"has_cooked_elephant" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:cooked_elephant"
+					}
+				]
+			}
+		},
+		"has_the_recipe" : {
+			"trigger" : "minecraft:recipe_unlocked",
+			"conditions" : {
+				"recipe" : "livingthings:cooked_elephant"
+			}
+		}
+	},
+	"requirements" : [
+		 [
+			"has_elephant",
+			"has_cooked_elephant",
+			"has_the_recipe"
+		]
+	]
+}
