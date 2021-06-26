@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Aquatic animal that looks like it's flying through the sea.$(br2)$(bold)Health: $()5 Hearts"
+			"text" : "Aquatic animal that looks like it's flying through the sea.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Drops:$()$(br)$(li)1-2 Raw Cod"
 		},
 		{
 			"type" : "entity",
