@@ -1,4 +1,4 @@
-# Living Things
+# Living Things [![](http://cf.way2muchnoise.eu/full_397252_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/living-things)
 
 ### adds various new Mobs to Minecraft
 
