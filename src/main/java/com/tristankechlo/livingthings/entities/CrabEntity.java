@@ -93,7 +93,9 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new BetterMeleeAttackGoal(this, 1.05D, false));
+		this.goalSelector.addGoal(0, new BetterMeleeAttackGoal(this, 1.05D, false, () -> {
+			return LivingThingsConfig.CRAB.canAttack.get();
+		}));
 		this.goalSelector.addGoal(1, new BreedGoal(this, 1.1D));
 		this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));

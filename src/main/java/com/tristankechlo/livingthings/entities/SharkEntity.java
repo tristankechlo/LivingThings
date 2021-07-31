@@ -67,7 +67,9 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FindWaterGoal(this));
-		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false) {
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false, () -> {
+			return LivingThingsConfig.SHARK.canAttack.get();
+		}) {
 			@Override
 			public double getAttackReachSqr(LivingEntity attackTarget) {
 				return (this.mob.getBbWidth() * 1.25F * this.mob.getBbWidth() * 1.25F + attackTarget.getBbWidth());

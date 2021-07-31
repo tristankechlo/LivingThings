@@ -71,7 +71,9 @@ public class RaccoonEntity extends AnimalEntity implements IAngerable, ILexiconE
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.25D, false));
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.25D, false, () -> {
+			return LivingThingsConfig.RACCOON.canAttack.get();
+		}));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, false, BREEDING_ITEMS));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));

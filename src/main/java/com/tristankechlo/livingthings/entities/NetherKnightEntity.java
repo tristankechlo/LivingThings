@@ -100,7 +100,9 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new BetterMeleeAttackGoal(this, 1.2D, false));
+		this.goalSelector.addGoal(5, new BetterMeleeAttackGoal(this, 1.2D, false, () -> {
+			return LivingThingsConfig.NETHER_KNIGHT.canAttack.get();
+		}));
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));

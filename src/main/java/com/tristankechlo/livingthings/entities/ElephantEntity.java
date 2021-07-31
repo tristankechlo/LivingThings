@@ -78,7 +78,9 @@ public class ElephantEntity extends AbstractTameableChestedEntity implements IAn
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.2D, false));
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.2D, false, () -> {
+			return LivingThingsConfig.ELEPHANT.canAttack.get();
+		}));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.9D));
 		this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.95D));

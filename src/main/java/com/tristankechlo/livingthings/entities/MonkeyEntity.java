@@ -103,7 +103,9 @@ public class MonkeyEntity extends TameableEntity implements ILexiconEntry {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new SwimGoal(this));
 		this.goalSelector.addGoal(2, new SitGoal(this));
-		this.goalSelector.addGoal(3, new BetterMeleeAttackGoal(this, 1, true));
+		this.goalSelector.addGoal(3, new BetterMeleeAttackGoal(this, 1, true, () -> {
+			return LivingThingsConfig.MONKEY.canAttack.get();
+		}));
 		this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, MonkeyEntity.getBreedingItems(), true));
 		this.goalSelector.addGoal(5, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1));

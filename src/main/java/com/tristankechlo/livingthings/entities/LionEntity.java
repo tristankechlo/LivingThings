@@ -121,7 +121,9 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false) {
+		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false, () -> {
+			return LivingThingsConfig.LION.canAttack.get();
+		}) {
 			@Override
 			public double getAttackReachSqr(LivingEntity attackTarget) {
 				return (double) (this.mob.getBbWidth() * 1.8F * this.mob.getBbWidth() * 1.8F
