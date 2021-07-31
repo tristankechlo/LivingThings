@@ -41,8 +41,9 @@
 	"item.livingthings.koala_spawn_egg" : "Koala Spawn Egg",
 	"item.livingthings.snail_spawn_egg" : "Snail Spawn Egg",
 	"item.livingthings.monkey_spawn_egg" : "Monkey Spawn Egg",
-
-
+	"item.livingthings.nether_knight_spawn_egg" : "Nether Knight Spawn Egg",
+	
+	
 	"__comment5" : "entity names",
 	"entity.livingthings.elephant" : "Elephant",
 	"entity.livingthings.giraffe" : "Giraffe",
@@ -59,6 +60,7 @@
 	"entity.livingthings.koala" : "Koala",
 	"entity.livingthings.snail" : "Snail",
 	"entity.livingthings.monkey" : "Monkey",
+	"entity.livingthings.nether_knight" : "Nether Knight",
 
 
 	"__comment6" : "subtitles",
@@ -90,6 +92,9 @@
     "subtitles.livingthings.ancient_blaze.shoot": "Ancient Blaze shoots",
     "subtitles.livingthings.ancient_blaze.spawn": "Ancient Blaze released",
     "subtitles.livingthings.ancient_blaze.charge_up": "Ancient Blaze charges up",
+	"subtitles.livingthings.nether_knight.ambient" : "Nether Knight noise",
+	"subtitles.livingthings.nether_knight.hurt" : "Nether Knight hurts",
+	"subtitles.livingthings.nether_knight.death" : "Nether Knight dies",
 
 
 	"__comment7" : "messages",

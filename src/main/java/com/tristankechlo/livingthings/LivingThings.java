@@ -7,6 +7,7 @@ import com.tristankechlo.livingthings.client.RenderHandler;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.config.misc.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEventHandler;
+import com.tristankechlo.livingthings.events.SpawnEvents;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
@@ -32,7 +33,6 @@ public class LivingThings {
 
 	public LivingThings() {
 		ModLoadingContext.get().registerConfig(Type.COMMON, LivingThingsConfig.spec, "livingthings/livingthings.toml");
-		ConfigManager.setup();
 
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -42,19 +42,21 @@ public class LivingThings {
 		ModParticle.PARTICLES.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 
-		modEventBus.addListener(this::ClientSetup);
-		modEventBus.addListener(this::CommonSetup);
+		modEventBus.addListener(this::clientSetup);
+		modEventBus.addListener(this::commonSetup);
 
 		MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
+		MinecraftForge.EVENT_BUS.register(new SpawnEvents());
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	public void ClientSetup(final FMLClientSetupEvent event) {
+	public void clientSetup(final FMLClientSetupEvent event) {
 		RenderHandler.registerEntityRenders();
 	}
 
-	public void CommonSetup(final FMLCommonSetupEvent event) {
+	public void commonSetup(final FMLCommonSetupEvent event) {
 		LivingThings.patchouliLoaded = ModList.get().isLoaded("patchouli");
+		ConfigManager.setup();
 	}
 
 }

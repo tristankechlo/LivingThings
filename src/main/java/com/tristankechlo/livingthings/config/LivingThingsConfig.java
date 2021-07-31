@@ -12,6 +12,7 @@ import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
 import com.tristankechlo.livingthings.config.entity.MonkeyConfig;
+import com.tristankechlo.livingthings.config.entity.NetherKnightConfig;
 import com.tristankechlo.livingthings.config.entity.OstrichConfig;
 import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
@@ -35,7 +36,7 @@ public class LivingThingsConfig {
 	public static final String SPAWNING_WATER = "can spawn in water";
 	public static final String WEIGHTED_RANDOM = "the values are considered as weighted-random";
 	public static final String HIGH_IMPACT = "be careful, even small changes can have a high impact";
-	
+
 	public static final double MIN_HEALTH = 1.0D;
 	public static final double MAX_HEALTH = Short.MAX_VALUE;
 	public static final double MIN_SPEED = 0.05D;
@@ -61,6 +62,7 @@ public class LivingThingsConfig {
 	public static final KoalaConfig KOALA = new KoalaConfig(BUILDER);
 	public static final SnailConfig SNAIL = new SnailConfig(BUILDER);
 	public static final MonkeyConfig MONKEY = new MonkeyConfig(BUILDER);
+	public static final NetherKnightConfig NETHER_KNIGHT = new NetherKnightConfig(BUILDER);
 
 	public static final ForgeConfigSpec spec = BUILDER.build();
 
@@ -82,7 +84,8 @@ public class LivingThingsConfig {
 		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
 			return true;
 		}
-		LivingThings.LOGGER.log(Level.INFO, "Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
+		LivingThings.LOGGER.log(Level.INFO,
+				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
 		return false;
 	}
 

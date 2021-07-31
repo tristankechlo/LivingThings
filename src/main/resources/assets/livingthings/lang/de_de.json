@@ -41,6 +41,7 @@
 	"item.livingthings.koala_spawn_egg" : "Koala-Spawn-Ei",
 	"item.livingthings.snail_spawn_egg" : "Schnecken-Spawn-Ei",
 	"item.livingthings.monkey_spawn_egg" : "Affen-Spawn-Ei",
+	"item.livingthings.nether_knight_spawn_egg" : "Nether-Krieger-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -59,6 +60,7 @@
 	"entity.livingthings.koala" : "Koala",
 	"entity.livingthings.snail" : "Schnecke",
 	"entity.livingthings.monkey" : "Affe",
+	"entity.livingthings.nether_knight" : "Nether Krieger",
 
 
 	"__comment6" : "subtitles",
@@ -90,6 +92,9 @@
     "subtitles.livingthings.ancient_blaze.shoot": "Antike Lohe schie\u00dft",
     "subtitles.livingthings.ancient_blaze.spawn": "Antike Lohe entfesselt",
     "subtitles.livingthings.ancient_blaze.charge_up": "Antike Lohe l\u00e4dt sich auf",
+	"subtitles.livingthings.nether_knight.ambient" : "Nether Krieger Ger\u00e4usche",
+	"subtitles.livingthings.nether_knight.hurt" : "Nether Krieger nimmt Schaden",
+	"subtitles.livingthings.nether_knight.death" : "Nether Krieger stirbt",
 
 
 	"__comment7" : "messages",

@@ -47,6 +47,11 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SPAWN = SOUNDS.register("ancient_blaze_spawn", () -> getSound("ancient_blaze.spawn"));
 	public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_CHARGE_UP = SOUNDS.register("ancient_blaze_charge_up", () -> getSound("ancient_blaze.charge_up"));
 
+	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_AMBIENT = SOUNDS.register("nether_knight_ambient", () -> getSound("nether_knight.ambient"));
+	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_HURT = SOUNDS.register("nether_knight_hurt", () -> getSound("nether_knight.hurt"));
+	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_DEATH = SOUNDS.register("nether_knight_death", () -> getSound("nether_knight.death"));
+	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_STEP = SOUNDS.register("nether_knight_step", () -> getSound("nether_knight.step"));
+
 	private static SoundEvent getSound(String name) {
 		return new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, name));
 	}

@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.client.renderer.KoalaRenderer;
 import com.tristankechlo.livingthings.client.renderer.LionRenderer;
 import com.tristankechlo.livingthings.client.renderer.MantarayRenderer;
 import com.tristankechlo.livingthings.client.renderer.MonkeyRenderer;
+import com.tristankechlo.livingthings.client.renderer.NetherKnightRenderer;
 import com.tristankechlo.livingthings.client.renderer.OstrichRenderer;
 import com.tristankechlo.livingthings.client.renderer.OwlRenderer;
 import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
@@ -37,5 +38,6 @@ public class RenderHandler {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KOALA_ENTITY.get(), KoalaRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SNAIL_ENTITY.get(), SnailRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), NetherKnightRenderer::new);
 	}
 }

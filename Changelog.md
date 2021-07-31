@@ -1,6 +1,9 @@
 # Changelog
 
-### Versiov 1.16.5 - 1.3.1
+### Version 1.16.5 - 1.3.2
+ - add nether knight entity
+
+### Version 1.16.5 - 1.3.1
  - added loot for snail/monkey/mantaray/kaola
  - added more items
      - raw/cooked elephant meat
