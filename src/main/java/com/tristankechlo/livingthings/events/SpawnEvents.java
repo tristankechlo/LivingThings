@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.events;
 
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.entity.EntityClassification;
@@ -19,7 +20,10 @@ public final class SpawnEvents {
 
 			// spawn NetherKnights in Fortresses
 			event.addEntitySpawn(EntityClassification.MONSTER,
-					new Spawners(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), 18, 1, 2));
+					new Spawners(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(),
+							LivingThingsConfig.NETHER_KNIGHT.spawnWeight.get(),
+							LivingThingsConfig.NETHER_KNIGHT.minSpawnCount.get(),
+							LivingThingsConfig.NETHER_KNIGHT.maxSpawnCount.get()));
 		}
 	}
 

@@ -9,6 +9,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class NetherKnightConfig {
 
@@ -18,6 +19,9 @@ public class NetherKnightConfig {
 	public final BooleanValue canAttack;
 	public final ConfigValue<List<? extends String>> swords;
 	public final ConfigValue<List<? extends String>> axes;
+	public final IntValue spawnWeight;
+	public final IntValue minSpawnCount;
+	public final IntValue maxSpawnCount;
 
 	public NetherKnightConfig(ForgeConfigSpec.Builder builder) {
 		builder.comment("Mob-Config for NetherKnight").push("NetherKnight");
@@ -46,6 +50,17 @@ public class NetherKnightConfig {
 						+ " | All names listed in here are possible names for the axe of the NetherKnight")
 				.worldRestart()
 				.defineList("AxeNames", Arrays.asList("Demonic Soul Collector"), (string) -> validateString(string));
+
+		builder.comment("Options for spawning in the nether fortress").push("Spawning");
+
+		spawnWeight = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | spawnweight compared to other mobs")
+				.worldRestart().defineInRange("SpawnWeight", 18, 1, Short.MAX_VALUE);
+		minSpawnCount = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | minimum size of the spawn group")
+				.worldRestart().defineInRange("MinSpawnCount", 1, 1, Short.MAX_VALUE);
+		maxSpawnCount = builder.comment(LivingThingsConfig.REQUIRES_RESTART + " | maximum size of the spawn group")
+				.worldRestart().defineInRange("MaxSpawnCount", 2, 1, Short.MAX_VALUE);
+
+		builder.pop();
 
 		builder.pop();
 	}
