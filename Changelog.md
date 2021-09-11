@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.16.5 - 1.3.3
+ - compress images
+
 ### Version 1.16.5 - 1.3.2
  - add nether knight entity
 

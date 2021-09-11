@@ -7,6 +7,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
+import com.tristankechlo.livingthings.entities.misc.SwimmingMovementController;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.block.Blocks;
@@ -19,7 +20,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.DolphinLookController;
-import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.ai.goal.FindWaterGoal;
 import net.minecraft.entity.ai.goal.FollowSchoolLeaderGoal;
@@ -41,7 +41,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -59,7 +58,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	public MantarayEntity(EntityType<? extends MantarayEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
-		this.moveControl = new MantarayEntity.MoveHelperController(this);
+		this.moveControl = new SwimmingMovementController(this);
 		this.lookControl = new DolphinLookController(this, 10);
 	}
 
@@ -164,7 +163,6 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
-	
 
 	@Override
 	public int getMaxSpawnClusterSize() {
@@ -223,7 +221,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		private final MantarayEntity fish;
 
 		public SwimGoal(MantarayEntity fish) {
-			super(fish, 1.0D, 1);
+			super(fish, 1.0D, 40);
 			this.fish = fish;
 		}
 
@@ -237,54 +235,4 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		}
 	}
 
-	static class MoveHelperController extends MovementController {
-		private final MantarayEntity mantaray;
-
-		public MoveHelperController(MantarayEntity mantarayIn) {
-			super(mantarayIn);
-			this.mantaray = mantarayIn;
-		}
-
-		@Override
-		public void tick() {
-			if (this.mantaray.isInWater()) {
-				this.mantaray.setDeltaMovement(this.mantaray.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
-			}
-
-			if (this.operation == MovementController.Action.MOVE_TO && !this.mantaray.getNavigation().isDone()) {
-				double d0 = this.wantedX - this.mantaray.getX();
-				double d1 = this.wantedY - this.mantaray.getY();
-				double d2 = this.wantedZ - this.mantaray.getZ();
-				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-				if (d3 < (double) 2.5000003E-7F) {
-					this.mob.setZza(0.0F);
-				} else {
-					float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-					this.mantaray.yRot = this.rotlerp(this.mantaray.yRot, f, 10.0F);
-					this.mantaray.yBodyRot = this.mantaray.yRot;
-					this.mantaray.yHeadRot = this.mantaray.yRot;
-					float f1 = (float) (this.speedModifier * this.mantaray.getAttributeValue(Attributes.MOVEMENT_SPEED));
-					if (this.mantaray.isInWater()) {
-						this.mantaray.setSpeed(f1 * 0.02F);
-						float f2 = -((float) (MathHelper.atan2(d1, MathHelper.sqrt(d0 * d0 + d2 * d2))
-								* 0.0174532925F));
-						f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
-						this.mantaray.xRot = this.rotlerp(this.mantaray.xRot, f2, 5.0F);
-						float f3 = MathHelper.cos(this.mantaray.xRot * 0.0174532925F);
-						float f4 = MathHelper.sin(this.mantaray.xRot * 0.0174532925F);
-						this.mantaray.zza = f3 * f1;
-						this.mantaray.yya = -f4 * f1;
-					} else {
-						this.mantaray.setSpeed(f1 * 0.1F);
-					}
-
-				}
-			} else {
-				this.mantaray.setSpeed(0.0F);
-				this.mantaray.setXxa(0.0F);
-				this.mantaray.setYya(0.0F);
-				this.mantaray.setZza(0.0F);
-			}
-		}
-	}
 }
