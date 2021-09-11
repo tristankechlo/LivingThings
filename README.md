@@ -26,7 +26,7 @@ more Mobs will be added soon
 #### Translations:
 | Language | up to modversion | Translator |
 |:--------:|:----------------:|:-----------|
-| **en_us** | 1.3.2 | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **en_us** | 1.3.3 | tristankechlo ([Github](https://github.com/tristankechlo)) |
 | **pt_br** | 1.2.0 | Mikeliro ([Github](https://github.com/Mikeliro)) | 
-| **de_de** | 1.3.2 | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **de_de** | 1.3.3 | tristankechlo ([Github](https://github.com/tristankechlo)) |
 | **ru_ru** | 1.2.3 | Intaria ([Github](https://github.com/Intaria)) |
