@@ -3,23 +3,21 @@
 		"category" : "neutral",
 		"sounds" : [
 			"livingthings:lion/lion_roar1",
-			"livingthings:lion/lion_roar2",
-			"livingthings:lion/lion_roar3"
+			"livingthings:lion/lion_roar2"
 		],
 		"subtitle" : "subtitles.livingthings.lion.ambient"
 	},
 	"lion.hurt" : {
 		"category" : "neutral",
 		"sounds" : [
-			"livingthings:lion/lion_roar3"
+			"livingthings:lion/lion_roar2"
 		],
 		"subtitle" : "subtitles.livingthings.lion.hurt"
 	},
 	"lion.death" : {
 		"category" : "neutral",
 		"sounds" : [
-			"livingthings:lion/lion_death1",
-			"livingthings:lion/lion_death2"
+			"livingthings:lion/lion_death1"
 		],
 		"subtitle" : "subtitles.livingthings.lion.death"
 	},
@@ -52,8 +50,7 @@
 	"elephant.ambient" : {
 		"category" : "neutral",
 		"sounds" : [
-			"livingthings:elephant/elephant_ambient1",
-			"livingthings:elephant/elephant_ambient2"
+			"livingthings:elephant/elephant_ambient1"
 		],
 		"subtitle" : "subtitles.livingthings.elephant.ambient"
 	},
@@ -178,9 +175,7 @@
 		"category" : "neutral",
 		"sounds" : [
 			"livingthings:owl/owl_death1",
-			"livingthings:owl/owl_death2",
-			"livingthings:owl/owl_death3",
-			"livingthings:owl/owl_death4"
+			"livingthings:owl/owl_death2"
 		],
 		"subtitle" : "subtitles.livingthings.owl.death"
 	},
