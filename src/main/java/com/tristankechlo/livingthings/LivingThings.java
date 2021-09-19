@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +25,7 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod(LivingThings.MOD_ID)
 public class LivingThings {
@@ -32,6 +35,7 @@ public class LivingThings {
 	public static boolean patchouliLoaded = false;
 
 	public LivingThings() {
+		setupConfigs();
 		ModLoadingContext.get().registerConfig(Type.COMMON, LivingThingsConfig.spec, "livingthings/livingthings.toml");
 
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -57,6 +61,13 @@ public class LivingThings {
 	public void commonSetup(final FMLCommonSetupEvent event) {
 		LivingThings.patchouliLoaded = ModList.get().isLoaded("patchouli");
 		ConfigManager.setup();
+	}
+
+	private void setupConfigs() {
+		File dir = FMLPaths.CONFIGDIR.get().resolve(LivingThings.MOD_ID).toFile();
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
 	}
 
 }
