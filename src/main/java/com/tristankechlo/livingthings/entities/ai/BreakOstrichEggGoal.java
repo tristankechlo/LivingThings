@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 
 public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
@@ -46,7 +47,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
 	@Override
 	public boolean canUse() {
-		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.level, this.blockPos, this.entity)) {
+		if (!ForgeHooks.canEntityDestroy(this.entity.level, this.blockPos, this.entity)) {
 			return false;
 		} else if (this.nextStartTick > 0) {
 			--this.nextStartTick;

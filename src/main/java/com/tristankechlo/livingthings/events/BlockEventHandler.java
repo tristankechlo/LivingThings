@@ -29,6 +29,7 @@ public class BlockEventHandler {
 	private static ITag<Block> droppingBananaBlocks;
 
 	@SubscribeEvent
+	/** used to drop bananas at block break event */
 	public void onBlockBreak(final BlockEvent.BreakEvent event) {
 		if (!LivingThingsConfig.GENERAL.doBananaDrops.get()) {
 			return;
@@ -65,7 +66,8 @@ public class BlockEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onPlayerRightClickBlock(final BlockEvent.EntityPlaceEvent event) {
+	/** used to spawn the ancient blaze */
+	public void onBlockPlaceEvent(final BlockEvent.EntityPlaceEvent event) {
 		if (!LivingThingsConfig.ANCIENT_BLAZE.canSpawn.get()) {
 			return;
 		}

@@ -35,16 +35,6 @@ public class BiomeLoadingEventHandler {
 				}
 			}
 		}
-
-//		String currentBiome = event.getName().toString();
-//		List<? extends String> ElephantSpawnBiomes = LivingThingsConfig.ELEPHANT.spawnBiomes.get();
-//
-//		if (ElephantSpawnBiomes.contains(currentBiome)) {
-//			event.getSpawns().getSpawner(EntityClassification.CREATURE)
-//					.add(new Spawners(ModEntityTypes.ELEPHANT_ENTITY.get(),
-//							LivingThingsConfig.ELEPHANT.weight.get(),
-//							LivingThingsConfig.ELEPHANT.minSpawns.get(),
-//							LivingThingsConfig.ELEPHANT.maxSpawns.get()));
-//		}
 	}
+
 }
