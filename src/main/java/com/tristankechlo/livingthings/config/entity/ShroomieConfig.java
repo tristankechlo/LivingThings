@@ -46,7 +46,7 @@ public class ShroomieConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(15, 3, 6, Biomes.MUSHROOM_FIELDS, Biomes.MUSHROOM_FIELD_SHORE));
+		spawns.add(new SpawnData(20, 5, 7, Biomes.MUSHROOM_FIELDS, Biomes.MUSHROOM_FIELD_SHORE));
 		return spawns;
 	}
 
