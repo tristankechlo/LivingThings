@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.entities.misc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.AgeableEntity;
@@ -22,7 +24,7 @@ public interface IMobVariants {
 			if (parent1 == parent2) {
 				return parent1;
 			} else {
-				if (new Random().nextBoolean()) {
+				if (entity1.getRandom().nextBoolean()) {
 					return parent1;
 				} else {
 					return parent2;
@@ -31,6 +33,23 @@ public interface IMobVariants {
 		} else {
 			return (byte) 0;
 		}
+	}
+
+	default byte getRandomVariant(Random random, byte[] variants, int[] weights) {
+		if (weights.length != variants.length) {
+			throw new IllegalArgumentException("Weights and Variants must have the same length.");
+		}
+		if (weights.length <= 0 || weights.length > Byte.MAX_VALUE) {
+			return 0;
+		}
+		List<WeightedMobVariant> weightedList = new ArrayList<>();
+		for (int i = 0; i < weights.length; i++) {
+			if (weights[i] <= 0 || variants[i] < 0) {
+				continue;
+			}
+			weightedList.add(new WeightedMobVariant(weights[i], variants[i]));
+		}
+		return WeightedRandom.getRandomItem(random, weightedList).variant;
 	}
 
 	class WeightedMobVariant extends WeightedRandom.Item {

@@ -42,6 +42,7 @@
 	"item.livingthings.snail_spawn_egg" : "Snail Spawn Egg",
 	"item.livingthings.monkey_spawn_egg" : "Monkey Spawn Egg",
 	"item.livingthings.nether_knight_spawn_egg" : "Nether Knight Spawn Egg",
+	"item.livingthings.shroomie_spawn_egg" : "Shroomie Spawn Egg",
 	
 	
 	"__comment5" : "entity names",
@@ -61,6 +62,7 @@
 	"entity.livingthings.snail" : "Snail",
 	"entity.livingthings.monkey" : "Monkey",
 	"entity.livingthings.nether_knight" : "Nether Knight",
+	"entity.livingthings.shroomie" : "Shroomie",
 
 
 	"__comment6" : "subtitles",

@@ -15,6 +15,7 @@ import com.tristankechlo.livingthings.client.renderer.OwlRenderer;
 import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
 import com.tristankechlo.livingthings.client.renderer.RaccoonRenderer;
 import com.tristankechlo.livingthings.client.renderer.SharkRenderer;
+import com.tristankechlo.livingthings.client.renderer.ShroomieRenderer;
 import com.tristankechlo.livingthings.client.renderer.SnailRenderer;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
@@ -39,5 +40,6 @@ public class RenderHandler {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SNAIL_ENTITY.get(), SnailRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), NetherKnightRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHROOMIE_ENTITY.get(), ShroomieRenderer::new);
 	}
 }

@@ -42,6 +42,7 @@
 	"item.livingthings.snail_spawn_egg" : "Schnecken-Spawn-Ei",
 	"item.livingthings.monkey_spawn_egg" : "Affen-Spawn-Ei",
 	"item.livingthings.nether_knight_spawn_egg" : "Nether-Krieger-Spawn-Ei",
+	"item.livingthings.shroomie_spawn_egg" : "Shroomie-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -61,6 +62,7 @@
 	"entity.livingthings.snail" : "Schnecke",
 	"entity.livingthings.monkey" : "Affe",
 	"entity.livingthings.nether_knight" : "Nether Krieger",
+	"entity.livingthings.shroomie" : "Shroomie",
 
 
 	"__comment6" : "subtitles",

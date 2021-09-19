@@ -16,6 +16,7 @@ import com.tristankechlo.livingthings.entities.OwlEntity;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
+import com.tristankechlo.livingthings.entities.ShroomieEntity;
 import com.tristankechlo.livingthings.entities.SnailEntity;
 
 import net.minecraft.entity.Entity;
@@ -50,6 +51,7 @@ public class ModEntityTypes {
 	private static final EntityType<SnailEntity> snail = createStandardEntityType("snail", SnailEntity::new, EntityClassification.CREATURE, 0.6F, 0.7F);
 	private static final EntityType<MonkeyEntity> monkey = createStandardEntityType("monkey", MonkeyEntity::new, EntityClassification.CREATURE, 0.6F, 0.7F);
 	private static final EntityType<NetherKnightEntity> nether_knight = EntityType.Builder.of(NetherKnightEntity::new, EntityClassification.MONSTER).sized(0.7F, 2.3F).fireImmune().build(LivingThings.MOD_ID + ":nether_knight");
+	private static final EntityType<ShroomieEntity> shroomie = createStandardEntityType("shroomie", ShroomieEntity::new, EntityClassification.CREATURE, 0.5F, 0.99F);
 
 	// register entity types
 	public static final RegistryObject<EntityType<ElephantEntity>> ELEPHANT_ENTITY = ENTITY_TYPES.register("elephant", () -> elephant);
@@ -68,6 +70,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<SnailEntity>> SNAIL_ENTITY = ENTITY_TYPES.register("snail", () -> snail);
 	public static final RegistryObject<EntityType<MonkeyEntity>> MONKEY_ENTITY = ENTITY_TYPES.register("monkey", () -> monkey);
 	public static final RegistryObject<EntityType<NetherKnightEntity>> NETHER_KNIGHT_ENTITY = ENTITY_TYPES.register("nether_knight", () -> nether_knight);
+	public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE_ENTITY = ENTITY_TYPES.register("shroomie", () -> shroomie);
 
 	// register spawn eggs
 	public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ModItems.ITEMS.register("elephant_spawn_egg", () -> new SpawnEggItem(elephant, 0x000000, 0x4e4e4e, spawn_egg_props));
@@ -86,6 +89,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<Item> SNAIL_SPAWN_EGG = ModItems.ITEMS.register("snail_spawn_egg", () -> new SpawnEggItem(snail, 0x2206464, 0x53588, spawn_egg_props));
 	public static final RegistryObject<Item> MONKEY_SPAWN_EGG = ModItems.ITEMS.register("monkey_spawn_egg", () -> new SpawnEggItem(monkey, 10051392, 7555121, spawn_egg_props));
 	public static final RegistryObject<Item> NETHER_KNIGHT_SPAWN_EGG = ModItems.ITEMS.register("nether_knight_spawn_egg", () -> new SpawnEggItem(nether_knight, 0x181a1c, 0xa32aa1, spawn_egg_props));
+	public static final RegistryObject<Item> SHROOMIE_SPAWN_EGG = ModItems.ITEMS.register("shroomie_spawn_egg", () -> new SpawnEggItem(shroomie, 0xb8968d, 0xdb380f, spawn_egg_props));
 
 	// create standard entity type
 	private static <T extends Entity> EntityType<T> createStandardEntityType(String entity_name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height) {
