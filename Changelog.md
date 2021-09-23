@@ -4,6 +4,11 @@
  - compress images
  - compress sound files
  - add shroomie-entity
+ - added new items
+     - raw lion meat
+     - cooked lion meat
+     - raw giraffe meat
+     - cooked giraffe meat
 
 ### Version 1.16.5 - 1.3.2
  - add nether knight entity

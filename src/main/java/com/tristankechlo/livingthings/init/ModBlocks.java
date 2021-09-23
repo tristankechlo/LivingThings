@@ -22,6 +22,6 @@ public class ModBlocks {
 
 	// BLOCK - ITEMS
 	public static final RegistryObject<Item> OSTRICH_NEST_ITEM = ModItems.ITEMS.register("ostrich_nest",
-			() -> new BlockItem(OSTRICH_NEST.get(), new Properties().tab(ModItemGroups.General)));
+			() -> new BlockItem(OSTRICH_NEST.get(), new Properties().tab(ModItemGroups.GENERAL)));
 
 }

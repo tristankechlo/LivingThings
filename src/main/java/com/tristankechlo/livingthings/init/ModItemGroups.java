@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModItemGroups {
 
-	public static final ItemGroup General = new ItemGroup("LivingThings") {
+	public static final ItemGroup GENERAL = new ItemGroup("LivingThings") {
 
 		@Override
 		public ItemStack makeIcon() {
