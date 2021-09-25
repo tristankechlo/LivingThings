@@ -23,6 +23,7 @@
 	"item.livingthings.banana" : "Banane",
 	"item.livingthings.elephant" : "Rohes Elefanten Fleisch",
 	"item.livingthings.cooked_elephant" : "Elefanten Fleisch",
+	"item.livingthings.seahorse_bucket" : "Seepferdcheneimer",
 	"item.livingthings.lion" : "Rohes L\u00f6wen Fleisch",
 	"item.livingthings.cooked_lion" : "L\u00f6wen Fleisch",
 	"item.livingthings.giraffe" : "Rohes Giraffen Fleisch",
@@ -47,6 +48,7 @@
 	"item.livingthings.monkey_spawn_egg" : "Affen-Spawn-Ei",
 	"item.livingthings.nether_knight_spawn_egg" : "Nether-Krieger-Spawn-Ei",
 	"item.livingthings.shroomie_spawn_egg" : "Shroomie-Spawn-Ei",
+	"item.livingthings.seahorse_spawn_egg" : "Seepferdchen-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -67,6 +69,7 @@
 	"entity.livingthings.monkey" : "Affe",
 	"entity.livingthings.nether_knight" : "Nether Krieger",
 	"entity.livingthings.shroomie" : "Shroomie",
+	"entity.livingthings.seahorse" : "Seepferdchen",
 
 
 	"__comment6" : "subtitles",
@@ -101,6 +104,7 @@
 	"subtitles.livingthings.nether_knight.ambient" : "Nether Krieger Ger\u00e4usche",
 	"subtitles.livingthings.nether_knight.hurt" : "Nether Krieger nimmt Schaden",
 	"subtitles.livingthings.nether_knight.death" : "Nether Krieger stirbt",
+	"subtitles.livingthings.seahorse.flop" : "Seepferdchen springt",
 
 
 	"__comment7" : "messages",

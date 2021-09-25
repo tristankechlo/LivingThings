@@ -52,6 +52,8 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_DEATH = SOUNDS.register("nether_knight_death", () -> getSound("nether_knight.death"));
 	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_STEP = SOUNDS.register("nether_knight_step", () -> getSound("nether_knight.step"));
 
+	public static final RegistryObject<SoundEvent> SEAHORSE_FLOP = SOUNDS.register("seahorse_flop", () -> getSound("seahorse.flop"));
+
 	private static SoundEvent getSound(String name) {
 		return new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, name));
 	}

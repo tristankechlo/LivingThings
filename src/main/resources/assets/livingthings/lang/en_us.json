@@ -23,6 +23,7 @@
 	"item.livingthings.banana" : "Banana",
 	"item.livingthings.elephant" : "Raw Elephant Meat",
 	"item.livingthings.cooked_elephant" : "Cooked Elephant Meat",
+	"item.livingthings.seahorse_bucket" : "Bucket of Seahorse",
 	"item.livingthings.lion" : "Raw Lion Meat",
 	"item.livingthings.cooked_lion" : "Cooked Lion Meat",
 	"item.livingthings.giraffe" : "Raw Giraffe Meat",
@@ -47,6 +48,7 @@
 	"item.livingthings.monkey_spawn_egg" : "Monkey Spawn Egg",
 	"item.livingthings.nether_knight_spawn_egg" : "Nether Knight Spawn Egg",
 	"item.livingthings.shroomie_spawn_egg" : "Shroomie Spawn Egg",
+	"item.livingthings.seahorse_spawn_egg" : "Seahorse Spawn Egg",
 	
 	
 	"__comment5" : "entity names",
@@ -67,6 +69,7 @@
 	"entity.livingthings.monkey" : "Monkey",
 	"entity.livingthings.nether_knight" : "Nether Knight",
 	"entity.livingthings.shroomie" : "Shroomie",
+	"entity.livingthings.seahorse" : "Seahorse",
 
 
 	"__comment6" : "subtitles",
@@ -101,6 +104,7 @@
 	"subtitles.livingthings.nether_knight.ambient" : "Nether Knight noise",
 	"subtitles.livingthings.nether_knight.hurt" : "Nether Knight hurts",
 	"subtitles.livingthings.nether_knight.death" : "Nether Knight dies",
+	"subtitles.livingthings.seahorse.flop" : "Seahorse flops",
 
 
 	"__comment7" : "messages",

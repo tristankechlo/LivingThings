@@ -15,6 +15,7 @@ import com.tristankechlo.livingthings.entities.OstrichEntity;
 import com.tristankechlo.livingthings.entities.OwlEntity;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
+import com.tristankechlo.livingthings.entities.SeahorseEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
 import com.tristankechlo.livingthings.entities.ShroomieEntity;
 import com.tristankechlo.livingthings.entities.SnailEntity;
@@ -25,6 +26,7 @@ import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -59,6 +61,7 @@ public class RegistryEventHandler {
 		event.put(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyEntity.createAttributes().build());
 		event.put(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), NetherKnightEntity.createAttributes().build());
 		event.put(ModEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntity.createAttributes().build());
+		event.put(ModEntityTypes.SEAHORSE_ENTITY.get(), SeahorseEntity.createAttributes().build());
 	}
 
 	private static void registerEntitySpawnPlacements() {
@@ -79,6 +82,7 @@ public class RegistryEventHandler {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MONKEY_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, MonkeyEntity::canMonkeySpawn);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHROOMIE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SEAHORSE_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
 	}
 
 }

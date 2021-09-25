@@ -25,6 +25,7 @@ import com.tristankechlo.livingthings.config.entity.OstrichConfig;
 import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
+import com.tristankechlo.livingthings.config.entity.SeahorseConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
@@ -134,6 +135,7 @@ public final class BiomeSpawnConfig {
 		names.put("livingthings:shark", SharkConfig::getDefaultSpawns);
 		names.put("livingthings:snail", SnailConfig::getDefaultSpawns);
 		names.put("livingthings:shroomie", ShroomieConfig::getDefaultSpawns);
+		names.put("livingthings:seahorse", SeahorseConfig::getDefaultSpawns);
 		return names;
 	}
 

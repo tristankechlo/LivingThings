@@ -17,6 +17,7 @@ import com.tristankechlo.livingthings.config.entity.OstrichConfig;
 import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.entity.RaccoonConfig;
+import com.tristankechlo.livingthings.config.entity.SeahorseConfig;
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
@@ -65,6 +66,7 @@ public class LivingThingsConfig {
 	public static final MonkeyConfig MONKEY = new MonkeyConfig(BUILDER);
 	public static final NetherKnightConfig NETHER_KNIGHT = new NetherKnightConfig(BUILDER);
 	public static final ShroomieConfig SHROOMIE = new ShroomieConfig(BUILDER);
+	public static final SeahorseConfig SEAHORSE = new SeahorseConfig(BUILDER);
 
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

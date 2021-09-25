@@ -3,8 +3,11 @@
 ### Version 1.16.5 - 1.3.3
  - compress images
  - compress sound files
- - add shroomie-entity
+ - add new mobs
+     - shroomie
+     - seahorse (can be picket up with buckets)
  - added new items
+     - bucket of seahorse
      - raw lion meat
      - cooked lion meat
      - raw giraffe meat

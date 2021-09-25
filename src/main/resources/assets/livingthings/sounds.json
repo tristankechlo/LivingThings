@@ -273,5 +273,26 @@
 			"mob/wither_skeleton/step4"
 		],
 		"subtitle" : "subtitles.block.generic.footsteps"
+	},
+	"seahorse.flop" : {
+		"sounds" : [
+			{
+				"name" : "entity/fish/flop1",
+				"volume" : 0.3
+			},
+			{
+				"name" : "entity/fish/flop2",
+				"volume" : 0.3
+			},
+			{
+				"name" : "entity/fish/flop3",
+				"volume" : 0.3
+			},
+			{
+				"name" : "entity/fish/flop4",
+				"volume" : 0.3
+			}
+		],
+		"subtitle" : "subtitles.livingthings.seahorse.flop"
 	}
 }
