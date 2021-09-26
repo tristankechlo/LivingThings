@@ -5,7 +5,7 @@
  - compress sound files
  - add new mobs
      - shroomie
-     - seahorse (can be picket up with buckets)
+     - seahorse (can be picked up with buckets)
  - added new items
      - bucket of seahorse
      - raw lion meat
