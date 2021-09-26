@@ -52,29 +52,13 @@ minecraft {
                 }
             }
         }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            //property 'mixin.env.disableRefMap', 'true'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            args '--mod', 'livingthings', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                livingthings {
-                    source sourceSets.main
-                }
-            }
-        }
     }
 }
 
 repositories {
     maven { url 'https://maven.blamejared.com' }
 }
+
 
 dependencies {
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

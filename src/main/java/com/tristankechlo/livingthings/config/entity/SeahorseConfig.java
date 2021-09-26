@@ -35,7 +35,7 @@ public class SeahorseConfig {
 				.defineInRange("MovementSpeed", 0.2D, LivingThingsConfig.MIN_SPEED, LivingThingsConfig.MAX_SPEED);
 
 		maxSpawnedInChunk = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
-				.defineInRange("MaxSpawnedInChunk", 4, 1, 15);
+				.defineInRange("MaxSpawnedInChunk", 6, 1, 15);
 
 		builder.comment(LivingThingsConfig.WEIGHTED_RANDOM).push("ColorVariantWeights");
 		blueWeight = builder.defineInRange("ColorBlueWeight", 20, 0, Integer.MAX_VALUE);
@@ -51,7 +51,7 @@ public class SeahorseConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(15, 2, 6, Biomes.WARM_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.LUKEWARM_OCEAN,
+		spawns.add(new SpawnData(17, 4, 7, Biomes.WARM_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.LUKEWARM_OCEAN,
 				Biomes.DEEP_LUKEWARM_OCEAN, Biomes.OCEAN, Biomes.DEEP_OCEAN));
 		return spawns;
 	}
