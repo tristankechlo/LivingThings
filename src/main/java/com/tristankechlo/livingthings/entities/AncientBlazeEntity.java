@@ -7,81 +7,82 @@ import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IChargeableMob;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.BlazeEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.PowerableMob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.LargeFireball;
+import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
-public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob, IRangedAttackMob, ILexiconEntry {
+@OnlyIn(value = Dist.CLIENT, _interface = PowerableMob.class)
+public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
 
-	private static final DataParameter<Byte> SHOOTS = EntityDataManager.defineId(AncientBlazeEntity.class,
-			DataSerializers.BYTE);
-	private static final DataParameter<Integer> INVULNERABLE_TIME = EntityDataManager.defineId(AncientBlazeEntity.class,
-			DataSerializers.INT);
+	private static final EntityDataAccessor<Byte> SHOOTS = SynchedEntityData.defineId(AncientBlazeEntity.class,
+			EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Integer> INVULNERABLE_TIME = SynchedEntityData
+			.defineId(AncientBlazeEntity.class, EntityDataSerializers.INT);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"hostile_mobs/ancient_blaze");
-	private final ServerBossInfo bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.YELLOW,
-			BossInfo.Overlay.PROGRESS);
+	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.YELLOW,
+			BossEvent.BossBarOverlay.PROGRESS);
 
-	public AncientBlazeEntity(EntityType<? extends AncientBlazeEntity> type, World world) {
+	public AncientBlazeEntity(EntityType<? extends AncientBlazeEntity> type, Level world) {
 		super(type, world);
-		this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
-		this.setPathfindingMalus(PathNodeType.LAVA, 8.0F);
-		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, 8.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
 		this.xpReward = 30;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.ANCIENT_BLAZE.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.ANCIENT_BLAZE.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.ANCIENT_BLAZE.speed.get())
 				.add(Attributes.FOLLOW_RANGE, 48.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ANCIENT_BLAZE.damage.get());
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
 		this.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -91,12 +92,12 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		this.goalSelector.addGoal(0, new AncientBlazeChargeUpGoal(this));
 		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 30, 20.0F));
 		this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0D));
-		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D, 0.0F));
+		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, true));
 	}
 
 	@Override
@@ -107,14 +108,14 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("ChargedTime", this.getInvulnerableTime());
 		compound.putByte("Shoots", this.getShoots());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setInvulnerableTime(compound.getInt("ChargedTime"));
 		this.setShoots(compound.getByte("Shoots"));
@@ -124,7 +125,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	}
 
 	@Override
-	public void setCustomName(ITextComponent name) {
+	public void setCustomName(Component name) {
 		super.setCustomName(name);
 		this.bossInfo.setName(this.getDisplayName());
 	}
@@ -154,7 +155,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
-		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+		this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
 	@Override
@@ -187,7 +188,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 		if (this.getInvulnerableTime() > 0 && source != DamageSource.OUT_OF_WORLD) {
 			return false;
 			// catch large fireballs
-		} else if (source.getDirectEntity() instanceof FireballEntity && source.getEntity() instanceof PlayerEntity) {
+		} else if (source.getDirectEntity() instanceof LargeFireball && source.getEntity() instanceof Player) {
 			int shoots = this.getShoots();
 			if (shoots < LivingThingsConfig.ANCIENT_BLAZE.largeFireballAmount.get()) {
 				this.setShoots((byte) (shoots + 1));
@@ -221,28 +222,26 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 
 		if (this.random.nextDouble() < chance && shoots > 0) {
 			this.setShoots((byte) (shoots - 1));
-			FireballEntity fireballentity = new FireballEntity(this.level, this, d1, d2, d3);
+			LargeFireball fireballentity = new LargeFireball(this.level, this, d1, d2, d3, 1);
 			fireballentity.setPos(fireballentity.getX(), this.getY(0.5D) + 0.5D, fireballentity.getZ());
-			fireballentity.explosionPower = 1;
 			this.level.addFreshEntity(fireballentity);
 		} else {
-			SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.level, this, d1, d2, d3);
+			SmallFireball smallfireballentity = new SmallFireball(this.level, this, d1, d2, d3);
 			smallfireballentity.setPos(smallfireballentity.getX(), this.getY(0.5D) + 0.5D, smallfireballentity.getZ());
 			this.level.addFreshEntity(smallfireballentity);
 		}
 		if (!this.level.isClientSide()) {
-			this.level.playSound(null, this.blockPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundCategory.HOSTILE,
+			this.level.playSound(null, this.blockPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundSource.HOSTILE,
 					2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 		}
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public void remove(boolean keepData) {
+	public void remove(Entity.RemovalReason reason) {
 		int amount = LivingThingsConfig.ANCIENT_BLAZE.blazeSpawnCount.get();
-		if (!this.level.isClientSide() && amount >= 1 && this.isDeadOrDying() && !this.removed) {
+		if (!this.level.isClientSide() && amount >= 1 && this.isDeadOrDying()) {
 			for (int i = 0; i < amount; i++) {
-				BlazeEntity blaze = new BlazeEntity(EntityType.BLAZE, this.level);
+				Blaze blaze = new Blaze(EntityType.BLAZE, this.level);
 				if (this.isPersistenceRequired()) {
 					blaze.setPersistenceRequired();
 				}
@@ -253,7 +252,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 				this.level.addFreshEntity(blaze);
 			}
 		}
-		super.remove(keepData);
+		super.remove(reason);
 	}
 
 	@Override
@@ -272,8 +271,7 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	}
 
 	@Override
-	public boolean causeFallDamage(float distance, float damageMultiplier) {
-		super.causeFallDamage(distance, damageMultiplier);
+	public boolean causeFallDamage(float p_149683_, float p_149684_, DamageSource p_149685_) {
 		return false;
 	}
 
@@ -288,13 +286,13 @@ public class AncientBlazeEntity extends MonsterEntity implements IChargeableMob,
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 		this.bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}

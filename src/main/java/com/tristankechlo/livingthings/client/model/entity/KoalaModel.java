@@ -1,129 +1,124 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.KoalaEntity;
 
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class KoalaModel<T extends KoalaEntity> extends AdvancedEntityModel<T> {
 
-	private final ModelRenderer Body;
-	private final ModelRenderer BodyBack;
-	private final ModelRenderer Head;
-	private final ModelRenderer EarLeft;
-	private final ModelRenderer EarRight;
-	private final ModelRenderer Nose;
-	private final ModelRenderer Nose2;
-	private final ModelRenderer LegFrontLeft;
-	private final ModelRenderer LegFrontLeft2;
-	private final ModelRenderer LegBackLeft;
-	private final ModelRenderer LegBackLeft2;
-	private final ModelRenderer LegFrontRight;
-	private final ModelRenderer LegFrontRight2;
-	private final ModelRenderer LegBackRight;
-	private final ModelRenderer LegBackRight2;
+	private final ModelPart Body;
+	private final ModelPart Head;
+	private final ModelPart LegFrontRight;
+	private final ModelPart LegFrontLeft;
+	private final ModelPart LegBackRight;
+	private final ModelPart LegBackLeft;
 
-	public KoalaModel() {
-		texWidth = 64;
-		texHeight = 32;
+	public KoalaModel(ModelPart root) {
+		this.Body = root.getChild("Body");
+		this.Head = root.getChild("Head");
+		this.LegFrontRight = root.getChild("LegFrontRight");
+		this.LegFrontLeft = root.getChild("LegFrontLeft");
+		this.LegBackRight = root.getChild("LegBackRight");
+		this.LegBackLeft = root.getChild("LegBackLeft");
+	}
 
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 19.1F, -2.0F);
-		this.setRotationAngle(Body, -0.0873F, 0.0F, 0.0F);
-		Body.texOffs(0, 4).addBox(-3.5F, -6.0F, -3.0F, 7.0F, 6.0F, 6.0F, 0.0F, false);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		BodyBack = new ModelRenderer(this);
-		BodyBack.setPos(0.0F, -2.9128F, 2.0038F);
-		Body.addChild(BodyBack);
-		this.setRotationAngle(BodyBack, -0.1309F, 0.0F, 0.0F);
-		BodyBack.texOffs(0, 17).addBox(-4.0F, -3.8486F, -0.0152F, 8.0F, 7.0F, 8.0F, 0.0F, false);
+		PartDefinition Body = partdefinition.addOrReplaceChild("Body",
+				CubeListBuilder.create().texOffs(0, 4).addBox(-3.5F, -6.0F, -3.0F, 7.0F, 6.0F, 6.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, 19.1F, -2.0F, -0.0873F, 0.0F, 0.0F));
 
-		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, -2.8577F, -2.7764F);
-		Body.addChild(Head);
-		this.setRotationAngle(Head, 0.0873F, 0.0F, 0.0F);
-		Head.texOffs(33, 23).addBox(-3.0F, -2.4245F, -3.9909F, 6.0F, 5.0F, 4.0F, 0.0F, true);
+		PartDefinition BodyBack = Body.addOrReplaceChild("BodyBack",
+				CubeListBuilder.create().texOffs(0, 17).addBox(-4.0F, -3.8486F, -0.0152F, 8.0F, 7.0F, 8.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, -2.9128F, 2.0038F, -0.1309F, 0.0F, 0.0F));
 
-		EarLeft = new ModelRenderer(this);
-		EarLeft.setPos(2.9F, -2.2245F, -1.4909F);
-		Head.addChild(EarLeft);
-		this.setRotationAngle(EarLeft, 0.0F, 0.0F, 0.1309F);
-		EarLeft.texOffs(54, 28).addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F, 0.0F, false);
+		PartDefinition Head = Body.addOrReplaceChild("Head",
+				CubeListBuilder.create().texOffs(33, 23).mirror()
+						.addBox(-3.0F, -2.4245F, -3.9909F, 6.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(0.0F, -2.8577F, -2.7764F, 0.0873F, 0.0F, 0.0F));
 
-		EarRight = new ModelRenderer(this);
-		EarRight.setPos(-2.9F, -2.2245F, -1.4909F);
-		Head.addChild(EarRight);
-		this.setRotationAngle(EarRight, 0.0F, 0.0F, -0.1309F);
-		EarRight.texOffs(54, 28).addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F, 0.0F, true);
+		PartDefinition EarLeft = Head.addOrReplaceChild("EarLeft",
+				CubeListBuilder.create().texOffs(54, 28).addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(2.9F, -2.2245F, -1.4909F, 0.0F, 0.0F, 0.1309F));
 
-		Nose = new ModelRenderer(this);
-		Nose.setPos(0.0F, 0.8255F, -3.6909F);
-		Head.addChild(Nose);
-		this.setRotationAngle(Nose, 0.0873F, 0.0F, 0.0F);
-		Nose.texOffs(54, 24).addBox(-1.5F, -1.0174F, -1.1992F, 3.0F, 2.0F, 1.0F, 0.0F, false);
+		PartDefinition EarRight = Head.addOrReplaceChild("EarRight",
+				CubeListBuilder.create().texOffs(54, 28).mirror()
+						.addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(-2.9F, -2.2245F, -1.4909F, 0.0F, 0.0F, -0.1309F));
 
-		Nose2 = new ModelRenderer(this);
-		Nose2.setPos(0.0F, 0.0F, 0.025F);
-		Nose.addChild(Nose2);
-		this.setRotationAngle(Nose2, 0.0873F, 0.0F, 0.0F);
-		Nose2.texOffs(38, 19).addBox(-1.0F, -1.0521F, -1.4954F, 2.0F, 2.0F, 1.0F, 0.0F, false);
+		PartDefinition Nose = Head.addOrReplaceChild("Nose",
+				CubeListBuilder.create().texOffs(54, 24).addBox(-1.5F, -1.0174F, -1.1992F, 3.0F, 2.0F, 1.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, 0.8255F, -3.6909F, 0.0873F, 0.0F, 0.0F));
 
-		LegFrontLeft = new ModelRenderer(this);
-		LegFrontLeft.setPos(2.5512F, -3.5798F, -0.5496F);
-		Body.addChild(LegFrontLeft);
-		this.setRotationAngle(LegFrontLeft, 0.0873F, 0.0F, -0.0873F);
-		LegFrontLeft.texOffs(27, 9).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 5.0F, 3.0F, 0.0F, false);
+		PartDefinition Nose2 = Nose.addOrReplaceChild("Nose2",
+				CubeListBuilder.create().texOffs(38, 19).addBox(-1.0F, -1.0521F, -1.4954F, 2.0F, 2.0F, 1.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, 0.0F, 0.025F, 0.0873F, 0.0F, 0.0F));
 
-		LegFrontLeft2 = new ModelRenderer(this);
-		LegFrontLeft2.setPos(-0.1863F, 4.4963F, 0.0016F);
-		LegFrontLeft.addChild(LegFrontLeft2);
-		this.setRotationAngle(LegFrontLeft2, 0.0F, 0.0F, 0.0873F);
-		LegFrontLeft2.texOffs(27, 1).addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
-		LegFrontLeft2.texOffs(27, 18).addBox(-1.3257F, 2.9924F, -2.4999F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+		PartDefinition LegFrontLeft = Body.addOrReplaceChild("LegFrontLeft",
+				CubeListBuilder.create().texOffs(27, 9).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 5.0F, 3.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(2.5512F, -3.5798F, -0.5496F, 0.0873F, 0.0F, -0.0873F));
 
-		LegBackLeft = new ModelRenderer(this);
-		LegBackLeft.setPos(3.0512F, -4.1899F, 6.4237F);
-		Body.addChild(LegBackLeft);
-		this.setRotationAngle(LegBackLeft, 0.0F, 0.0F, -0.0873F);
-		LegBackLeft.texOffs(40, 9).addBox(-2.0057F, 0.0432F, -2.0038F, 4.0F, 5.0F, 4.0F, 0.0F, false);
+		PartDefinition LegFrontLeft2 = LegFrontLeft.addOrReplaceChild("LegFrontLeft2",
+				CubeListBuilder.create().texOffs(27, 1)
+						.addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)).texOffs(27, 18)
+						.addBox(-1.3257F, 2.9924F, -2.4999F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-0.1863F, 4.4963F, 0.0016F, 0.0F, 0.0F, 0.0873F));
 
-		LegBackLeft2 = new ModelRenderer(this);
-		LegBackLeft2.setPos(-0.1863F, 4.4963F, 0.0016F);
-		LegBackLeft.addChild(LegBackLeft2);
-		this.setRotationAngle(LegBackLeft2, 0.0873F, 0.0F, 0.0873F);
-		LegBackLeft2.texOffs(41, 1).addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
-		LegBackLeft2.texOffs(27, 18).addBox(-1.3257F, 2.9923F, -2.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+		PartDefinition LegBackLeft = Body.addOrReplaceChild("LegBackLeft",
+				CubeListBuilder.create().texOffs(40, 9).addBox(-2.0057F, 0.0432F, -2.0038F, 4.0F, 5.0F, 4.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(3.0512F, -4.1899F, 6.4237F, 0.0F, 0.0F, -0.0873F));
 
-		LegFrontRight = new ModelRenderer(this);
-		LegFrontRight.setPos(-2.4488F, -3.5798F, -0.5496F);
-		Body.addChild(LegFrontRight);
-		this.setRotationAngle(LegFrontRight, 0.0873F, 0.0F, 0.0873F);
-		LegFrontRight.texOffs(27, 9).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 5.0F, 3.0F, 0.0F, true);
+		PartDefinition LegBackLeft2 = LegBackLeft.addOrReplaceChild("LegBackLeft2",
+				CubeListBuilder.create().texOffs(41, 1)
+						.addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)).texOffs(27, 18)
+						.addBox(-1.3257F, 2.9923F, -2.5F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-0.1863F, 4.4963F, 0.0016F, 0.0873F, 0.0F, 0.0873F));
 
-		LegFrontRight2 = new ModelRenderer(this);
-		LegFrontRight2.setPos(-0.1863F, 4.4963F, 0.0016F);
-		LegFrontRight.addChild(LegFrontRight2);
-		this.setRotationAngle(LegFrontRight2, 0.0F, 0.0F, -0.0873F);
-		LegFrontRight2.texOffs(27, 1).addBox(-1.3007F, -0.0076F, -1.4998F, 3.0F, 4.0F, 3.0F, 0.0F, false);
-		LegFrontRight2.texOffs(27, 18).addBox(-1.3007F, 2.9924F, -2.4999F, 3.0F, 1.0F, 1.0F, 0.0F, true);
+		PartDefinition LegFrontRight = Body.addOrReplaceChild("LegFrontRight",
+				CubeListBuilder.create().texOffs(27, 9).mirror()
+						.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(-2.4488F, -3.5798F, -0.5496F, 0.0873F, 0.0F, 0.0873F));
 
-		LegBackRight = new ModelRenderer(this);
-		LegBackRight.setPos(-2.9488F, -4.1899F, 6.4237F);
-		Body.addChild(LegBackRight);
-		this.setRotationAngle(LegBackRight, 0.0F, 0.0F, 0.0873F);
-		LegBackRight.texOffs(40, 9).addBox(-2.0057F, 0.0432F, -2.0038F, 4.0F, 5.0F, 4.0F, 0.0F, false);
+		PartDefinition LegFrontRight2 = LegFrontRight.addOrReplaceChild("LegFrontRight2",
+				CubeListBuilder.create().texOffs(27, 1)
+						.addBox(-1.3007F, -0.0076F, -1.4998F, 3.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
+						.texOffs(27, 18).mirror()
+						.addBox(-1.3007F, 2.9924F, -2.4999F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(-0.1863F, 4.4963F, 0.0016F, 0.0F, 0.0F, -0.0873F));
 
-		LegBackRight2 = new ModelRenderer(this);
-		LegBackRight2.setPos(-0.1863F, 4.4963F, 0.0016F);
-		LegBackRight.addChild(LegBackRight2);
-		this.setRotationAngle(LegBackRight2, 0.0873F, 0.0F, -0.0873F);
-		LegBackRight2.texOffs(41, 1).addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
-		LegBackRight2.texOffs(27, 18).addBox(-1.3257F, 2.9923F, -2.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+		PartDefinition LegBackRight = Body.addOrReplaceChild("LegBackRight",
+				CubeListBuilder.create().texOffs(40, 9).addBox(-2.0057F, 0.0432F, -2.0038F, 4.0F, 5.0F, 4.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-2.9488F, -4.1899F, 6.4237F, 0.0F, 0.0F, 0.0873F));
+
+		PartDefinition LegBackRight2 = LegBackRight.addOrReplaceChild("LegBackRight2",
+				CubeListBuilder.create().texOffs(41, 1)
+						.addBox(-1.3257F, -0.0076F, -1.5F, 3.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)).texOffs(27, 18)
+						.addBox(-1.3257F, 2.9923F, -2.5F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-0.1863F, 4.4963F, 0.0016F, 0.0873F, 0.0F, -0.0873F));
+
+		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
 
 	@Override
@@ -137,7 +132,7 @@ public class KoalaModel<T extends KoalaEntity> extends AdvancedEntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay,
+	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay,
 			float red, float green, float blue, float alpha) {
 
 		if (this.young) {

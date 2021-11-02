@@ -1,62 +1,63 @@
 package com.tristankechlo.livingthings.items;
 
-import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
+import java.util.function.Consumer;
+
+import com.tristankechlo.livingthings.client.ClientEvents;
 import com.tristankechlo.livingthings.init.ModItems;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 
 public class ModArmorItem extends ArmorItem {
 
-	private BipedModel<?> model;
-
-	public ModArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
+	public ModArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
 		super(materialIn, slot, builderIn);
 	}
 
 	@Override
-	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
+	public void onArmorTick(ItemStack stack, Level world, Player player) {
 		if (!player.isInLava()) {
-			EffectInstance effect = new EffectInstance(Effects.FIRE_RESISTANCE, 2400, 0, false, false, true);
+			MobEffectInstance effect = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 0, false, false, true);
 			if (stack.getItem() == ModItems.ANCIENT_HELMET.get()) {
 				player.addEffect(effect);
 			}
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
 	@OnlyIn(Dist.CLIENT)
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack,
-			EquipmentSlotType armorSlot, A _default) {
-		if (this.model == null) {
-			this.model = new AncientArmorModel(2.0F);
+	@Override
+	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+		consumer.accept(Rendering.INSTANCE);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private static final class Rendering implements IItemRenderProperties {
+		private static final Rendering INSTANCE = new ModArmorItem.Rendering();
+
+		private Rendering() {}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack,
+				EquipmentSlot armorSlot, A _default) {
+			return (A) ClientEvents.ANCIENT_ARMOR_MODEL;
 		}
-
-		this.model.head.visible = (armorSlot == EquipmentSlotType.HEAD);
-
-		this.model.young = _default.young;
-		this.model.crouching = _default.crouching;
-		this.model.riding = _default.riding;
-		this.model.rightArmPose = _default.rightArmPose;
-		this.model.leftArmPose = _default.leftArmPose;
-
-		return (A) model;
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return "livingthings:textures/models/armor/ancient_layer_1.png";
 	}
 

@@ -31,10 +31,10 @@ import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 import com.tristankechlo.livingthings.config.misc.SpawnData;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.MobSpawnInfo.Spawners;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public final class BiomeSpawnConfig {
@@ -82,8 +82,8 @@ public final class BiomeSpawnConfig {
 	 * 
 	 * @return a Map with the biome-ResourceLocation as the key
 	 */
-	public static Map<ResourceLocation, Map<EntityClassification, List<Spawners>>> getBiomeSpawnMap() {
-		Map<ResourceLocation, Map<EntityClassification, List<Spawners>>> biomeSpawnData = new HashMap<>();
+	public static Map<ResourceLocation, Map<MobCategory, List<SpawnerData>>> getBiomeSpawnMap() {
+		Map<ResourceLocation, Map<MobCategory, List<SpawnerData>>> biomeSpawnData = new HashMap<>();
 		for (Map.Entry<String, List<SpawnData>> entry : entityBasedSpawnData.entrySet()) {
 			ResourceLocation name = new ResourceLocation(entry.getKey());
 			EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(name);
@@ -96,19 +96,19 @@ public final class BiomeSpawnConfig {
 					if (!ForgeRegistries.BIOMES.containsKey(biome)) {
 						continue;
 					}
-					Map<EntityClassification, List<Spawners>> classificationMap = biomeSpawnData.get(biome);
+					Map<MobCategory, List<SpawnerData>> classificationMap = biomeSpawnData.get(biome);
 					if (classificationMap == null) {
 						classificationMap = new HashMap<>();
 					}
-					EntityClassification entityClassification = entityType.getCategory();
-					List<Spawners> spawnersMap = classificationMap.get(entityClassification);
+					MobCategory entityClassification = entityType.getCategory();
+					List<SpawnerData> spawnersMap = classificationMap.get(entityClassification);
 					if (spawnersMap == null) {
 						spawnersMap = new ArrayList<>();
 					}
 					int weight = BiomeSpawnConfig.checkRange(spawnData.weight, 1, Short.MAX_VALUE, 15);
 					int minCount = BiomeSpawnConfig.checkRange(spawnData.minCount, 1, Short.MAX_VALUE, 3);
 					int maxCount = BiomeSpawnConfig.checkRange(spawnData.maxCount, 1, Short.MAX_VALUE, 5);
-					Spawners spawners = new Spawners(entityType, weight, minCount, maxCount);
+					SpawnerData spawners = new SpawnerData(entityType, weight, minCount, maxCount);
 					spawnersMap.add(spawners);
 					classificationMap.put(entityClassification, spawnersMap);
 					biomeSpawnData.put(biome, classificationMap);

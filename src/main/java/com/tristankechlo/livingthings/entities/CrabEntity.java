@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -12,67 +13,67 @@ import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable, IScaleableMob, ILexiconEntry {
+public class CrabEntity extends Animal implements IMobVariants, NeutralMob, IScaleableMob, ILexiconEntry {
 
-	private static final DataParameter<Byte> CRAB_VARIANT = EntityDataManager.defineId(CrabEntity.class,
-			DataSerializers.BYTE);
-	private static final DataParameter<Byte> CRAB_SCALING = EntityDataManager.defineId(CrabEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> CRAB_VARIANT = SynchedEntityData.defineId(CrabEntity.class,
+			EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> CRAB_SCALING = SynchedEntityData.defineId(CrabEntity.class,
+			EntityDataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"neutral_mobs/crab");
-	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
+	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.COD);
 	private int angerTime;
 	private UUID angerTarget;
 
-	public CrabEntity(EntityType<? extends CrabEntity> type, World worldIn) {
+	public CrabEntity(EntityType<? extends CrabEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.maxUpStep = 1.0F;
-		this.setPathfindingMalus(PathNodeType.WATER, 1.0F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
-		CrabEntity entityChild = ModEntityTypes.CRAB_ENTITY.get().create(this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+		CrabEntity entityChild = ModEntityTypes.CRAB.get().create(this.level);
 		entityChild.setVariant(this.getVariantFromParents(this, entity));
 		entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
@@ -85,8 +86,8 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		return entityChild;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.CRAB.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.CRAB.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.CRAB.speed.get()).add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.CRAB.damage.get());
 	}
@@ -97,24 +98,24 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 			return LivingThingsConfig.CRAB.canAttack.get();
 		}));
 		this.goalSelector.addGoal(1, new BreedGoal(this, 1.1D));
-		this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
+		this.targetSelector.addGoal(1, new ResetUniversalAngerTargetGoal<>(this, true));
 	}
 
-	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, IWorld world, SpawnReason reason, BlockPos pos,
-			Random random) {
+	public static boolean canCrabSpawn(EntityType<CrabEntity> animal, LevelAccessor world, MobSpawnType reason,
+			BlockPos pos, Random random) {
 		BlockState state = world.getBlockState(pos.below());
 		return (world.isWaterAt(pos))
 				|| (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.SAND) || state.is(Blocks.GRAVEL));
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
 		this.setVariant(CrabEntity.getWeightedRandomColorVariant(this.random));
 		this.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
@@ -134,11 +135,11 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		if (color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
 						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
-		return variant.variant;
+		return variant.get().variant;
 	}
 
 	public static byte getWeightedRandomScaling(Random random) {
@@ -149,12 +150,12 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
 			return 0;
 		}
-		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobScaling> scaling = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
 						new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 2),
 						new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) -2),
 						new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
-		return scaling.scaling;
+		return scaling.get().scaling;
 	}
 
 	@Override
@@ -165,7 +166,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putByte("CrabVariant", this.getVariant());
 		compound.putByte("CrabScaling", this.getScaling());
@@ -173,12 +174,12 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("CrabVariant"));
 		this.setScaling(compound.getByte("CrabScaling"));
-		if (this.level instanceof ServerWorld) {
-			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
+		if (this.level instanceof ServerLevel) {
+			this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
 		}
 	}
 
@@ -193,7 +194,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		if (this.isBaby()) {
 			return 0.175F;
 		}
@@ -228,13 +229,13 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	@Override
 	public void setScaling(byte scaling) {
 		this.entityData.set(CRAB_SCALING, scaling);
-		this.setLocationFromBoundingbox();// center bounding box
+		this.reapplyPosition();// center bounding box
 		this.refreshDimensions();
 		this.xpReward = Math.abs(scaling) * this.random.nextInt(2);
 	}
 
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> key) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		if (CRAB_SCALING.equals(key)) {
 			this.refreshDimensions();
 		}
@@ -251,7 +252,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 	}
 
 	@Override
-	public EntitySize getDimensions(Pose poseIn) {
+	public EntityDimensions getDimensions(Pose poseIn) {
 		if (this.isBaby()) {
 			return super.getDimensions(poseIn);
 		}
@@ -280,7 +281,7 @@ public class CrabEntity extends AnimalEntity implements IMobVariants, IAngerable
 
 	@Override
 	public void startPersistentAngerTimer() {
-		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
+		this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
 	}
 
 	@Override

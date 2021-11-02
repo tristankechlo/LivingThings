@@ -1,14 +1,15 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.client.renderer.layer.AncientBlazeChargedLayer;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,9 +19,9 @@ public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, Ancien
 	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/ancient_blaze/ancient_blaze.png");
 
-	public AncientBlazeRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new AncientBlazeModel<>(), 0.5F);
-		this.addLayer(new AncientBlazeChargedLayer(this));
+	public AncientBlazeRenderer(Context context) {
+		super(context, new AncientBlazeModel<>(context.bakeLayer(ModelLayer.ANCIENT_BLAZE)), 0.5F);
+		this.addLayer(new AncientBlazeChargedLayer(this, context.getModelSet()));
 	}
 
 	@Override

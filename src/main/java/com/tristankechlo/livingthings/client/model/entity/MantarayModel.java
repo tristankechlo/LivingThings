@@ -1,99 +1,107 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.MantarayEntity;
 
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel<T> {
 
-	private final ModelRenderer Body;
-	private final ModelRenderer Tail;
-	private final ModelRenderer Tail2;
-	private final ModelRenderer LeftFlipper;
-	private final ModelRenderer LeftFlipper2;
-	private final ModelRenderer RightFlipper;
-	private final ModelRenderer RightFlipper2;
-	private final ModelRenderer Head;
-	private final ModelRenderer eyes;
+	private final ModelPart Body;
+	private final ModelPart Tail;
+	private final ModelPart Tail2;
+	private final ModelPart LeftFlipper;
+	private final ModelPart LeftFlipper2;
+	private final ModelPart RightFlipper;
+	private final ModelPart RightFlipper2;
 
-	public MantarayModel() {
-		texWidth = 64;
-		texHeight = 64;
+	public MantarayModel(ModelPart root) {
+		this.Body = root.getChild("Body");
+		this.Tail = root.getChild("Tail");
+		this.Tail2 = root.getChild("Tail2");
+		this.LeftFlipper = root.getChild("LeftFlipper");
+		this.LeftFlipper2 = root.getChild("LeftFlipper2");
+		this.RightFlipper = root.getChild("RightFlipper");
+		this.RightFlipper2 = root.getChild("RightFlipper2");
+	}
 
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 23.5F, 0.0F);
-		Body.texOffs(0, 38).addBox(-3.0F, -3.9F, -6.0F, 6.0F, 1.0F, 10.0F, 0.0F, false);
-		Body.texOffs(0, 51).addBox(-3.5F, -3.5F, -6.0F, 7.0F, 2.0F, 11.0F, 0.0F, false);
-		Body.texOffs(28, 50).addBox(-3.5F, -1.75F, -6.0F, 7.0F, 1.0F, 11.0F, 0.0F, false);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		Tail = new ModelRenderer(this);
-		Tail.setPos(0.0F, -1.5F, 5.0F);
-		Body.addChild(Tail);
-		Tail.texOffs(46, 14).addBox(-1.5F, -2.0F, 0.0F, 3.0F, 2.0F, 6.0F, 0.0F, false);
+		PartDefinition Body = partdefinition.addOrReplaceChild("Body",
+				CubeListBuilder.create().texOffs(0, 38)
+						.addBox(-3.0F, -3.9F, -6.0F, 6.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)).texOffs(0, 51)
+						.addBox(-3.5F, -3.5F, -6.0F, 7.0F, 2.0F, 11.0F, new CubeDeformation(0.0F)).texOffs(28, 50)
+						.addBox(-3.5F, -1.75F, -6.0F, 7.0F, 1.0F, 11.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, 23.5F, 0.0F));
 
-		Tail2 = new ModelRenderer(this);
-		Tail2.setPos(0.0F, -0.25F, 6.0F);
-		Tail.addChild(Tail2);
-		Tail2.texOffs(33, 41).addBox(-0.5F, -1.5F, 0.0F, 1.0F, 1.0F, 7.0F, 0.0F, false);
+		PartDefinition Tail = Body.addOrReplaceChild("Tail", CubeListBuilder.create().texOffs(46, 14).addBox(-1.5F,
+				-2.0F, 0.0F, 3.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.5F, 5.0F));
 
-		LeftFlipper = new ModelRenderer(this);
-		LeftFlipper.setPos(3.5F, -2.5F, -0.25F);
-		Body.addChild(LeftFlipper);
-		this.setRotationAngle(LeftFlipper, 0.0F, 0.0F, -0.0873F);
-		LeftFlipper.texOffs(0, 1).addBox(0.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F, 0.0F, false);
+		PartDefinition Tail2 = Tail.addOrReplaceChild("Tail2", CubeListBuilder.create().texOffs(33, 41).addBox(-0.5F,
+				-1.5F, 0.0F, 1.0F, 1.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -0.25F, 6.0F));
 
-		LeftFlipper2 = new ModelRenderer(this);
-		LeftFlipper2.setPos(4.0F, 0.0F, 0.0F);
-		LeftFlipper.addChild(LeftFlipper2);
-		this.setRotationAngle(LeftFlipper2, 0.0F, 0.0F, -0.0873F);
-		LeftFlipper2.texOffs(27, 3).addBox(0.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, false);
-		LeftFlipper2.texOffs(0, 13).addBox(0.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, false);
-		LeftFlipper2.texOffs(0, 23).addBox(2.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, 0.0F, false);
-		LeftFlipper2.texOffs(48, 5).addBox(5.0F, -1.0F, -3.85F, 2.0F, 1.0F, 6.0F, 0.0F, false);
-		LeftFlipper2.texOffs(22, 16).addBox(7.0F, -1.0F, -3.7F, 1.0F, 1.0F, 5.0F, 0.0F, false);
-		LeftFlipper2.texOffs(22, 26).addBox(8.0F, -1.0F, -3.55F, 1.0F, 1.0F, 4.0F, 0.0F, false);
-		LeftFlipper2.texOffs(35, 18).addBox(9.0F, -1.0F, -3.4F, 1.0F, 1.0F, 3.0F, 0.0F, false);
+		PartDefinition LeftFlipper = Body.addOrReplaceChild("LeftFlipper",
+				CubeListBuilder.create().texOffs(0, 1).addBox(0.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(3.5F, -2.5F, -0.25F, 0.0F, 0.0F, -0.1745F));
 
-		RightFlipper = new ModelRenderer(this);
-		RightFlipper.setPos(-3.5F, -2.5F, -0.25F);
-		Body.addChild(RightFlipper);
-		this.setRotationAngle(RightFlipper, 0.0F, 0.0F, 0.0873F);
-		RightFlipper.texOffs(0, 1).addBox(-4.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F, 0.0F, true);
+		PartDefinition LeftFlipper2 = LeftFlipper.addOrReplaceChild("LeftFlipper2",
+				CubeListBuilder.create().texOffs(27, 3)
+						.addBox(0.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)).texOffs(0, 13)
+						.addBox(0.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)).texOffs(0, 23)
+						.addBox(2.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, new CubeDeformation(0.0F)).texOffs(48, 5)
+						.addBox(5.0F, -1.0F, -3.85F, 2.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(22, 16)
+						.addBox(7.0F, -1.0F, -3.7F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).texOffs(22, 26)
+						.addBox(8.0F, -1.0F, -3.55F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(35, 18)
+						.addBox(9.0F, -1.0F, -3.4F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(4.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.1745F));
 
-		RightFlipper2 = new ModelRenderer(this);
-		RightFlipper2.setPos(-4.0F, 0.0F, 0.0F);
-		RightFlipper.addChild(RightFlipper2);
-		this.setRotationAngle(RightFlipper2, 0.0F, 0.0F, 0.0873F);
-		RightFlipper2.texOffs(27, 3).addBox(-2.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, true);
-		RightFlipper2.texOffs(0, 13).addBox(-2.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, 0.0F, true);
-		RightFlipper2.texOffs(0, 23).addBox(-5.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, 0.0F, true);
-		RightFlipper2.texOffs(48, 5).addBox(-7.0F, -1.0F, -3.85F, 2.0F, 1.0F, 6.0F, 0.0F, true);
-		RightFlipper2.texOffs(22, 16).addBox(-8.0F, -1.0F, -3.7F, 1.0F, 1.0F, 5.0F, 0.0F, true);
-		RightFlipper2.texOffs(22, 26).addBox(-9.0F, -1.0F, -3.55F, 1.0F, 1.0F, 4.0F, 0.0F, true);
-		RightFlipper2.texOffs(35, 18).addBox(-10.0F, -1.0F, -3.4F, 1.0F, 1.0F, 3.0F, 0.0F, true);
+		PartDefinition RightFlipper = Body.addOrReplaceChild("RightFlipper",
+				CubeListBuilder.create().texOffs(0, 1).mirror()
+						.addBox(-4.0F, -1.0F, -4.5F, 4.0F, 2.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(-3.5F, -2.5F, -0.25F, 0.0F, 0.0F, 0.1745F));
 
-		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, -2.25F, -5.75F);
-		Body.addChild(Head);
-		Head.texOffs(30, 33).addBox(-3.0F, -1.25F, -1.0F, 6.0F, 2.0F, 1.0F, 0.0F, false);
-		Head.texOffs(45, 34).addBox(-3.0F, 0.25F, -1.0F, 6.0F, 1.0F, 1.0F, 0.0F, false);
+		PartDefinition RightFlipper2 = RightFlipper.addOrReplaceChild("RightFlipper2", CubeListBuilder.create()
+				.texOffs(27, 3).mirror().addBox(-2.0F, -1.0F, -4.25F, 2.0F, 1.0F, 8.0F, new CubeDeformation(0.0F))
+				.mirror(false).texOffs(0, 13).mirror()
+				.addBox(-2.0F, -0.5F, -4.25F, 2.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)).mirror(false).texOffs(0, 23)
+				.mirror().addBox(-5.0F, -1.0F, -4.0F, 3.0F, 1.0F, 7.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(48, 5).mirror().addBox(-7.0F, -1.0F, -3.85F, 2.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+				.mirror(false).texOffs(22, 16).mirror()
+				.addBox(-8.0F, -1.0F, -3.7F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false).texOffs(22, 26)
+				.mirror().addBox(-9.0F, -1.0F, -3.55F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(35, 18).mirror().addBox(-10.0F, -1.0F, -3.4F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+				.mirror(false), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
 
-		eyes = new ModelRenderer(this);
-		eyes.setPos(0.0F, 0.0131F, -0.8491F);
-		Head.addChild(eyes);
-		this.setRotationAngle(eyes, 0.1309F, 0.0F, 0.0F);
-		eyes.texOffs(22, 33).addBox(-2.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
-		eyes.texOffs(15, 33).addBox(-2.6F, -0.75F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
-		eyes.texOffs(8, 33).addBox(1.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
-		eyes.texOffs(0, 33).addBox(1.6F, -0.75F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
+		PartDefinition Head = Body.addOrReplaceChild("Head",
+				CubeListBuilder.create().texOffs(30, 33)
+						.addBox(-3.0F, -1.25F, -1.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(45, 34)
+						.addBox(-3.0F, 0.25F, -1.0F, 6.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, -2.25F, -5.75F));
+
+		PartDefinition eyes = Head.addOrReplaceChild("eyes",
+				CubeListBuilder.create().texOffs(22, 33)
+						.addBox(-2.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)).texOffs(15, 33)
+						.addBox(-2.6F, -0.75F, -2.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)).texOffs(8, 33)
+						.addBox(1.6F, -0.25F, -2.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)).texOffs(0, 33)
+						.addBox(1.6F, -0.75F, -2.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, 0.0131F, -0.8491F, 0.1309F, 0.0F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
@@ -112,19 +120,19 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
 		this.RightFlipper.zRot = 0.34906585F;
 		this.RightFlipper2.zRot = 0.34906585F;
 
-		if (Entity.getHorizontalDistanceSqr(entity.getDeltaMovement()) > 1.0E-7D) {
-			this.Body.xRot += -0.05F + (-0.05F * MathHelper.cos(ageInTicks * 0.2F));
+		if (entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+			this.Body.xRot += -0.05F + (-0.05F * Mth.cos(ageInTicks * 0.2F));
 
 			// wings flapping
-			this.LeftFlipper.zRot = -0.6F * MathHelper.cos(ageInTicks * 0.15F);
-			this.LeftFlipper2.zRot = -0.6F * MathHelper.cos(ageInTicks * 0.15F);
-			this.RightFlipper.zRot = 0.6F * MathHelper.cos(ageInTicks * 0.15F);
-			this.RightFlipper2.zRot = 0.6F * MathHelper.cos(ageInTicks * 0.15F);
+			this.LeftFlipper.zRot = -0.6F * Mth.cos(ageInTicks * 0.15F);
+			this.LeftFlipper2.zRot = -0.6F * Mth.cos(ageInTicks * 0.15F);
+			this.RightFlipper.zRot = 0.6F * Mth.cos(ageInTicks * 0.15F);
+			this.RightFlipper2.zRot = 0.6F * Mth.cos(ageInTicks * 0.15F);
 		}
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay,
+	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay,
 			float red, float green, float blue, float alpha) {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}

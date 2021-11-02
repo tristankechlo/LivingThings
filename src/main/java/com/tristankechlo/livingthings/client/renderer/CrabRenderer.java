@@ -1,13 +1,14 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.entities.CrabEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,8 +22,8 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
 	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/crab/crab_albino.png");
 
-	public CrabRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new CrabModel<>(), 0.4F);
+	public CrabRenderer(Context context) {
+		super(context, new CrabModel<>(context.bakeLayer(ModelLayer.CRAB)), 0.4F);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
 	}
 
 	@Override
-	protected void scale(CrabEntity crab, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(CrabEntity crab, PoseStack matrixStackIn, float partialTickTime) {
 		if (!crab.isBaby()) {
 			float scale = 1.0F + (crab.getScaling() * 0.1F);
 			matrixStackIn.scale(scale, scale, scale);

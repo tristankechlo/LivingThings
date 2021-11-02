@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
@@ -7,74 +8,74 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
-import com.tristankechlo.livingthings.entities.misc.SwimmingMovementController;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.DolphinLookController;
-import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.ai.goal.FindWaterGoal;
-import net.minecraft.entity.ai.goal.FollowSchoolLeaderGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.WeighedRandom;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-public class MantarayEntity extends AbstractGroupFishEntity implements IMobVariants, IScaleableMob, ILexiconEntry {
+public class MantarayEntity extends AbstractSchoolingFish implements IMobVariants, IScaleableMob, ILexiconEntry {
 
-	private static final DataParameter<Byte> MANTARAY_VARIANT = EntityDataManager.defineId(MantarayEntity.class,
-			DataSerializers.BYTE);
-	private static final DataParameter<Byte> MANTARAY_SCALING = EntityDataManager.defineId(MantarayEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> MANTARAY_VARIANT = SynchedEntityData.defineId(MantarayEntity.class,
+			EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> MANTARAY_SCALING = SynchedEntityData.defineId(MantarayEntity.class,
+			EntityDataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/mantaray");
 
-	public MantarayEntity(EntityType<? extends MantarayEntity> type, World worldIn) {
+	public MantarayEntity(EntityType<? extends MantarayEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
-		this.moveControl = new SwimmingMovementController(this);
-		this.lookControl = new DolphinLookController(this, 10);
+		this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+		this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+		this.lookControl = new SmoothSwimmingLookControl(this, 10);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.MANTARAY.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.MANTARAY.speed.get());
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new FindWaterGoal(this));
+		this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.55D));
 		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 16.0F, 1.3D, 1.45D));
-		this.goalSelector.addGoal(3, new FollowSchoolLeaderGoal(this));
+		this.goalSelector.addGoal(3, new FollowFlockLeaderGoal(this));
 		this.goalSelector.addGoal(4, new MantarayEntity.SwimGoal(this));
-		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 
 	@Override
@@ -85,22 +86,22 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putByte("MantarayVariant", this.getVariant());
 		compound.putByte("MantarayScaling", this.getScaling());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("MantarayVariant"));
 		this.setScaling(compound.getByte("MantarayScaling"));
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
 		this.setVariant(MantarayEntity.getWeightedRandomColorVariant(this.random));
 		this.setScaling(MantarayEntity.getWeightedRandomScaling(this.random));
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -112,10 +113,10 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		if (color1Weight <= 0 && color2Weight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1)));
-		return variant.variant;
+		return variant.get().variant;
 	}
 
 	public static byte getWeightedRandomScaling(Random random) {
@@ -126,15 +127,15 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 		if (scaling1Weight <= 0 && scaling2Weight <= 0 && scaling3Weight <= 0 && scaling4Weight <= 0) {
 			return 0;
 		}
-		WeightedMobScaling scaling = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobScaling> scaling = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
 						new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 0),
 						new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 2),
 						new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
-		return scaling.scaling;
+		return scaling.get().scaling;
 	}
 
-	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, IWorld world, SpawnReason reason,
+	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
 		return world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
 	}
@@ -147,7 +148,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 			if (this.onGround) {
 				this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F),
 						0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-				this.yRot = this.random.nextFloat() * 360.0F;
+				this.setYRot(this.random.nextFloat() * 360.0F);
 				this.onGround = false;
 				this.hasImpulse = true;
 			}
@@ -155,7 +156,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	public boolean canBeLeashed(PlayerEntity player) {
+	public boolean canBeLeashed(Player player) {
 		return true;
 	}
 
@@ -170,13 +171,13 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.4F;
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-		return ActionResultType.PASS;
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -200,7 +201,7 @@ public class MantarayEntity extends AbstractGroupFishEntity implements IMobVaria
 	}
 
 	@Override
-	protected ItemStack getBucketItemStack() {
+	public ItemStack getBucketItemStack() {
 		// required by AbstractFishEntity
 		// not used, because we are overriding the rightclick method
 		return new ItemStack(Items.BUCKET);

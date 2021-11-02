@@ -8,35 +8,35 @@ import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModSounds;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 
 public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
 	private final Block block;
-	private final MobEntity entity;
+	private final Mob entity;
 	private int breakingTime;
 	private boolean destroyNestComplete;
 	private int chance;
 
-	public BreakOstrichEggGoal(CreatureEntity creatureIn, double speed, int yMax, int chance,
+	public BreakOstrichEggGoal(PathfinderMob creatureIn, double speed, int yMax, int chance,
 			boolean destroyNestComplete) {
 		super(creatureIn, speed, 12, yMax);
 		this.block = ModBlocks.OSTRICH_NEST.get();
@@ -78,37 +78,38 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 		this.breakingTime = 0;
 	}
 
-	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.HOSTILE, 0.5F,
+	public void playBreakingSound(LevelAccessor worldIn, BlockPos pos) {
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.HOSTILE, 0.5F,
 				0.9F + this.entity.getRandom().nextFloat() * 0.2F);
 	}
 
-	public void playBrokenSound(World worldIn, BlockPos pos) {
-		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F,
+	public void playBrokenSound(Level worldIn, BlockPos pos) {
+		worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F,
 				0.9F + worldIn.random.nextFloat() * 0.2F);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		World world = this.entity.level;
+		Level world = this.entity.level;
 		BlockPos blockpos = this.entity.blockPosition();
 		BlockPos blockpos1 = this.findTarget(blockpos, world);
 		Random random = this.entity.getRandom();
 		if (this.isReachedTarget() && blockpos1 != null) {
 			if (this.breakingTime > 0) {
-				Vector3d vector3d = this.entity.getDeltaMovement();
+				Vec3 vector3d = this.entity.getDeltaMovement();
 				this.entity.setDeltaMovement(vector3d.x, 0.3D, vector3d.z);
 				if (!world.isClientSide()) {
-					((ServerWorld) world).sendParticles(
-							new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.EGG)), blockpos1.getX() + 0.5D,
-							blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3, (random.nextFloat() - 0.5D) * 0.08D,
-							(random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D, 0.15F);
+					((ServerLevel) world).sendParticles(
+							new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.EGG)),
+							blockpos1.getX() + 0.5D, blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3,
+							(random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D,
+							(random.nextFloat() - 0.5D) * 0.08D, 0.15F);
 				}
 			}
 
 			if (this.breakingTime % 2 == 0) {
-				Vector3d vector3d1 = this.entity.getDeltaMovement();
+				Vec3 vector3d1 = this.entity.getDeltaMovement();
 				this.entity.setDeltaMovement(vector3d1.x, -0.3D, vector3d1.z);
 				if (this.breakingTime % 6 == 0) {
 					this.playBreakingSound(world, this.blockPos);
@@ -129,7 +130,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 						double d3 = random.nextGaussian() * 0.02D;
 						double d1 = random.nextGaussian() * 0.02D;
 						double d2 = random.nextGaussian() * 0.02D;
-						((ServerWorld) world).sendParticles(ParticleTypes.POOF, blockpos1.getX() + 0.5D,
+						((ServerLevel) world).sendParticles(ParticleTypes.POOF, blockpos1.getX() + 0.5D,
 								blockpos1.getY(), blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double) 0.15F);
 					}
 
@@ -143,7 +144,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 	}
 
 	@Nullable
-	private BlockPos findTarget(BlockPos pos, IBlockReader worldIn) {
+	private BlockPos findTarget(BlockPos pos, BlockGetter worldIn) {
 		if (worldIn.getBlockState(pos).is(this.block)) {
 			if (worldIn.getBlockState(pos).getValue(OstrichNestBlock.EGG)) {
 				return pos;
@@ -165,10 +166,9 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	protected boolean isValidTarget(IWorldReader worldIn, BlockPos pos) {
-		IChunk ichunk = worldIn.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FULL, false);
+	protected boolean isValidTarget(LevelReader worldIn, BlockPos pos) {
+		ChunkAccess ichunk = worldIn.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FULL, false);
 		if (ichunk == null) {
 			return false;
 		} else {

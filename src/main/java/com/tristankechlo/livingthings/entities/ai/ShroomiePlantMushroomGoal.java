@@ -2,17 +2,17 @@ package com.tristankechlo.livingthings.entities.ai;
 
 import com.tristankechlo.livingthings.entities.ShroomieEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.pathfinding.Path;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraftforge.common.IPlantable;
 
 public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
@@ -38,7 +38,6 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
 		return this.shroomie.canPlantMushroom() && super.canContinueToUse();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
 		BlockPos blockpos = this.getMoveToTarget();
@@ -54,7 +53,7 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
 		}
 		if (this.shroomie.canPlantMushroom() && this.isReachedTarget()
 				&& this.shroomie.level.getBlockState(blockpos).isAir()) {
-			this.shroomie.level.playSound(null, blockpos, SoundEvents.LILY_PAD_PLACE, SoundCategory.BLOCKS, 0.9F, 0.9F);
+			this.shroomie.level.playSound(null, blockpos, SoundEvents.LILY_PAD_PLACE, SoundSource.BLOCKS, 0.9F, 0.9F);
 			this.shroomie.level.setBlockAndUpdate(blockpos, targetState);
 			this.shroomie.plantedMushroom();
 		}
@@ -69,8 +68,7 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	protected boolean isValidTarget(IWorldReader worldReader, BlockPos blockpos) {
+	protected boolean isValidTarget(LevelReader worldReader, BlockPos blockpos) {
 		BlockState blockstate = worldReader.getBlockState(blockpos);
 		if (blockstate.is(BlockTags.MUSHROOM_GROW_BLOCK)) {
 			return worldReader.getBlockState(blockpos.above()).isAir();

@@ -1,12 +1,13 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,8 +19,8 @@ public class ElephantRenderer extends MobRenderer<ElephantEntity, ElephantModel<
 	protected static final ResourceLocation TEXTURE_SADDLED = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/elephant/elephant_saddled.png");
 
-	public ElephantRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ElephantModel<>(), 1.2F);
+	public ElephantRenderer(Context context) {
+		super(context, new ElephantModel<>(context.bakeLayer(ModelLayer.ELEPHANT)), 1.2F);
 	}
 
 	@Override

@@ -1,14 +1,15 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.OwlModel;
 import com.tristankechlo.livingthings.entities.OwlEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,8 +23,8 @@ public class OwlRenderer extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 	protected static final ResourceLocation TEXTURE_BLACK = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/owl/owl_black.png");
 
-	public OwlRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new OwlModel<>(), 0.29F);
+	public OwlRenderer(Context context) {
+		super(context, new OwlModel<>(context.bakeLayer(ModelLayer.OWL)), 0.29F);
 	}
 
 	@Override
@@ -38,16 +39,16 @@ public class OwlRenderer extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 	}
 
 	@Override
-	protected void scale(OwlEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(OwlEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
 		// scale the owl down a bit, to be smaller than one block
 		matrixStackIn.scale(0.94F, 0.94F, 0.94F);
 	}
 
 	@Override
 	protected float getBob(OwlEntity livingBase, float partialTicks) {
-		float f = MathHelper.lerp(partialTicks, livingBase.oFlap, livingBase.flap);
-		float f1 = MathHelper.lerp(partialTicks, livingBase.oFlapSpeed, livingBase.flapSpeed);
-		return (MathHelper.sin(f) + 1.0F) * f1;
+		float f = Mth.lerp(partialTicks, livingBase.oFlap, livingBase.flap);
+		float f1 = Mth.lerp(partialTicks, livingBase.oFlapSpeed, livingBase.flapSpeed);
+		return (Mth.sin(f) + 1.0F) * f1;
 	}
 
 }

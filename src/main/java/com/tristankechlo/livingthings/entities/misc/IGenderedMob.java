@@ -1,6 +1,6 @@
 package com.tristankechlo.livingthings.entities.misc;
 
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeighedRandom;
 
 public interface IGenderedMob {
 
@@ -12,7 +12,7 @@ public interface IGenderedMob {
 		MALE, FEMALE;
 	}
 
-	class WeightedGender extends WeightedRandom.Item {
+	class WeightedGender extends WeighedRandom.WeighedRandomItem {
 
 		public final Gender gender;
 

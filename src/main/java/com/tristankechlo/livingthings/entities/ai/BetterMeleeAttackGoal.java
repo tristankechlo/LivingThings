@@ -4,15 +4,15 @@ import java.util.function.Supplier;
 
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.Difficulty;
 
 public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 
 	private final Supplier<Boolean> canAttack;
 
-	public BetterMeleeAttackGoal(CreatureEntity creature, double speedIn, boolean useLongMemory,
+	public BetterMeleeAttackGoal(PathfinderMob creature, double speedIn, boolean useLongMemory,
 			Supplier<Boolean> canAttack) {
 		super(creature, speedIn, useLongMemory);
 		this.canAttack = canAttack;

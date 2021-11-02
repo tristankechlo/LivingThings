@@ -1,26 +1,31 @@
 package com.tristankechlo.livingthings.client.renderer.layer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.EnergyLayer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AncientBlazeChargedLayer extends EnergyLayer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> {
+public class AncientBlazeChargedLayer
+		extends EnergySwirlLayer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/ancient_blaze/ancient_blaze_charge.png");
-	private final AncientBlazeModel<AncientBlazeEntity> model = new AncientBlazeModel<>();
+	private final AncientBlazeModel<AncientBlazeEntity> model;
 
 	public AncientBlazeChargedLayer(
-			IEntityRenderer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> entityRenderer) {
+			RenderLayerParent<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> entityRenderer,
+			EntityModelSet entityModelSet) {
 		super(entityRenderer);
+		this.model = new AncientBlazeModel<>(entityModelSet.bakeLayer(ModelLayer.ANCIENT_BLAZE));
 	}
 
 	@Override

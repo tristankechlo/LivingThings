@@ -1,63 +1,75 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.ShroomieEntity;
 
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel<T> {
 
-	private final ModelRenderer Body;
-	private final ModelRenderer LegLeft;
-	private final ModelRenderer LegRight;
-	private final ModelRenderer HeadBrown;
-	private final ModelRenderer HeadRed;
-	private final ModelRenderer ArmLeft;
-	private final ModelRenderer ArmRight;
+	private final ModelPart Body;
+	private final ModelPart LegLeft;
+	private final ModelPart LegRight;
+	private final ModelPart HeadBrown;
+	private final ModelPart HeadRed;
+	private final ModelPart ArmLeft;
+	private final ModelPart ArmRight;
 
-	public ShroomieModel() {
-		texWidth = 48;
-		texHeight = 32;
+	public ShroomieModel(ModelPart root) {
+		this.Body = root.getChild("Body");
+		this.LegLeft = root.getChild("LegLeft");
+		this.LegRight = root.getChild("LegRight");
+		this.HeadBrown = root.getChild("HeadBrown");
+		this.HeadRed = root.getChild("HeadRed");
+		this.ArmLeft = root.getChild("ArmLeft");
+		this.ArmRight = root.getChild("ArmRight");
+	}
 
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 24.0F, 0.0F);
-		Body.texOffs(0, 18).addBox(-3.0F, -11.0F, -3.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		LegLeft = new ModelRenderer(this);
-		LegLeft.setPos(-1.5F, -3.0F, 0.0F);
-		Body.addChild(LegLeft);
-		LegLeft.texOffs(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, true);
+		PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 18).addBox(
+				-3.0F, -11.0F, -3.0F, 6.0F, 8.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		LegRight = new ModelRenderer(this);
-		LegRight.setPos(1.5F, -3.0F, 0.0F);
-		Body.addChild(LegRight);
-		LegRight.texOffs(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, false);
+		PartDefinition LegLeft = Body.addOrReplaceChild("LegLeft",
+				CubeListBuilder.create().texOffs(0, 0).mirror()
+						.addBox(-1.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offset(-1.5F, -3.0F, 0.0F));
 
-		HeadBrown = new ModelRenderer(this);
-		HeadBrown.setPos(0.0F, -11.0F, 0.0F);
-		Body.addChild(HeadBrown);
-		HeadBrown.texOffs(0, 5).addBox(-5.0F, -3.0F, -5.0F, 10.0F, 3.0F, 10.0F, 0.0F, false);
+		PartDefinition LegRight = Body.addOrReplaceChild("LegRight", CubeListBuilder.create().texOffs(0, 0).addBox(
+				-1.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.5F, -3.0F, 0.0F));
 
-		HeadRed = new ModelRenderer(this);
-		HeadRed.setPos(0.0F, -11.0F, 0.0F);
-		Body.addChild(HeadRed);
-		HeadRed.texOffs(0, 4).addBox(-5.0F, -4.0F, -5.0F, 10.0F, 4.0F, 10.0F, 0.0F, false);
-		HeadRed.texOffs(24, 23).addBox(-3.0F, -7.0F, -3.0F, 6.0F, 3.0F, 6.0F, 0.0F, false);
+		PartDefinition HeadBrown = Body.addOrReplaceChild("HeadBrown", CubeListBuilder.create().texOffs(0, 5)
+				.addBox(-5.0F, -3.0F, -5.0F, 10.0F, 3.0F, 10.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, -11.0F, 0.0F));
 
-		ArmLeft = new ModelRenderer(this);
-		ArmLeft.setPos(3.0F, -9.0F, 0.0F);
-		Body.addChild(ArmLeft);
-		ArmLeft.texOffs(0, 6).addBox(0.0F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
+		PartDefinition HeadRed = Body.addOrReplaceChild("HeadRed",
+				CubeListBuilder.create().texOffs(0, 4)
+						.addBox(-5.0F, -4.0F, -5.0F, 10.0F, 4.0F, 10.0F, new CubeDeformation(0.0F)).texOffs(24, 23)
+						.addBox(-3.0F, -7.0F, -3.0F, 6.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, -11.0F, 0.0F));
 
-		ArmRight = new ModelRenderer(this);
-		ArmRight.setPos(-3.0F, -9.0F, 0.0F);
-		Body.addChild(ArmRight);
-		ArmRight.texOffs(0, 6).addBox(-1.0F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, true);
+		PartDefinition ArmLeft = Body.addOrReplaceChild("ArmLeft", CubeListBuilder.create().texOffs(0, 6).addBox(0.0F,
+				0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -9.0F, 0.0F));
+
+		PartDefinition ArmRight = Body.addOrReplaceChild("ArmRight",
+				CubeListBuilder.create().texOffs(0, 6).mirror()
+						.addBox(-1.0F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offset(-3.0F, -9.0F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 48, 32);
 	}
 
 	@Override
@@ -79,7 +91,7 @@ public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay,
+	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay,
 			float red, float green, float blue, float alpha) {
 		Body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 	}

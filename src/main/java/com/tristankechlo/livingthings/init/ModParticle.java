@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

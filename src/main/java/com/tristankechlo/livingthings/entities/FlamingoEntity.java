@@ -7,61 +7,61 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
-public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
+public class FlamingoEntity extends Animal implements ILexiconEntry {
 
-	private static final DataParameter<Boolean> LEFT_LEG_UP = EntityDataManager.defineId(FlamingoEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> RIGHT_LEG_UP = EntityDataManager.defineId(FlamingoEntity.class,
-			DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> LEFT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> RIGHT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class,
+			EntityDataSerializers.BOOLEAN);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/flamingo");
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON);
 	protected DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
 
-	public FlamingoEntity(EntityType<? extends FlamingoEntity> type, World worldIn) {
+	public FlamingoEntity(EntityType<? extends FlamingoEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.maxUpStep = 1.0F;
-		this.setPathfindingMalus(PathNodeType.WATER, 1.0F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
-		return ModEntityTypes.FLAMINGO_ENTITY.get().create(world);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+		return ModEntityTypes.FLAMINGO.get().create(world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.FLAMINGO.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.FLAMINGO.speed.get());
 	}
 
@@ -76,9 +76,9 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.2D));
 		this.goalSelector.addGoal(5, new FlamingoEntity.LiftLegsGoal(this, 15));
 		this.goalSelector.addGoal(5, this.randomWalkingGoal);
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(8, new LookAtGoal(this, FlamingoEntity.class, 8.0F));
+		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, FlamingoEntity.class, 8.0F));
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 0.6F : 1.2F;
 	}
 
@@ -195,7 +195,7 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
 	}
 
-	static class SwimInDeepWaterGoal extends SwimGoal {
+	static class SwimInDeepWaterGoal extends FloatGoal {
 
 		private final FlamingoEntity flamingo;
 
@@ -219,7 +219,7 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 
 	}
 
-	static class DeepWaterAvoidingRandomWalkingGoal extends RandomWalkingGoal {
+	static class DeepWaterAvoidingRandomWalkingGoal extends RandomStrollGoal {
 
 		private final FlamingoEntity flamingo;
 
@@ -229,12 +229,12 @@ public class FlamingoEntity extends AnimalEntity implements ILexiconEntry {
 		}
 
 		@Override
-		protected Vector3d getPosition() {
+		protected Vec3 getPosition() {
 			if (this.flamingo.wasEyeInWater) {
-				Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 15, 7);
+				Vec3 vector3d = LandRandomPos.getPos(this.mob, 15, 7);
 				return vector3d == null ? super.getPosition() : vector3d;
 			} else {
-				return RandomPositionGenerator.getLandPos(this.mob, 10, 7);
+				return LandRandomPos.getPos(this.mob, 10, 7);
 			}
 		}
 

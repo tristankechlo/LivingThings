@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.misc;
 
 import com.tristankechlo.livingthings.LivingThings;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public final class LivingThingsTags {
 

@@ -6,10 +6,10 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
 import com.tristankechlo.livingthings.init.ModSounds;
 
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.projectile.LargeFireball;
+import net.minecraft.world.entity.projectile.SmallFireball;
 
 public class AncientBlazeChargeUpGoal extends Goal {
 
@@ -36,7 +36,7 @@ public class AncientBlazeChargeUpGoal extends Goal {
 				this.blaze.setShoots((byte) (this.blaze.getShoots() + 1));
 				if (!this.blaze.level.isClientSide()) {
 					this.blaze.level.playSound(null, this.blaze.blockPosition(),
-							ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundCategory.HOSTILE, 1.0F, 1.0F);
+							ModSounds.ANCIENT_BLAZE_CHARGE_UP.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
 				}
 			}
 		}
@@ -46,14 +46,14 @@ public class AncientBlazeChargeUpGoal extends Goal {
 
 			if (!this.blaze.level.isClientSide()) {
 				this.blaze.level.playSound(null, this.blaze.blockPosition(), ModSounds.ANCIENT_BLAZE_SPAWN.get(),
-						SoundCategory.HOSTILE, 1.0F, 1.0F);
+						SoundSource.HOSTILE, 1.0F, 1.0F);
 			}
 
 			for (int i = 0; i < 4; i++) {
 				double accelX = Math.pow(-1, i) * 90;
 				double accelZ = (i < 2) ? 90 : -90;
-				SmallFireballEntity smallfireballentity = new SmallFireballEntity(this.blaze.level, this.blaze, accelX,
-						-15D, accelZ);
+				SmallFireball smallfireballentity = new SmallFireball(this.blaze.level, this.blaze, accelX, -15D,
+						accelZ);
 				smallfireballentity.setPos(smallfireballentity.getX(), this.blaze.getY(0.5D),
 						smallfireballentity.getZ());
 				this.blaze.level.addFreshEntity(smallfireballentity);
@@ -62,8 +62,8 @@ public class AncientBlazeChargeUpGoal extends Goal {
 			for (int i = 0; i < 4; i++) {
 				double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
 				double accelZ = (i < 2) ? Math.pow(-1, i) * 90 : 0;
-				FireballEntity smallfireballentity = new FireballEntity(this.blaze.level, this.blaze, accelX, -15D,
-						accelZ);
+				LargeFireball smallfireballentity = new LargeFireball(this.blaze.level, this.blaze, accelX, -15D,
+						accelZ, 1);
 				smallfireballentity.setPos(smallfireballentity.getX(), this.blaze.getY(0.5D) + 0.5D,
 						smallfireballentity.getZ());
 				this.blaze.level.addFreshEntity(smallfireballentity);

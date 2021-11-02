@@ -1,13 +1,14 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.ShroomieModel;
 import com.tristankechlo.livingthings.entities.ShroomieEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,8 +20,8 @@ public class ShroomieRenderer extends MobRenderer<ShroomieEntity, EntityModel<Sh
 	private static final ResourceLocation BROWN = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/shroomie/shroomie_brown.png");
 
-	public ShroomieRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ShroomieModel<>(), 0.4F);
+	public ShroomieRenderer(Context context) {
+		super(context, new ShroomieModel<>(context.bakeLayer(ModelLayer.SHROOMIE)), 0.4F);
 	}
 
 	@Override

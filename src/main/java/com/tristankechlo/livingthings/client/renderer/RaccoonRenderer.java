@@ -1,12 +1,13 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.RaccoonModel;
 import com.tristankechlo.livingthings.entities.RaccoonEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,8 +17,8 @@ public class RaccoonRenderer extends MobRenderer<RaccoonEntity, RaccoonModel<Rac
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/raccoon.png");
 
-	public RaccoonRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new RaccoonModel<>(), 0.4F);
+	public RaccoonRenderer(Context context) {
+		super(context, new RaccoonModel<>(context.bakeLayer(ModelLayer.RACCOON)), 0.4F);
 	}
 
 	@Override

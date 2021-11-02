@@ -9,64 +9,64 @@ import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobVariants {
+public class ShroomieEntity extends Animal implements ILexiconEntry, IMobVariants {
 
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/shroomie");
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(ShroomieEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class,
+			EntityDataSerializers.BYTE);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
-	private static final RangedInteger RANGED_INTEGER = TickRangeConverter.rangeOfSeconds(30, 60);
+	private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
 	private boolean canPlantMushroom;
 	private int mushroomCooldown;
 
-	public ShroomieEntity(EntityType<? extends ShroomieEntity> entityType, World world) {
+	public ShroomieEntity(EntityType<? extends ShroomieEntity> entityType, Level world) {
 		super(entityType, world);
 		canPlantMushroom = false;
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		this.setVariant(tag.getByte("ShroomieType"));
 		this.mushroomCooldown = tag.getInt("MushroomCooldown");
@@ -74,7 +74,7 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putByte("ShroomieType", getVariant());
 		tag.putInt("MushroomCooldown", this.mushroomCooldown);
@@ -83,15 +83,15 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, BREEDING_ITEMS, false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
 		this.goalSelector.addGoal(5, new ShroomiePlantMushroomGoal(this));
-		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(9, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
 	}
 
 	@Override
@@ -109,8 +109,8 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason,
-			ILivingEntityData data, CompoundNBT tag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
+			SpawnGroupData data, CompoundTag tag) {
 		final int brownWeight = LivingThingsConfig.SHROOMIE.brownWeight.get();
 		final int redWeight = LivingThingsConfig.SHROOMIE.redWeight.get();
 		this.setVariant(this.getRandomVariant(random, new byte[] { 0, 1 }, new int[] { brownWeight, redWeight }));
@@ -128,37 +128,39 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+	protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
 		return 0.55F;
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if ((this.getVariant() == 1 && stack.getItem().equals(Items.RED_MUSHROOM))
 				|| (this.getVariant() == 0 && stack.getItem().equals(Items.BROWN_MUSHROOM))) {
 			if (this.level.isClientSide) {
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			} else {
 				if (!this.canPlantMushroom) {
-					this.usePlayerItem(player, stack);
+					if (!player.getAbilities().instabuild) {
+						stack.shrink(1);
+					}
 					this.mushroomCooldown += 100;
 					this.canPlantMushroom = true;
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				} else {
-					return ActionResultType.FAIL;
+					return InteractionResult.FAIL;
 				}
 			}
 		}
 		return super.mobInteract(player, hand);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SHROOMIE.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SHROOMIE.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SHROOMIE.speed.get());
 	}
 
-	public static boolean canShroomieSpawn(EntityType<? extends AnimalEntity> type, IWorld world, SpawnReason reason,
+	public static boolean canShroomieSpawn(EntityType<? extends Animal> type, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
 		BlockState state = world.getBlockState(pos.below());
 		return (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.MYCELIUM)) && world.getRawBrightness(pos, 0) > 7;
@@ -170,8 +172,8 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity parent) {
-		ShroomieEntity shroomie = ModEntityTypes.SHROOMIE_ENTITY.get().create(world);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
+		ShroomieEntity shroomie = ModEntityTypes.SHROOMIE.get().create(world);
 		shroomie.setVariant(this.getVariantFromParents(this, parent));
 		return shroomie;
 	}
@@ -185,7 +187,7 @@ public class ShroomieEntity extends AnimalEntity implements ILexiconEntry, IMobV
 		if (this.random.nextBoolean()) {
 			this.canPlantMushroom = false;
 		}
-		this.mushroomCooldown = RANGED_INTEGER.randomValue(random);
+		this.mushroomCooldown = RANGED_INTEGER.sample(random);
 	}
 
 	@Override

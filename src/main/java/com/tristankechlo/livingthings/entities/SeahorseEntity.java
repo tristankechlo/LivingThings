@@ -8,49 +8,49 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 import com.tristankechlo.livingthings.misc.Util;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
-public class SeahorseEntity extends AbstractGroupFishEntity implements ILexiconEntry, IMobVariants {
+public class SeahorseEntity extends AbstractSchoolingFish implements ILexiconEntry, IMobVariants {
 
 	private static final ResourceLocation LEXICON = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/seahorse");
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(SeahorseEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(SeahorseEntity.class,
+			EntityDataSerializers.BYTE);
 
-	public SeahorseEntity(EntityType<SeahorseEntity> type, World world) {
+	public SeahorseEntity(EntityType<SeahorseEntity> type, Level world) {
 		super(type, world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SEAHORSE.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SEAHORSE.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SEAHORSE.speed.get());
 	}
 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(9, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
 	}
 
 	@Override
@@ -60,13 +60,13 @@ public class SeahorseEntity extends AbstractGroupFishEntity implements ILexiconE
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putByte("SeahorseVariant", getVariant());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		this.setVariant(tag.getByte("SeahorseVariant"));
 	}
@@ -82,7 +82,7 @@ public class SeahorseEntity extends AbstractGroupFishEntity implements ILexiconE
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.6F;
 	}
 
@@ -102,20 +102,20 @@ public class SeahorseEntity extends AbstractGroupFishEntity implements ILexiconE
 	}
 
 	@Override
-	protected ItemStack getBucketItemStack() {
+	public ItemStack getBucketItemStack() {
 		return new ItemStack(ModItems.SEAHORSE_BUCKET.get());
 	}
 
 	@Override
-	protected void saveToBucketTag(ItemStack stack) {
+	public void saveToBucketTag(ItemStack stack) {
 		super.saveToBucketTag(stack);
-		CompoundNBT compoundnbt = stack.getOrCreateTag();
+		CompoundTag compoundnbt = stack.getOrCreateTag();
 		compoundnbt.putByte("BucketSeahorseVariantTag", this.getVariant());
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason,
-			ILivingEntityData entityData, CompoundNBT tag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty,
+			MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag tag) {
 		entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData, tag);
 		if (tag != null && tag.contains("BucketSeahorseVariantTag", 1)) {
 			this.setVariant(tag.getByte("BucketSeahorseVariantTag"));
@@ -139,11 +139,11 @@ public class SeahorseEntity extends AbstractGroupFishEntity implements ILexiconE
 		return entityData;
 	}
 
-	private static final class SeahorseData extends AbstractGroupFishEntity.GroupData {
+	private static final class SeahorseData extends AbstractSchoolingFish.SchoolSpawnGroupData {
 
 		private final byte variant;
 
-		public SeahorseData(AbstractGroupFishEntity fish, byte variant) {
+		public SeahorseData(AbstractSchoolingFish fish, byte variant) {
 			super(fish);
 			this.variant = variant;
 		}

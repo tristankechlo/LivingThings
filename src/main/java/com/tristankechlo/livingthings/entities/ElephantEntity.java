@@ -14,82 +14,82 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.server.management.PreYggdrasilConverter;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.OldUsersConverter;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ElephantEntity extends AnimalEntity implements IAngerable, ILexiconEntry {
+public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry {
 
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
 	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.APPLE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"neutral_mobs/elephant");
-	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
-	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent(
+	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
+	private static final Component CONTAINER_NAME = new TranslatableComponent(
 			"container." + LivingThings.MOD_ID + ".elephant");
-	private static final DataParameter<Boolean> IS_SADDLED = EntityDataManager.defineId(ElephantEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> HAS_CHEST = EntityDataManager.defineId(ElephantEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_TAMED = EntityDataManager.defineId(ElephantEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager
-			.defineId(ElephantEntity.class, DataSerializers.OPTIONAL_UUID);
-	protected Inventory entityInventory;
+	private static final EntityDataAccessor<Boolean> IS_SADDLED = SynchedEntityData.defineId(ElephantEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> HAS_CHEST = SynchedEntityData.defineId(ElephantEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> IS_TAMED = SynchedEntityData.defineId(ElephantEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData
+			.defineId(ElephantEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	protected SimpleContainer entityInventory;
 	private int tameAmount;
 	private int angerTime;
 	private int attackTimer;
 	private UUID angerTarget;
 
-	public ElephantEntity(EntityType<? extends ElephantEntity> entityType, World worldIn) {
+	public ElephantEntity(EntityType<? extends ElephantEntity> entityType, Level worldIn) {
 		super(entityType, worldIn);
 		this.maxUpStep = 1.0F;
 		this.initInventory();
@@ -106,16 +106,16 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity parent) {
-		ElephantEntity child = ModEntityTypes.ELEPHANT_ENTITY.get().create(this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
+		ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level);
 		if (this.isTame() || ((ElephantEntity) parent).isTame()) {
 			child.setTame(true);
 		}
 		return child;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.ELEPHANT.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.ELEPHANT.speed.get())
 				.add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.ELEPHANT.damage.get());
@@ -123,25 +123,25 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.2D, false, () -> {
 			return LivingThingsConfig.ELEPHANT.canAttack.get();
 		}));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.9D));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.9D));
 		this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.95D));
-		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(0, new ElephantEntity.NewHurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, true));
+		this.targetSelector.addGoal(1, new ResetUniversalAngerTargetGoal<>(this, true));
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (this.level instanceof ServerWorld) {
-			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
+		if (this.level instanceof ServerLevel) {
+			this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
 		}
 		this.setSaddled(compound.getBoolean("Saddled"));
 		this.setHasChest(compound.getBoolean("Chested"));
@@ -156,7 +156,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 			uuid = compound.getUUID("Owner");
 		} else {
 			String string = compound.getString("Owner");
-			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), string);
+			uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), string);
 		}
 		if (uuid != null) {
 			this.setOwnerUniqueId(uuid);
@@ -164,7 +164,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		this.addPersistentAngerSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
@@ -178,8 +178,8 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	protected void initInventory() {
-		Inventory inventory = this.entityInventory;
-		this.entityInventory = new Inventory(27);
+		SimpleContainer inventory = this.entityInventory;
+		this.entityInventory = new SimpleContainer(27);
 		if (inventory != null) {
 			int invSize = Math.min(inventory.getContainerSize(), this.entityInventory.getContainerSize());
 
@@ -192,10 +192,10 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 		}
 	}
 
-	public void openInventory(PlayerEntity player) {
+	public void openInventory(Player player) {
 		// elephant inv is a generic chest
-		player.openMenu(new SimpleNamedContainerProvider((id, playerInv, playerIn) -> {
-			return new ChestContainer(ContainerType.GENERIC_9x3, id, player.inventory, this.entityInventory, 3);
+		player.openMenu(new SimpleMenuProvider((id, playerInv, playerIn) -> {
+			return new ChestMenu(MenuType.GENERIC_9x3, id, player.getInventory(), this.entityInventory, 3);
 		}, CONTAINER_NAME));
 	}
 
@@ -232,7 +232,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 1.3F : 2.25F;
 	}
 
@@ -277,7 +277,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private void spawnParticle(IParticleData particle) {
+	private void spawnParticle(ParticleOptions particle) {
 		if (particle != null) {
 			for (int i = 0; i < 7; ++i) {
 				double d0 = this.random.nextGaussian() * 0.03D;
@@ -289,10 +289,10 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 		}
 	}
 
-	private void doPlayerRide(PlayerEntity player) {
+	private void doPlayerRide(Player player) {
 		if (!this.level.isClientSide()) {
-			player.yRot = this.yRot;
-			player.xRot = this.xRot;
+			player.setYRot(this.getYRot());
+			player.setXRot(this.getXRot());
 			player.startRiding(this);
 		}
 	}
@@ -323,19 +323,19 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 
 	@Override
 	public boolean isControlledByLocalInstance() {
-		return this.getControllingPassenger() instanceof PlayerEntity;
+		return this.getControllingPassenger() instanceof Player;
 	}
 
 	@Override
-	public void travel(Vector3d travelVector) {
+	public void travel(Vec3 travelVector) {
 		if (this.isAlive()) {
 			if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
 				LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
-				this.yRot = livingentity.yRot;
-				this.yRotO = this.yRot;
-				this.xRot = livingentity.xRot * 0.5F;
-				this.setRot(this.yRot, this.xRot);
-				this.yBodyRot = this.yRot;
+				this.setYRot(livingentity.getYRot());
+				this.yRotO = this.getYRot();
+				this.setXRot(livingentity.getXRot() * 0.5F);
+				this.setRot(this.getYRot(), this.getXRot());
+				this.yBodyRot = this.getYRot();
 				this.yHeadRot = this.yBodyRot;
 				float sideSpeed = livingentity.xxa * 0.4F;
 				float forwardSpeed = livingentity.zza * 0.7F;
@@ -348,9 +348,9 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 				this.flyingSpeed = this.getSpeed() * 0.1F;
 				if (this.isControlledByLocalInstance()) {
 					this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-					super.travel(new Vector3d(sideSpeed, travelVector.y, forwardSpeed));
-				} else if (livingentity instanceof PlayerEntity) {
-					this.setDeltaMovement(Vector3d.ZERO);
+					super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
+				} else if (livingentity instanceof Player) {
+					this.setDeltaMovement(Vec3.ZERO);
 				}
 
 				this.calculateEntityAnimation(this, false);
@@ -445,7 +445,7 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 
 	@Override
 	public void startPersistentAngerTimer() {
-		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
+		this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
 	}
 
 	@Override
@@ -454,9 +454,9 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-		if (hand == Hand.OFF_HAND) { // prevent offhand use
-			return ActionResultType.PASS;
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		if (hand == InteractionHand.OFF_HAND) { // prevent offhand use
+			return InteractionResult.PASS;
 		}
 		ItemStack stack = player.getMainHandItem();
 
@@ -470,21 +470,23 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 				// start riding
 				this.doPlayerRide(player);
 			}
-			return ActionResultType.sidedSuccess(this.level.isClientSide());
+			return InteractionResult.sidedSuccess(this.level.isClientSide());
 
 		} else if (stack.getItem() == ModItems.LEXICON.get()) {
 
 			// prevent any use when item is lexicon
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 
 		} else if (this.isFood(stack)) {
 
 			if (this.isBaby()) {
 				// age up
 				int age = this.getAge();
-				this.usePlayerItem(player, stack);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 				this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
-				return ActionResultType.sidedSuccess(this.level.isClientSide());
+				return InteractionResult.sidedSuccess(this.level.isClientSide());
 			}
 
 			if (this.isTame()) {
@@ -496,17 +498,21 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 					if (!this.level.isClientSide()) {
 						float healAmount = 3.0F;
 						this.heal(healAmount);
-						this.usePlayerItem(player, stack);
-						return ActionResultType.SUCCESS;
+						if (!player.getAbilities().instabuild) {
+							stack.shrink(1);
+						}
+						return InteractionResult.SUCCESS;
 					}
 
 					// if already full health
 				} else {
 					// set in love
 					if (!this.level.isClientSide() && !this.isBaby() && this.canBreed()) {
-						this.usePlayerItem(player, stack);
+						if (!player.getAbilities().instabuild) {
+							stack.shrink(1);
+						}
 						this.setInLove(player);
-						return ActionResultType.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 				}
 
@@ -517,58 +523,64 @@ public class ElephantEntity extends AnimalEntity implements IAngerable, ILexicon
 			// progress taming
 			if (!this.level.isClientSide()) {
 				this.addTameAmount(200);
-				this.usePlayerItem(player, stack);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 				// if entity shall be set as tamed now
 				if (this.getTameAmount() >= 1000) {
 					this.setTame(true);
 					this.setOwnerUniqueId(player.getUUID());
-					if (player instanceof ServerPlayerEntity) {
-						CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayerEntity) player, this);
+					if (player instanceof ServerPlayer) {
+						CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer) player, this);
 					}
 					this.level.broadcastEntityEvent(this, (byte) 6);
 				} else {
 					this.level.broadcastEntityEvent(this, (byte) 7);
 				}
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 
 		} else if (this.isTame() && stack.getItem() == Items.SADDLE && !this.isBaby()) {
 
 			// saddle entity
 			if (!this.level.isClientSide() && !this.isSaddled()) {
-				this.usePlayerItem(player, stack);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 				this.setSaddled(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 
 		} else if (this.isTame() && this.isSaddled() && stack.getItem() == Items.CHEST && !this.isBaby()) {
 
 			// add chest to entity
 			if (!this.level.isClientSide() && !this.hasChest()) {
-				this.usePlayerItem(player, stack);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 				this.setHasChest(true);
 				this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	private static class NewHurtByTargetGoal extends HurtByTargetGoal {
 
-		public NewHurtByTargetGoal(CreatureEntity creatureIn) {
+		public NewHurtByTargetGoal(PathfinderMob creatureIn) {
 			super(creatureIn);
 		}
 
 		@Override
 		public boolean canUse() {
 			LivingEntity livingentity = this.mob.getLastHurtByMob();
-			if (livingentity instanceof PlayerEntity) {
+			if (livingentity instanceof Player) {
 				UUID ownerID = ((ElephantEntity) this.mob).getOwnerUniqueId();
 				if (ownerID != null) {
-					if (ownerID == ((PlayerEntity) livingentity).getUUID()) {
+					if (ownerID == ((Player) livingentity).getUUID()) {
 						return false;
 					}
 				}

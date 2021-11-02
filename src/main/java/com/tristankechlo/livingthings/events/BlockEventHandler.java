@@ -6,27 +6,27 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.tags.Tag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BlockEventHandler {
 
-	private static ITag<Block> droppingBananaBlocks;
+	private static Tag<Block> droppingBananaBlocks;
 
 	@SubscribeEvent
 	/** used to drop bananas at block break event */
@@ -34,9 +34,9 @@ public class BlockEventHandler {
 		if (!LivingThingsConfig.GENERAL.doBananaDrops.get()) {
 			return;
 		}
-		IWorld world = event.getWorld();
+		LevelAccessor world = event.getWorld();
 		BlockState state = event.getState();
-		PlayerEntity player = event.getPlayer();
+		Player player = event.getPlayer();
 		BlockPos pos = event.getPos();
 		if (world == null || state == null || player == null || pos == null) {
 			return;
@@ -60,7 +60,7 @@ public class BlockEventHandler {
 		double dropChance = LivingThingsConfig.GENERAL.bananaDropChance.get() / 100.0D;
 		if (world.getRandom().nextDouble() < dropChance) {
 			ItemStack loot = new ItemStack(ModItems.BANANA.get());
-			ItemEntity entity = new ItemEntity((World) world, pos.getX(), pos.getY(), pos.getZ(), loot);
+			ItemEntity entity = new ItemEntity((Level) world, pos.getX(), pos.getY(), pos.getZ(), loot);
 			world.addFreshEntity(entity);
 		}
 	}
@@ -71,15 +71,15 @@ public class BlockEventHandler {
 		if (!LivingThingsConfig.ANCIENT_BLAZE.canSpawn.get()) {
 			return;
 		}
-		final IWorld world = event.getWorld();
+		final LevelAccessor world = event.getWorld();
 		if (world == null) {
 			return;
 		}
 		final Entity entity = event.getEntity();
-		if (entity == null || !(entity instanceof PlayerEntity)) {
+		if (entity == null || !(entity instanceof Player)) {
 			return;
 		}
-		final PlayerEntity player = (PlayerEntity) entity;
+		final Player player = (Player) entity;
 		if (world.isClientSide() || player.isSpectator()) {
 			return;
 		}
@@ -92,7 +92,7 @@ public class BlockEventHandler {
 			world.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), 3);
 			world.setBlock(pos.below(2), Blocks.AIR.defaultBlockState(), 3);
 
-			AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE_ENTITY.get().create((World) world);
+			AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE.get().create((Level) world);
 			blaze.setInvulnerableTime(LivingThingsConfig.ANCIENT_BLAZE.chargingTime.get());
 			blaze.setPos(pos.getX() + 0.5D, pos.below(2).getY() + 0.2D, pos.getZ() + 0.5D);
 			world.addFreshEntity(blaze);

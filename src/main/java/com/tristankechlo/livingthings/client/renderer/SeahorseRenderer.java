@@ -1,12 +1,13 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.SeahorseModel;
 import com.tristankechlo.livingthings.entities.SeahorseEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,8 +25,8 @@ public class SeahorseRenderer extends MobRenderer<SeahorseEntity, SeahorseModel<
 	private static final ResourceLocation YELLOW = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/seahorse/seahorse_yellow.png");
 
-	public SeahorseRenderer(EntityRendererManager rendererManager) {
-		super(rendererManager, new SeahorseModel<>(), 0.2F);
+	public SeahorseRenderer(Context context) {
+		super(context, new SeahorseModel<>(context.bakeLayer(ModelLayer.SEAHORSE)), 0.2F);
 	}
 
 	@Override

@@ -1,16 +1,17 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.MonkeyModel;
 import com.tristankechlo.livingthings.client.model.entity.MonkeySittingModel;
 import com.tristankechlo.livingthings.entities.MonkeyEntity;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,12 +20,14 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<Monkey
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/monkey.png");
-	private final MonkeyModel<MonkeyEntity> modelNormal = new MonkeyModel<>();
-	private final MonkeySittingModel<MonkeyEntity> modelSitting = new MonkeySittingModel<>();
+	private final MonkeyModel<MonkeyEntity> modelNormal;
+	private final MonkeySittingModel<MonkeyEntity> modelSitting;
 	private byte lastAction;
 
-	public MonkeyRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new MonkeyModel<>(), 0.35F);
+	public MonkeyRenderer(Context context) {
+		super(context, new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY)), 0.35F);
+		this.modelNormal = new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY));
+		this.modelSitting = new MonkeySittingModel<>(context.bakeLayer(ModelLayer.MONKEY_SITTING));
 	}
 
 	@Override
@@ -33,8 +36,8 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<Monkey
 	}
 
 	@Override
-	public void render(MonkeyEntity monkey, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
-			IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(MonkeyEntity monkey, float entityYaw, float partialTicks, PoseStack matrixStackIn,
+			MultiBufferSource bufferIn, int packedLightIn) {
 
 		byte monkeyAction = (byte) ((monkey.isCrouching()) ? 1 : 0);
 		if (monkeyAction != this.lastAction) {

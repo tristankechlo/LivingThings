@@ -8,67 +8,67 @@ import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
+public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"hostile_mobs/nether_knight");
 
-	public NetherKnightEntity(EntityType<? extends MonsterEntity> type, World world) {
+	public NetherKnightEntity(EntityType<? extends Monster> type, Level world) {
 		super(type, world);
-		this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
-		this.setPathfindingMalus(PathNodeType.LAVA, 0.0F);
-		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.NETHER_KNIGHT.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.NETHER_KNIGHT.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.NETHER_KNIGHT.speed.get())
 				.add(Attributes.FOLLOW_RANGE, 48.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.NETHER_KNIGHT.damage.get());
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficultyInstance,
-			SpawnReason spawnReason, ILivingEntityData data, CompoundNBT nbt) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance,
+			MobSpawnType spawnReason, SpawnGroupData data, CompoundTag nbt) {
 		this.setCanPickUpLoot(false);
 		this.setLeftHanded(world.getRandom().nextBoolean());
 		this.populateDefaultEquipmentSlots(difficultyInstance);
@@ -77,9 +77,9 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance p_180481_1_) {
-		EquipmentSlotType first = this.random.nextBoolean() ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
-		EquipmentSlotType second = first == EquipmentSlotType.MAINHAND ? EquipmentSlotType.OFFHAND
-				: EquipmentSlotType.MAINHAND;
+		EquipmentSlot first = this.random.nextBoolean() ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+		EquipmentSlot second = first == EquipmentSlot.MAINHAND ? EquipmentSlot.OFFHAND
+				: EquipmentSlot.MAINHAND;
 		this.setItemSlot(first, createMainHandItem());
 		this.setItemSlot(second, createOffHandItem());
 	}
@@ -103,17 +103,17 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 		this.goalSelector.addGoal(5, new BetterMeleeAttackGoal(this, 1.2D, false, () -> {
 			return LivingThingsConfig.NETHER_KNIGHT.canAttack.get();
 		}));
-		this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(NetherKnightEntity.class));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.UNDEAD;
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 			stack.enchant(Enchantments.SHARPNESS, 2 + random.nextInt(3));
 		}
 		stack.enchant(Enchantments.MOB_LOOTING, 1);
-		stack.setHoverName(new StringTextComponent(name));
+		stack.setHoverName(new TextComponent(name));
 		return stack;
 	}
 
@@ -151,7 +151,7 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 			stack.enchant(Enchantments.BLOCK_EFFICIENCY, 1 + random.nextInt(3));
 		}
 		stack.enchant(Enchantments.SHARPNESS, 2);
-		stack.setHoverName(new StringTextComponent(name));
+		stack.setHoverName(new TextComponent(name));
 		return stack;
 	}
 
@@ -195,8 +195,8 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 		super.tick();
 		// float in lava
 		if (this.isInLava()) {
-			ISelectionContext iselectioncontext = ISelectionContext.of(this);
-			if (iselectioncontext.isAbove(FlowingFluidBlock.STABLE_SHAPE, this.blockPosition(), true)
+			CollisionContext iselectioncontext = CollisionContext.of(this);
+			if (iselectioncontext.isAbove(LiquidBlock.STABLE_SHAPE, this.blockPosition(), true)
 					&& !this.level.getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
 				this.onGround = true;
 			} else {
@@ -221,7 +221,7 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 			return false;
 		} else {
 			if (entity instanceof LivingEntity) {
-				((LivingEntity) entity).addEffect(new EffectInstance(Effects.WITHER, 100));
+				((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.WITHER, 100));
 			}
 			return true;
 		}
@@ -233,8 +233,8 @@ public class NetherKnightEntity extends MonsterEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public boolean canBeAffected(EffectInstance effect) {
-		return (effect.getEffect() == Effects.WITHER) ? false : super.canBeAffected(effect);
+	public boolean canBeAffected(MobEffectInstance effect) {
+		return (effect.getEffect() == MobEffects.WITHER) ? false : super.canBeAffected(effect);
 	}
 
 }

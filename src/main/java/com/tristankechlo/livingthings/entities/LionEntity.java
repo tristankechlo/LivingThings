@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -15,74 +16,74 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
-public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants, IGenderedMob, ILexiconEntry {
+public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob, ILexiconEntry {
 
-	private static final DataParameter<Boolean> MALE = EntityDataManager.defineId(LionEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Byte> LION_VARIANT = EntityDataManager.defineId(LionEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Boolean> MALE = SynchedEntityData.defineId(LionEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Byte> LION_VARIANT = SynchedEntityData.defineId(LionEntity.class,
+			EntityDataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"hostile_mobs/lion");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.BEEF, Items.CHICKEN, Items.RABBIT);
-	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
+	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
-	public LionEntity(EntityType<? extends LionEntity> entityType, World worldIn) {
+	public LionEntity(EntityType<? extends LionEntity> entityType, Level worldIn) {
 		super(entityType, worldIn);
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entityIn) {
-		LionEntity entityChild = ModEntityTypes.LION_ENTITY.get().create(this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entityIn) {
+		LionEntity entityChild = ModEntityTypes.LION.get().create(this.level);
 		entityChild.setGender(LionEntity.getWeightedRandomGender(this.random));
 		entityChild.setVariant(this.getVariantFromParents(this, entityIn));
 		return entityChild;
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		this.setGender(LionEntity.getWeightedRandomGender(this.random));
 		this.setVariant(LionEntity.getWeightedRandomColorVariant(this.random));
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -94,10 +95,10 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		if (maleWeight <= 0 && femaleWeight <= 0) {
 			return random.nextBoolean() ? Gender.MALE : Gender.FEMALE;
 		}
-		WeightedGender gender = WeightedRandom.getRandomItem(random,
+		Optional<WeightedGender> gender = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedGender(Math.max(0, maleWeight), Gender.MALE),
 						new WeightedGender(Math.max(0, femaleWeight), Gender.FEMALE)));
-		return gender.gender;
+		return gender.get().gender;
 	}
 
 	public static byte getWeightedRandomColorVariant(Random random) {
@@ -106,21 +107,21 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 		if (color1Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
-		return variant.variant;
+		return variant.get().variant;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.LION.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.LION.speed.get()).add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.LION.damage.get());
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false, () -> {
 			return LivingThingsConfig.LION.canAttack.get();
 		}) {
@@ -130,16 +131,15 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 						+ attackTarget.getBbWidth());
 			}
 		});
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.9D));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.9D));
 		this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.95D));
-		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 7.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 7.0F));
+		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(1,
-				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, true, null));
+		this.targetSelector.addGoal(2, new ResetUniversalAngerTargetGoal<>(this, true));
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		if (this.getGender() == Gender.MALE) {
 			compound.putBoolean("IsMale", true);
@@ -160,7 +160,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.getBoolean("IsMale")) {
 			this.setGender(Gender.MALE);
@@ -168,13 +168,13 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 			this.setGender(Gender.FEMALE);
 		}
 		this.setVariant(compound.getByte("LionVariant"));
-		if (this.level instanceof ServerWorld) {
-			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
+		if (this.level instanceof ServerLevel) {
+			this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
 		}
 	}
 
 	@Override
-	public boolean canMate(AnimalEntity otherAnimal) {
+	public boolean canMate(Animal otherAnimal) {
 		if (otherAnimal == this) {
 			return false;
 		}
@@ -223,7 +223,7 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 0.7F : 1.45F;
 	}
 
@@ -281,6 +281,6 @@ public class LionEntity extends AnimalEntity implements IAngerable, IMobVariants
 
 	@Override
 	public void startPersistentAngerTimer() {
-		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
+		this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
 	}
 }

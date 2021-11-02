@@ -1,17 +1,17 @@
 package com.tristankechlo.livingthings.init;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModItemGroups {
 
-	public static final ItemGroup GENERAL = new ItemGroup("LivingThings") {
+	public static final CreativeModeTab GENERAL = new CreativeModeTab("LivingThings") {
 
 		@Override
 		public ItemStack makeIcon() {

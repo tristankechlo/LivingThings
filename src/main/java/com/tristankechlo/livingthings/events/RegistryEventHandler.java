@@ -21,13 +21,13 @@ import com.tristankechlo.livingthings.entities.ShroomieEntity;
 import com.tristankechlo.livingthings.entities.SnailEntity;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacements.Type;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,45 +44,45 @@ public class RegistryEventHandler {
 	// add attributes like health to entities
 	@SubscribeEvent
 	public static void onAttributeRegister(final EntityAttributeCreationEvent event) {
-		event.put(ModEntityTypes.ELEPHANT_ENTITY.get(), ElephantEntity.createAttributes().build());
-		event.put(ModEntityTypes.GIRAFFE_ENTITY.get(), GiraffeEntity.createAttributes().build());
-		event.put(ModEntityTypes.LION_ENTITY.get(), LionEntity.createAttributes().build());
-		event.put(ModEntityTypes.SHARK_ENTITY.get(), SharkEntity.createAttributes().build());
-		event.put(ModEntityTypes.PENGUIN_ENTITY.get(), PenguinEntity.createAttributes().build());
-		event.put(ModEntityTypes.OSTRICH_ENTITY.get(), OstrichEntity.createAttributes().build());
-		event.put(ModEntityTypes.FLAMINGO_ENTITY.get(), FlamingoEntity.createAttributes().build());
-		event.put(ModEntityTypes.CRAB_ENTITY.get(), CrabEntity.createAttributes().build());
-		event.put(ModEntityTypes.MANTARAY_ENTITY.get(), MantarayEntity.createAttributes().build());
-		event.put(ModEntityTypes.RACCOON_ENTITY.get(), RaccoonEntity.createAttributes().build());
-		event.put(ModEntityTypes.OWL_ENTITY.get(), OwlEntity.createAttributes().build());
-		event.put(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), AncientBlazeEntity.createAttributes().build());
-		event.put(ModEntityTypes.KOALA_ENTITY.get(), KoalaEntity.createAttributes().build());
-		event.put(ModEntityTypes.SNAIL_ENTITY.get(), SnailEntity.createAttributes().build());
-		event.put(ModEntityTypes.MONKEY_ENTITY.get(), MonkeyEntity.createAttributes().build());
-		event.put(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), NetherKnightEntity.createAttributes().build());
-		event.put(ModEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntity.createAttributes().build());
-		event.put(ModEntityTypes.SEAHORSE_ENTITY.get(), SeahorseEntity.createAttributes().build());
+		event.put(ModEntityTypes.ELEPHANT.get(), ElephantEntity.createAttributes().build());
+		event.put(ModEntityTypes.GIRAFFE.get(), GiraffeEntity.createAttributes().build());
+		event.put(ModEntityTypes.LION.get(), LionEntity.createAttributes().build());
+		event.put(ModEntityTypes.SHARK.get(), SharkEntity.createAttributes().build());
+		event.put(ModEntityTypes.PENGUIN.get(), PenguinEntity.createAttributes().build());
+		event.put(ModEntityTypes.OSTRICH.get(), OstrichEntity.createAttributes().build());
+		event.put(ModEntityTypes.FLAMINGO.get(), FlamingoEntity.createAttributes().build());
+		event.put(ModEntityTypes.CRAB.get(), CrabEntity.createAttributes().build());
+		event.put(ModEntityTypes.MANTARAY.get(), MantarayEntity.createAttributes().build());
+		event.put(ModEntityTypes.RACCOON.get(), RaccoonEntity.createAttributes().build());
+		event.put(ModEntityTypes.OWL.get(), OwlEntity.createAttributes().build());
+		event.put(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeEntity.createAttributes().build());
+		event.put(ModEntityTypes.KOALA.get(), KoalaEntity.createAttributes().build());
+		event.put(ModEntityTypes.SNAIL.get(), SnailEntity.createAttributes().build());
+		event.put(ModEntityTypes.MONKEY.get(), MonkeyEntity.createAttributes().build());
+		event.put(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightEntity.createAttributes().build());
+		event.put(ModEntityTypes.SHROOMIE.get(), ShroomieEntity.createAttributes().build());
+		event.put(ModEntityTypes.SEAHORSE.get(), SeahorseEntity.createAttributes().build());
 	}
 
 	private static void registerEntitySpawnPlacements() {
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.ELEPHANT_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.GIRAFFE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.LION_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHARK_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SharkEntity::canSharkSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.PENGUIN_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.OSTRICH_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.FLAMINGO_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.CRAB_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.MANTARAY_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.RACCOON_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.OWL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.ANCIENT_BLAZE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.KOALA_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, KoalaEntity::canKoalaSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SNAIL_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.MONKEY_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, MonkeyEntity::canMonkeySpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.NETHER_KNIGHT_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHROOMIE_ENTITY.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SEAHORSE_ENTITY.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.ELEPHANT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.GIRAFFE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.LION.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.SHARK.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SharkEntity::canSharkSpawn);
+		SpawnPlacements.register(ModEntityTypes.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.OSTRICH.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.FLAMINGO.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.CRAB.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CrabEntity::canCrabSpawn);
+		SpawnPlacements.register(ModEntityTypes.MANTARAY.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::canMantaraySpawn);
+		SpawnPlacements.register(ModEntityTypes.RACCOON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.OWL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, OwlEntity::canOwlSpawn);
+		SpawnPlacements.register(ModEntityTypes.ANCIENT_BLAZE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.KOALA.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, KoalaEntity::canKoalaSpawn);
+		SpawnPlacements.register(ModEntityTypes.SNAIL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.MONKEY.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, MonkeyEntity::canMonkeySpawn);
+		SpawnPlacements.register(ModEntityTypes.NETHER_KNIGHT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.SHROOMIE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
+		SpawnPlacements.register(ModEntityTypes.SEAHORSE.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractFish::checkFishSpawnRules);
 	}
 
 }

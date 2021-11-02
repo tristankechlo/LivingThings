@@ -1,100 +1,108 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.LionEntity;
 import com.tristankechlo.livingthings.entities.misc.IGenderedMob.Gender;
 
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
 
-	private final ModelRenderer Body;
-	private final ModelRenderer Legs;
-	private final ModelRenderer FrontLeftLeg;
-	private final ModelRenderer FrontRightLeg;
-	private final ModelRenderer BackLeftLeg;
-	private final ModelRenderer BackRightLeg;
-	private final ModelRenderer Tail;
-	private final ModelRenderer Head;
-	private final ModelRenderer Ears;
-	private final ModelRenderer LeftEar;
-	private final ModelRenderer RightEar;
-	private final ModelRenderer Mane;
+	private final ModelPart Body;
+	private final ModelPart Mane;
+	private final ModelPart Head;
+	private final ModelPart FrontRightLeg;
+	private final ModelPart FrontLeftLeg;
+	private final ModelPart BackRightLeg;
+	private final ModelPart BackLeftLeg;
+	private final ModelPart Tail;
 
-	public LionModel() {
-		texWidth = 128;
-		texHeight = 64;
+	public LionModel(ModelPart root) {
+		this.Body = root.getChild("Body");
+		this.Mane = root.getChild("Mane");
+		this.Head = root.getChild("Head");
+		this.FrontRightLeg = root.getChild("FrontRightLeg");
+		this.FrontLeftLeg = root.getChild("FrontLeftLeg");
+		this.BackRightLeg = root.getChild("BackRightLeg");
+		this.BackLeftLeg = root.getChild("BackLeftLeg");
+		this.Tail = root.getChild("Tail");
+	}
 
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 6.0F, 0.0F);
-		Body.texOffs(0, 23).addBox(-6.0F, -4.0F, -14.0F, 12.0F, 12.0F, 29.0F, 0.0F, false);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		Legs = new ModelRenderer(this);
-		Legs.setPos(0.0F, 18.0F, 0.0F);
-		Body.addChild(Legs);
+		PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 23)
+				.addBox(-6.0F, -4.0F, -14.0F, 12.0F, 12.0F, 29.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, 6.0F, 0.0F));
 
-		FrontLeftLeg = new ModelRenderer(this);
-		FrontLeftLeg.setPos(4.0F, -10.0F, -12.0F);
-		Legs.addChild(FrontLeftLeg);
-		FrontLeftLeg.texOffs(0, 17).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, false);
+		PartDefinition Legs = Body.addOrReplaceChild("Legs", CubeListBuilder.create(),
+				PartPose.offset(0.0F, 18.0F, 0.0F));
 
-		FrontRightLeg = new ModelRenderer(this);
-		FrontRightLeg.setPos(-4.0F, -10.0F, -12.0F);
-		Legs.addChild(FrontRightLeg);
-		FrontRightLeg.texOffs(0, 17).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, false);
+		PartDefinition FrontLeftLeg = Legs.addOrReplaceChild("FrontLeftLeg", CubeListBuilder.create().texOffs(0, 17)
+				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(4.0F, -10.0F, -12.0F));
 
-		BackLeftLeg = new ModelRenderer(this);
-		BackLeftLeg.setPos(4.0F, -10.0F, 12.0F);
-		Legs.addChild(BackLeftLeg);
-		BackLeftLeg.texOffs(0, 17).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, false);
+		PartDefinition FrontRightLeg = Legs.addOrReplaceChild("FrontRightLeg", CubeListBuilder.create().texOffs(0, 17)
+				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(-4.0F, -10.0F, -12.0F));
 
-		BackRightLeg = new ModelRenderer(this);
-		BackRightLeg.setPos(-4.0F, -10.0F, 12.0F);
-		Legs.addChild(BackRightLeg);
-		BackRightLeg.texOffs(0, 17).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, false);
+		PartDefinition BackLeftLeg = Legs.addOrReplaceChild("BackLeftLeg", CubeListBuilder.create().texOffs(0, 17)
+				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(4.0F, -10.0F, 12.0F));
 
-		Tail = new ModelRenderer(this);
-		Tail.setPos(0.0F, -4.0F, 14.5F);
-		Body.addChild(Tail);
-		this.setRotationAngle(Tail, -2.7489F, 0.0F, 0.0F);
-		Tail.texOffs(61, 21).addBox(-1.0F, -12.5F, 0.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
+		PartDefinition BackRightLeg = Legs.addOrReplaceChild("BackRightLeg", CubeListBuilder.create().texOffs(0, 17)
+				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(-4.0F, -10.0F, 12.0F));
 
-		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, 0.0F, -14.0F);
-		Body.addChild(Head);
-		Head.texOffs(88, 44).addBox(-6.0F, -7.0F, -8.0F, 12.0F, 12.0F, 8.0F, 0.0F, false);
-		Head.texOffs(30, 1).addBox(-3.0F, -2.0F, -14.0F, 6.0F, 7.0F, 6.0F, 0.0F, false);
+		PartDefinition Tail = Body.addOrReplaceChild("Tail",
+				CubeListBuilder.create().texOffs(61, 21).addBox(-1.0F, -12.5F, 0.0F, 2.0F, 12.0F, 2.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(0.0F, -4.0F, 14.5F, -2.7489F, 0.0F, 0.0F));
 
-		Ears = new ModelRenderer(this);
-		Ears.setPos(0.0F, -7.0F, -1.0F);
-		Head.addChild(Ears);
+		PartDefinition Head = Body.addOrReplaceChild("Head",
+				CubeListBuilder.create().texOffs(88, 44)
+						.addBox(-6.0F, -7.0F, -8.0F, 12.0F, 12.0F, 8.0F, new CubeDeformation(0.0F)).texOffs(30, 1)
+						.addBox(-3.0F, -2.0F, -14.0F, 6.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, 0.0F, -14.0F));
 
-		LeftEar = new ModelRenderer(this);
-		LeftEar.setPos(5.0F, 0.0F, -1.0F);
-		Ears.addChild(LeftEar);
-		this.setRotationAngle(LeftEar, 0.0F, 0.0F, 0.1745F);
-		LeftEar.texOffs(11, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+		PartDefinition Ears = Head.addOrReplaceChild("Ears", CubeListBuilder.create(),
+				PartPose.offset(0.0F, -7.0F, -1.0F));
 
-		RightEar = new ModelRenderer(this);
-		RightEar.setPos(-5.0F, 0.0F, -1.0F);
-		Ears.addChild(RightEar);
-		this.setRotationAngle(RightEar, 0.0F, 0.0F, -0.1745F);
-		RightEar.texOffs(0, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+		PartDefinition LeftEar = Ears
+				.addOrReplaceChild("LeftEar",
+						CubeListBuilder.create().texOffs(11, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F,
+								new CubeDeformation(0.0F)),
+						PartPose.offsetAndRotation(5.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.1745F));
 
-		Mane = new ModelRenderer(this);
-		Mane.setPos(0.0F, 6.0F, -14.0F);
-		Mane.texOffs(82, 0).addBox(-7.0F, -9.0F, -2.0F, 14.0F, 15.0F, 9.0F, 0.0F, true);
+		PartDefinition RightEar = Ears.addOrReplaceChild("RightEar",
+				CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-5.0F, 0.0F, -1.0F, 0.0F, 0.0F, -0.1745F));
+
+		PartDefinition Mane = partdefinition.addOrReplaceChild("Mane",
+				CubeListBuilder.create().texOffs(82, 0).mirror()
+						.addBox(-7.0F, -9.0F, -2.0F, 14.0F, 15.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offset(0.0F, 6.0F, -14.0F));
+
+		return LayerDefinition.create(meshdefinition, 128, 64);
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn,
-			int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
 
 		if (this.young) {
 			matrixStackIn.scale(0.6F, 0.6F, 0.6F);
@@ -114,7 +122,7 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
 
 		this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
 
-		this.Tail.zRot = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
+		this.Tail.zRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
 	}
 
 	@Override

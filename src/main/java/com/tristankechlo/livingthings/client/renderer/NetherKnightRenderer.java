@@ -1,13 +1,14 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.NetherKnightModel;
 import com.tristankechlo.livingthings.client.renderer.layer.NetherKnightHeldItemLayer;
 import com.tristankechlo.livingthings.entities.NetherKnightEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -17,8 +18,8 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
 	private static final ResourceLocation TEXTURE = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/nether_knight.png");
 
-	public NetherKnightRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new NetherKnightModel<>(), 0.5F);
+	public NetherKnightRenderer(Context context) {
+		super(context, new NetherKnightModel<>(context.bakeLayer(ModelLayer.NETHER_KNIGHT)), 0.5F);
 		this.addLayer(new NetherKnightHeldItemLayer<>(this));
 	}
 

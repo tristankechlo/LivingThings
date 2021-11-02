@@ -1,66 +1,77 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entities.PenguinEntity;
 
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PenguinModel<T extends PenguinEntity> extends AdvancedEntityModel<T> {
 
-	private final ModelRenderer Body;
-	private final ModelRenderer RightFeet;
-	private final ModelRenderer LeftFeet;
-	private final ModelRenderer LeftWing;
-	private final ModelRenderer RightWing;
-	private final ModelRenderer Head;
-	private final ModelRenderer Beak;
+	private final ModelPart Body;
+	private final ModelPart Head;
+	private final ModelPart Beak;
+	private final ModelPart LeftWing;
+	private final ModelPart RightWing;
+	private final ModelPart LeftFeet;
+	private final ModelPart RightFeet;
 
-	public PenguinModel() {
-		texWidth = 64;
-		texHeight = 42;
+	public PenguinModel(ModelPart root) {
+		this.Body = root.getChild("Body");
+		this.Head = root.getChild("Head");
+		this.Beak = root.getChild("Beak");
+		this.LeftWing = root.getChild("LeftWing");
+		this.RightWing = root.getChild("RightWing");
+		this.LeftFeet = root.getChild("LeftFeet");
+		this.RightFeet = root.getChild("RightFeet");
+	}
 
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 24.0F, -1.0833F);
-		Body.texOffs(0, 0).addBox(-5.0F, -16.0F, -3.9167F, 10.0F, 16.0F, 9.0F, 0.0F, false);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		RightFeet = new ModelRenderer(this);
-		RightFeet.setPos(-4.0F, -0.5F, -2.9167F);
-		Body.addChild(RightFeet);
-		setRotationAngle(RightFeet, 0.0F, 0.1745F, 0.0F);
-		RightFeet.texOffs(54, 10).addBox(-1.0F, -0.5F, -3.0F, 2.0F, 1.0F, 3.0F, 0.0F, false);
+		PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 0)
+				.addBox(-5.0F, -16.0F, -3.9167F, 10.0F, 16.0F, 9.0F, new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, 24.0F, -1.0833F));
 
-		LeftFeet = new ModelRenderer(this);
-		LeftFeet.setPos(4.0F, -0.5F, -2.9167F);
-		Body.addChild(LeftFeet);
-		setRotationAngle(LeftFeet, 0.0F, -0.1745F, 0.0F);
-		LeftFeet.texOffs(54, 10).addBox(-1.0F, -0.5F, -3.0F, 2.0F, 1.0F, 3.0F, 0.0F, true);
+		PartDefinition RightFeet = Body.addOrReplaceChild("RightFeet",
+				CubeListBuilder.create().texOffs(54, 10).addBox(-1.0F, -0.5F, -3.0F, 2.0F, 1.0F, 3.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-4.0F, -0.5F, -2.9167F, 0.0F, 0.1745F, 0.0F));
 
-		LeftWing = new ModelRenderer(this);
-		LeftWing.setPos(5.0F, -14.0F, 1.0833F);
-		Body.addChild(LeftWing);
-		setRotationAngle(LeftWing, 0.0F, 0.0F, -0.0873F);
-		LeftWing.texOffs(46, 23).addBox(0.0F, 0.0F, -4.5F, 1.0F, 11.0F, 8.0F, 0.0F, false);
+		PartDefinition LeftFeet = Body.addOrReplaceChild("LeftFeet",
+				CubeListBuilder.create().texOffs(54, 10).mirror()
+						.addBox(-1.0F, -0.5F, -3.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(4.0F, -0.5F, -2.9167F, 0.0F, -0.1745F, 0.0F));
 
-		RightWing = new ModelRenderer(this);
-		RightWing.setPos(-5.0F, -14.0F, 1.0833F);
-		Body.addChild(RightWing);
-		setRotationAngle(RightWing, 0.0F, 0.0F, 0.0873F);
-		RightWing.texOffs(46, 23).addBox(-1.0F, 0.0F, -4.5F, 1.0F, 11.0F, 8.0F, 0.0F, true);
+		PartDefinition LeftWing = Body.addOrReplaceChild("LeftWing",
+				CubeListBuilder.create().texOffs(46, 23).addBox(0.0F, 0.0F, -4.5F, 1.0F, 11.0F, 8.0F,
+						new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(5.0F, -14.0F, 1.0833F, 0.0F, 0.0F, -0.0873F));
 
-		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, 8.0F, -1.0F);
-		Head.texOffs(0, 27).addBox(-4.0F, -7.0F, -3.75F, 8.0F, 7.0F, 8.0F, 0.0F, false);
+		PartDefinition RightWing = Body.addOrReplaceChild("RightWing",
+				CubeListBuilder.create().texOffs(46, 23).mirror()
+						.addBox(-1.0F, 0.0F, -4.5F, 1.0F, 11.0F, 8.0F, new CubeDeformation(0.0F)).mirror(false),
+				PartPose.offsetAndRotation(-5.0F, -14.0F, 1.0833F, 0.0F, 0.0F, 0.0873F));
 
-		Beak = new ModelRenderer(this);
-		Beak.setPos(0.0F, -1.75F, -3.75F);
-		Head.addChild(Beak);
-		Beak.texOffs(54, 0).addBox(-1.5F, -1.0F, -2.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
+		PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 27).addBox(
+				-4.0F, -7.0F, -3.75F, 8.0F, 7.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 8.0F, -1.0F));
+
+		PartDefinition Beak = Head.addOrReplaceChild("Beak", CubeListBuilder.create().texOffs(54, 0).addBox(-1.5F,
+				-1.0F, -2.0F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.75F, -3.75F));
+
+		return LayerDefinition.create(meshdefinition, 64, 42);
 	}
 
 	@Override
@@ -70,21 +81,21 @@ public class PenguinModel<T extends PenguinEntity> extends AdvancedEntityModel<T
 		this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
 
 		// wobbling effect while walking
-		this.Body.zRot = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
+		this.Body.zRot = (Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
 
 		// animate penguin swinging wings
 		this.RightWing.zRot = (0.1308996938F)
-				+ ((0.7872664625F + MathHelper.cos(limbSwing * 0.6662F) * 1.0F) * limbSwingAmount);
+				+ ((0.7872664625F + Mth.cos(limbSwing * 0.6662F) * 1.0F) * limbSwingAmount);
 		this.LeftWing.zRot = (-0.1308996938F)
-				+ ((-0.7872664625F + MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
-		this.RightFeet.xRot = -((MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
-		this.LeftFeet.xRot = (MathHelper.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
+				+ ((-0.7872664625F + Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
+		this.RightFeet.xRot = -((Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
+		this.LeftFeet.xRot = (Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
 
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn,
-			int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
 
 		if (this.young) {
 			matrixStackIn.pushPose();

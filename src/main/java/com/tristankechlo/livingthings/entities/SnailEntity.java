@@ -10,52 +10,52 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SnailEntity extends AnimalEntity implements ILexiconEntry {
+public class SnailEntity extends Animal implements ILexiconEntry {
 
-	private static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(SnailEntity.class,
-			DataSerializers.INT);
-	private static final DataParameter<Integer> SHELL_COLOR_F = EntityDataManager.defineId(SnailEntity.class,
-			DataSerializers.INT);
-	private static final DataParameter<Integer> SHELL_COLOR_B = EntityDataManager.defineId(SnailEntity.class,
-			DataSerializers.INT);
+	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(SnailEntity.class,
+			EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> SHELL_COLOR_F = SynchedEntityData.defineId(SnailEntity.class,
+			EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> SHELL_COLOR_B = SynchedEntityData.defineId(SnailEntity.class,
+			EntityDataSerializers.INT);
 	private static final ResourceLocation[] BODY_TEXTURES = new ResourceLocation[] {
 			textureLocation("snail_body_1.png") };
 	private static final ResourceLocation[] SHELL_TEXTURES_B = new ResourceLocation[] {
@@ -66,7 +66,7 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/snail");
 
-	public SnailEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+	public SnailEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -75,8 +75,8 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
-		SnailEntity snailChild = ModEntityTypes.SNAIL_ENTITY.get().create(world);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+		SnailEntity snailChild = ModEntityTypes.SNAIL.get().create(world);
 		if (entity == this) {
 			// make copy of current snail
 			snailChild.setShellColor(PatternType.FOREGROUND, this.getShellColor(PatternType.FOREGROUND));
@@ -109,14 +109,14 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 		return snailChild;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SNAIL.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SNAIL.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SNAIL.speed.get());
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
 		// select randomly a preset
 		SnailVariants data = SnailVariants.values()[level.getRandom().nextInt(SnailVariants.values().length)];
 		this.setVariant(data.getVariant());
@@ -127,14 +127,14 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, BREEDING_ITEMS, false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setVariant(compound.getByte("SnailVariant"));
 		this.setShellColor(PatternType.FOREGROUND, compound.getInt("ShellColorF"));
@@ -154,7 +154,7 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("SnailVariant", this.getVariant());
 		compound.putInt("ShellColorF", this.getShellColor(PatternType.FOREGROUND));
@@ -167,23 +167,25 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof DyeItem) {
 			DyeColor color = DyeColor.getColor(stack);
 			if (player.isCrouching()) {
-				this.setShellColor(PatternType.FOREGROUND, color.getColorValue());
+				this.setShellColor(PatternType.FOREGROUND, color.getTextColor());
 			} else {
-				this.setShellColor(PatternType.BACKGROUND, color.getColorValue());
+				this.setShellColor(PatternType.BACKGROUND, color.getTextColor());
 			}
-			this.usePlayerItem(player, stack);
-			return ActionResultType.sidedSuccess(this.level.isClientSide);
+			if (!player.getAbilities().instabuild) {
+				stack.shrink(1);
+			}
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		}
 		return super.mobInteract(player, hand);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 0.3F : 0.65F;
 	}
 
@@ -259,8 +261,12 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 
 	static enum SnailVariants {
 
-		NORMAL(0, 0, 11693105, 8209952), GREEN(0, 0, 412975, 2129982), PURPLE(0, 0, 6488099, 10238043),
-		BLUE(0, 0, 4857561, 6447075), RED(0, 0, 10367513, 13586001), NORMAL_2(0, 1, 9847813, 7352576);
+		NORMAL(0, 0, 11693105, 8209952),
+		GREEN(0, 0, 412975, 2129982),
+		PURPLE(0, 0, 6488099, 10238043),
+		BLUE(0, 0, 4857561, 6447075),
+		RED(0, 0, 10367513, 13586001),
+		NORMAL_2(0, 1, 9847813, 7352576);
 
 		private int variant;
 		private int colorForeground;
@@ -287,7 +293,8 @@ public class SnailEntity extends AnimalEntity implements ILexiconEntry {
 	}
 
 	public static enum PatternType {
-		FOREGROUND, BACKGROUND;
+		FOREGROUND,
+		BACKGROUND;
 	}
 
 }

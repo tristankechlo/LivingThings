@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.tristankechlo.livingthings.client.RenderHandler;
+import com.tristankechlo.livingthings.client.ClientEvents;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.config.misc.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEventHandler;
@@ -22,7 +22,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -46,16 +45,12 @@ public class LivingThings {
 		ModParticle.PARTICLES.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 
-		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::commonSetup);
 
+		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 		MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnEvents());
 		MinecraftForge.EVENT_BUS.register(this);
-	}
-
-	public void clientSetup(final FMLClientSetupEvent event) {
-		RenderHandler.registerEntityRenders();
 	}
 
 	public void commonSetup(final FMLCommonSetupEvent event) {

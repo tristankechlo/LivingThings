@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
@@ -10,63 +11,63 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowMobGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SitGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.Mth;
+import net.minecraft.util.WeighedRandom;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowMobGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVariants, ILexiconEntry {
+public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
 
-	private static final DataParameter<Byte> OWL_VARIANT = EntityDataManager.defineId(OwlEntity.class,
-			DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> OWL_VARIANT = SynchedEntityData.defineId(OwlEntity.class,
+			EntityDataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/owl");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS,
 			Items.BEETROOT_SEEDS);
@@ -77,29 +78,29 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	public float oFlap;
 	private float flapping = 1.0F;
 
-	public OwlEntity(EntityType<? extends OwlEntity> type, World worldIn) {
+	public OwlEntity(EntityType<? extends OwlEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.moveControl = new FlyingMovementController(this, 10, false);
-		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, -1.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, -1.0F);
+		this.moveControl = new FlyingMoveControl(this, 10, false);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
 	}
 
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
-		OwlEntity child = ModEntityTypes.OWL_ENTITY.get().create(world);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+		OwlEntity child = ModEntityTypes.OWL.get().create(world);
 		child.setVariant(this.getVariantFromParents(this, entity));
 		return child;
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.OWL.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.OWL.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.OWL.speed.get())
 				.add(Attributes.FLYING_SPEED, LivingThingsConfig.OWL.flyingSpeed.get());
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+			MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
 		this.setVariant(OwlEntity.getWeightedRandomColorVariant(this.random));
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -111,23 +112,23 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 		if (colorBrownWeight <= 0 && colorWhiteWeight <= 0 && colorBlackWeight <= 0) {
 			return 0;
 		}
-		WeightedMobVariant variant = WeightedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, colorBrownWeight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, colorWhiteWeight), (byte) 1),
 						new WeightedMobVariant(Math.max(0, colorBlackWeight), (byte) 2)));
-		return variant.variant;
+		return variant.get().variant;
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new SitGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
+		this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, false, BREEDING_ITEMS));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, BREEDING_ITEMS, false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.0D));
 		this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
-		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
 	}
@@ -139,7 +140,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("OwlVariant")) {
 			this.setVariant(compound.getByte("OwlVariant"));
@@ -149,7 +150,7 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putByte("OwlVariant", this.getVariant());
 	}
@@ -161,11 +162,13 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (!this.isTame() && TAMING_ITEMS.test(stack)) {
 			if (!this.level.isClientSide()) {
-				this.usePlayerItem(player, stack);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 				if (this.random.nextInt(5) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
 					this.tame(player);
 					this.level.broadcastEntityEvent(this, (byte) 7);
@@ -173,12 +176,12 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 					this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 			}
-			return ActionResultType.sidedSuccess(this.level.isClientSide());
+			return InteractionResult.sidedSuccess(this.level.isClientSide());
 
 		} else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && TAMING_ITEMS.test(stack)) {
 
 			this.setOrderedToSit(!this.isCrouching());
-			return ActionResultType.sidedSuccess(this.level.isClientSide());
+			return InteractionResult.sidedSuccess(this.level.isClientSide());
 
 		} else {
 			return super.mobInteract(player, hand);
@@ -190,13 +193,13 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 		this.oFlapSpeed = this.flapSpeed;
 		this.flapSpeed = (float) ((double) this.flapSpeed
 				+ (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
-		this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+		this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
 		if (!this.onGround && this.flapping < 1.0F) {
 			this.flapping = 1.0F;
 		}
 
 		this.flapping = (float) ((double) this.flapping * 0.9D);
-		Vector3d vector3d = this.getDeltaMovement();
+		Vec3 vector3d = this.getDeltaMovement();
 		if (!this.onGround && vector3d.y < 0.0D) {
 			this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
 		}
@@ -204,16 +207,16 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 		this.flap += this.flapping * 2.0F;
 	}
 
-	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, IWorld worldIn, SpawnReason reason, BlockPos pos,
-			Random random) {
+	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, LevelAccessor worldIn, MobSpawnType reason,
+			BlockPos pos, Random random) {
 		BlockState blockstate = worldIn.getBlockState(pos.below());
 		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS)
 				|| blockstate.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World worldIn) {
-		FlyingPathNavigator flyingpathnavigator = new FlyingPathNavigator(this, worldIn);
+	protected PathNavigation createNavigation(Level worldIn) {
+		FlyingPathNavigation flyingpathnavigator = new FlyingPathNavigation(this, worldIn);
 		flyingpathnavigator.setCanOpenDoors(false);
 		flyingpathnavigator.setCanFloat(true);
 		flyingpathnavigator.setCanPassDoors(true);
@@ -231,13 +234,12 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return this.isBaby() ? 0.45F : 0.9F;
 	}
 
 	@Override
-	public boolean causeFallDamage(float distance, float damageMultiplier) {
-		super.causeFallDamage(distance, damageMultiplier);
+	public boolean causeFallDamage(float p_149683_, float p_149684_, DamageSource p_149685_) {
 		return false;
 	}
 
@@ -257,19 +259,18 @@ public class OwlEntity extends TameableEntity implements IFlyingAnimal, IMobVari
 	}
 
 	@Override
-	protected float playFlySound(float volume) {
+	protected void onFlap() {
 		this.playSound(ModSounds.OWL_FLY.get(), 0.15F, 1.0F);
-		return volume + this.flapSpeed / 2.0F;
 	}
-
-	@Override
-	protected boolean makeFlySound() {
-		return true;
-	}
+	/*
+	 * removed in 1.17.1?
+	 * 
+	 * @Override protected boolean makeFlySound() { return true; }
+	 */
 
 	@Override
 	protected void doPush(Entity entityIn) {
-		if (!(entityIn instanceof PlayerEntity)) {
+		if (!(entityIn instanceof Player)) {
 			super.doPush(entityIn);
 		}
 	}

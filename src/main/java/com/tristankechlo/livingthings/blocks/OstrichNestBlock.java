@@ -9,35 +9,35 @@ import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class OstrichNestBlock extends Block implements ILexiconEntry {
 
@@ -49,47 +49,47 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
 			"items/ostrich_nest");
 
 	public OstrichNestBlock() {
-		super(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_BROWN).strength(0.5F).randomTicks()
+		super(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_BROWN).strength(0.5F).randomTicks()
 				.noCollission());
 		registerDefaultState(this.defaultBlockState().setValue(HATCH, 0).setValue(EGG, false));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(EGG, HATCH);
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-			BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
+			BlockHitResult hit) {
 		if (player.getMainHandItem().getItem() == ModItems.LEXICON.get()) {
 			// prevent any use when rightclicked with lexicon
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 		}
-		if (!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+		if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
 			if (player.getMainHandItem().getItem() == Items.AIR) {
 				Block block = state.getBlock();
 				if (!(block instanceof OstrichNestBlock)) {
-					return ActionResultType.PASS;
+					return InteractionResult.PASS;
 				}
 				if (state.getValue(OstrichNestBlock.EGG)) {
 					worldIn.setBlock(pos,
 							state.setValue(OstrichNestBlock.EGG, false).setValue(OstrichNestBlock.HATCH, 0), 2);
-					worldIn.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F);
+					worldIn.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_BREAK, SoundSource.BLOCKS, 0.7F, 0.9F);
 
 					ItemEntity entity = new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5D, pos.getZ(),
 							new ItemStack(ModItems.OSTRICH_EGG.get(), 1));
 					entity.setDefaultPickUpDelay();
 					worldIn.addFreshEntity(entity);
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (!state.getValue(EGG)) {
 			return;
 		}
@@ -97,20 +97,20 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
 			int i = state.getValue(HATCH);
 			if (i < 2) {
 				worldIn.setBlock(pos, state.setValue(HATCH, i + 1), 2);
-				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
+				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F, 0.9F);
 			} else {
 				worldIn.setBlock(pos, state.setValue(EGG, false).setValue(HATCH, 0), 2);
-				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundCategory.BLOCKS, 0.7F, 0.9F);
+				worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F, 0.9F);
 
-				OstrichEntity ostrichEntity = ModEntityTypes.OSTRICH_ENTITY.get().create(worldIn);
+				OstrichEntity ostrichEntity = ModEntityTypes.OSTRICH.get().create(worldIn);
 				ostrichEntity.setAge(-24000);
-				ostrichEntity.setPosAndOldPos(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+				ostrichEntity.setPosRaw(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 				worldIn.addFreshEntity(ostrichEntity);
 			}
 		}
 	}
 
-	private boolean canGrow(World worldIn) {
+	private boolean canGrow(Level worldIn) {
 		float f = worldIn.getTimeOfDay(1.0F);
 		if (f < 0.7F && f > 0.6F) {
 			return true;
@@ -120,16 +120,16 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		if (state.getValue(EGG)) {
-			return VoxelShapes.join(NEST_SHAPE, EGG_SHAPE, IBooleanFunction.OR);
+			return Shapes.join(NEST_SHAPE, EGG_SHAPE, BooleanOp.OR);
 		}
 		return NEST_SHAPE;
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState p_149645_1_) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState p_149645_1_) {
+		return RenderShape.MODEL;
 	}
 
 	@Override

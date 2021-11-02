@@ -22,11 +22,11 @@ import com.tristankechlo.livingthings.config.entity.SharkConfig;
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber
@@ -71,14 +71,14 @@ public class LivingThingsConfig {
 	public static final ForgeConfigSpec spec = BUILDER.build();
 
 	@SubscribeEvent
-	public static void onLoad(final ModConfig.Loading configEvent) {
+	public static void onLoad(final ModConfigEvent.Loading configEvent) {
 		if (configEvent.getConfig().getModId() == LivingThings.MOD_ID) {
 			LivingThings.LOGGER.debug("Loaded config file {}", configEvent.getConfig().getFileName());
 		}
 	}
 
 	@SubscribeEvent
-	public static void onFileChange(final ModConfig.Reloading configEvent) {
+	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
 		if (configEvent.getConfig().getModId() == LivingThings.MOD_ID) {
 			LivingThings.LOGGER.debug("Config just got changed on the file system!");
 		}

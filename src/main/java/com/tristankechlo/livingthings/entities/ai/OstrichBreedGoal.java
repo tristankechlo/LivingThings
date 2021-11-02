@@ -5,11 +5,11 @@ import java.util.Random;
 import com.tristankechlo.livingthings.entities.OstrichEntity;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.level.GameRules;
 
 public class OstrichBreedGoal extends BreedGoal {
 
@@ -27,7 +27,7 @@ public class OstrichBreedGoal extends BreedGoal {
 
 	@Override
 	protected void breed() {
-		ServerPlayerEntity serverplayerentity = this.animal.getLoveCause();
+		ServerPlayer serverplayerentity = this.animal.getLoveCause();
 		if (serverplayerentity == null && this.partner.getLoveCause() != null) {
 			serverplayerentity = this.partner.getLoveCause();
 		}
@@ -42,7 +42,7 @@ public class OstrichBreedGoal extends BreedGoal {
 		this.partner.setAge(6000);
 		Random random = this.animal.getRandom();
 		if (this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-			this.level.addFreshEntity(new ExperienceOrbEntity(this.level, this.animal.getX(), this.animal.getY(),
+			this.level.addFreshEntity(new ExperienceOrb(this.level, this.animal.getX(), this.animal.getY(),
 					this.animal.getZ(), random.nextInt(7) + 1));
 		}
 	}

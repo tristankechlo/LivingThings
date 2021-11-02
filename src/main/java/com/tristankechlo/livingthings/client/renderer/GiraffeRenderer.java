@@ -1,12 +1,13 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.GiraffeModel;
 import com.tristankechlo.livingthings.entities.GiraffeEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,8 +21,8 @@ public class GiraffeRenderer extends MobRenderer<GiraffeEntity, GiraffeModel<Gir
 	protected static final ResourceLocation TEXTURE_ALBINO = new ResourceLocation(LivingThings.MOD_ID,
 			"textures/entity/giraffe/giraffe_albino.png");
 
-	public GiraffeRenderer(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new GiraffeModel<>(), 0.8F);
+	public GiraffeRenderer(Context context) {
+		super(context, new GiraffeModel<>(context.bakeLayer(ModelLayer.GIRAFFE)), 0.8F);
 	}
 
 	@Override

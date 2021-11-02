@@ -6,9 +6,9 @@ import java.util.Map;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.BiomeSpawnConfig;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.MobSpawnInfo.Spawners;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = LivingThings.MOD_ID)
 public class BiomeLoadingEventHandler {
 
-	private static Map<ResourceLocation, Map<EntityClassification, List<Spawners>>> biomeSpawnMap;
+	private static Map<ResourceLocation, Map<MobCategory, List<SpawnerData>>> biomeSpawnMap;
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onBiomeLoading(BiomeLoadingEvent event) {
@@ -27,10 +27,10 @@ public class BiomeLoadingEventHandler {
 		}
 
 		if (biomeSpawnMap.containsKey(event.getName())) {
-			Map<EntityClassification, List<Spawners>> classificationMap = biomeSpawnMap.get(event.getName());
-			for (Map.Entry<EntityClassification, List<Spawners>> entry : classificationMap.entrySet()) {
-				EntityClassification classification = entry.getKey();
-				for (Spawners spawner : entry.getValue()) {
+			Map<MobCategory, List<SpawnerData>> classificationMap = biomeSpawnMap.get(event.getName());
+			for (Map.Entry<MobCategory, List<SpawnerData>> entry : classificationMap.entrySet()) {
+				MobCategory classification = entry.getKey();
+				for (SpawnerData spawner : entry.getValue()) {
 					event.getSpawns().getSpawner(classification).add(spawner);
 				}
 			}

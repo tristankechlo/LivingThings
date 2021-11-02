@@ -6,58 +6,58 @@ import java.util.UUID;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
-import com.tristankechlo.livingthings.entities.misc.SwimmingMovementController;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.DolphinLookController;
-import net.minecraft.entity.ai.goal.FindWaterGoal;
-import net.minecraft.entity.ai.goal.FollowBoatGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.FollowBoatGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
-public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconEntry {
+public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntry {
 
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"hostile_mobs/shark");
-	private static final RangedInteger rangedInteger = TickRangeConverter.rangeOfSeconds(20, 39);
+	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
 
-	public SharkEntity(EntityType<? extends SharkEntity> type, World worldIn) {
+	public SharkEntity(EntityType<? extends SharkEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
-		this.moveControl = new SwimmingMovementController(this);
-		this.lookControl = new DolphinLookController(this, 10);
+		this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+		this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+		this.lookControl = new SmoothSwimmingLookControl(this, 10);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.SHARK.health.get())
 				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.SHARK.speed.get())
 				.add(Attributes.FOLLOW_RANGE, 16.0D)
 				.add(Attributes.ATTACK_DAMAGE, LivingThingsConfig.SHARK.damage.get());
@@ -65,7 +65,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new FindWaterGoal(this));
+		this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
 		this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false, () -> {
 			return LivingThingsConfig.SHARK.canAttack.get();
 		}) {
@@ -76,25 +76,24 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 		});
 		this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 35));
 		this.goalSelector.addGoal(3, new FollowBoatGoal(this));
-		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1,
-				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-		this.targetSelector.addGoal(2, new ResetAngerGoal<>(this, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, true, null));
+		this.targetSelector.addGoal(2, new ResetUniversalAngerTargetGoal<>(this, true));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (this.level instanceof ServerWorld) {
-			this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
+		if (this.level instanceof ServerLevel) {
+			this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
 		}
 	}
 
@@ -106,7 +105,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 			if (this.onGround) {
 				this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F),
 						0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-				this.yRot = this.random.nextFloat() * 360.0F;
+				this.setYRot(this.random.nextFloat() * 360.0F);
 				this.onGround = false;
 				this.hasImpulse = true;
 			}
@@ -114,7 +113,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	public boolean canBeLeashed(PlayerEntity player) {
+	public boolean canBeLeashed(Player player) {
 		return true;
 	}
 
@@ -129,12 +128,12 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World worldIn) {
-		return new SwimmerPathNavigator(this, worldIn);
+	protected PathNavigation createNavigation(Level worldIn) {
+		return new WaterBoundPathNavigation(this, worldIn);
 	}
 
 	@Override
-	public void travel(Vector3d vector) {
+	public void travel(Vec3 vector) {
 		if (this.isEffectiveAi() && this.isInWater()) {
 			this.moveRelative(this.getSpeed(), vector);
 			this.move(MoverType.SELF, this.getDeltaMovement());
@@ -147,8 +146,8 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 		}
 	}
 
-	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, IWorld world, SpawnReason reason, BlockPos pos,
-			Random random) {
+	public static boolean canSharkSpawn(EntityType<SharkEntity> entity, LevelAccessor world, MobSpawnType reason,
+			BlockPos pos, Random random) {
 		return world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
 	}
 
@@ -179,7 +178,7 @@ public class SharkEntity extends WaterMobEntity implements IAngerable, ILexiconE
 
 	@Override
 	public void startPersistentAngerTimer() {
-		this.setRemainingPersistentAngerTime(rangedInteger.randomValue(this.random));
+		this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
 	}
 
 	@Override

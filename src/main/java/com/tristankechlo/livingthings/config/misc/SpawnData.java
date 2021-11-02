@@ -3,8 +3,8 @@ package com.tristankechlo.livingthings.config.misc;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 
 public final class SpawnData {
 
@@ -14,7 +14,7 @@ public final class SpawnData {
 	public List<String> biomes;
 
 	@SuppressWarnings("unchecked")
-	public SpawnData(int weight, int min, int max, RegistryKey<Biome>... biomes) {
+	public SpawnData(int weight, int min, int max, ResourceKey<Biome>... biomes) {
 		this.weight = weight;
 		this.minCount = min;
 		this.maxCount = max;

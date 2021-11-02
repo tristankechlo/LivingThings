@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.entity.AgeableMob;
 
 public interface IMobVariants {
 
@@ -17,7 +17,7 @@ public interface IMobVariants {
 	 */
 	void setVariant(byte variant);
 
-	default byte getVariantFromParents(AgeableEntity entity1, AgeableEntity entity2) {
+	default byte getVariantFromParents(AgeableMob entity1, AgeableMob entity2) {
 		if ((entity1 instanceof IMobVariants) && (entity2 instanceof IMobVariants)) {
 			byte parent1 = ((IMobVariants) entity1).getVariant();
 			byte parent2 = ((IMobVariants) entity2).getVariant();
@@ -49,10 +49,10 @@ public interface IMobVariants {
 			}
 			weightedList.add(new WeightedMobVariant(weights[i], variants[i]));
 		}
-		return WeightedRandom.getRandomItem(random, weightedList).variant;
+		return WeighedRandom.getRandomItem(random, weightedList).get().variant;
 	}
 
-	class WeightedMobVariant extends WeightedRandom.Item {
+	class WeightedMobVariant extends WeighedRandom.WeighedRandomItem {
 
 		public final byte variant;
 
