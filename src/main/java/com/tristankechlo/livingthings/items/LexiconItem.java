@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.items;
 import java.util.List;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
 import net.minecraft.ChatFormatting;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class LexiconItem extends Item {
 
@@ -42,8 +44,7 @@ public class LexiconItem extends Item {
 			if (LivingThings.patchouliLoaded) {
 				// open the lexicon
 				final ResourceLocation book = this.getRegistryName();
-				// TODO
-				// vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, book);
+				vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, book);
 			} else {
 				// send error messages
 				player.connection.send(new ClientboundSetTitleTextPacket(
@@ -65,8 +66,7 @@ public class LexiconItem extends Item {
 			// open lexicon page for the corresponding entity
 			final ResourceLocation book = this.getRegistryName();
 			final ResourceLocation entry = ((ILexiconEntry) target).getLexiconEntry();
-			// TODO
-			// vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(book, entry, 0);
+			vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(book, entry, 0);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
@@ -79,8 +79,7 @@ public class LexiconItem extends Item {
 			// open lexicon page for the corresponding block
 			final ResourceLocation book = this.getRegistryName();
 			final ResourceLocation entry = ((ILexiconEntry) block).getLexiconEntry();
-			// TODO
-			// vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(book, entry, 0);
+			vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(book, entry, 0);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
@@ -95,11 +94,11 @@ public class LexiconItem extends Item {
 	}
 
 	public static Component getEdition() {
-		/*
-		 * TODO if (LivingThings.patchouliLoaded) { return
-		 * vazkii.patchouli.api.PatchouliAPI.get()
-		 * .getSubtitle(ForgeRegistries.ITEMS.getKey(ModItems.LEXICON.get())); }
-		 */
+		if (LivingThings.patchouliLoaded) {
+			return vazkii.patchouli.api.PatchouliAPI.get()
+					.getSubtitle(ForgeRegistries.ITEMS.getKey(ModItems.LEXICON.get()));
+		}
+
 		return new TextComponent("2nd Edition");
 	}
 

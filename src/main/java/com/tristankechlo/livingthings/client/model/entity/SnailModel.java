@@ -25,10 +25,11 @@ public class SnailModel<T extends SnailEntity> extends AdvancedEntityModel<T> {
 
 	public SnailModel(ModelPart root, float scale) {
 		this.Body = root.getChild("Body");
-		this.LeftEyeStick = root.getChild("LeftEyeStick");
-		this.RightEyeStick = root.getChild("RightEyeStick");
+		this.LeftEyeStick = Body.getChild("LeftEyeStick");
+		this.RightEyeStick = Body.getChild("RightEyeStick");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

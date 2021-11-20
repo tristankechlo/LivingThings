@@ -27,13 +27,14 @@ public class KoalaModel<T extends KoalaEntity> extends AdvancedEntityModel<T> {
 
 	public KoalaModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.LegFrontRight = root.getChild("LegFrontRight");
-		this.LegFrontLeft = root.getChild("LegFrontLeft");
-		this.LegBackRight = root.getChild("LegBackRight");
-		this.LegBackLeft = root.getChild("LegBackLeft");
+		this.Head = Body.getChild("Head");
+		this.LegFrontRight = Body.getChild("LegFrontRight");
+		this.LegFrontLeft = Body.getChild("LegFrontLeft");
+		this.LegBackRight = Body.getChild("LegBackRight");
+		this.LegBackLeft = Body.getChild("LegBackLeft");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

@@ -29,14 +29,15 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
 
 	public OwlModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.Tail = root.getChild("Tail");
-		this.LeftWing = root.getChild("LeftWing");
-		this.RightWing = root.getChild("RightWing");
-		this.LeftLeg = root.getChild("LeftLeg");
-		this.RightLeg = root.getChild("RightLeg");
+		this.Head = Body.getChild("Head");
+		this.Tail = Body.getChild("Tail");
+		this.LeftWing = Body.getChild("LeftWing");
+		this.RightWing = Body.getChild("RightWing");
+		this.LeftLeg = Body.getChild("LeftLeg");
+		this.RightLeg = Body.getChild("RightLeg");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
@@ -148,18 +149,18 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
 		this.RightWing.x = -3.5F;
 		this.LeftWing.x = 3.5F;
 		switch (state) {
-			case SITTING:
-				break;
-			case STANDING:
-				this.LeftLeg.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-				this.RightLeg.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-				break;
-			case FLYING:
-			default:
-				this.Tail.xRot = -0.959931F + Mth.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
-				this.LeftWing.zRot = -0.0873F - ageInTicks;
-				this.RightWing.zRot = 0.0873F + ageInTicks;
-				break;
+		case SITTING:
+			break;
+		case STANDING:
+			this.LeftLeg.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+			this.RightLeg.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+			break;
+		case FLYING:
+		default:
+			this.Tail.xRot = -0.959931F + Mth.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
+			this.LeftWing.zRot = -0.0873F - ageInTicks;
+			this.RightWing.zRot = 0.0873F + ageInTicks;
+			break;
 		}
 
 	}
@@ -184,20 +185,20 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
 		this.RightLeg.zRot = 0F;
 
 		switch (state) {
-			case SITTING:
-				this.Body.xRot = 0F;
-				this.LeftLeg.xRot = 0F;
-				this.RightLeg.xRot = 0F;
-				break;
-			case FLYING:
-				if (owl.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
-					this.LeftLeg.xRot += 0.6981317F;
-					this.RightLeg.xRot += 0.6981317F;
-				}
-				break;
-			case STANDING:
-			default:
-				break;
+		case SITTING:
+			this.Body.xRot = 0F;
+			this.LeftLeg.xRot = 0F;
+			this.RightLeg.xRot = 0F;
+			break;
+		case FLYING:
+			if (owl.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+				this.LeftLeg.xRot += 0.6981317F;
+				this.RightLeg.xRot += 0.6981317F;
+			}
+			break;
+		case STANDING:
+		default:
+			break;
 		}
 	}
 
@@ -211,8 +212,6 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
 
 	@OnlyIn(Dist.CLIENT)
 	public static enum OwlState {
-		FLYING,
-		STANDING,
-		SITTING;
+		FLYING, STANDING, SITTING;
 	}
 }

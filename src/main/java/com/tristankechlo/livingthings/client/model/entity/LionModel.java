@@ -23,6 +23,7 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
 	private final ModelPart Body;
 	private final ModelPart Mane;
 	private final ModelPart Head;
+	private final ModelPart Legs;
 	private final ModelPart FrontRightLeg;
 	private final ModelPart FrontLeftLeg;
 	private final ModelPart BackRightLeg;
@@ -32,14 +33,16 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
 	public LionModel(ModelPart root) {
 		this.Body = root.getChild("Body");
 		this.Mane = root.getChild("Mane");
-		this.Head = root.getChild("Head");
-		this.FrontRightLeg = root.getChild("FrontRightLeg");
-		this.FrontLeftLeg = root.getChild("FrontLeftLeg");
-		this.BackRightLeg = root.getChild("BackRightLeg");
-		this.BackLeftLeg = root.getChild("BackLeftLeg");
-		this.Tail = root.getChild("Tail");
+		this.Head = Body.getChild("Head");
+		this.Legs = Body.getChild("Legs");
+		this.FrontRightLeg = Legs.getChild("FrontRightLeg");
+		this.FrontLeftLeg = Legs.getChild("FrontLeftLeg");
+		this.BackRightLeg = Legs.getChild("BackRightLeg");
+		this.BackLeftLeg = Legs.getChild("BackLeftLeg");
+		this.Tail = Body.getChild("Tail");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

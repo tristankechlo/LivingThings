@@ -21,6 +21,7 @@ public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T
 
 	private final ModelPart Body;
 	private final ModelPart Head;
+	private final ModelPart Legs;
 	private final ModelPart NeckTop;
 	private final ModelPart NeckMiddle;
 	private final ModelPart NeckBottom;
@@ -33,18 +34,20 @@ public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T
 
 	public GiraffeModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.NeckTop = root.getChild("NeckTop");
-		this.NeckMiddle = root.getChild("NeckMiddle");
-		this.NeckBottom = root.getChild("NeckBottom");
-		this.FrontRightLeg = root.getChild("FrontRightLeg");
-		this.FrontLeftLeg = root.getChild("FrontLeftLeg");
-		this.BackRightLeg = root.getChild("BackRightLeg");
-		this.BackLeftLeg = root.getChild("BackLeftLeg");
-		this.TailTop = root.getChild("TailTop");
-		this.TailBottom = root.getChild("TailBottom");
+		this.Legs = Body.getChild("Legs");
+		this.NeckBottom = Body.getChild("NeckBottom");
+		this.NeckMiddle = NeckBottom.getChild("NeckMiddle");
+		this.NeckTop = NeckMiddle.getChild("NeckTop");
+		this.Head = NeckTop.getChild("Head");
+		this.FrontRightLeg = Legs.getChild("FrontRightLeg");
+		this.FrontLeftLeg = Legs.getChild("FrontLeftLeg");
+		this.BackRightLeg = Legs.getChild("BackRightLeg");
+		this.BackLeftLeg = Legs.getChild("BackLeftLeg");
+		this.TailTop = Body.getChild("TailTop");
+		this.TailBottom = TailTop.getChild("TailBottom");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

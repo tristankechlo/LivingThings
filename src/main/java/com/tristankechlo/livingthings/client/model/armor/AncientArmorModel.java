@@ -26,8 +26,9 @@ public class AncientArmorModel extends HumanoidModel<LivingEntity> {
 		this.Head = root.getChild("Head");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshdefinition = new MeshDefinition();
+		MeshDefinition meshdefinition = HumanoidModel.createMesh(new CubeDeformation(1.0F), 0.0F);
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
 		PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create(),

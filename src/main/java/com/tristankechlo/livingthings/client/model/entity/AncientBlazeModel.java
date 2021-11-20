@@ -26,46 +26,26 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
 	private final ModelPart Body;
 	private final ModelPart Head;
 	private final ModelPart Shields;
+	private final ModelPart Sticks;
 	private final ModelPart[] shields; // 4
 	private final ModelPart[] sticks; // 10
 
 	public AncientBlazeModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.Shields = root.getChild("Shields");
+		this.Head = Body.getChild("Head");
+		this.Shields = Body.getChild("Shields");
 		this.shields = new ModelPart[MAX_SHIELD_COUNT];
 		Arrays.setAll(this.shields, (number) -> {
-			return root.getChild("shield_" + number);
+			return Shields.getChild("shield_" + number);
 		});
+		this.Sticks = Body.getChild("Sticks");
 		this.sticks = new ModelPart[MAX_STICK_COUNT];
 		Arrays.setAll(this.sticks, (number) -> {
-			return root.getChild("stick_" + number);
+			return Sticks.getChild("stick_" + number);
 		});
-
-		Shields = new ModelPart(this);
-		Shields.setPos(0.0F, -22.0F, 0.0F);
-		Body.addChild(Shields);
-		this.setRotationAngle(Shields, 0.0F, -0.7854F, 0.0F);
-
-		for (int i = 0; i < this.shields.length; i++) {
-			this.shields[i] = new ModelPart(this, 0, 43);
-			this.shields[i].addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F, 0.0F, false);
-			this.shields[i].setPos(i * 7.5F, 0.0F, i * 7.5F);
-			this.setRotationAngle(this.shields[i], -0.3491F, ((-1) ^ i) * 1.570796F, 0.0F);
-			this.Shields.addChild(this.shields[i]);
-		}
-
-		Sticks = new ModelPart(this);
-		Sticks.setPos(0.0F, 5.0F, 0.0F);
-		Body.addChild(Sticks);
-
-		for (int i = 0; i < this.sticks.length; i++) {
-			this.sticks[i] = new ModelPart(this, 0, 18);
-			this.sticks[i].addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-			this.Sticks.addChild(this.sticks[i]);
-		}
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
@@ -131,50 +111,23 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
 		PartDefinition Shields = Body.addOrReplaceChild("Shields", CubeListBuilder.create(),
 				PartPose.offsetAndRotation(0.0F, -22.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
-		PartDefinition ShieldOne = Shields.addOrReplaceChild("ShieldOne",
-				CubeListBuilder.create().texOffs(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F,
-						new CubeDeformation(0.0F)),
-				PartPose.offsetAndRotation(0.0F, 0.0F, -7.5F, -0.3491F, 0.0F, 0.0F));
+		CubeListBuilder shieldForm = CubeListBuilder.create().texOffs(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F,
+				2.0F, new CubeDeformation(0.0F));
 
-		PartDefinition ShieldTwo = Shields.addOrReplaceChild("ShieldTwo",
-				CubeListBuilder.create().texOffs(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F,
-						new CubeDeformation(0.0F)),
-				PartPose.offsetAndRotation(-7.5F, 0.0F, 0.0F, -0.3491F, 1.5708F, 0.0F));
-
-		PartDefinition ShieldThree = Shields.addOrReplaceChild("ShieldThree",
-				CubeListBuilder.create().texOffs(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F,
-						new CubeDeformation(0.0F)),
-				PartPose.offsetAndRotation(0.0F, 0.0F, 7.5F, -0.3491F, 3.1416F, 0.0F));
-
-		PartDefinition ShieldFour = Shields.addOrReplaceChild("ShieldFour",
-				CubeListBuilder.create().texOffs(0, 43).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 19.0F, 2.0F,
-						new CubeDeformation(0.0F)),
-				PartPose.offsetAndRotation(7.5F, 0.0F, 0.0F, -0.3491F, -1.5708F, 0.0F));
+		for (int i = 0; i < MAX_SHIELD_COUNT; i++) {
+			Shields.addOrReplaceChild("shield_" + i, shieldForm,
+					PartPose.offsetAndRotation(i * 7.5F, 0F, i * 7.5F, -0.3491F, ((-1) ^ i) * 1.570796F, 0.0F));
+		}
 
 		PartDefinition Sticks = Body.addOrReplaceChild("Sticks", CubeListBuilder.create(),
 				PartPose.offset(0.0F, 5.0F, 0.0F));
 
-		PartDefinition StickOne = Sticks.addOrReplaceChild("StickOne", CubeListBuilder.create().texOffs(0, 18).addBox(
-				-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.0F, 0.0F, 0.0F));
+		CubeListBuilder stickForm = CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F,
+				2.0F, new CubeDeformation(0.0F));
 
-		PartDefinition StickTwo = Sticks.addOrReplaceChild("StickTwo", CubeListBuilder.create().texOffs(0, 18)
-				.addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
-				PartPose.offset(-4.0F, 0.0F, 6.928F));
-
-		PartDefinition StickThree = Sticks.addOrReplaceChild("StickThree", CubeListBuilder.create().texOffs(0, 18)
-				.addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
-				PartPose.offset(4.0F, 0.0F, 6.928F));
-
-		PartDefinition StickFour = Sticks.addOrReplaceChild("StickFour", CubeListBuilder.create().texOffs(0, 18).addBox(
-				-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, 0.0F, 0.0F));
-
-		PartDefinition StickFive = Sticks.addOrReplaceChild("StickFive", CubeListBuilder.create().texOffs(0, 18)
-				.addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
-				PartPose.offset(4.0F, 0.0F, -6.928F));
-
-		PartDefinition StickSix = Sticks.addOrReplaceChild("StickSix", CubeListBuilder.create().texOffs(0, 18)
-				.addBox(-1.0F, -6.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)),
-				PartPose.offset(-4.0F, 0.0F, -6.928F));
+		for (int i = 0; i < MAX_STICK_COUNT; i++) {
+			Sticks.addOrReplaceChild("stick_" + i, stickForm, PartPose.offset(i * 4.0F, 0F, i * 4.0F));
+		}
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}

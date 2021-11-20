@@ -29,14 +29,15 @@ public class RaccoonModel<T extends RaccoonEntity> extends AdvancedEntityModel<T
 
 	public RaccoonModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.Tail = root.getChild("Tail");
-		this.LegFrontRight = root.getChild("LegFrontRight");
-		this.LegFrontLeft = root.getChild("LegFrontLeft");
-		this.LegBackRight = root.getChild("LegBackRight");
-		this.LegBackLeft = root.getChild("LegBackLeft");
+		this.Head = Body.getChild("Head");
+		this.Tail = Body.getChild("Tail");
+		this.LegFrontRight = Body.getChild("LegFrontRight");
+		this.LegFrontLeft = Body.getChild("LegFrontLeft");
+		this.LegBackRight = Body.getChild("LegBackRight");
+		this.LegBackLeft = Body.getChild("LegBackLeft");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

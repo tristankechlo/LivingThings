@@ -24,19 +24,30 @@ public class SeahorseModel<T extends SeahorseEntity> extends AdvancedEntityModel
 	private final ModelPart Ear_Right;
 	private final ModelPart Ear_Left;
 	private final ModelPart tail;
+	private final ModelPart tail1;
+	private final ModelPart tail2;
+	private final ModelPart tail3;
+	private final ModelPart tail4;
 	private final ModelPart tail5;
+	private final ModelPart tail6;
 	private final ModelPart tail7;
 
 	public SeahorseModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("head");
-		this.Ear_Right = root.getChild("ear_right");
-		this.Ear_Left = root.getChild("ear_left");
-		this.tail = root.getChild("tail");
-		this.tail5 = root.getChild("tail5");
-		this.tail7 = root.getChild("tail7");
+		this.Head = Body.getChild("head");
+		this.Ear_Right = Head.getChild("ear_right");
+		this.Ear_Left = Head.getChild("ear_left");
+		this.tail = Body.getChild("tail");
+		this.tail1 = tail.getChild("tail1");
+		this.tail2 = tail1.getChild("tail2");
+		this.tail3 = tail2.getChild("tail3");
+		this.tail4 = tail3.getChild("tail4");
+		this.tail5 = tail4.getChild("tail5");
+		this.tail6 = tail5.getChild("tail6");
+		this.tail7 = tail6.getChild("tail7");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

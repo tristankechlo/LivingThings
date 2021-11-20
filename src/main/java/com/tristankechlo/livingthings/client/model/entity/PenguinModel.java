@@ -30,13 +30,14 @@ public class PenguinModel<T extends PenguinEntity> extends AdvancedEntityModel<T
 	public PenguinModel(ModelPart root) {
 		this.Body = root.getChild("Body");
 		this.Head = root.getChild("Head");
-		this.Beak = root.getChild("Beak");
-		this.LeftWing = root.getChild("LeftWing");
-		this.RightWing = root.getChild("RightWing");
-		this.LeftFeet = root.getChild("LeftFeet");
-		this.RightFeet = root.getChild("RightFeet");
+		this.Beak = Head.getChild("Beak");
+		this.LeftWing = Body.getChild("LeftWing");
+		this.RightWing = Body.getChild("RightWing");
+		this.LeftFeet = Body.getChild("LeftFeet");
+		this.RightFeet = Body.getChild("RightFeet");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

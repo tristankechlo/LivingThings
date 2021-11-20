@@ -29,14 +29,15 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
 
 	public MantarayModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Tail = root.getChild("Tail");
-		this.Tail2 = root.getChild("Tail2");
-		this.LeftFlipper = root.getChild("LeftFlipper");
-		this.LeftFlipper2 = root.getChild("LeftFlipper2");
-		this.RightFlipper = root.getChild("RightFlipper");
-		this.RightFlipper2 = root.getChild("RightFlipper2");
+		this.Tail = Body.getChild("Tail");
+		this.Tail2 = Tail.getChild("Tail2");
+		this.LeftFlipper = Body.getChild("LeftFlipper");
+		this.LeftFlipper2 = LeftFlipper.getChild("LeftFlipper2");
+		this.RightFlipper = Body.getChild("RightFlipper");
+		this.RightFlipper2 = RightFlipper.getChild("RightFlipper2");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

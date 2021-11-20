@@ -34,17 +34,18 @@ public class OstrichModel<T extends OstrichEntity> extends AdvancedEntityModel<T
 
 	public OstrichModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.Neck = root.getChild("Neck");
-		this.NeckTop = root.getChild("NeckTop");
-		this.LeftLegTop = root.getChild("LeftLegTop");
-		this.LeftLegBottom = root.getChild("LeftLegBottom");
-		this.LeftFoot = root.getChild("LeftFoot");
-		this.RightLegTop = root.getChild("RightLegTop");
-		this.RightLegBottom = root.getChild("RightLegBottom");
-		this.RightFoot = root.getChild("RightFoot");
+		this.Neck = Body.getChild("Neck");
+		this.NeckTop = Neck.getChild("NeckTop");
+		this.Head = NeckTop.getChild("Head");
+		this.LeftLegTop = Body.getChild("LeftLegTop");
+		this.LeftLegBottom = LeftLegTop.getChild("LeftLegBottom");
+		this.LeftFoot = LeftLegBottom.getChild("LeftFoot");
+		this.RightLegTop = Body.getChild("RightLegTop");
+		this.RightLegBottom = RightLegTop.getChild("RightLegBottom");
+		this.RightFoot = RightLegBottom.getChild("RightFoot");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

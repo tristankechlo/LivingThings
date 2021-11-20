@@ -27,12 +27,13 @@ public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
 
 	public SharkModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.LeftFin = root.getChild("LeftFin");
-		this.RightFin = root.getChild("RightFin");
-		this.Tail = root.getChild("Tail");
-		this.Tail2 = root.getChild("Tail2");
+		this.LeftFin = Body.getChild("LeftFin");
+		this.RightFin = Body.getChild("RightFin");
+		this.Tail = Body.getChild("Tail");
+		this.Tail2 = Tail.getChild("Tail2");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

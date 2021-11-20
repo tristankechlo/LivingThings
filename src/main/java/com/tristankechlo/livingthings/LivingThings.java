@@ -5,7 +5,6 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.tristankechlo.livingthings.client.ClientEvents;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.config.misc.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEventHandler;
@@ -47,7 +46,6 @@ public class LivingThings {
 
 		modEventBus.addListener(this::commonSetup);
 
-		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 		MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnEvents());
 		MinecraftForge.EVENT_BUS.register(this);

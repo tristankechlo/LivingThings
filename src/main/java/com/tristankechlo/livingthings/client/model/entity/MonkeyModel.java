@@ -20,6 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelPart Body;
+	private final ModelPart BodyFront;
 	private final ModelPart Head;
 	private final ModelPart Tail;
 	private final ModelPart Tail2;
@@ -30,21 +31,27 @@ public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> 
 	private final ModelPart FrontLeftLegBottom;
 	private final ModelPart BackRightLegTop;
 	private final ModelPart BackLeftLegTop;
+	//private final ModelPart BackRightLegBottom;
+	//private final ModelPart BackLeftLegBottom;
 
 	public MonkeyModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.Tail = root.getChild("Tail");
-		this.Tail2 = root.getChild("Tail2");
-		this.Tail3 = root.getChild("Tail3");
-		this.FrontRightLegTop = root.getChild("FrontRightLegTop");
-		this.FrontRightLegBottom = root.getChild("FrontRightLegBottom");
-		this.FrontLeftLegTop = root.getChild("FrontLeftLegTop");
-		this.FrontLeftLegBottom = root.getChild("FrontLeftLegBottom");
-		this.BackRightLegTop = root.getChild("BackRightLegTop");
-		this.BackLeftLegTop = root.getChild("BackLeftLegTop");
+		this.BodyFront = Body.getChild("BodyFront");
+		this.Head = BodyFront.getChild("Head");
+		this.Tail = Body.getChild("Tail");
+		this.Tail2 = Tail.getChild("Tail2");
+		this.Tail3 = Tail2.getChild("Tail3");
+		this.FrontRightLegTop = BodyFront.getChild("FrontRightLegTop");
+		this.FrontRightLegBottom = FrontRightLegTop.getChild("FrontRightLegBottom");
+		this.FrontLeftLegTop = BodyFront.getChild("FrontLeftLegTop");
+		this.FrontLeftLegBottom = FrontLeftLegTop.getChild("FrontLeftLegBottom");
+		this.BackRightLegTop = Body.getChild("BackRightLegTop");
+		this.BackLeftLegTop = Body.getChild("BackLeftLegTop");
+//		this.BackRightLegBottom = BackRightLegTop.getChild("BackRightLegBottom");
+//		this.BackLeftLegBottom = BackLeftLegTop.getChild("BackLeftLegBottom");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

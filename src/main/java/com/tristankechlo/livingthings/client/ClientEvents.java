@@ -1,6 +1,8 @@
 package com.tristankechlo.livingthings.client;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
+import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 import com.tristankechlo.livingthings.client.model.entity.FlamingoModel;
@@ -40,15 +42,20 @@ import com.tristankechlo.livingthings.client.renderer.SnailRenderer;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = LivingThings.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ClientEvents {
-	
+
 	public static AncientArmorModel ANCIENT_ARMOR_MODEL = null;
 
 	@SubscribeEvent
-	private void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+	public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModelLayer.ELEPHANT, ElephantModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.GIRAFFE, GiraffeModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.LION, LionModel::createBodyLayer);
@@ -60,7 +67,7 @@ public final class ClientEvents {
 		event.registerLayerDefinition(ModelLayer.MANTARAY, MantarayModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.OWL, OwlModel::createBodyLayer);
-		// ancient blaze
+		event.registerLayerDefinition(ModelLayer.ANCIENT_BLAZE, AncientBlazeModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.KOALA, KoalaModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.SNAIL, SnailModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.MONKEY, MonkeyModel::createBodyLayer);
@@ -72,7 +79,7 @@ public final class ClientEvents {
 	}
 
 	@SubscribeEvent
-	private void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+	public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.GIRAFFE.get(), GiraffeRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.LION.get(), LionRenderer::new);
@@ -92,10 +99,11 @@ public final class ClientEvents {
 		event.registerEntityRenderer(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
 	}
-	
+
 	@SubscribeEvent
-	private void onAddLayers(EntityRenderersEvent.AddLayers event) {
-		ANCIENT_ARMOR_MODEL = new AncientArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayer.ANCIENT_ARMOR));
+	public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+		ANCIENT_ARMOR_MODEL = new AncientArmorModel(
+				Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayer.ANCIENT_ARMOR));
 	}
 
 }

@@ -23,7 +23,7 @@ public final class ModelLayer {
 	public static final ModelLayerLocation KOALA = createLayerLocation(Names.KOALA);
 	public static final ModelLayerLocation SNAIL = createLayerLocation(Names.SNAIL);
 	public static final ModelLayerLocation MONKEY = createLayerLocation(Names.MONKEY);
-	public static final ModelLayerLocation MONKEY_SITTING = createLayerLocation(Names.MONKEY);
+	public static final ModelLayerLocation MONKEY_SITTING = createLayerLocation(Names.MONKEY + "_sitting");
 	public static final ModelLayerLocation NETHER_KNIGHT = createLayerLocation(Names.NETHER_KNIGHT);
 	public static final ModelLayerLocation SHROOMIE = createLayerLocation(Names.SHROOMIE);
 	public static final ModelLayerLocation SEAHORSE = createLayerLocation(Names.SEAHORSE);

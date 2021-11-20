@@ -33,6 +33,9 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 	private final ModelPart TrunkTop;
 	private final ModelPart TrunkMiddle;
 	private final ModelPart TrunkBottom;
+	private final ModelPart Back;
+	private final ModelPart Front;
+	private final ModelPart Legs;
 	private final ModelPart RightFrontLeg;
 	private final ModelPart LeftFrontLeg;
 	private final ModelPart RightBackLeg;
@@ -43,16 +46,20 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 		this.Body = root.getChild("Body");
 		this.Chests = root.getChild("Chests");
 		this.Saddle = root.getChild("Saddle");
-		this.Head = root.getChild("Head");
-		this.TrunkTop = root.getChild("TrunkTop");
-		this.TrunkMiddle = root.getChild("TrunkMiddle");
-		this.TrunkBottom = root.getChild("TrunkBottom");
-		this.RightFrontLeg = root.getChild("RightFrontLeg");
-		this.LeftFrontLeg = root.getChild("LeftFrontLeg");
-		this.RightBackLeg = root.getChild("RightBackLeg");
-		this.LeftBackLeg = root.getChild("LeftBackLeg");
+		this.Head = Body.getChild("Head");
+		this.TrunkTop = Head.getChild("TrunkTop");
+		this.TrunkMiddle = TrunkTop.getChild("TrunkMiddle");
+		this.TrunkBottom = TrunkMiddle.getChild("TrunkBottom");
+		this.Legs = Body.getChild("Legs");
+		this.Front = Legs.getChild("Front");
+		this.Back = Legs.getChild("Back");
+		this.RightFrontLeg = Front.getChild("RightFrontLeg");
+		this.LeftFrontLeg = Front.getChild("LeftFrontLeg");
+		this.RightBackLeg = Back.getChild("RightBackLeg");
+		this.LeftBackLeg = Back.getChild("LeftBackLeg");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

@@ -28,14 +28,15 @@ public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel
 
 	public ShroomieModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.LegLeft = root.getChild("LegLeft");
-		this.LegRight = root.getChild("LegRight");
-		this.HeadBrown = root.getChild("HeadBrown");
-		this.HeadRed = root.getChild("HeadRed");
-		this.ArmLeft = root.getChild("ArmLeft");
-		this.ArmRight = root.getChild("ArmRight");
+		this.LegLeft = Body.getChild("LegLeft");
+		this.LegRight = Body.getChild("LegRight");
+		this.HeadBrown = Body.getChild("HeadBrown");
+		this.HeadRed = Body.getChild("HeadRed");
+		this.ArmLeft = Body.getChild("ArmLeft");
+		this.ArmRight = Body.getChild("ArmRight");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

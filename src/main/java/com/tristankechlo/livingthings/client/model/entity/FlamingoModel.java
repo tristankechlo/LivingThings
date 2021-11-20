@@ -20,7 +20,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel<T> {
 
 	private final ModelPart Body;
+	private final ModelPart NeckBottom;
+	private final ModelPart Neck2;
+	private final ModelPart Neck3;
+	private final ModelPart Neck4;
+	private final ModelPart Neck5;
+	private final ModelPart NeckTop;
 	private final ModelPart Head;
+	private final ModelPart Legs;
 	private final ModelPart LeftLegTop;
 	private final ModelPart LeftLegBottom;
 	private final ModelPart LeftFoot;
@@ -30,15 +37,23 @@ public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel
 
 	public FlamingoModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.LeftLegTop = root.getChild("LeftLegTop");
-		this.LeftLegBottom = root.getChild("LeftLegBottom");
-		this.LeftFoot = root.getChild("LeftFoot");
-		this.RightLegTop = root.getChild("RightLegTop");
-		this.RightLegBottom = root.getChild("RightLegBottom");
-		this.RightFoot = root.getChild("RightFoot");
+		this.NeckBottom = Body.getChild("NeckBottom");
+		this.Neck2 = NeckBottom.getChild("Neck2");
+		this.Neck3 = Neck2.getChild("Neck3");
+		this.Neck4 = Neck3.getChild("Neck4");
+		this.Neck5 = Neck4.getChild("Neck5");
+		this.NeckTop = Neck5.getChild("NeckTop");
+		this.Head = NeckTop.getChild("Head");
+		this.Legs = Body.getChild("Legs");
+		this.LeftLegTop = Legs.getChild("LeftLegTop");
+		this.LeftLegBottom = LeftLegTop.getChild("LeftLegBottom");
+		this.LeftFoot = LeftLegBottom.getChild("LeftFoot");
+		this.RightLegTop = Legs.getChild("RightLegTop");
+		this.RightLegBottom = RightLegTop.getChild("RightLegBottom");
+		this.RightFoot = RightLegBottom.getChild("RightFoot");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

@@ -33,18 +33,19 @@ public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
 
 	public CrabModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Leg1 = root.getChild("Leg1");
-		this.Leg2 = root.getChild("Leg2");
-		this.Leg3 = root.getChild("Leg3");
-		this.Leg4 = root.getChild("Leg4");
-		this.Leg5 = root.getChild("Leg5");
-		this.Leg6 = root.getChild("Leg6");
-		this.Leg7 = root.getChild("Leg7");
-		this.Leg8 = root.getChild("Leg8");
-		this.Shear1 = root.getChild("Shear1");
-		this.Shear2 = root.getChild("Shear2");
+		this.Leg1 = Body.getChild("Leg1");
+		this.Leg2 = Body.getChild("Leg2");
+		this.Leg3 = Body.getChild("Leg3");
+		this.Leg4 = Body.getChild("Leg4");
+		this.Leg5 = Body.getChild("Leg5");
+		this.Leg6 = Body.getChild("Leg6");
+		this.Leg7 = Body.getChild("Leg7");
+		this.Leg8 = Body.getChild("Leg8");
+		this.Shear1 = Body.getChild("Shear1");
+		this.Shear2 = Body.getChild("Shear2");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

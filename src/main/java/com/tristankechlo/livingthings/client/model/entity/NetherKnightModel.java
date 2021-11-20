@@ -30,13 +30,14 @@ public class NetherKnightModel<T extends NetherKnightEntity> extends AdvancedEnt
 
 	public NetherKnightModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.Head = root.getChild("Head");
-		this.RightArm = root.getChild("RightArm");
-		this.LeftArm = root.getChild("LeftArm");
-		this.RightLeg = root.getChild("RightLeg");
-		this.LeftLeg = root.getChild("LeftLeg");
+		this.Head = Body.getChild("Head");
+		this.RightArm = Body.getChild("RightArm");
+		this.LeftArm = Body.getChild("LeftArm");
+		this.RightLeg = Body.getChild("RightLeg");
+		this.LeftLeg = Body.getChild("LeftLeg");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();

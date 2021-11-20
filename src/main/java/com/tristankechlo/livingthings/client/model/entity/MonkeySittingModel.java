@@ -25,10 +25,11 @@ public class MonkeySittingModel<T extends MonkeyEntity> extends AdvancedEntityMo
 
 	public MonkeySittingModel(ModelPart root) {
 		this.Body = root.getChild("Body");
-		this.BodyTop = root.getChild("BodyTop");
-		this.Head = root.getChild("Head");
+		this.BodyTop = Body.getChild("BodyTop");
+		this.Head = BodyTop.getChild("Head");
 	}
 
+	@SuppressWarnings("unused")
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
