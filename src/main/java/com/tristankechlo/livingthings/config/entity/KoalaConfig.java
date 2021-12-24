@@ -37,9 +37,8 @@ public class KoalaConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(50, 3, 5, Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS,
-				Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE));
-		spawns.add(new SpawnData(25, 3, 5, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS));
+		spawns.add(new SpawnData(50, 3, 5, Biomes.JUNGLE, Biomes.SPARSE_JUNGLE));
+		spawns.add(new SpawnData(25, 3, 5, Biomes.BAMBOO_JUNGLE));
 		spawns.add(new SpawnData(10, 3, 5, Biomes.SAVANNA_PLATEAU));
 		return spawns;
 	}

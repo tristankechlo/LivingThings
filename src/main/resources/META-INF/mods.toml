@@ -1,12 +1,12 @@
 modLoader="javafml"
-loaderVersion="[37,)"
+loaderVersion="[39,)"
 license="CC BY-NC-ND 4.0"
 showAsResourcePack=false
 issueTrackerURL="https://github.com/tristankechlo/LivingThings/issues"
 
 [[mods]]
 modId="livingthings"
-version="1.17.1 - 1.4.0"
+version="1.18.1 - 1.4.0"
 displayName="Living Things"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/living-things"
 #logoFile="examplemod.png"
@@ -17,13 +17,13 @@ description='''adds various new mobs to Minecraft'''
 [[dependencies.livingthings]]
     modId="forge"
     mandatory=true
-    versionRange="[37.0.85,)"
+    versionRange="[39,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.livingthings]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1,1.18)"
+    versionRange="[1.18.1,1.19)"
     ordering="NONE"
     side="BOTH"

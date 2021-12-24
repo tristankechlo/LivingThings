@@ -37,8 +37,8 @@ public class SnailConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(12, 3, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SWAMP, Biomes.SWAMP_HILLS,
-				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST, Biomes.RIVER));
+		spawns.add(new SpawnData(12, 3, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SWAMP, Biomes.FOREST,
+				Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST, Biomes.RIVER));
 		spawns.add(new SpawnData(15, 4, 6, Biomes.MUSHROOM_FIELDS));
 		return spawns;
 	}

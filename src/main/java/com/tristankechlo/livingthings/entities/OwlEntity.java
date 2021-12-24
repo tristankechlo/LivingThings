@@ -21,7 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -112,7 +112,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 		if (colorBrownWeight <= 0 && colorWhiteWeight <= 0 && colorBlackWeight <= 0) {
 			return 0;
 		}
-		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeightedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, colorBrownWeight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, colorWhiteWeight), (byte) 1),
 						new WeightedMobVariant(Math.max(0, colorBlackWeight), (byte) 2)));

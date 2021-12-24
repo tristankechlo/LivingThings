@@ -53,10 +53,9 @@ public class OwlConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(20, 3, 6, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.BIRCH_FOREST_HILLS,
-				Biomes.TALL_BIRCH_FOREST, Biomes.TALL_BIRCH_HILLS, Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS,
-				Biomes.FLOWER_FOREST, Biomes.WOODED_HILLS, Biomes.WOODED_MOUNTAINS, Biomes.TAIGA, Biomes.TAIGA_HILLS,
-				Biomes.TAIGA_MOUNTAINS));
+		spawns.add(new SpawnData(20, 3, 6, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST,
+				Biomes.DARK_FOREST, Biomes.FLOWER_FOREST, Biomes.WOODED_BADLANDS, Biomes.TAIGA,
+				Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA));
 		return spawns;
 	}
 

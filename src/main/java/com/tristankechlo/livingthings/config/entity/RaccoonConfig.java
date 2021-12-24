@@ -44,9 +44,8 @@ public class RaccoonConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(20, 2, 6, Biomes.PLAINS, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.BIRCH_FOREST_HILLS,
-				Biomes.TALL_BIRCH_FOREST, Biomes.TALL_BIRCH_HILLS, Biomes.SUNFLOWER_PLAINS, Biomes.DARK_FOREST,
-				Biomes.DARK_FOREST_HILLS, Biomes.FLOWER_FOREST));
+		spawns.add(new SpawnData(20, 2, 6, Biomes.PLAINS, Biomes.FOREST, Biomes.BIRCH_FOREST,
+				Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.SUNFLOWER_PLAINS, Biomes.DARK_FOREST, Biomes.FLOWER_FOREST));
 		return spawns;
 	}
 

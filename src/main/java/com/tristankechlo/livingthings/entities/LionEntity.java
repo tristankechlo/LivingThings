@@ -24,7 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -95,7 +95,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
 		if (maleWeight <= 0 && femaleWeight <= 0) {
 			return random.nextBoolean() ? Gender.MALE : Gender.FEMALE;
 		}
-		Optional<WeightedGender> gender = WeighedRandom.getRandomItem(random,
+		Optional<WeightedGender> gender = WeightedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedGender(Math.max(0, maleWeight), Gender.MALE),
 						new WeightedGender(Math.max(0, femaleWeight), Gender.FEMALE)));
 		return gender.get().gender;
@@ -107,7 +107,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
 		if (color1Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeightedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));
 		return variant.get().variant;

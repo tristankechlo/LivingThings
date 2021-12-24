@@ -44,8 +44,7 @@ public class ElephantConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(15, 3, 5, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.SHATTERED_SAVANNA,
-				Biomes.SHATTERED_SAVANNA_PLATEAU));
+		spawns.add(new SpawnData(15, 3, 5, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA));
 		return spawns;
 	}
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.AgeableMob;
 
 public interface IMobVariants {
@@ -49,16 +51,22 @@ public interface IMobVariants {
 			}
 			weightedList.add(new WeightedMobVariant(weights[i], variants[i]));
 		}
-		return WeighedRandom.getRandomItem(random, weightedList).get().variant;
+		return WeightedRandom.getRandomItem(random, weightedList).get().variant;
 	}
 
-	class WeightedMobVariant extends WeighedRandom.WeighedRandomItem {
+	class WeightedMobVariant implements WeightedEntry {
 
 		public final byte variant;
+		public final Weight weight;
 
 		public WeightedMobVariant(int weight, byte variant) {
-			super(weight);
 			this.variant = variant;
+			this.weight = Weight.of(weight);
+		}
+
+		@Override
+		public Weight getWeight() {
+			return this.weight;
 		}
 
 	}

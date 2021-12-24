@@ -37,8 +37,8 @@ public class PenguinConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(12, 3, 6, Biomes.SNOWY_TUNDRA, Biomes.SNOWY_MOUNTAINS, Biomes.SNOWY_BEACH));
-		spawns.add(new SpawnData(15, 3, 6, Biomes.SNOWY_TAIGA, Biomes.SNOWY_TAIGA_HILLS, Biomes.SNOWY_TAIGA_MOUNTAINS));
+		spawns.add(new SpawnData(12, 3, 6, Biomes.SNOWY_PLAINS, Biomes.SNOWY_SLOPES, Biomes.SNOWY_BEACH));
+		spawns.add(new SpawnData(15, 3, 6, Biomes.SNOWY_TAIGA));
 		return spawns;
 	}
 

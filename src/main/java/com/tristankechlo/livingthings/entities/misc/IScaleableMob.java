@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.entities.misc;
 
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
 
 public interface IScaleableMob {
 
@@ -8,13 +9,19 @@ public interface IScaleableMob {
 
 	void setScaling(byte scaling);
 
-	class WeightedMobScaling extends WeighedRandom.WeighedRandomItem {
+	class WeightedMobScaling implements WeightedEntry {
 
 		public final byte scaling;
+		public final Weight weight;
 
 		public WeightedMobScaling(int weight, byte scaling) {
-			super(weight);
+			this.weight = Weight.of(weight);
 			this.scaling = scaling;
+		}
+
+		@Override
+		public Weight getWeight() {
+			return this.weight;
 		}
 
 	}

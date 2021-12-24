@@ -67,8 +67,7 @@ public class CrabConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(50, 5, 8, Biomes.RIVER, Biomes.BEACH, Biomes.DESERT_LAKES, Biomes.SWAMP_HILLS,
-				Biomes.SWAMP));
+		spawns.add(new SpawnData(50, 5, 8, Biomes.RIVER, Biomes.BEACH, Biomes.SWAMP));
 		return spawns;
 	}
 

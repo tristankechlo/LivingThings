@@ -46,7 +46,7 @@ public class SharkConfig {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
 		spawns.add(new SpawnData(13, 2, 3, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.FROZEN_OCEAN,
 				Biomes.DEEP_FROZEN_OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_COLD_OCEAN, Biomes.WARM_OCEAN,
-				Biomes.DEEP_WARM_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN));
+				Biomes.LUKEWARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN));
 		return spawns;
 	}
 

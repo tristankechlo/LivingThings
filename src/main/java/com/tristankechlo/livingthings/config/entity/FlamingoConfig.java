@@ -37,7 +37,7 @@ public class FlamingoConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(24, 3, 6, Biomes.RIVER, Biomes.SWAMP_HILLS, Biomes.SWAMP));
+		spawns.add(new SpawnData(24, 3, 6, Biomes.RIVER, Biomes.SWAMP));
 		return spawns;
 	}
 

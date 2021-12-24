@@ -19,7 +19,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
@@ -84,7 +84,7 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
 		if (color1Weight <= 0 && color2Weight <= 0 && albinoWeight <= 0) {
 			return 0;
 		}
-		Optional<WeightedMobVariant> variant = WeighedRandom.getRandomItem(random,
+		Optional<WeightedMobVariant> variant = WeightedRandom.getRandomItem(random,
 				ImmutableList.of(new WeightedMobVariant(Math.max(0, color1Weight), (byte) 0),
 						new WeightedMobVariant(Math.max(0, color2Weight), (byte) 1),
 						new WeightedMobVariant(Math.max(0, albinoWeight), (byte) 15)));

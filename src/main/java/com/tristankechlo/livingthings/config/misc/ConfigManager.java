@@ -49,8 +49,7 @@ public abstract class ConfigManager {
 	private static void loadConfigFromFile(File file) {
 		JsonObject json = null;
 		try {
-			JsonParser parser = new JsonParser();
-			JsonElement jsonElement = parser.parse(new FileReader(file));
+			JsonElement jsonElement = JsonParser.parseReader(new FileReader(file));
 			json = jsonElement.getAsJsonObject();
 		} catch (Exception e) {
 			e.printStackTrace();
