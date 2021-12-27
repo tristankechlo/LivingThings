@@ -6,6 +6,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -39,14 +41,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
 
 public class KoalaEntity extends Animal implements ILexiconEntry {
 
 	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(KoalaEntity.class,
 			EntityDataSerializers.BYTE);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
+	private static Tag<Block> spawnableOn = null;
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/koala");
 
@@ -90,11 +92,12 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
 		}
 	}
 
-	public static boolean canKoalaSpawn(EntityType<KoalaEntity> koala, LevelAccessor world, MobSpawnType reason,
+	public static boolean checkKoalaSpawnRules(EntityType<KoalaEntity> animal, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
-		BlockState blockstate = world.getBlockState(pos.below());
-		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS))
-				&& world.getRawBrightness(pos, 0) > 8;
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.KOALA_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

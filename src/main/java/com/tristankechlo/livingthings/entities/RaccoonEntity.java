@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Random;
 import java.util.UUID;
 
 import com.tristankechlo.livingthings.LivingThings;
@@ -10,11 +11,15 @@ import com.tristankechlo.livingthings.entities.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,6 +27,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -41,6 +47,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 
 public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 
@@ -51,9 +59,18 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
+	private static Tag<Block> spawnableOn = null;
 
 	public RaccoonEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
+	}
+
+	public static boolean checkRaccoonSpawnRules(EntityType<RaccoonEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.RACCOON_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

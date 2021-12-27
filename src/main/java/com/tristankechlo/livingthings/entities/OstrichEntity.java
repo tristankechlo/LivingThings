@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Random;
+
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.blocks.OstrichNestBlock;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
@@ -9,6 +11,7 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +23,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -29,6 +34,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ItemBasedSteering;
 import net.minecraft.world.entity.ItemSteerable;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -46,6 +52,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -70,10 +77,19 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 	private final ItemBasedSteering boostHelper = new ItemBasedSteering(this.entityData, BOOST_TIME, SADDLED);
 	private int nestBuildingCounter;
 	private int layingEggCounter;
+	private static Tag<Block> spawnableOn = null;
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.WHEAT);
 
 	public OstrichEntity(EntityType<? extends OstrichEntity> entityType, Level worldIn) {
 		super(entityType, worldIn);
+	}
+
+	public static boolean checkOstrichSpawnRules(EntityType<OstrichEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.OSTRICH_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

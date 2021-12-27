@@ -1,21 +1,27 @@
 package com.tristankechlo.livingthings.entities;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,6 +41,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -48,11 +56,20 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
 			"passive_mobs/flamingo");
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON);
 	protected DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
+	private static Tag<Block> spawnableOn = null;
 
 	public FlamingoEntity(EntityType<? extends FlamingoEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.maxUpStep = 1.0F;
 		this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
+	}
+
+	public static boolean checkFlamingoSpawnRules(EntityType<FlamingoEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.FLAMINGO_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

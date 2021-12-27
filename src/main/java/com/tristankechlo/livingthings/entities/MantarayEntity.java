@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.entities.misc.IScaleableMob;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +18,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -44,7 +47,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class MantarayEntity extends AbstractSchoolingFish implements IMobVariants, IScaleableMob, ILexiconEntry {
@@ -55,6 +58,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
 			EntityDataSerializers.BYTE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/mantaray");
+	private static Tag<Fluid> spawnableOn = null;
 
 	public MantarayEntity(EntityType<? extends MantarayEntity> type, Level worldIn) {
 		super(type, worldIn);
@@ -135,9 +139,13 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
 		return scaling.get().scaling;
 	}
 
-	public static boolean canMantaraySpawn(EntityType<MantarayEntity> entity, LevelAccessor world, MobSpawnType reason,
-			BlockPos pos, Random random) {
-		return world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
+	public static boolean checkMantaraySpawnRules(EntityType<MantarayEntity> entity, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = FluidTags.getAllTags().getTagOrEmpty(LivingThingsTags.MANTARAY_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getFluidState(pos).getType())
+				&& spawnableOn.contains(world.getFluidState(pos.above()).getType());
 	}
 
 	@Override

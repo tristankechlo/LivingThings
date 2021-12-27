@@ -10,6 +10,7 @@ import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
@@ -58,8 +60,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -72,6 +73,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS,
 			Items.BEETROOT_SEEDS);
 	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.WHEAT_SEEDS);
+	private static Tag<Block> spawnableOn = null;
 	public float flap;
 	public float flapSpeed;
 	public float oFlapSpeed;
@@ -207,11 +209,12 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 		this.flap += this.flapping * 2.0F;
 	}
 
-	public static boolean canOwlSpawn(EntityType<OwlEntity> parrotIn, LevelAccessor worldIn, MobSpawnType reason,
+	public static boolean checkOwlSpawnRules(EntityType<OwlEntity> animal, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
-		BlockState blockstate = worldIn.getBlockState(pos.below());
-		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS)
-				|| blockstate.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.OWL_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

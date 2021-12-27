@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.entities;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -12,8 +13,10 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +30,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -40,6 +45,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
@@ -62,6 +68,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -83,6 +91,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 			EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData
 			.defineId(ElephantEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static Tag<Block> spawnableOn = null;
 	protected SimpleContainer entityInventory;
 	private int tameAmount;
 	private int angerTime;
@@ -94,6 +103,14 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 		this.maxUpStep = 1.0F;
 		this.initInventory();
 		this.tameAmount = 0;
+	}
+
+	public static boolean checkElephantSpawnRules(EntityType<ElephantEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.ELEPHANT_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override
@@ -260,19 +277,19 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id) {
 		switch (id) {
-			case 4: // start attack animation
-				this.attackTimer = 10;
-				break;
-			case 6: // entity tamed
-				this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
-				this.spawnParticle(ParticleTypes.FIREWORK);
-				break;
-			case 7: // progress while taming
-				this.spawnParticle(ParticleTypes.COMPOSTER);
-				break;
-			default:
-				super.handleEntityEvent(id);
-				break;
+		case 4: // start attack animation
+			this.attackTimer = 10;
+			break;
+		case 6: // entity tamed
+			this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
+			this.spawnParticle(ParticleTypes.FIREWORK);
+			break;
+		case 7: // progress while taming
+			this.spawnParticle(ParticleTypes.COMPOSTER);
+			break;
+		default:
+			super.handleEntityEvent(id);
+			break;
 		}
 	}
 

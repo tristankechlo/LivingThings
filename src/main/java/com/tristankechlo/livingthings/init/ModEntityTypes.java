@@ -37,7 +37,7 @@ public class ModEntityTypes {
 	private static final EntityType<LionEntity> lion = createStandardEntityType("lion", LionEntity::new, MobCategory.CREATURE, 1.25F, 1.5F);
 	private static final EntityType<SharkEntity> shark = createStandardEntityType("shark", SharkEntity::new, MobCategory.WATER_CREATURE, 1.4F, 1.1F);
 	private static final EntityType<PenguinEntity> penguin = createStandardEntityType("penguin", PenguinEntity::new, MobCategory.CREATURE, 0.8F, 1.45F);
-	private static final EntityType<OstrichEntity> ostrich = createStandardEntityType("ostrich", OstrichEntity::new, MobCategory.CREATURE, 0.8F, 1.8F);
+	private static final EntityType<OstrichEntity> ostrich = createStandardEntityType("ostrich", OstrichEntity::new, MobCategory.CREATURE, 0.6F, 1.8F);
 	private static final EntityType<FlamingoEntity> flamingo = createStandardEntityType("flamingo", FlamingoEntity::new, MobCategory.CREATURE, 0.6F, 1.25F);
 	private static final EntityType<CrabEntity> crab = createStandardEntityType("crab", CrabEntity::new, MobCategory.CREATURE, 0.4F, 0.4F);
 	private static final EntityType<MantarayEntity> mantaray = createStandardEntityType("mantaray", MantarayEntity::new, MobCategory.WATER_AMBIENT, 0.75F, 0.45F);

@@ -15,7 +15,9 @@ import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,6 +25,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -54,7 +58,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 
 public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob, ILexiconEntry {
 
@@ -66,11 +72,20 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
 			"hostile_mobs/lion");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.BEEF, Items.CHICKEN, Items.RABBIT);
 	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
+	private static Tag<Block> spawnableOn = null;
 	private int angerTime;
 	private UUID angerTarget;
 
 	public LionEntity(EntityType<? extends LionEntity> entityType, Level worldIn) {
 		super(entityType, worldIn);
+	}
+
+	public static boolean checkLionSpawnRules(EntityType<LionEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.LION_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

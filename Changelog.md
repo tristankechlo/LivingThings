@@ -1,7 +1,13 @@
 # Changelog
 
-### Version 1.18.1 - 1.4.0
+### Version 1.18.1 - 1.4.1
  - port to 1.18.1
+ - entity spawn rules now use data-tags to determine on which blocks the entities can spawn on
+     - land entities use blocktags
+     - swimming animals use fluidtags in which they can spawn in
+     - format: `<mobname>_spawnable_on.json`
+ - reduced ostrich hitbox
+ - changed spawnrates for raccoon, snail and seahorses
 
 ### Version 1.17.1 - 1.4.0
  - port to 1.17.1

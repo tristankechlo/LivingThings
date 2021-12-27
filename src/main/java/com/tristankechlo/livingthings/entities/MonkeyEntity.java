@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -54,8 +55,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -70,6 +71,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(MonkeyEntity.class,
 			EntityDataSerializers.BYTE);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.APPLE);
+	private static Tag<Block> spawnableOn = null;
 	private BlockPos jukeboxPosition;
 	private boolean partying;
 
@@ -300,11 +302,12 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 		}
 	}
 
-	public static boolean canMonkeySpawn(EntityType<MonkeyEntity> parrotIn, LevelAccessor worldIn, MobSpawnType reason,
-			BlockPos pos, Random random) {
-		BlockState blockstate = worldIn.getBlockState(pos.below());
-		return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS)
-				|| blockstate.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
+	public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.MONKEY_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

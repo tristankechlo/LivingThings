@@ -1,19 +1,25 @@
 package com.tristankechlo.livingthings.entities;
 
+import java.util.Random;
+
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 import com.tristankechlo.livingthings.misc.Util;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -29,16 +35,28 @@ import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.material.Fluid;
 
 public class SeahorseEntity extends AbstractSchoolingFish implements ILexiconEntry, IMobVariants {
 
 	private static final ResourceLocation LEXICON = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/seahorse");
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(SeahorseEntity.class,
 			EntityDataSerializers.BYTE);
+	private static Tag<Fluid> spawnableOn = null;
 
 	public SeahorseEntity(EntityType<SeahorseEntity> type, Level world) {
 		super(type, world);
+	}
+
+	public static boolean checkSeahorseSpawnRules(EntityType<SeahorseEntity> entity, LevelAccessor world, MobSpawnType reason,
+			BlockPos pos, Random random) {
+		if (spawnableOn == null) {
+			spawnableOn = FluidTags.getAllTags().getTagOrEmpty(LivingThingsTags.SEAHORSE_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(world.getFluidState(pos).getType())
+				&& spawnableOn.contains(world.getFluidState(pos.above()).getType());
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
