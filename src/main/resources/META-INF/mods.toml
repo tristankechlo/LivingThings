@@ -17,7 +17,7 @@ description='''adds various new mobs to Minecraft'''
 [[dependencies.livingthings]]
     modId="forge"
     mandatory=true
-    versionRange="[39,)"
+    versionRange="[39.0.58,)"
     ordering="NONE"
     side="BOTH"
 
