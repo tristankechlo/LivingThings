@@ -36,24 +36,25 @@ public class ModArmorItem extends ArmorItem {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(Rendering.INSTANCE);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	private static final class Rendering implements IItemRenderProperties {
+
 		private static final Rendering INSTANCE = new ModArmorItem.Rendering();
 
 		private Rendering() {}
 
 		@Override
-		@SuppressWarnings("unchecked")
-		public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack,
-				EquipmentSlot armorSlot, A _default) {
-			return (A) ClientEvents.ANCIENT_ARMOR_MODEL;
+		public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot,
+				HumanoidModel<?> _default) {
+			return ClientEvents.ANCIENT_ARMOR_MODEL;
 		}
+
 	}
 
 	@Override

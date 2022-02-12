@@ -61,6 +61,9 @@ dependencies {
 }
 
 jar {
+	from('/'){
+		include 'CREDITS.md'
+	}
     manifest {
         attributes([
             "Specification-Title": "Living Things",
