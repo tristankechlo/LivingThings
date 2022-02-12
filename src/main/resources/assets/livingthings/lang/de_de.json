@@ -49,6 +49,7 @@
 	"item.livingthings.nether_knight_spawn_egg" : "Nether-Krieger-Spawn-Ei",
 	"item.livingthings.shroomie_spawn_egg" : "Shroomie-Spawn-Ei",
 	"item.livingthings.seahorse_spawn_egg" : "Seepferdchen-Spawn-Ei",
+	"item.livingthings.baby_ender_dragon_spawn_egg" : "Baby-Enderdrachen-Spawn-Ei",
 
 
 	"__comment5" : "entity names",
@@ -70,6 +71,7 @@
 	"entity.livingthings.nether_knight" : "Nether Krieger",
 	"entity.livingthings.shroomie" : "Shroomie",
 	"entity.livingthings.seahorse" : "Seepferdchen",
+	"entity.livingthings.baby_ender_dragon" : "Baby Enderdrache",
 
 
 	"__comment6" : "subtitles",

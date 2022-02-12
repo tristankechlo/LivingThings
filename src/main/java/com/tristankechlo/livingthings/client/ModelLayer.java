@@ -28,8 +28,10 @@ public final class ModelLayer {
 	public static final ModelLayerLocation SHROOMIE = createLayerLocation(Names.SHROOMIE);
 	public static final ModelLayerLocation SEAHORSE = createLayerLocation(Names.SEAHORSE);
 	public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
+	public static final ModelLayerLocation BABY_ENDER_DRAGON = createLayerLocation(Names.BABY_ENDER_DRAGON);
 
 	private static final ModelLayerLocation createLayerLocation(final String name) {
 		return new ModelLayerLocation(new ResourceLocation(LivingThings.MOD_ID, name), "main");
 	}
+
 }

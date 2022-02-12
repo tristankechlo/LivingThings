@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.events;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
+import com.tristankechlo.livingthings.entities.BabyEnderDragonEntity;
 import com.tristankechlo.livingthings.entities.CrabEntity;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
@@ -60,6 +61,7 @@ public class RegistryEventHandler {
 		event.put(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightEntity.createAttributes().build());
 		event.put(ModEntityTypes.SHROOMIE.get(), ShroomieEntity.createAttributes().build());
 		event.put(ModEntityTypes.SEAHORSE.get(), SeahorseEntity.createAttributes().build());
+		event.put(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonEntity.createAttributes().build());
 	}
 
 	private static void registerEntitySpawnPlacements() {
@@ -81,6 +83,7 @@ public class RegistryEventHandler {
 		SpawnPlacements.register(ModEntityTypes.NETHER_KNIGHT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 		SpawnPlacements.register(ModEntityTypes.SHROOMIE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::checkShroomieSpawnRules);
 		SpawnPlacements.register(ModEntityTypes.SEAHORSE.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SeahorseEntity::checkSeahorseSpawnRules);
+		SpawnPlacements.register(ModEntityTypes.BABY_ENDER_DRAGON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BabyEnderDragonEntity::checkBabyEnderDragonSpawnRules);
 	}
 
 }

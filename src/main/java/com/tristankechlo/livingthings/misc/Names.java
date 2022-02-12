@@ -20,5 +20,6 @@ public class Names {
 	public static final String NETHER_KNIGHT = "nether_knight";
 	public static final String SHROOMIE = "shroomie";
 	public static final String SEAHORSE = "seahorse";
+	public static final String BABY_ENDER_DRAGON = "baby_ender_dragon";
 
 }

@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.client;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
+import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonModel;
 import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 import com.tristankechlo.livingthings.client.model.entity.FlamingoModel;
@@ -22,6 +23,7 @@ import com.tristankechlo.livingthings.client.model.entity.SharkModel;
 import com.tristankechlo.livingthings.client.model.entity.ShroomieModel;
 import com.tristankechlo.livingthings.client.model.entity.SnailModel;
 import com.tristankechlo.livingthings.client.renderer.AncientBlazeRenderer;
+import com.tristankechlo.livingthings.client.renderer.BabyEnderDragonRenderer;
 import com.tristankechlo.livingthings.client.renderer.CrabRenderer;
 import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
 import com.tristankechlo.livingthings.client.renderer.FlamingoRenderer;
@@ -76,6 +78,7 @@ public final class ClientEvents {
 		event.registerLayerDefinition(ModelLayer.SHROOMIE, ShroomieModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.SEAHORSE, SeahorseModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
+		event.registerLayerDefinition(ModelLayer.BABY_ENDER_DRAGON, BabyEnderDragonModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
@@ -98,6 +101,7 @@ public final class ClientEvents {
 		event.registerEntityRenderer(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
 	}
 
 	@SubscribeEvent

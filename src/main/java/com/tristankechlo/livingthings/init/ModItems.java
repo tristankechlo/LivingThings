@@ -4,6 +4,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.items.LexiconItem;
 import com.tristankechlo.livingthings.items.ModArmorItem;
 import com.tristankechlo.livingthings.items.OstrichEggItem;
+import com.tristankechlo.livingthings.misc.Names;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -41,6 +42,7 @@ public final class ModItems {
 	public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.seahorse, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
 
 	// register spawn eggs
+	// TODO replace item names
 	public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ITEMS.register("elephant_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.ELEPHANT, 0x000000, 0x4e4e4e, SPAWN_EGG_PROPERTIES));
 	public static final RegistryObject<Item> GIRAFFE_SPAWN_EGG = ITEMS.register("giraffe_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.GIRAFFE, 0xebb26c, 0x785f40, SPAWN_EGG_PROPERTIES));
 	public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.LION, 0xebb26c, 0xFFFFFF, SPAWN_EGG_PROPERTIES));
@@ -59,6 +61,6 @@ public final class ModItems {
 	public static final RegistryObject<Item> NETHER_KNIGHT_SPAWN_EGG = ITEMS.register("nether_knight_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.NETHER_KNIGHT, 0x181a1c, 0xa32aa1, SPAWN_EGG_PROPERTIES));
 	public static final RegistryObject<Item> SHROOMIE_SPAWN_EGG = ITEMS.register("shroomie_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.SHROOMIE, 0xb8968d, 0xdb380f, SPAWN_EGG_PROPERTIES));
 	public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = ITEMS.register("seahorse_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.SEAHORSE, 0x22ff22, 0xdb380f, SPAWN_EGG_PROPERTIES));
-
-
+	public static final RegistryObject<Item> BABY_ENDER_DRAGON_SPAWN_EGG = ITEMS.register(Names.BABY_ENDER_DRAGON + "_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.BABY_ENDER_DRAGON, 0x201e24, 0xff59cd, SPAWN_EGG_PROPERTIES));
+	
 }

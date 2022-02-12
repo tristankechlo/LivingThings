@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.entities.AncientBlazeEntity;
+import com.tristankechlo.livingthings.entities.BabyEnderDragonEntity;
 import com.tristankechlo.livingthings.entities.CrabEntity;
 import com.tristankechlo.livingthings.entities.ElephantEntity;
 import com.tristankechlo.livingthings.entities.FlamingoEntity;
@@ -19,6 +20,7 @@ import com.tristankechlo.livingthings.entities.SeahorseEntity;
 import com.tristankechlo.livingthings.entities.SharkEntity;
 import com.tristankechlo.livingthings.entities.ShroomieEntity;
 import com.tristankechlo.livingthings.entities.SnailEntity;
+import com.tristankechlo.livingthings.misc.Names;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +31,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModEntityTypes {
 
+	// TODO replace entity names
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, LivingThings.MOD_ID);
 
 	// create entity types
@@ -50,6 +53,7 @@ public class ModEntityTypes {
 	private static final EntityType<NetherKnightEntity> nether_knight = EntityType.Builder.of(NetherKnightEntity::new, MobCategory.MONSTER).sized(0.7F, 2.3F).fireImmune().build(LivingThings.MOD_ID + ":nether_knight");
 	private static final EntityType<ShroomieEntity> shroomie = createStandardEntityType("shroomie", ShroomieEntity::new, MobCategory.CREATURE, 0.5F, 0.99F);
 	public static final EntityType<SeahorseEntity> seahorse = createStandardEntityType("seahorse", SeahorseEntity::new, MobCategory.WATER_AMBIENT, 0.2F, 0.7F);
+	private static final EntityType<BabyEnderDragonEntity> baby_ender_dragon = createStandardEntityType(Names.BABY_ENDER_DRAGON, BabyEnderDragonEntity::new, MobCategory.CREATURE, 0.75F, 0.75F);
 
 	// register entity types
 	public static final RegistryObject<EntityType<ElephantEntity>> ELEPHANT = ENTITY_TYPES.register("elephant", () -> elephant);
@@ -70,6 +74,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<NetherKnightEntity>> NETHER_KNIGHT = ENTITY_TYPES.register("nether_knight", () -> nether_knight);
 	public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE = ENTITY_TYPES.register("shroomie", () -> shroomie);
 	public static final RegistryObject<EntityType<SeahorseEntity>> SEAHORSE = ENTITY_TYPES.register("seahorse", () -> seahorse);
+	public static final RegistryObject<EntityType<BabyEnderDragonEntity>> BABY_ENDER_DRAGON = ENTITY_TYPES.register(Names.BABY_ENDER_DRAGON, () -> baby_ender_dragon);
 
 	// create standard entity type
 	private static <T extends Entity> EntityType<T> createStandardEntityType(String entity_name, EntityType.EntityFactory<T> factory, MobCategory classification, float width, float height) {

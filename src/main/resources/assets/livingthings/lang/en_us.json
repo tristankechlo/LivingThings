@@ -49,6 +49,7 @@
 	"item.livingthings.nether_knight_spawn_egg" : "Nether Knight Spawn Egg",
 	"item.livingthings.shroomie_spawn_egg" : "Shroomie Spawn Egg",
 	"item.livingthings.seahorse_spawn_egg" : "Seahorse Spawn Egg",
+	"item.livingthings.baby_ender_dragon_spawn_egg" : "Baby Enderdragon Spawn Egg",
 	
 	
 	"__comment5" : "entity names",
@@ -70,6 +71,7 @@
 	"entity.livingthings.nether_knight" : "Nether Knight",
 	"entity.livingthings.shroomie" : "Shroomie",
 	"entity.livingthings.seahorse" : "Seahorse",
+	"entity.livingthings.baby_ender_dragon" : "Baby Enderdragon",
 
 
 	"__comment6" : "subtitles",
