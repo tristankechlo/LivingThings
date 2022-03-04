@@ -4,6 +4,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonModel;
+import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonSittingModel;
 import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 import com.tristankechlo.livingthings.client.model.entity.FlamingoModel;
@@ -79,6 +80,7 @@ public final class ClientEvents {
 		event.registerLayerDefinition(ModelLayer.SEAHORSE, SeahorseModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayer.BABY_ENDER_DRAGON, BabyEnderDragonModel::createBodyLayer);
+		event.registerLayerDefinition(ModelLayer.BABY_ENDER_DRAGON_SITTING, BabyEnderDragonSittingModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
@@ -106,8 +108,7 @@ public final class ClientEvents {
 
 	@SubscribeEvent
 	public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
-		ANCIENT_ARMOR_MODEL = new AncientArmorModel(
-				Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayer.ANCIENT_ARMOR));
+		ANCIENT_ARMOR_MODEL = new AncientArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayer.ANCIENT_ARMOR));
 	}
 
 }
