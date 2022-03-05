@@ -2,8 +2,6 @@ package com.tristankechlo.livingthings.entities.ai;
 
 import java.util.EnumSet;
 
-import com.tristankechlo.livingthings.entities.BabyEnderDragonEntity;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -12,11 +10,11 @@ import net.minecraft.world.entity.ai.goal.Goal;
  * similar to SitWhenOrderedToGoal, except the mob can start sitting when in the
  * air
  */
-public class BabyEnderDragonSitGoal extends Goal {
+public class CustomSitWhenOrderedToSitGoal extends Goal {
 
 	private final TamableAnimal mob;
 
-	public BabyEnderDragonSitGoal(BabyEnderDragonEntity entity) {
+	public CustomSitWhenOrderedToSitGoal(TamableAnimal entity) {
 		this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
 		this.mob = entity;
 	}

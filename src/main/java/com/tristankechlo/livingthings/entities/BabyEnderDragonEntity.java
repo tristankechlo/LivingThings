@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.tristankechlo.livingthings.entities.ai.BabyEnderDragonSitGoal;
+import com.tristankechlo.livingthings.entities.ai.CustomSitWhenOrderedToSitGoal;
 import com.tristankechlo.livingthings.entities.misc.CustomDragonFireball;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 
@@ -85,7 +85,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new BabyEnderDragonSitGoal(this));
+		this.goalSelector.addGoal(2, new CustomSitWhenOrderedToSitGoal(this));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, TAMING_ITEMS, false));
 		this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.1D, 120, 240, 25.0F));
 		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.3D, 10.0F, 2.0F, true));
