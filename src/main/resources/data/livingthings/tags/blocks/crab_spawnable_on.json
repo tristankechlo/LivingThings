@@ -5,7 +5,6 @@
 		"#minecraft:dirt",
 		"#minecraft:sand",
 		"#forge:gravel",
-		"#forge:dirt",
 		"#forge:sand"
 	]
 }

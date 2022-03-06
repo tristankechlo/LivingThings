@@ -5,7 +5,6 @@
 		"#minecraft:leaves",
 		"#minecraft:logs",
 		"#minecraft:dirt",
-		"minecraft:air",
-		"#forge:dirt"
+		"minecraft:air"
 	]
 }
