@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Level;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.AncientBlazeConfig;
+import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
@@ -67,6 +68,7 @@ public class LivingThingsConfig {
 	public static final NetherKnightConfig NETHER_KNIGHT = new NetherKnightConfig(BUILDER);
 	public static final ShroomieConfig SHROOMIE = new ShroomieConfig(BUILDER);
 	public static final SeahorseConfig SEAHORSE = new SeahorseConfig(BUILDER);
+	public static final BabyEnderDragonConfig BABY_ENDER_DRAGON = new BabyEnderDragonConfig(BUILDER);
 
 	public static final ForgeConfigSpec spec = BUILDER.build();
 

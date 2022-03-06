@@ -25,6 +25,7 @@ public final class LivingThingsTags {
 	public static final ResourceLocation SHARK_SPAWNABLE_ON = get(Names.SHARK + "_spawnable_on");
 	public static final ResourceLocation SHROOMIE_SPAWNABLE_ON = get(Names.SHROOMIE + "_spawnable_on");
 	public static final ResourceLocation SNAIL_SPAWNABLE_ON = get(Names.SNAIL + "_spawnable_on");
+	public static final ResourceLocation BABY_ENDER_DRAGON_SPAWNABLE_ON = get(Names.BABY_ENDER_DRAGON + "_spawnable_on");
 
 	public static ResourceLocation get(String name) {
 		return new ResourceLocation(LivingThings.MOD_ID, name);

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
@@ -136,6 +137,7 @@ public final class BiomeSpawnConfig {
 		names.put("livingthings:snail", SnailConfig::getDefaultSpawns);
 		names.put("livingthings:shroomie", ShroomieConfig::getDefaultSpawns);
 		names.put("livingthings:seahorse", SeahorseConfig::getDefaultSpawns);
+		names.put("livingthings:baby_ender_dragon", BabyEnderDragonConfig::getDefaultSpawns);
 		return names;
 	}
 

@@ -5,23 +5,35 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.entities.ai.CustomSitWhenOrderedToSitGoal;
 import com.tristankechlo.livingthings.entities.misc.CustomDragonFireball;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModItems;
+import com.tristankechlo.livingthings.misc.ILexiconEntry;
+import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -45,6 +57,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
@@ -57,12 +70,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
-//TODO patchouli
-public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, RangedAttackMob, FlyingAnimal {
+public class BabyEnderDragonEntity extends TamableAnimal
+		implements NeutralMob, RangedAttackMob, FlyingAnimal, ILexiconEntry {
 
 	private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData
 			.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
@@ -70,15 +84,16 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 			.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(BabyEnderDragonEntity.class,
 			EntityDataSerializers.BOOLEAN);
+	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
+			"hostile_mobs/baby_ender_dragon");
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.CHORUS_FRUIT);
-	@Nullable
+	private static Tag<Block> spawnableOn = null;
 	private UUID persistentAngerTarget;
 
 	public BabyEnderDragonEntity(EntityType<? extends BabyEnderDragonEntity> entity, Level level) {
 		super(entity, level);
 		this.setTame(false);
-
 		this.moveControl = new FlyingMoveControl(this, 10, true);
 	}
 
@@ -88,7 +103,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 		this.goalSelector.addGoal(2, new CustomSitWhenOrderedToSitGoal(this));
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, TAMING_ITEMS, false));
 		this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.1D, 120, 240, 25.0F));
-		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.3D, 10.0F, 2.0F, true));
+		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.3D, 10.0F, 3.0F, true));
 		this.goalSelector.addGoal(8, new WaterAvoidingRandomFlyingGoal(this, 1.2D));
 		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
@@ -135,6 +150,9 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 		ItemStack itemstack = player.getItemInHand(hand);
 		Item item = itemstack.getItem();
 		if (this.level.isClientSide) {
+			if (item == ModItems.LEXICON.get()) {
+				return InteractionResult.PASS;
+			}
 			boolean flag = this.isOwnedBy(player) || this.isTame()
 					|| TAMING_ITEMS.test(itemstack) && !this.isTame() && !this.isAngry();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
@@ -217,15 +235,17 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		// TODO attributes
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10).add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.FLYING_SPEED, 0.5D);
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LivingThingsConfig.BABY_ENDER_DRAGON.health.get())
+				.add(Attributes.MOVEMENT_SPEED, LivingThingsConfig.BABY_ENDER_DRAGON.walkingSpeed.get())
+				.add(Attributes.FLYING_SPEED, LivingThingsConfig.BABY_ENDER_DRAGON.flyingSpeed.get());
 	}
 
 	public static boolean checkBabyEnderDragonSpawnRules(EntityType<BabyEnderDragonEntity> entityType,
 			LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		// TODO spawn rules
-		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+		if (spawnableOn == null) {
+			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.BABY_ENDER_DRAGON_SPAWNABLE_ON);
+		}
+		return spawnableOn.contains(level.getBlockState(pos.below()).getBlock());
 	}
 
 	protected static boolean isBrightEnoughToSpawn(BlockAndTintGetter p_186210_, BlockPos p_186211_) {
@@ -267,6 +287,11 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 	}
 
 	@Override
+	public boolean canMate(Animal animal) {
+		return false;
+	}
+
+	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
 		BabyEnderDragonEntity child = ModEntityTypes.BABY_ENDER_DRAGON.get().create(world);
 		UUID uuid = this.getOwnerUUID();
@@ -279,7 +304,13 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
 	@Override
 	public void performRangedAttack(LivingEntity entity, float distanceFactor) {
-		// TODO check ambientmode
+		// don't attack if disabled in config
+		boolean peaceful = (this.level.getDifficulty() == Difficulty.PEACEFUL);
+		boolean ambientMode = LivingThingsConfig.GENERAL.ambientMode.get();
+		if (peaceful || ambientMode || !LivingThingsConfig.BABY_ENDER_DRAGON.canAttack.get()) {
+			return;
+		}
+
 		Vec3 vec = this.getViewVector(1.0F);
 		double d1 = this.getX() - vec.x * 10D;
 		double d2 = this.getY();
@@ -292,6 +323,8 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 		this.level.addFreshEntity(dragonfireball);
 		if (!this.level.isClientSide() && !this.isSilent()) {
 			// TODO play shoot sound
+			this.level.playSound(null, this.blockPosition(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.HOSTILE, 2.0F,
+					(this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 		}
 	}
 
@@ -307,7 +340,45 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
 	@Override
 	public boolean isFlying() {
-		return !this.onGround;
+		return !this.isOnGround();
+	}
+
+	@Override
+	public ResourceLocation getLexiconEntry() {
+		return LEXICON_ENTRY;
+	}
+
+	@Override
+	public int getMaxSpawnClusterSize() {
+		return LivingThingsConfig.BABY_ENDER_DRAGON.maxSpawnedInChunk.get();
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		// TODO ambient sound
+		return super.getAmbientSound();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource p_21239_) {
+		// TODO hurt sound
+		return super.getHurtSound(p_21239_);
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		// TODO death sound
+		return super.getDeathSound();
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float damage) {
+		Entity target = source.getEntity();
+		if ((target instanceof LivingEntity) && !this.isOwnedBy((LivingEntity) target)) {
+			this.setOrderedToSit(false);
+			this.setTarget((LivingEntity) target);
+		}
+		return super.hurt(source, damage);
 	}
 
 }

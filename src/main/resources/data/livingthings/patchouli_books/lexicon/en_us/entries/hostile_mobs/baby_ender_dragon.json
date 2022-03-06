@@ -1,0 +1,20 @@
+{
+	"name" : "Baby Enderdragon",
+	"icon" : "livingthings:baby_ender_dragon_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "A semi dangerous animal that has a weakness for chorus fruits!$(br)Tamed baby enderdragons will follow you around.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Taming Items: $()$(li)Chorus Fruit"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:baby_ender_dragon",
+			"rotate" : false,
+			"scale" : 0.6,
+			"default_rotation" : 45,
+			"offset" : 0.2,
+			"text" : "Can be found in all End-Biomes"
+		}
+	]
+}
