@@ -268,7 +268,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 		ItemStack stack = player.getItemInHand(hand);
 		Item item = stack.getItem();
 		if (this.level.isClientSide()) {
-			if (isLexicon(stack)) {
+			if (ILexiconEntry.isLexicon(stack)) {
 				return InteractionResult.PASS;
 			}
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isFood(stack) && !this.isTame();

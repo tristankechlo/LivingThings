@@ -10,12 +10,12 @@ public interface ILexiconEntry {
 
 	ResourceLocation getLexiconEntry();
 
-	default boolean isLexicon(Item item) {
+	public static boolean isLexicon(Item item) {
 		return item.equals(ModItems.LEXICON.get());
 	}
 
-	default boolean isLexicon(ItemStack stack) {
-		return this.isLexicon(stack.getItem());
+	public static boolean isLexicon(ItemStack stack) {
+		return isLexicon(stack.getItem());
 	}
 
 }

@@ -36,12 +36,6 @@ import net.minecraftforge.fml.common.Mod;
 public class RegistryEventHandler {
 
 	@SubscribeEvent
-	public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-		registerEntitySpawnPlacements();
-	}
-
-	// add attributes like health to entities
-	@SubscribeEvent
 	public static void onAttributeRegister(final EntityAttributeCreationEvent event) {
 		event.put(ModEntityTypes.ELEPHANT.get(), ElephantEntity.createAttributes().build());
 		event.put(ModEntityTypes.GIRAFFE.get(), GiraffeEntity.createAttributes().build());
@@ -64,7 +58,8 @@ public class RegistryEventHandler {
 		event.put(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonEntity.createAttributes().build());
 	}
 
-	private static void registerEntitySpawnPlacements() {
+	@SubscribeEvent
+	public static void registerEntitySpawnPlacements(final RegistryEvent.Register<EntityType<?>> event) {
 		SpawnPlacements.register(ModEntityTypes.ELEPHANT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ElephantEntity::checkElephantSpawnRules);
 		SpawnPlacements.register(ModEntityTypes.GIRAFFE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GiraffeEntity::checkGiraffeSpawnRules);
 		SpawnPlacements.register(ModEntityTypes.LION.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LionEntity::checkLionSpawnRules);

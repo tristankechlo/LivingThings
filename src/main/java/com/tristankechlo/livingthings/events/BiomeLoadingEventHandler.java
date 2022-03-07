@@ -6,8 +6,8 @@ import java.util.Map;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.BiomeSpawnConfig;
 
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -32,6 +32,7 @@ public class BiomeLoadingEventHandler {
 				MobCategory classification = entry.getKey();
 				for (SpawnerData spawner : entry.getValue()) {
 					event.getSpawns().getSpawner(classification).add(spawner);
+					LivingThings.LOGGER.info(event.getName() + " | " + classification + " | " + spawner);
 				}
 			}
 		}

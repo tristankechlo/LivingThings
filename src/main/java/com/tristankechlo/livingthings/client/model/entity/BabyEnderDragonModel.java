@@ -218,7 +218,12 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
 		this.Head.yRot = (netHeadYaw / 2) * 0.0174532925F;
 		this.Head.xRot = (headPitch / 2) * 0.0174532925F;
 
-		final boolean isMoving = entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-4D;
+		this.FrontLeftLeg.xRot = 0.0F;
+		this.FrontRightLeg.xRot = 0.0F;
+		this.BackLeftLeg.xRot = 0.0F;
+		this.BackRightLeg.xRot = 0.0F;
+
+		final boolean isMoving = entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D;
 		final boolean isFlying = entity.isFlying();
 
 		if (isFlying && isMoving) { // is flying
@@ -254,6 +259,11 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
 		this.Tail2.zRot = 0F;
 		this.Tail3.zRot = 0F;
 		this.Tail4.zRot = 0F;
+
+		this.FrontLeftLeg.xRot = 1.0F;
+		this.FrontRightLeg.xRot = 1.0F;
+		this.BackLeftLeg.xRot = 1.0F;
+		this.BackRightLeg.xRot = 1.0F;
 	}
 
 	private void animateHovering(float ageInTicks) {

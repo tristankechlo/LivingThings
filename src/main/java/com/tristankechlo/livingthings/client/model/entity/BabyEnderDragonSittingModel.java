@@ -213,7 +213,10 @@ public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDr
 
 		this.animateSwingingTail(ageInTicks, 1.0F);
 
-		this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
+		this.BackLeftLeg.xRot = 0.6981317008F;
+		this.BackRightLeg.xRot = 0.6981317008F;
+		this.FrontLeftLeg.xRot = 0.1745329252F;
+		this.FrontRightLeg.xRot = 0.1745329252F;
 	}
 
 	private void animateSwingingTail(float ageInTicks, float speedModifier) {

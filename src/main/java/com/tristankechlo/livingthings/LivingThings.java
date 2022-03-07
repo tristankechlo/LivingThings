@@ -12,7 +12,6 @@ import com.tristankechlo.livingthings.events.SpawnEvents;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
-import com.tristankechlo.livingthings.init.ModParticle;
 import com.tristankechlo.livingthings.init.ModSounds;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -41,7 +40,6 @@ public class LivingThings {
 		ModItems.ITEMS.register(modEventBus);
 		ModBlocks.BLOCKS.register(modEventBus);
 		ModSounds.SOUNDS.register(modEventBus);
-		ModParticle.PARTICLES.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 
 		modEventBus.addListener(this::commonSetup);

@@ -89,12 +89,14 @@ public final class BiomeSpawnConfig {
 			ResourceLocation name = new ResourceLocation(entry.getKey());
 			EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(name);
 			if (entityType == null || !name.getNamespace().equals(LivingThings.MOD_ID)) {
+				LivingThings.LOGGER.warn("Ignoring unknown/wrong entity type: " + entry.getKey());
 				continue;
 			}
 			for (SpawnData spawnData : entry.getValue()) {
 				for (String biomeString : spawnData.biomes) {
 					ResourceLocation biome = new ResourceLocation(biomeString);
 					if (!ForgeRegistries.BIOMES.containsKey(biome)) {
+						LivingThings.LOGGER.warn("Ignoring unknown biome: " + biomeString);
 						continue;
 					}
 					Map<MobCategory, List<SpawnerData>> classificationMap = biomeSpawnData.get(biome);

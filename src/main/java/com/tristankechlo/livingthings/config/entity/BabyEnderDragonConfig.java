@@ -45,7 +45,7 @@ public class BabyEnderDragonConfig {
 	@SuppressWarnings("unchecked")
 	public static List<SpawnData> getDefaultSpawns() {
 		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(12, 3, 5, Biomes.END_BARRENS, Biomes.END_HIGHLANDS, Biomes.END_MIDLANDS,
+		spawns.add(new SpawnData(15, 3, 5, Biomes.END_BARRENS, Biomes.END_HIGHLANDS, Biomes.END_MIDLANDS,
 				Biomes.SMALL_END_ISLANDS, Biomes.THE_END));
 		return spawns;
 	}
