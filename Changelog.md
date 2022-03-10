@@ -1,6 +1,11 @@
 # Changelog
 
 ### Version 1.18.1 - 1.5.0
+ - new elephant texture
+ - new mob: `baby_ender_dragon`
+     - can be found in all end biomes
+     - can be tamed with chorus fruits
+ - meat items are now actually declared as meat so they can be fed to wolves
 
 ### Version 1.18.1 - 1.4.1
  - port to 1.18.1
