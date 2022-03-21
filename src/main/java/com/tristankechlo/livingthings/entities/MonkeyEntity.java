@@ -18,9 +18,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -55,7 +52,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -71,7 +67,6 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(MonkeyEntity.class,
 			EntityDataSerializers.BYTE);
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.APPLE);
-	private static Tag<Block> spawnableOn = null;
 	private BlockPos jukeboxPosition;
 	private boolean partying;
 
@@ -80,7 +75,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 	}
 
 	private static final Ingredient getBreedingItems() {
-		Ingredient bananas = Ingredient.of(ItemTags.getAllTags().getTagOrEmpty(LivingThingsTags.BANANAS));
+		Ingredient bananas = Ingredient.of(LivingThingsTags.BANANAS);
 		return Ingredient.merge(ImmutableList.of(bananas, BREEDING_ITEMS));
 	}
 
@@ -156,7 +151,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
 	@Override
 	public void aiStep() {
-		if (this.jukeboxPosition == null || !this.jukeboxPosition.closerThan(this.position(), 3.46D)
+		if (this.jukeboxPosition == null || !this.jukeboxPosition.closerToCenterThan(this.position(), 3.46D)
 				|| !this.level.getBlockState(this.jukeboxPosition).is(Blocks.JUKEBOX)) {
 			this.partying = false;
 			this.jukeboxPosition = null;
@@ -170,7 +165,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 	}
 
 	public static boolean isBananaItem(ItemStack stack) {
-		return ItemTags.getAllTags().getTagOrEmpty(LivingThingsTags.BANANAS).contains(stack.getItem());
+		return stack.is(LivingThingsTags.BANANAS);
 	}
 
 	@Override
@@ -304,10 +299,8 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
 	public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world,
 			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.MONKEY_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.MONKEY_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

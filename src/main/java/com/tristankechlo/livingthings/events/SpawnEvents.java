@@ -16,7 +16,7 @@ public final class SpawnEvents {
 
 		String structureName = event.getStructure().getRegistryName().toString();
 
-		if (structureName.equals(StructureFeature.NETHER_BRIDGE.getRegistryName().toString())) {
+		if (structureName.equals(StructureFeature.FORTRESS.getRegistryName().toString())) {
 
 			// spawn NetherKnights in Fortresses
 			event.addEntitySpawn(MobCategory.MONSTER,

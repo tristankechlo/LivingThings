@@ -30,8 +30,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -69,7 +67,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -91,7 +88,6 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 			EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData
 			.defineId(ElephantEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-	private static Tag<Block> spawnableOn = null;
 	protected SimpleContainer entityInventory;
 	private int tameAmount;
 	private int angerTime;
@@ -107,10 +103,8 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
 	public static boolean checkElephantSpawnRules(EntityType<ElephantEntity> animal, LevelAccessor world,
 			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.ELEPHANT_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.ELEPHANT_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

@@ -18,8 +18,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -37,26 +35,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.material.Fluid;
 
 public class SeahorseEntity extends AbstractSchoolingFish implements ILexiconEntry, IMobVariants {
 
 	private static final ResourceLocation LEXICON = new ResourceLocation(LivingThings.MOD_ID, "passive_mobs/seahorse");
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(SeahorseEntity.class,
 			EntityDataSerializers.BYTE);
-	private static Tag<Fluid> spawnableOn = null;
 
 	public SeahorseEntity(EntityType<SeahorseEntity> type, Level world) {
 		super(type, world);
 	}
 
-	public static boolean checkSeahorseSpawnRules(EntityType<SeahorseEntity> entity, LevelAccessor world, MobSpawnType reason,
-			BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = FluidTags.getAllTags().getTagOrEmpty(LivingThingsTags.SEAHORSE_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getFluidState(pos).getType())
-				&& spawnableOn.contains(world.getFluidState(pos.above()).getType());
+	public static boolean checkSeahorseSpawnRules(EntityType<SeahorseEntity> entity, LevelAccessor world,
+			MobSpawnType reason, BlockPos pos, Random random) {
+		return world.getFluidState(pos).is(LivingThingsTags.SEAHORSE_SPAWNABLE_ON)
+				&& world.getFluidState(pos.above()).is(LivingThingsTags.SEAHORSE_SPAWNABLE_ON);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

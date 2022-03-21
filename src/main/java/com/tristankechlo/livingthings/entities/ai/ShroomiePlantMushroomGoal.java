@@ -41,7 +41,7 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
 	@Override
 	public void tick() {
 		BlockPos blockpos = this.getMoveToTarget();
-		if (!blockpos.closerThan(this.mob.position(), this.acceptedDistance())) {
+		if (!blockpos.closerToCenterThan(this.mob.position(), this.acceptedDistance())) {
 			this.isAboveDestination = false;
 			++this.tryTicks;
 			if (this.shouldRecalculatePath()) {

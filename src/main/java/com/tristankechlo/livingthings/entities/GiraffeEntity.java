@@ -20,8 +20,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -52,7 +50,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 
 public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, ILexiconEntry {
 
@@ -62,7 +59,6 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
 			"neutral_mobs/giraffe");
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.WHEAT);
 	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-	private static Tag<Block> spawnableOn = null;
 	private int angerTime;
 	private UUID angerTarget;
 
@@ -72,10 +68,8 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
 
 	public static boolean checkGiraffeSpawnRules(EntityType<GiraffeEntity> animal, LevelAccessor world,
 			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.GIRAFFE_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.GIRAFFE_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

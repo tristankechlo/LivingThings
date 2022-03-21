@@ -6,27 +6,22 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BlockEventHandler {
-
-	private static Tag<Block> droppingBananaBlocks;
 
 	@SubscribeEvent
 	/** used to drop bananas at block break event */
@@ -44,10 +39,7 @@ public class BlockEventHandler {
 		if (world.isClientSide() || player.isSpectator() || player.isCreative()) {
 			return;
 		}
-		if (droppingBananaBlocks == null) {
-			droppingBananaBlocks = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.DROPS_BANANAS);
-		}
-		if (!droppingBananaBlocks.contains(state.getBlock())) {
+		if (!state.is(LivingThingsTags.DROPS_BANANAS)) {
 			return;
 		}
 		ItemStack stack = player.getMainHandItem();

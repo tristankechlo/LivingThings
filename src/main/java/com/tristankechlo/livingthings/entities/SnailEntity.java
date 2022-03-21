@@ -19,8 +19,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -51,7 +49,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -72,18 +69,15 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.CARROT, Items.APPLE);
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"passive_mobs/snail");
-	private static Tag<Block> spawnableOn = null;
 
 	public SnailEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public static boolean checkSnailSpawnRules(EntityType<SnailEntity> animal, LevelAccessor world,
-			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.SNAIL_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+	public static boolean checkSnailSpawnRules(EntityType<SnailEntity> animal, LevelAccessor world, MobSpawnType reason,
+			BlockPos pos, Random random) {
+		return world.getBlockState(pos.below()).is(LivingThingsTags.SNAIL_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	private static final ResourceLocation textureLocation(String name) {

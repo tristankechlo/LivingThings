@@ -23,8 +23,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -77,7 +75,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 	private final ItemBasedSteering boostHelper = new ItemBasedSteering(this.entityData, BOOST_TIME, SADDLED);
 	private int nestBuildingCounter;
 	private int layingEggCounter;
-	private static Tag<Block> spawnableOn = null;
 	private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.WHEAT);
 
 	public OstrichEntity(EntityType<? extends OstrichEntity> entityType, Level worldIn) {
@@ -86,10 +83,8 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 
 	public static boolean checkOstrichSpawnRules(EntityType<OstrichEntity> animal, LevelAccessor world,
 			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.OSTRICH_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.OSTRICH_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override
@@ -316,7 +311,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 		@Override
 		public void tick() {
 			BlockPos blockpos = this.getMoveToTarget();
-			if (!blockpos.closerThan(this.mob.position(), this.acceptedDistance())) {
+			if (!blockpos.closerToCenterThan(this.mob.position(), this.acceptedDistance())) {
 				this.isAboveDestination = false;
 				++this.tryTicks;
 				if (this.shouldRecalculatePath()) {

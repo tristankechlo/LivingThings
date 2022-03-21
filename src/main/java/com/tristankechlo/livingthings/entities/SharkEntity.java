@@ -13,8 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
@@ -40,7 +38,6 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -49,7 +46,6 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
 	private static final ResourceLocation LEXICON_ENTRY = new ResourceLocation(LivingThings.MOD_ID,
 			"hostile_mobs/shark");
 	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-	private static Tag<Fluid> spawnableOn = null;
 	private int angerTime;
 	private UUID angerTarget;
 
@@ -152,11 +148,8 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
 
 	public static boolean checkSharkSpawnRules(EntityType<SharkEntity> entity, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = FluidTags.getAllTags().getTagOrEmpty(LivingThingsTags.SHARK_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getFluidState(pos).getType())
-				&& spawnableOn.contains(world.getFluidState(pos.above()).getType());
+		return world.getFluidState(pos).is(LivingThingsTags.SHARK_SPAWNABLE_ON)
+				&& world.getFluidState(pos.above()).is(LivingThingsTags.SHARK_SPAWNABLE_ON);
 	}
 
 	@Override

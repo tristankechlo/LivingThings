@@ -18,8 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
@@ -48,7 +46,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 
 public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 
@@ -59,7 +56,6 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 	private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
 	private int angerTime;
 	private UUID angerTarget;
-	private static Tag<Block> spawnableOn = null;
 
 	public RaccoonEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
@@ -67,10 +63,8 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 
 	public static boolean checkRaccoonSpawnRules(EntityType<RaccoonEntity> animal, LevelAccessor world,
 			MobSpawnType reason, BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.RACCOON_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.RACCOON_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

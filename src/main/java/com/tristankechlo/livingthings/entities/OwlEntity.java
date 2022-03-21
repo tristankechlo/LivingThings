@@ -20,8 +20,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
@@ -60,7 +58,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -73,7 +70,6 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 	private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS,
 			Items.BEETROOT_SEEDS);
 	private static final Ingredient TAMING_ITEMS = Ingredient.of(Items.WHEAT_SEEDS);
-	private static Tag<Block> spawnableOn = null;
 	public float flap;
 	public float flapSpeed;
 	public float oFlapSpeed;
@@ -211,10 +207,8 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 
 	public static boolean checkOwlSpawnRules(EntityType<OwlEntity> animal, LevelAccessor world, MobSpawnType reason,
 			BlockPos pos, Random random) {
-		if (spawnableOn == null) {
-			spawnableOn = BlockTags.getAllTags().getTagOrEmpty(LivingThingsTags.OWL_SPAWNABLE_ON);
-		}
-		return spawnableOn.contains(world.getBlockState(pos.below()).getBlock()) && isBrightEnoughToSpawn(world, pos);
+		return world.getBlockState(pos.below()).is(LivingThingsTags.OWL_SPAWNABLE_ON)
+				&& isBrightEnoughToSpawn(world, pos);
 	}
 
 	@Override

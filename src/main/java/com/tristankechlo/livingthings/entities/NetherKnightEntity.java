@@ -8,43 +8,43 @@ import com.tristankechlo.livingthings.entities.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
@@ -78,8 +78,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance p_180481_1_) {
 		EquipmentSlot first = this.random.nextBoolean() ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
-		EquipmentSlot second = first == EquipmentSlot.MAINHAND ? EquipmentSlot.OFFHAND
-				: EquipmentSlot.MAINHAND;
+		EquipmentSlot second = first == EquipmentSlot.MAINHAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
 		this.setItemSlot(first, createMainHandItem());
 		this.setItemSlot(second, createOffHandItem());
 	}
@@ -181,7 +180,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
 	}
 
 	@Override
-	public boolean canStandOnFluid(Fluid fluid) {
+	public boolean canStandOnFluid(FluidState fluid) {
 		return fluid.is(FluidTags.LAVA);
 	}
 
