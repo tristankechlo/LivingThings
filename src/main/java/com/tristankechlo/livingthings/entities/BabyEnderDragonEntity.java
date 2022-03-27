@@ -301,11 +301,11 @@ public class BabyEnderDragonEntity extends TamableAnimal
 		}
 
 		Vec3 vec = this.getViewVector(1.0F);
-		double d1 = this.getX() - vec.x * 10D;
-		double d2 = this.getY();
-		double d3 = this.getZ() - vec.z * 10D;
+		double d1 = this.getX() - vec.x;
+		double d2 = this.getY(0.5);
+		double d3 = this.getZ() - vec.z;
 		double d4 = entity.getX() - d1;
-		double d5 = entity.getY(0.1) - d2;
+		double d5 = entity.getY(0.5) - d2;
 		double d6 = entity.getZ() - d3;
 		CustomDragonFireball dragonfireball = new CustomDragonFireball(this.level, this, d4, d5, d6);
 		dragonfireball.moveTo(d1, d2, d3, 0.0F, 0.0F);
