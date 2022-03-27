@@ -42,8 +42,8 @@ public final class ModItems {
 	public static final RegistryObject<Item> COOKED_LION = ITEMS.register("cooked_lion", () -> new Item(new Properties().tab(ModItemGroups.GENERAL).food(ModFoods.COOKED_LION)));
 	public static final RegistryObject<Item> GIRAFFE = ITEMS.register("giraffe", () -> new Item(new Properties().tab(ModItemGroups.GENERAL).food(ModFoods.GIRAFFE)));
 	public static final RegistryObject<Item> COOKED_GIRAFFE = ITEMS.register("cooked_giraffe", () -> new Item(new Properties().tab(ModItemGroups.GENERAL).food(ModFoods.COOKED_GIRAFFE)));
-	@SuppressWarnings("deprecation")
-	public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.seahorse, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
+	public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
+
 
 	// register spawn eggs
 	public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = registerSpawnEgg(Names.ELEPHANT, ModEntityTypes.ELEPHANT, 0x000000, 0x4e4e4e);

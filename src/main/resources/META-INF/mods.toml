@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[39,)"
+loaderVersion="[40,)"
 license="CC BY-NC-ND 4.0"
 showAsResourcePack=false
 issueTrackerURL="https://github.com/tristankechlo/LivingThings/issues"
@@ -17,13 +17,13 @@ description='''adds various new mobs to Minecraft'''
 [[dependencies.livingthings]]
     modId="forge"
     mandatory=true
-    versionRange="[39.0.58,)"
+    versionRange="[40,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.livingthings]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1,1.19)"
+    versionRange="[1.18.2,1.19)"
     ordering="NONE"
     side="BOTH"

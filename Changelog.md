@@ -1,6 +1,7 @@
 # Changelog
 
-### Version 1.18.1 - 1.5.0
+### Version 1.18.2 - 1.5.0
+ - port to 1.18.2
  - new elephant texture
  - new mob: `baby_ender_dragon`
      - can be found in all end biomes

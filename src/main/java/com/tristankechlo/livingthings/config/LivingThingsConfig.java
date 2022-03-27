@@ -1,7 +1,5 @@
 package com.tristankechlo.livingthings.config;
 
-import org.apache.logging.log4j.Level;
-
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.AncientBlazeConfig;
 import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
@@ -90,8 +88,7 @@ public class LivingThingsConfig {
 		if (ForgeRegistries.BIOMES.containsKey(new ResourceLocation(String.valueOf(test)))) {
 			return true;
 		}
-		LivingThings.LOGGER.log(Level.INFO,
-				"Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
+		LivingThings.LOGGER.info("Removing unknown Biome[" + String.valueOf(test) + "] from " + name + "-SpawnBiomes");
 		return false;
 	}
 

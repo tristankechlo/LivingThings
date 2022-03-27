@@ -2,9 +2,9 @@ package com.tristankechlo.livingthings;
 
 import java.io.File;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
+import com.mojang.logging.LogUtils;
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
 import com.tristankechlo.livingthings.config.misc.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEventHandler;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 @Mod(LivingThings.MOD_ID)
 public class LivingThings {
 
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String MOD_ID = "livingthings";
 	public static boolean patchouliLoaded = false;
 

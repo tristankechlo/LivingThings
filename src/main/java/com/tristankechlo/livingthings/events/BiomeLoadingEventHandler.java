@@ -32,7 +32,7 @@ public class BiomeLoadingEventHandler {
 				MobCategory classification = entry.getKey();
 				for (SpawnerData spawner : entry.getValue()) {
 					event.getSpawns().getSpawner(classification).add(spawner);
-					LivingThings.LOGGER.info(event.getName() + " | " + classification + " | " + spawner);
+//					LivingThings.LOGGER.info(event.getName() + " | " + classification + " | " + spawner);
 				}
 			}
 		}
