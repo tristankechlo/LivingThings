@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.misc.Names;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -53,6 +54,12 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> NETHER_KNIGHT_STEP = registerSound("nether_knight_step", "nether_knight.step");
 
 	public static final RegistryObject<SoundEvent> SEAHORSE_FLOP = registerSound("seahorse_flop", "seahorse.flop");
+
+	public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_AMBIENT = registerSound(Names.BABY_ENDER_DRAGON + "_ambient", Names.BABY_ENDER_DRAGON + ".ambient");
+	public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_HURT = registerSound(Names.BABY_ENDER_DRAGON + "_hurt", Names.BABY_ENDER_DRAGON + ".hurt");
+	public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_DEATH = registerSound(Names.BABY_ENDER_DRAGON + "_death", Names.BABY_ENDER_DRAGON + ".death");
+	public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_FLAP = registerSound(Names.BABY_ENDER_DRAGON + "_flap", Names.BABY_ENDER_DRAGON + ".flap");
+	public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_SHOOT = registerSound(Names.BABY_ENDER_DRAGON + "_shoot", Names.BABY_ENDER_DRAGON + ".shoot");
 
 	private static RegistryObject<SoundEvent> registerSound(String soundName, String soundLocation) {
 		return SOUNDS.register(soundName, () -> new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, soundLocation)));

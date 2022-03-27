@@ -11,6 +11,7 @@ import com.tristankechlo.livingthings.entities.ai.CustomSitWhenOrderedToSitGoal;
 import com.tristankechlo.livingthings.entities.misc.CustomDragonFireball;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
+import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.misc.ILexiconEntry;
 import com.tristankechlo.livingthings.misc.LivingThingsTags;
 
@@ -22,7 +23,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -311,9 +311,8 @@ public class BabyEnderDragonEntity extends TamableAnimal
 		dragonfireball.moveTo(d1, d2, d3, 0.0F, 0.0F);
 		this.level.addFreshEntity(dragonfireball);
 		if (!this.level.isClientSide() && !this.isSilent()) {
-			// TODO play shoot sound
-			this.level.playSound(null, this.blockPosition(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.HOSTILE, 2.0F,
-					(this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+			this.level.playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_SHOOT.get(),
+					SoundSource.HOSTILE, 2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 		}
 	}
 
@@ -344,20 +343,23 @@ public class BabyEnderDragonEntity extends TamableAnimal
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		// TODO ambient sound
-		return super.getAmbientSound();
+		return ModSounds.BABY_ENDER_DRAGON_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource p_21239_) {
-		// TODO hurt sound
-		return super.getHurtSound(p_21239_);
+		return ModSounds.BABY_ENDER_DRAGON_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		// TODO death sound
-		return super.getDeathSound();
+		return ModSounds.BABY_ENDER_DRAGON_DEATH.get();
+	}
+
+	@Override
+	protected void onFlap() {
+		this.level.playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_FLAP.get(), SoundSource.AMBIENT,
+				2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 	}
 
 	@Override

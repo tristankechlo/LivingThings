@@ -106,7 +106,12 @@
 	"subtitles.livingthings.nether_knight.ambient" : "Nether Krieger Ger\u00e4usche",
 	"subtitles.livingthings.nether_knight.hurt" : "Nether Krieger nimmt Schaden",
 	"subtitles.livingthings.nether_knight.death" : "Nether Krieger stirbt",
-	"subtitles.livingthings.seahorse.flop" : "Seepferdchen springt",
+	"subtitles.livingthings.seahorse.flop" : "Seepferdchen h\u00fcpft",
+	"subtitles.livingthings.baby_ender_dragon.ambient" : "Baby Enderdrache br\u00fcllt",
+	"subtitles.livingthings.baby_ender_dragon.hurt" : "Baby Enderdrache nimmt Schaden",
+	"subtitles.livingthings.baby_ender_dragon.death" : "Baby Enderdrache stirbt",
+	"subtitles.livingthings.baby_ender_dragon.flaps" : "Baby Enderdrache flattert",
+	"subtitles.livingthings.baby_ender_dragon.shoot" : "Baby Enderdrache schie\u00dft",
 
 
 	"__comment7" : "messages",

@@ -32,8 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModEntityTypes {
 
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
-			LivingThings.MOD_ID);
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, LivingThings.MOD_ID);
 
 	// register entity types
 	public static final RegistryObject<EntityType<ElephantEntity>> ELEPHANT = ENTITY_TYPES.register(Names.ELEPHANT,

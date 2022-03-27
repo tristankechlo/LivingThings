@@ -107,6 +107,11 @@
 	"subtitles.livingthings.nether_knight.hurt" : "Nether Knight hurts",
 	"subtitles.livingthings.nether_knight.death" : "Nether Knight dies",
 	"subtitles.livingthings.seahorse.flop" : "Seahorse flops",
+	"subtitles.livingthings.baby_ender_dragon.ambient" : "Baby Enderdragon roars",
+	"subtitles.livingthings.baby_ender_dragon.hurt" : "Baby Enderdragon hurts",
+	"subtitles.livingthings.baby_ender_dragon.death" : "Baby Enderdragon dies",
+	"subtitles.livingthings.baby_ender_dragon.flaps" : "Baby Enderdragon flaps",
+	"subtitles.livingthings.baby_ender_dragon.shoot" : "Baby Enderdragon shoots",
 
 
 	"__comment7" : "messages",
