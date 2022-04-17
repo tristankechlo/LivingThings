@@ -357,6 +357,11 @@ public class BabyEnderDragonEntity extends TamableAnimal
 	}
 
 	@Override
+	public int getAmbientSoundInterval() {
+		return 300;
+	}
+
+	@Override
 	protected void onFlap() {
 		this.level.playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_FLAP.get(), SoundSource.AMBIENT,
 				2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
