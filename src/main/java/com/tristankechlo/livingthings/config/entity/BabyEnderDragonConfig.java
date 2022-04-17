@@ -1,12 +1,7 @@
 package com.tristankechlo.livingthings.config.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.tristankechlo.livingthings.config.LivingThingsConfig;
-import com.tristankechlo.livingthings.config.misc.SpawnData;
 
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
@@ -18,6 +13,7 @@ public class BabyEnderDragonConfig {
 	public final DoubleValue health;
 	public final DoubleValue walkingSpeed;
 	public final DoubleValue flyingSpeed;
+	public final BooleanValue canSpawn;
 	public final IntValue maxSpawnedInChunk;
 
 	public BabyEnderDragonConfig(ForgeConfigSpec.Builder builder) {
@@ -39,14 +35,18 @@ public class BabyEnderDragonConfig {
 		maxSpawnedInChunk = builder.comment(LivingThingsConfig.REQUIRES_RESTART).worldRestart()
 				.defineInRange("MaxSpawnedInChunk", 5, 1, 15);
 
+		canSpawn = builder.comment("wether or not the entity shall spawn when conditions are met").define("CanSpawn",
+				true);
+
 		builder.pop();
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<SpawnData> getDefaultSpawns() {
-		List<SpawnData> spawns = new ArrayList<SpawnData>();
-		spawns.add(new SpawnData(15, 3, 5, Biomes.END_BARRENS, Biomes.END_HIGHLANDS, Biomes.END_MIDLANDS,
-				Biomes.SMALL_END_ISLANDS, Biomes.THE_END));
-		return spawns;
-	}
+//	@SuppressWarnings("unchecked")
+//	public static List<SpawnData> getDefaultSpawns() {
+//		List<SpawnData> spawns = new ArrayList<SpawnData>();
+//		spawns.add(new SpawnData(15, 3, 5, Biomes.END_BARRENS, Biomes.END_HIGHLANDS, Biomes.END_MIDLANDS,
+//				Biomes.SMALL_END_ISLANDS, Biomes.THE_END));
+//		return spawns;
+//	}
+
 }

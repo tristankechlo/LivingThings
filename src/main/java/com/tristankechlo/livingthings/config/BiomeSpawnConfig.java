@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.tristankechlo.livingthings.LivingThings;
-import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
@@ -32,9 +31,9 @@ import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 import com.tristankechlo.livingthings.config.misc.SpawnData;
 
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -139,7 +138,7 @@ public final class BiomeSpawnConfig {
 		names.put("livingthings:snail", SnailConfig::getDefaultSpawns);
 		names.put("livingthings:shroomie", ShroomieConfig::getDefaultSpawns);
 		names.put("livingthings:seahorse", SeahorseConfig::getDefaultSpawns);
-		names.put("livingthings:baby_ender_dragon", BabyEnderDragonConfig::getDefaultSpawns);
+//		names.put("livingthings:baby_ender_dragon", BabyEnderDragonConfig::getDefaultSpawns);
 		return names;
 	}
 

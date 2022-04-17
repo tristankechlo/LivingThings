@@ -4,7 +4,7 @@
  - port to 1.18.2
  - new elephant texture
  - new mob: `baby_ender_dragon`
-     - can be found in all end biomes
+     - can be hatched by placing a dragon egg on top of a purpur pillar
      - can be tamed with chorus fruits
  - meat items are now actually declared as meat so they can be fed to wolves
 
