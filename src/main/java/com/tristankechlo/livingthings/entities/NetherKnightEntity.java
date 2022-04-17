@@ -85,13 +85,14 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
 	@Override
 	protected void dropEquipment() {
+		final int dropChance = Math.max(1, LivingThingsConfig.NETHER_KNIGHT.weaponDropChance.get());
 		ItemStack mainHand = this.getMainHandItem();
-		if (mainHand != null) {
+		if (mainHand != null && random.nextInt(dropChance) == 0) {
 			mainHand.setDamageValue(500 + random.nextInt(500));
 			this.spawnAtLocation(mainHand);
 		}
 		ItemStack offHand = this.getOffhandItem();
-		if (offHand != null) {
+		if (offHand != null && random.nextInt(dropChance) == 0) {
 			offHand.setDamageValue(500 + random.nextInt(500));
 			this.spawnAtLocation(offHand);
 		}

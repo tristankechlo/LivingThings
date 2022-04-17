@@ -22,6 +22,7 @@ public class NetherKnightConfig {
 	public final IntValue spawnWeight;
 	public final IntValue minSpawnCount;
 	public final IntValue maxSpawnCount;
+	public final IntValue weaponDropChance;
 
 	public NetherKnightConfig(ForgeConfigSpec.Builder builder) {
 		builder.comment("Mob-Config for NetherKnight").push("NetherKnight");
@@ -37,6 +38,10 @@ public class NetherKnightConfig {
 				10.0D, LivingThingsConfig.MIN_DAMAGE, LivingThingsConfig.MAX_DAMAGE);
 
 		canAttack = builder.define("CanAttack", true);
+
+		weaponDropChance = builder.comment(LivingThingsConfig.REQUIRES_RESTART
+				+ " | higher value means the weapons less likely to drop | will be calculated for main/offhand individually")
+				.worldRestart().defineInRange("WeaponDropChance", 1, 1, Integer.MAX_VALUE);
 
 		swords = builder
 				.comment(LivingThingsConfig.REQUIRES_RESTART
