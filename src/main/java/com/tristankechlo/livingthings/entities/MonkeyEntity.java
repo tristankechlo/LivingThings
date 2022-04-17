@@ -255,7 +255,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
 	@Override
 	protected int calculateFallDamage(float distance, float damageMultiplier) {
-		return super.calculateFallDamage(distance, (damageMultiplier * 0.5F));
+		return (int) (super.calculateFallDamage(distance, (damageMultiplier)) * 0.5D);
 	}
 
 	@Override
