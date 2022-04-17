@@ -2,11 +2,13 @@
 
 ### Version 1.18.2 - 1.5.0
  - port to 1.18.2
- - new elephant texture
+ - new improved elephant texture
  - new mob: `baby_ender_dragon`
      - can be hatched by placing a dragon egg on top of a purpur pillar
      - can be tamed with chorus fruits
  - meat items are now actually declared as meat so they can be fed to wolves
+ - reduced falldamage for monkeys and koalas
+ - dropchance for the netherknight weapons are now changable through the config
 
 ### Version 1.18.1 - 1.4.1
  - port to 1.18.1
