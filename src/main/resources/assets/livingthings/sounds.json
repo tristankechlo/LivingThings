@@ -298,24 +298,15 @@
 	"baby_ender_dragon.ambient": {
 		"sounds": [
 			{
-				"name": "mob/enderdragon/growl1",
-				"pitch": 1.5,
-				"volume": 0.75
+				"name": "livingthings:baby_enderdragon/growl",
+				"pitch": 1.2
 			},
 			{
-				"name": "mob/enderdragon/growl2",
-				"pitch": 1.5,
-				"volume": 0.75
+				"name": "livingthings:baby_enderdragon/growl"
 			},
 			{
-				"name": "mob/enderdragon/growl3",
-				"pitch": 1.5,
-				"volume": 0.75
-			},
-			{
-				"name": "mob/enderdragon/growl4",
-				"pitch": 1.5,
-				"volume": 0.75
+				"name": "livingthings:baby_enderdragon/growl",
+				"pitch": 0.8
 			}
 		],
 		"subtitle": "subtitles.livingthings.baby_ender_dragon.ambient"

@@ -106,7 +106,8 @@ public class BabyEnderDragonEntity extends TamableAnimal
 		this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
 		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
+		this.targetSelector.addGoal(4,
+				new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 		this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
 	}
 
@@ -299,7 +300,9 @@ public class BabyEnderDragonEntity extends TamableAnimal
 		if (peaceful || ambientMode || !LivingThingsConfig.BABY_ENDER_DRAGON.canAttack.get()) {
 			return;
 		}
-
+		if (!this.canAttack(entity)) { // do not attack creative,... players
+			return;
+		}
 		Vec3 vec = this.getViewVector(1.0F);
 		double d1 = this.getX() - vec.x;
 		double d2 = this.getY(0.5);
