@@ -274,7 +274,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 					if (!player.getAbilities().instabuild) {
 						stack.shrink(1);
 					}
-					this.heal(item.getFoodProperties().getNutrition());
+					this.heal(item.getFoodProperties(stack, null).getNutrition());
 					return InteractionResult.SUCCESS;
 				} else if (stack.isEmpty()) {
 					this.setSitting(!this.isCrouching());

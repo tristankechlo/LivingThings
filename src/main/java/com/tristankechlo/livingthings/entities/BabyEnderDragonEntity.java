@@ -157,7 +157,7 @@ public class BabyEnderDragonEntity extends TamableAnimal
 					if (!player.getAbilities().instabuild) {
 						itemstack.shrink(1);
 					}
-					this.heal((float) (item.getFoodProperties().getNutrition() / 2));
+					this.heal((float) (item.getFoodProperties(itemstack, null).getNutrition() / 2));
 					this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
 					return InteractionResult.SUCCESS;
 				}
