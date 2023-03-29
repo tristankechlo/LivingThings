@@ -3,6 +3,7 @@ subprojects {
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
     jar {
+        from rootProject.file('CREDITS.md')
         manifest {
             attributes([
                     'Specification-Title'     : mod_name,
