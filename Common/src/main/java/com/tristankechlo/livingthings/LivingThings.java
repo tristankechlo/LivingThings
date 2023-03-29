@@ -1,5 +1,9 @@
 package com.tristankechlo.livingthings;
 
+import com.tristankechlo.livingthings.init.ModBlocks;
+import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModItems;
+import com.tristankechlo.livingthings.init.ModSounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,5 +19,13 @@ public final class LivingThings {
     public static final String DISCORD_URL = "https://discord.gg/bhUaWhq";
     public static final String CURSEFORGE_URL = "https://curseforge.com/minecraft/mc-mods/living-things";
     public static final String MODRINTH_URL = "https://modrinth.com/mod/living-things";
+
+    public static void init() {
+        //make sure all classes are loaded
+        ModItems.init();
+        ModBlocks.init();
+        ModSounds.init();
+        ModEntities.init();
+    }
 
 }

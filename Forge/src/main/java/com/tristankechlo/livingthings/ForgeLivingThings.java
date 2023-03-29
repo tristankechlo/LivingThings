@@ -7,6 +7,7 @@ public final class ForgeLivingThings {
 
     public ForgeLivingThings() {
         LivingThings.LOGGER.info("Hello from ForgeLivingThings!");
+        LivingThings.init();
     }
 
 }

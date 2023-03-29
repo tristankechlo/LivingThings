@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.platform;
 
+import net.minecraft.world.item.CreativeModeTab;
+
 import java.nio.file.Path;
 
 public interface IPlatformHelper {
@@ -17,5 +19,11 @@ public interface IPlatformHelper {
     }
 
     Path getConfigDirectory();
+
+    CreativeModeTab getCreativeModeTab();
+
+    static CreativeModeTab getCreativeTab() {
+        return IPlatformHelper.INSTANCE.getCreativeModeTab();
+    }
 
 }

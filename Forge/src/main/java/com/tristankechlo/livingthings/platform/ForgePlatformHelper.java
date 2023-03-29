@@ -1,5 +1,7 @@
 package com.tristankechlo.livingthings.platform;
 
+import com.tristankechlo.livingthings.init.ForgeIemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -26,6 +28,11 @@ public final class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public Path getConfigDirectory() {
         return FMLPaths.CONFIGDIR.get();
+    }
+
+    @Override
+    public CreativeModeTab getCreativeModeTab() {
+        return ForgeIemGroup.GENERAL;
     }
 
 }
