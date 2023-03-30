@@ -14,7 +14,7 @@ public final class ModItems {
     public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registry.ITEM, LivingThings.MOD_ID);
 
     public static final RegistryObject<Item> SHARK_TOOTH = ITEMS.register("shark_tooth", () -> new Item(normalProps()));
-    //public static final RegistryObject<Item> OSTRICH_EGG = ITEMS.register("ostrich_egg", () -> new OstrichEggItem(new Properties().tab(ModItemGroups.GENERAL).stacksTo(16)));
+    public static final RegistryObject<Item> OSTRICH_EGG = ITEMS.register("ostrich_egg", () -> new Item(normalProps().stacksTo(16)));
     public static final RegistryObject<Item> CRAB = ITEMS.register("crab", () -> new Item(normalProps().food(ModFoods.CRAB)));
     public static final RegistryObject<Item> COOKED_CRAB = ITEMS.register("cooked_crab", () -> new Item(normalProps().food(ModFoods.COOKED_CRAB)));
     public static final RegistryObject<Item> CRAB_SHELL = ITEMS.register("crab_shell", () -> new Item(normalProps()));
@@ -31,7 +31,7 @@ public final class ModItems {
     public static final RegistryObject<Item> COOKED_GIRAFFE = ITEMS.register("cooked_giraffe", () -> new Item(normalProps().food(ModFoods.COOKED_GIRAFFE)));
     //public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
 
-    private static Item.Properties normalProps() {
+    public static Item.Properties normalProps() {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());
     }
 

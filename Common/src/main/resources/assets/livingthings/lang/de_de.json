@@ -12,5 +12,7 @@
     "item.livingthings.lion": "Rohes L\u00f6wen Fleisch",
     "item.livingthings.cooked_lion": "L\u00f6wen Fleisch",
     "item.livingthings.giraffe": "Rohes Giraffen Fleisch",
-    "item.livingthings.cooked_giraffe": "Giraffen Fleisch"
+    "item.livingthings.cooked_giraffe": "Giraffen Fleisch",
+    "item.livingthings.ostrich_egg": "Straußen Ei",
+    "block.livingthings.ostrich_nest": "Straußen Nest"
 }

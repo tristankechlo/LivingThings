@@ -1,0 +1,34 @@
+{
+    "variants" : {
+        "egg=true,hatch=0" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_cracked_0"
+            }
+        ],
+        "egg=true,hatch=1" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_cracked_1"
+            }
+        ],
+        "egg=true,hatch=2" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_cracked_2"
+            }
+        ],
+        "egg=false,hatch=0" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_empty"
+            }
+        ],
+        "egg=false,hatch=1" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_empty"
+            }
+        ],
+        "egg=false,hatch=2" : [
+            {
+                "model" : "livingthings:block/ostrich_nest_empty"
+            }
+        ]
+    }
+}

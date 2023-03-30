@@ -1,0 +1,6 @@
+{
+    "parent": "livingthings:block/ostrich_nest",
+    "textures": {
+        "egg": "livingthings:blocks/ostrich_nest_egg_cracked_2"
+    }
+}

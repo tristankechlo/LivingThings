@@ -12,5 +12,7 @@
     "item.livingthings.lion": "Raw Lion Meat",
     "item.livingthings.cooked_lion": "Cooked Lion Meat",
     "item.livingthings.giraffe": "Raw Giraffe Meat",
-    "item.livingthings.cooked_giraffe": "Cooked Giraffe Meat"
+    "item.livingthings.cooked_giraffe": "Cooked Giraffe Meat",
+    "item.livingthings.ostrich_egg": "Ostrich Egg",
+    "block.livingthings.ostrich_nest": "Ostrich Nest"
 }
