@@ -1,16 +1,12 @@
 {
     "required": true,
-    "minVersion": "0.8",
     "package": "com.tristankechlo.livingthings.mixin",
     "compatibilityLevel": "JAVA_17",
+    "minVersion": "0.8",
     "mixins": [
+        "SpawnPlacementsInvoker"
     ],
     "client": [
     ],
-    "server": [
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+    "refmap": "livingthings.refmap.json"
 }
-

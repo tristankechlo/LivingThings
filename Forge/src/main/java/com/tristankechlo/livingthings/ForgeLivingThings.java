@@ -23,8 +23,7 @@ public final class ForgeLivingThings {
     }
 
     public void onSpawnPlacementsRegister(final SpawnPlacementRegisterEvent event) {
-        final SpawnPlacementRegisterEvent.Operation operation = SpawnPlacementRegisterEvent.Operation.REPLACE;
-        LivingThings.registerSpawnPlacements((entityType, type, heightmap, predicate) -> event.register(entityType, type, heightmap, predicate, operation));
+        LivingThings.registerSpawnPlacements();
     }
 
 }

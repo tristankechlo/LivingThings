@@ -5,10 +5,10 @@ import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntities;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.mixin.SpawnPlacementsInvoker;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacements.Type;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.slf4j.Logger;
@@ -38,16 +38,13 @@ public final class LivingThings {
     }
 
     public static void registerMobAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> consumer) {
+        LivingThings.LOGGER.info("Registering MobAttributes");
         consumer.accept(ModEntities.PENGUIN.get(), PenguinEntity.createAttributes());
     }
 
-    public static <T extends Mob> void registerSpawnPlacements(SpawnPlacementHelper<T> helper) {
-        helper.register((EntityType<T>) ModEntities.PENGUIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
-    }
-
-    @FunctionalInterface
-    public interface SpawnPlacementHelper<T extends Mob> {
-        void register(EntityType<T> entityType, SpawnPlacements.Type type, Heightmap.Types heightmap, SpawnPlacements.SpawnPredicate<T> predicate);
+    public static void registerSpawnPlacements() {
+        LivingThings.LOGGER.info("Registering SpawnPlacements");
+        SpawnPlacementsInvoker.register(ModEntities.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
     }
 
 }

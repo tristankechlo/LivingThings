@@ -28,7 +28,7 @@ public class PenguinEntity extends Animal {
         super(entityType, worldIn);
     }
 
-    public static boolean checkPenguinSpawnRules(EntityType<? extends Mob> animal, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkPenguinSpawnRules(EntityType<PenguinEntity> animal, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.PENGUIN_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
