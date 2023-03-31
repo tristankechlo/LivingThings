@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entity;
 
+import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.init.ModEntities;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -15,16 +16,12 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.PolarBear;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 public class PenguinEntity extends Animal {
 
-    private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON, Items.TROPICAL_FISH);
-
-    public PenguinEntity(EntityType<? extends PenguinEntity> entityType, Level worldIn) {
+    public PenguinEntity(EntityType<PenguinEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
     }
 
@@ -38,7 +35,9 @@ public class PenguinEntity extends Animal {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10).add(Attributes.MOVEMENT_SPEED, 0.25);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, PenguinConfig.health())
+                .add(Attributes.MOVEMENT_SPEED, PenguinConfig.movementSpeed());
     }
 
     @Override
@@ -46,7 +45,7 @@ public class PenguinEntity extends Animal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, PolarBear.class, 8.0F, 1.0D, 1.2D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, TEMPTATION_ITEMS, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, PenguinConfig.temptationItems(), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -56,7 +55,7 @@ public class PenguinEntity extends Animal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return TEMPTATION_ITEMS.test(stack);
+        return PenguinConfig.temptationItems().test(stack);
     }
 
     @Override
@@ -76,13 +75,12 @@ public class PenguinEntity extends Animal {
 
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return this.isBaby() ? 0.6F : 1.3F;
+        return size.height * 0.9F;
     }
 
     @Override
     public int getMaxSpawnClusterSize() {
-        //return LivingThingsConfig.PENGUIN.maxSpawnedInChunk.get();
-        return 9;
+        return PenguinConfig.maxSpawnedInChunk();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings;
 
+import com.tristankechlo.livingthings.config.util.ConfigManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -12,9 +13,12 @@ public final class ForgeLivingThings {
 
     public ForgeLivingThings() {
         LivingThings.init();
+        ConfigManager.loadAndVerifyConfig();
+
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         modbus.addListener(this::onAttributeRegister);
         modbus.addListener(this::onSpawnPlacementsRegister);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
