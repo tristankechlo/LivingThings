@@ -71,7 +71,7 @@ public class PenguinEntity extends Animal {
 
     @Override
     public int getAmbientSoundInterval() {
-        return 180;
+        return PenguinConfig.talkInterval();
     }
 
     @Override

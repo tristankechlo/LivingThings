@@ -14,11 +14,12 @@ public final class PenguinConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 6, 1, 15);
+    public final IntegerValue talkInterval = new IntegerValue("talkInterval", 180, 0, Integer.MAX_VALUE);
     public final IngredientValue temptationItems = new IngredientValue("temptationItems", Items.COD, Items.SALMON, Items.TROPICAL_FISH);
 
     private PenguinConfig() {
         super("penguin");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, temptationItems);
+        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, talkInterval, temptationItems);
     }
 
     public static PenguinConfig get() {
@@ -39,6 +40,10 @@ public final class PenguinConfig extends EntityConfig {
 
     public static Ingredient temptationItems() {
         return INSTANCE.temptationItems.get();
+    }
+
+    public static int talkInterval() {
+        return INSTANCE.talkInterval.get();
     }
 
 }
