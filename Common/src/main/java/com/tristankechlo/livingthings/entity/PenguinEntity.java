@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -85,20 +86,17 @@ public class PenguinEntity extends Animal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        //return ModSounds.PENGUIN_AMBIENT.get();
-        return super.getAmbientSound();
+        return ModSounds.PENGUIN_AMBIENT.get();
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        //return ModSounds.PENGUIN_HURT.get();
-        return super.getHurtSound(damageSourceIn);
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return ModSounds.PENGUIN_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        //return ModSounds.PENGUIN_DEATH.get();
-        return super.getDeathSound();
+        return ModSounds.PENGUIN_DEATH.get();
     }
 
 }
