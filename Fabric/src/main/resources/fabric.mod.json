@@ -18,6 +18,9 @@
     "entrypoints": {
         "main": [
             "com.tristankechlo.livingthings.FabricLivingThings"
+        ],
+        "client": [
+            "com.tristankechlo.livingthings.FabricLivingThingsClient"
         ]
     },
     "mixins": [

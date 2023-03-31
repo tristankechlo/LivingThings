@@ -14,5 +14,6 @@
     "item.livingthings.giraffe": "Rohes Giraffen Fleisch",
     "item.livingthings.cooked_giraffe": "Giraffen Fleisch",
     "item.livingthings.ostrich_egg": "Straußen Ei",
-    "block.livingthings.ostrich_nest": "Straußen Nest"
+    "block.livingthings.ostrich_nest": "Straußen Nest",
+    "item.livingthings.penguin_spawn_egg": "Pinguin-Spawn-Ei"
 }

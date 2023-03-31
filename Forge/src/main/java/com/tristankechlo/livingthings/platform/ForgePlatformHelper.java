@@ -1,6 +1,6 @@
 package com.tristankechlo.livingthings.platform;
 
-import com.tristankechlo.livingthings.init.ForgeIemGroup;
+import com.tristankechlo.livingthings.init.ForgeItemGroup;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -32,7 +32,7 @@ public final class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public CreativeModeTab getCreativeModeTab() {
-        return ForgeIemGroup.GENERAL;
+        return ForgeItemGroup.GENERAL;
     }
 
 }

@@ -7,13 +7,13 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
-public class ForgeIemGroup extends CreativeModeTab {
+public class ForgeItemGroup extends CreativeModeTab {
 
-    public static final ForgeIemGroup GENERAL = new ForgeIemGroup("general", ModItems.SHARK_TOOTH);
+    public static final ForgeItemGroup GENERAL = new ForgeItemGroup("general", ModItems.SHARK_TOOTH);
 
     private final Supplier<Item> icon;
 
-    public ForgeIemGroup(String name, Supplier<Item> icon) {
+    public ForgeItemGroup(String name, Supplier<Item> icon) {
         super(LivingThings.MOD_ID + "." + name);
         this.icon = icon;
     }
