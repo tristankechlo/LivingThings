@@ -1,7 +1,9 @@
 package com.tristankechlo.livingthings;
 
+import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.util.ConfigManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,7 +21,12 @@ public final class ForgeLivingThings {
         modbus.addListener(this::onAttributeRegister);
         modbus.addListener(this::onSpawnPlacementsRegister);
 
+        MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void registerCommands(final RegisterCommandsEvent event) {
+        LivingThingsCommand.register(event.getDispatcher());
     }
 
     public void onAttributeRegister(final EntityAttributeCreationEvent event) {
