@@ -147,8 +147,8 @@ public class OstrichEntity extends Animal implements ItemSteerable {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        return (this.isBaby()) ? 0.8F : 1.75F;
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+        return size.height * 0.98F;
     }
 
     @Override
