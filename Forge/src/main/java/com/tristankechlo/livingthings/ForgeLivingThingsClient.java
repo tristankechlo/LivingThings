@@ -23,6 +23,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.OSTRICH.get(), OstrichRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.FLAMINGO.get(), FlamingoRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.CRAB.get(), CrabRenderer::new);
     }
 
     @SubscribeEvent
@@ -34,6 +35,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.PENGUIN, PenguinModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.OSTRICH, OstrichModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.FLAMINGO, FlamingoModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.CRAB, CrabModel::createBodyLayer);
     }
 
 }

@@ -66,5 +66,7 @@
     "item.livingthings.ostrich_spawn_egg": "Strau\u00dfen-Spawn-Ei",
     "entity.livingthings.ostrich": "Strau\u00df",
     "item.livingthings.flamingo_spawn_egg": "Flamingo-Spawn-Ei",
-    "entity.livingthings.flamingo": "Flamingo"
+    "entity.livingthings.flamingo": "Flamingo",
+    "item.livingthings.crab_spawn_egg": "Krabben-Spawn-Ei",
+    "entity.livingthings.crab": "Krabbe"
 }
