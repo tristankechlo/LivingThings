@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public final class PenguinConfig extends EntityConfig {
 
-    public static final PenguinConfig INSTANCE = new PenguinConfig();
+    private static final PenguinConfig INSTANCE = new PenguinConfig();
 
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);

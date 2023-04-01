@@ -56,5 +56,7 @@
     "subtitles.livingthings.baby_ender_dragon.shoot": "Baby Enderdrache schie\u00dft",
     "entity.livingthings.elephant": "Elefant",
     "entity.livingthings.penguin": "Pinguin",
-    "container.livingthings.elephant": "Elefant"
+    "container.livingthings.elephant": "Elefant",
+    "item.livingthings.giraffe_spawn_egg": "Giraffen-Spawn-Ei",
+    "entity.livingthings.giraffe": "Giraffe"
 }

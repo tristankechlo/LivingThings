@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.entity.ElephantEntity;
+import com.tristankechlo.livingthings.entity.GiraffeEntity;
 import com.tristankechlo.livingthings.entity.PenguinEntity;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -34,12 +35,14 @@ public final class LivingThings {
     public static void registerMobAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> consumer) {
         LivingThings.LOGGER.info("Registering MobAttributes");
         consumer.accept(ModEntityTypes.ELEPHANT.get(), ElephantEntity.createAttributes());
+        consumer.accept(ModEntityTypes.GIRAFFE.get(), GiraffeEntity.createAttributes());
         consumer.accept(ModEntityTypes.PENGUIN.get(), PenguinEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
         LivingThings.LOGGER.info("Registering SpawnPlacements");
         SpawnPlacementsInvoker.register(ModEntityTypes.ELEPHANT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ElephantEntity::checkElephantSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.GIRAFFE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GiraffeEntity::checkGiraffeSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
     }
 

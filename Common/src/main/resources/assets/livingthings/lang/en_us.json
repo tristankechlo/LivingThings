@@ -16,6 +16,7 @@
     "item.livingthings.ostrich_egg": "Ostrich Egg",
     "block.livingthings.ostrich_nest": "Ostrich Nest",
     "item.livingthings.elephant_spawn_egg": "Elephant Spawn Egg",
+    "item.livingthings.giraffe_spawn_egg": "Giraffe Spawn Egg",
     "item.livingthings.penguin_spawn_egg": "Penguin Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
@@ -55,6 +56,7 @@
     "subtitles.livingthings.baby_ender_dragon.flaps": "Baby Enderdragon flaps",
     "subtitles.livingthings.baby_ender_dragon.shoot": "Baby Enderdragon shoots",
     "entity.livingthings.elephant": "Elephant",
+    "entity.livingthings.giraffe": "Giraffe",
     "entity.livingthings.penguin": "Penguin",
     "container.livingthings.elephant": "Elephant"
 }

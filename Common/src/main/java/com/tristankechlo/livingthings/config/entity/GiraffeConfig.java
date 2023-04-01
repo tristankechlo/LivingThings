@@ -8,24 +8,28 @@ import com.tristankechlo.livingthings.config.values.NumberValue.IntegerValue;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public final class ElephantConfig extends EntityConfig {
+public final class GiraffeConfig extends EntityConfig {
 
-    private static final ElephantConfig INSTANCE = new ElephantConfig();
+    private static final GiraffeConfig INSTANCE = new GiraffeConfig();
 
     public final BooleanValue canAttack = new BooleanValue("canAttack", true);
-    public final DoubleValue health = new DoubleValue("health", 60.0D, MIN_HEALTH, MAX_HEALTH);
-    public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
-    public final DoubleValue attackDamage = new DoubleValue("attackDamage", 7.0D, MIN_DAMAGE, MAX_DAMAGE);
+    public final DoubleValue health = new DoubleValue("health", 30.0D, MIN_HEALTH, MAX_HEALTH);
+    public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.3D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue attackDamage = new DoubleValue("attackDamage", 4.0D, MIN_DAMAGE, MAX_DAMAGE);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
     public final IngredientValue temptationItems = new IngredientValue("temptationItems", Ingredient.of(Items.WHEAT));
-    public final IngredientValue tamingItems = new IngredientValue("tamingItems", Ingredient.of(Items.APPLE));
 
-    private ElephantConfig() {
-        super("elephant");
-        this.registerConfigValues(canAttack, health, movementSpeed, attackDamage, maxSpawnedInChunk, temptationItems, tamingItems);
+    public final IntegerValue color1Weight = new IntegerValue("color1Weight", 50, 0, Integer.MAX_VALUE);
+    public final IntegerValue color2Weight = new IntegerValue("color2Weight", 50, 0, Integer.MAX_VALUE);
+    public final IntegerValue colorAlbinoWeight = new IntegerValue("colorAlbinoWeight", 1, 0, Integer.MAX_VALUE);
+
+    private GiraffeConfig() {
+        super("giraffe");
+        this.registerConfigValues(this.canAttack, this.health, this.movementSpeed, this.attackDamage, this.maxSpawnedInChunk, this.temptationItems);
+        this.registerForCategory("colorsVariants", this.color1Weight, this.color2Weight, this.colorAlbinoWeight);
     }
 
-    public static ElephantConfig get() {
+    public static GiraffeConfig get() {
         return INSTANCE;
     }
 
@@ -47,6 +51,10 @@ public final class ElephantConfig extends EntityConfig {
 
     public static int maxSpawnedInChunk() {
         return INSTANCE.maxSpawnedInChunk.get();
+    }
+
+    public static Ingredient temptationItems() {
+        return INSTANCE.temptationItems.get();
     }
 
 }
