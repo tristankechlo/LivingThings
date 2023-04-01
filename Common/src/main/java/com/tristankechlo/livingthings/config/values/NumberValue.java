@@ -41,7 +41,7 @@ public abstract class NumberValue<T extends Number> implements IConfig.Value<T> 
             this.value = this.clamp(temp, this.minValue, this.maxValue);
             return;
         }
-        LivingThings.LOGGER.warn("Config value {} is missing or not a primitive value, using default value {}", this.getIdentifier(), this.defaultValue);
+        LivingThings.LOGGER.warn("Config value '{}' is missing or not a primitive value, using default value '{}'", this.getIdentifier(), this.defaultValue);
         this.setToDefault();
     }
 

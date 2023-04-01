@@ -35,7 +35,7 @@ public final class BooleanValue implements IConfig.Value<Boolean> {
             this.value = GsonHelper.getAsBoolean(json, this.getIdentifier(), defaultValue);
             return;
         }
-        LivingThings.LOGGER.warn("Config value {} is missing or not a primitive value, using default value {}", this.getIdentifier(), this.defaultValue);
+        LivingThings.LOGGER.warn("Config value '{}' is missing or not a primitive value, using default value '{}'", this.getIdentifier(), this.defaultValue);
         this.setToDefault();
     }
 
