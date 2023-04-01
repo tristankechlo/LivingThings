@@ -11,7 +11,7 @@ public class GiraffeRenderer extends MobRenderer<GiraffeEntity, GiraffeModel<Gir
 
     protected static final ResourceLocation TEXTURE_1 = ModelLayer.getEntityTexture("giraffe/giraffe_1.png");
     protected static final ResourceLocation TEXTURE_2 = ModelLayer.getEntityTexture("giraffe/giraffe_2.png");
-    protected static final ResourceLocation TEXTURE_ALBINO = ModelLayer.getEntityTexture("giraffe/giraffe_white.png");
+    protected static final ResourceLocation TEXTURE_WHITE = ModelLayer.getEntityTexture("giraffe/giraffe_white.png");
 
     public GiraffeRenderer(Context context) {
         super(context, new GiraffeModel<>(context.bakeLayer(ModelLayer.GIRAFFE)), 0.8F);
@@ -21,7 +21,7 @@ public class GiraffeRenderer extends MobRenderer<GiraffeEntity, GiraffeModel<Gir
     public ResourceLocation getTextureLocation(GiraffeEntity entity) {
         byte variant = entity.getVariant();
         if (variant == 2) {
-            return TEXTURE_ALBINO;
+            return TEXTURE_WHITE;
         } else if (variant == 1) {
             return TEXTURE_2;
         }

@@ -11,7 +11,7 @@ public final class ModSounds {
 
     public static void init() {}
 
-    public static final RegistrationProvider<SoundEvent> SOUNDS = RegistrationProvider.get(Registry.SOUND_EVENT, LivingThings.MOD_ID);
+    private static final RegistrationProvider<SoundEvent> SOUNDS = RegistrationProvider.get(Registry.SOUND_EVENT, LivingThings.MOD_ID);
 
     public static final RegistryObject<SoundEvent> LION_AMBIENT = registerSound("lion_ambient", "lion.ambient");
     public static final RegistryObject<SoundEvent> LION_HURT = registerSound("lion_hurt", "lion.hurt");
