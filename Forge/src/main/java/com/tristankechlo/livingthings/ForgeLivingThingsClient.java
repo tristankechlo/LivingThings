@@ -1,14 +1,8 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.client.ModelLayer;
-import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
-import com.tristankechlo.livingthings.client.model.entity.GiraffeModel;
-import com.tristankechlo.livingthings.client.model.entity.LionModel;
-import com.tristankechlo.livingthings.client.model.entity.PenguinModel;
-import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
-import com.tristankechlo.livingthings.client.renderer.GiraffeRenderer;
-import com.tristankechlo.livingthings.client.renderer.LionRenderer;
-import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
+import com.tristankechlo.livingthings.client.model.entity.*;
+import com.tristankechlo.livingthings.client.renderer.*;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,6 +19,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.GIRAFFE.get(), GiraffeRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.LION.get(), LionRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.SHARK.get(), SharkRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
     }
 
@@ -33,6 +28,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.ELEPHANT, ElephantModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.GIRAFFE, GiraffeModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.LION, LionModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.SHARK, SharkModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.PENGUIN, PenguinModel::createBodyLayer);
     }
 

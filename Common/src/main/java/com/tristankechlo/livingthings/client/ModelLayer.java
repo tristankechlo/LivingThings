@@ -9,6 +9,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation ELEPHANT = createLayerLocation("elephant");
     public static final ModelLayerLocation GIRAFFE = createLayerLocation("giraffe");
     public static final ModelLayerLocation LION = createLayerLocation("lion");
+    public static final ModelLayerLocation SHARK = createLayerLocation("shark");
     public static final ModelLayerLocation PENGUIN = createLayerLocation("penguin");
 
     private static ModelLayerLocation createLayerLocation(final String name) {

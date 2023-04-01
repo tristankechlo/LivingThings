@@ -1,9 +1,6 @@
 package com.tristankechlo.livingthings;
 
-import com.tristankechlo.livingthings.entity.ElephantEntity;
-import com.tristankechlo.livingthings.entity.GiraffeEntity;
-import com.tristankechlo.livingthings.entity.LionEntity;
-import com.tristankechlo.livingthings.entity.PenguinEntity;
+import com.tristankechlo.livingthings.entity.*;
 import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
@@ -38,6 +35,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.ELEPHANT.get(), ElephantEntity.createAttributes());
         consumer.accept(ModEntityTypes.GIRAFFE.get(), GiraffeEntity.createAttributes());
         consumer.accept(ModEntityTypes.LION.get(), LionEntity.createAttributes());
+        consumer.accept(ModEntityTypes.SHARK.get(), SharkEntity.createAttributes());
         consumer.accept(ModEntityTypes.PENGUIN.get(), PenguinEntity.createAttributes());
     }
 
@@ -46,6 +44,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.ELEPHANT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ElephantEntity::checkElephantSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.GIRAFFE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GiraffeEntity::checkGiraffeSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.LION.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LionEntity::checkLionSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.SHARK.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SharkEntity::checkSharkSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
     }
 

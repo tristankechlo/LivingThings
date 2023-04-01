@@ -1,14 +1,8 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.client.ModelLayer;
-import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
-import com.tristankechlo.livingthings.client.model.entity.GiraffeModel;
-import com.tristankechlo.livingthings.client.model.entity.LionModel;
-import com.tristankechlo.livingthings.client.model.entity.PenguinModel;
-import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
-import com.tristankechlo.livingthings.client.renderer.GiraffeRenderer;
-import com.tristankechlo.livingthings.client.renderer.LionRenderer;
-import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
+import com.tristankechlo.livingthings.client.model.entity.*;
+import com.tristankechlo.livingthings.client.renderer.*;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -29,6 +23,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.GIRAFFE.get(), GiraffeRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.LION.get(), LionRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.SHARK.get(), SharkRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
     }
 
@@ -36,6 +31,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.ELEPHANT, ElephantModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.GIRAFFE, GiraffeModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.LION, LionModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.SHARK, SharkModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.PENGUIN, PenguinModel::createBodyLayer);
     }
 

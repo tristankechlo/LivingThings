@@ -18,6 +18,10 @@ public final class ModBlocks {
     public static final RegistryObject<Block> OSTRICH_NEST = BLOCKS.register("ostrich_nest", OstrichNestBlock::new);
 
     //BLOCK ITEMS
-    public static final RegistryObject<BlockItem> OSTRICH_NEST_ITEM = ModItems.register("ostrich_nest", new BlockItem(OSTRICH_NEST.get(), ModItems.normalProps()));
+    public static final RegistryObject<BlockItem> OSTRICH_NEST_ITEM = ModItems.ITEMS.register("ostrich_nest", () -> new BlockItem(OSTRICH_NEST.get(), ModItems.normalProps()));
+
+    static {
+        ModItems.ALL_ITEMS.add(OSTRICH_NEST_ITEM);
+    }
 
 }
