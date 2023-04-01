@@ -22,6 +22,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.SHARK.get(), SharkRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.OSTRICH.get(), OstrichRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.FLAMINGO.get(), FlamingoRenderer::new);
     }
 
     @SubscribeEvent
@@ -32,6 +33,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.SHARK, SharkModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.PENGUIN, PenguinModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.OSTRICH, OstrichModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.FLAMINGO, FlamingoModel::createBodyLayer);
     }
 
 }
