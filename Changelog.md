@@ -8,6 +8,11 @@
     - allow to change temptation items for mobs
 - new textures for entities
     - penguin
+    - crab
+    - mantaray
+    - shark
+    - lion
+    - flamingo
 - new ostrich nest texture
 
 ### Version 1.18.2 - 1.5.0

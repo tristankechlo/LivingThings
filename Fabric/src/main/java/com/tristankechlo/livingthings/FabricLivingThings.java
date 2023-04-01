@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
-import com.tristankechlo.livingthings.config.util.ConfigManager;
+import com.tristankechlo.livingthings.config.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;

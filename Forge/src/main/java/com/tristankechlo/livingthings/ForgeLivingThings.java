@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
-import com.tristankechlo.livingthings.config.util.ConfigManager;
+import com.tristankechlo.livingthings.config.ConfigManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;

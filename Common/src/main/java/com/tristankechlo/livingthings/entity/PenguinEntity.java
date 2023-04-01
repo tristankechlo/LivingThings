@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
-import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -32,7 +32,7 @@ public class PenguinEntity extends Animal {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel worldIn, AgeableMob parent) {
-        return ModEntities.PENGUIN.get().create(worldIn);
+        return ModEntityTypes.PENGUIN.get().create(worldIn);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

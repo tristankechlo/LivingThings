@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class ModelLayer {
 
+    public static final ModelLayerLocation ELEPHANT = createLayerLocation("elephant");
     public static final ModelLayerLocation PENGUIN = createLayerLocation("penguin");
 
     private static ModelLayerLocation createLayerLocation(final String name) {

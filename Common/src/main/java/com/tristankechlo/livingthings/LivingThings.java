@@ -1,8 +1,9 @@
 package com.tristankechlo.livingthings;
 
+import com.tristankechlo.livingthings.entity.ElephantEntity;
 import com.tristankechlo.livingthings.entity.PenguinEntity;
 import com.tristankechlo.livingthings.init.ModBlocks;
-import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.mixin.SpawnPlacementsInvoker;
@@ -27,17 +28,19 @@ public final class LivingThings {
         ModItems.init();
         ModBlocks.init();
         ModSounds.init();
-        ModEntities.init();
+        ModEntityTypes.init();
     }
 
     public static void registerMobAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> consumer) {
         LivingThings.LOGGER.info("Registering MobAttributes");
-        consumer.accept(ModEntities.PENGUIN.get(), PenguinEntity.createAttributes());
+        consumer.accept(ModEntityTypes.ELEPHANT.get(), ElephantEntity.createAttributes());
+        consumer.accept(ModEntityTypes.PENGUIN.get(), PenguinEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
         LivingThings.LOGGER.info("Registering SpawnPlacements");
-        SpawnPlacementsInvoker.register(ModEntities.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.ELEPHANT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ElephantEntity::checkElephantSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
     }
 
 }

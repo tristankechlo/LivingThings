@@ -1,9 +1,11 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.client.ModelLayer;
+import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
 import com.tristankechlo.livingthings.client.model.entity.PenguinModel;
+import com.tristankechlo.livingthings.client.renderer.ElephantRenderer;
 import com.tristankechlo.livingthings.client.renderer.PenguinRenderer;
-import com.tristankechlo.livingthings.init.ModEntities;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -16,11 +18,13 @@ public final class ForgeLivingThingsClient {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntities.PENGUIN.get(), PenguinRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
     }
 
     @SubscribeEvent
     public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ModelLayer.ELEPHANT, ElephantModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.PENGUIN, PenguinModel::createBodyLayer);
     }
 
