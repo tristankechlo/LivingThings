@@ -20,6 +20,7 @@
     "item.livingthings.lion_spawn_egg": "Lion Spawn Egg",
     "item.livingthings.shark_spawn_egg": "Shark Spawn Egg",
     "item.livingthings.penguin_spawn_egg": "Penguin Spawn Egg",
+    "item.livingthings.ostrich_spawn_egg": "Ostrich Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -62,5 +63,6 @@
     "entity.livingthings.lion": "Lion",
     "entity.livingthings.shark": "Shark",
     "entity.livingthings.penguin": "Penguin",
+    "entity.livingthings.ostrich": "Ostrich",
     "container.livingthings.elephant": "Elephant"
 }

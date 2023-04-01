@@ -37,6 +37,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.LION.get(), LionEntity.createAttributes());
         consumer.accept(ModEntityTypes.SHARK.get(), SharkEntity.createAttributes());
         consumer.accept(ModEntityTypes.PENGUIN.get(), PenguinEntity.createAttributes());
+        consumer.accept(ModEntityTypes.OSTRICH.get(), OstrichEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -46,6 +47,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.LION.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LionEntity::checkLionSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.SHARK.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SharkEntity::checkSharkSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.PENGUIN.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PenguinEntity::checkPenguinSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.OSTRICH.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, OstrichEntity::checkOstrichSpawnRules);
     }
 
 }

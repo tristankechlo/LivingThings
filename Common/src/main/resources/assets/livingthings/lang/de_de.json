@@ -62,5 +62,7 @@
     "entity.livingthings.giraffe": "Giraffe",
     "entity.livingthings.lion": "L\u00f6we",
     "item.livingthings.shark_spawn_egg": "Haifisch-Spawn-Ei",
-    "entity.livingthings.shark": "Haifisch"
+    "entity.livingthings.shark": "Haifisch",
+    "item.livingthings.ostrich_spawn_egg": "Strau\u00dfen-Spawn-Ei",
+    "entity.livingthings.ostrich": "Strau\u00df"
 }

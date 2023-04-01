@@ -44,6 +44,7 @@ public final class ModItems {
     public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.LION.get(), 0xebb26c, 0xFFFFFF, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> SHARK_SPAWN_EGG = ITEMS.register("shark_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHARK.get(), 0x707187, 0x595a6b, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> PENGUIN_SPAWN_EGG = ITEMS.register("penguin_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.PENGUIN.get(), 0x000000, 0xFFFFFF, SPAWN_EGG_PROPS));
+    public static final RegistryObject<Item> OSTRICH_SPAWN_EGG = ITEMS.register("ostrich_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OSTRICH.get(), 0x130d08, 0xa56f5b, SPAWN_EGG_PROPS));
 
     public static Item.Properties normalProps() {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());
@@ -53,7 +54,7 @@ public final class ModItems {
         List<RegistryObject<Item>> items = List.of(SHARK_TOOTH, OSTRICH_EGG, CRAB, COOKED_CRAB, CRAB_SHELL, BANANA, OSTRICH, COOKED_OSTRICH,
                 ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE);
         ALL_ITEMS.addAll(items);
-        SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG);
+        SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG, OSTRICH_SPAWN_EGG);
     }
 
 }
