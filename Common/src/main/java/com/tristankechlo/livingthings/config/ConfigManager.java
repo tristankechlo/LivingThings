@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonWriter;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.config.entity.GiraffeConfig;
+import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.config.util.EntityConfig;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
@@ -21,7 +22,7 @@ public final class ConfigManager {
     private static final File CONFIG_DIR = IPlatformHelper.INSTANCE.getConfigDirectory().resolve(LivingThings.MOD_ID).toFile();
 
     static {
-        CONFIGS = List.of(GeneralConfig.get(), PenguinConfig.get(), ElephantConfig.get(), GiraffeConfig.get());
+        CONFIGS = List.of(GeneralConfig.get(), PenguinConfig.get(), ElephantConfig.get(), GiraffeConfig.get(), LionConfig.get());
     }
 
     public static void loadAndVerifyConfig() {

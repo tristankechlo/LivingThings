@@ -21,12 +21,12 @@ public final class GiraffeConfig extends EntityConfig {
 
     public final IntegerValue color1Weight = new IntegerValue("color1Weight", 50, 0, Integer.MAX_VALUE);
     public final IntegerValue color2Weight = new IntegerValue("color2Weight", 50, 0, Integer.MAX_VALUE);
-    public final IntegerValue colorAlbinoWeight = new IntegerValue("colorAlbinoWeight", 1, 0, Integer.MAX_VALUE);
+    public final IntegerValue colorWhiteWeight = new IntegerValue("colorAlbinoWeight", 1, 0, Integer.MAX_VALUE);
 
     private GiraffeConfig() {
         super("giraffe");
         this.registerConfigValues(this.canAttack, this.health, this.movementSpeed, this.attackDamage, this.maxSpawnedInChunk, this.temptationItems);
-        this.registerForCategory("colorsVariants", this.color1Weight, this.color2Weight, this.colorAlbinoWeight);
+        this.registerForCategory("colorWeights", this.color1Weight, this.color2Weight, this.colorWhiteWeight);
     }
 
     public static GiraffeConfig get() {

@@ -16,6 +16,7 @@
     "item.livingthings.ostrich_egg": "Straußen Ei",
     "block.livingthings.ostrich_nest": "Straußen Nest",
     "item.livingthings.elephant_spawn_egg": "Elefanten-Spawn-Ei",
+    "item.livingthings.lion_spawn_egg": "L\u00f6wen-Spawn-Ei",
     "item.livingthings.penguin_spawn_egg": "Pinguin-Spawn-Ei",
     "subtitles.livingthings.lion.ambient": "L\u00f6we br\u00fcllt",
     "subtitles.livingthings.lion.hurt": "L\u00f6we nimmt Schaden",
@@ -58,5 +59,6 @@
     "entity.livingthings.penguin": "Pinguin",
     "container.livingthings.elephant": "Elefant",
     "item.livingthings.giraffe_spawn_egg": "Giraffen-Spawn-Ei",
-    "entity.livingthings.giraffe": "Giraffe"
+    "entity.livingthings.giraffe": "Giraffe",
+    "entity.livingthings.lion": "L\u00f6we"
 }

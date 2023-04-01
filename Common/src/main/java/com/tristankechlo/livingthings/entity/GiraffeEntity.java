@@ -56,8 +56,8 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
         int color1Weight = GiraffeConfig.get().color1Weight.get();
         int color2Weight = GiraffeConfig.get().color2Weight.get();
-        int albinoWeight = GiraffeConfig.get().colorAlbinoWeight.get();
-        byte variant = this.getRandomVariant(random, new byte[]{0, 1, 2}, new int[]{color1Weight, color2Weight, albinoWeight});
+        int whiteWeight = GiraffeConfig.get().colorWhiteWeight.get();
+        byte variant = this.getRandomVariant(random, new byte[]{0, 1, 2}, new int[]{color1Weight, color2Weight, whiteWeight});
         this.setVariant(variant);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
