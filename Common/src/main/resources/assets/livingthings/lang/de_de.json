@@ -68,5 +68,7 @@
     "item.livingthings.flamingo_spawn_egg": "Flamingo-Spawn-Ei",
     "entity.livingthings.flamingo": "Flamingo",
     "item.livingthings.crab_spawn_egg": "Krabben-Spawn-Ei",
-    "entity.livingthings.crab": "Krabbe"
+    "entity.livingthings.crab": "Krabbe",
+    "item.livingthings.mantaray_spawn_egg": "Mantaray-Spawn-Ei",
+    "entity.livingthings.mantaray": "Mantaray"
 }

@@ -20,7 +20,7 @@ public final class ConfigManager {
 
     static {
         CONFIGS = List.of(GeneralConfig.get(), PenguinConfig.get(), ElephantConfig.get(), GiraffeConfig.get(), LionConfig.get(),
-                SharkConfig.get(), OstrichConfig.get(), FlamingoConfig.get(), CrabConfig.get());
+                SharkConfig.get(), OstrichConfig.get(), FlamingoConfig.get(), CrabConfig.get(), MantarayConfig.get());
     }
 
     public static void loadAndVerifyConfig() {
