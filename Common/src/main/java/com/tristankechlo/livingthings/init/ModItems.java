@@ -54,6 +54,7 @@ public final class ModItems {
     public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OWL.get(), 0xedd7d5, 0x6e3834, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> ANCIENT_BLAZE_SPAWN_EGG = ITEMS.register("ancient_blaze_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ANCIENT_BLAZE.get(), 0xF6B200, 0xFFF87D, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> KOALA_SPAWN_EGG = ITEMS.register("koala_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.KOALA.get(), 0x565050, 0x8f8686, SPAWN_EGG_PROPS));
+    public static final RegistryObject<Item> SNAIL_SPAWN_EGG = ITEMS.register("snail_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SNAIL.get(), 0x2206464, 0x53588, SPAWN_EGG_PROPS));
 
     public static Item.Properties normalProps() {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());
@@ -65,7 +66,7 @@ public final class ModItems {
         ALL_ITEMS.addAll(items);
         SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG, OSTRICH_SPAWN_EGG,
                 FLAMINGO_SPAWN_EGG, CRAB_SPAWN_EGG, MANTARAY_SPAWN_EGG, RACCOON_SPAWN_EGG, OWL_SPAWN_EGG, ANCIENT_BLAZE_SPAWN_EGG,
-                KOALA_SPAWN_EGG);
+                KOALA_SPAWN_EGG, SNAIL_SPAWN_EGG);
     }
 
 }

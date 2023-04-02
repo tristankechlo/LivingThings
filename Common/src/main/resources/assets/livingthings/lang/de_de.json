@@ -79,5 +79,7 @@
     "entity.livingthings.ancient_blaze": "Antike Lohe",
     "item.livingthings.ancient_helmet": "Antiker Helm",
     "item.livingthings.koala_spawn_egg": "Koala-Spawn-Ei",
-    "entity.livingthings.koala": "Koala"
+    "entity.livingthings.koala": "Koala",
+    "item.livingthings.snail_spawn_egg": "Schnecken-Spawn-Ei",
+    "entity.livingthings.snail": "Schnecke"
 }

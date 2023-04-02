@@ -30,6 +30,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.OWL.get(), OwlRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.KOALA.get(), KoalaRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.SNAIL.get(), SnailRenderer::new);
     }
 
     @SubscribeEvent
@@ -47,6 +48,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.OWL, OwlModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.ANCIENT_BLAZE, AncientBlazeModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.KOALA, KoalaModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.SNAIL, SnailModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 
