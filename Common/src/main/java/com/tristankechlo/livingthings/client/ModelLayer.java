@@ -16,6 +16,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation CRAB = createLayerLocation("crab");
     public static final ModelLayerLocation MANTARAY = createLayerLocation("mantaray");
     public static final ModelLayerLocation RACCOON = createLayerLocation("raccoon");
+    public static final ModelLayerLocation OWL = createLayerLocation("owl");
 
     private static ModelLayerLocation createLayerLocation(final String name) {
         return new ModelLayerLocation(new ResourceLocation(LivingThings.MOD_ID, name), "main");

@@ -25,6 +25,7 @@
     "item.livingthings.crab_spawn_egg": "Crab Spawn Egg",
     "item.livingthings.mantaray_spawn_egg": "Mantaray Spawn Egg",
     "item.livingthings.raccoon_spawn_egg": "Raccon Spawn Egg",
+    "item.livingthings.owl_spawn_egg": "Owl Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -72,5 +73,6 @@
     "entity.livingthings.crab": "Crab",
     "entity.livingthings.mantaray": "Mantaray",
     "entity.livingthings.raccoon": "Raccon",
+    "entity.livingthings.owl": "Owl",
     "container.livingthings.elephant": "Elephant"
 }

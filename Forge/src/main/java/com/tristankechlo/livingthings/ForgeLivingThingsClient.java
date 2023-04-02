@@ -26,6 +26,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.CRAB.get(), CrabRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.OWL.get(), OwlRenderer::new);
     }
 
     @SubscribeEvent
@@ -40,6 +41,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.CRAB, CrabModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.MANTARAY, MantarayModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.OWL, OwlModel::createBodyLayer);
     }
 
 }
