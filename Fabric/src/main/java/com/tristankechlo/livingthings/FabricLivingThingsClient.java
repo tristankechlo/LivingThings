@@ -33,6 +33,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.OWL.get(), OwlRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.KOALA.get(), KoalaRenderer::new);
     }
 
     private void registerLayerDefinitions() {
@@ -48,6 +49,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.OWL, OwlModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_BLAZE, AncientBlazeModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.KOALA, KoalaModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 

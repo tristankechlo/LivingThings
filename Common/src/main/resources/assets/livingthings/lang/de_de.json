@@ -77,5 +77,7 @@
     "entity.livingthings.owl": "Eule",
     "item.livingthings.ancient_blaze_spawn_egg": "Antike-Lohe-Spawn-Ei",
     "entity.livingthings.ancient_blaze": "Antike Lohe",
-    "item.livingthings.ancient_helmet": "Antiker Helm"
+    "item.livingthings.ancient_helmet": "Antiker Helm",
+    "item.livingthings.koala_spawn_egg": "Koala-Spawn-Ei",
+    "entity.livingthings.koala": "Koala"
 }

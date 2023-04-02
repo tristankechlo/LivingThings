@@ -45,6 +45,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.RACCOON.get(), RaccoonEntity.createAttributes());
         consumer.accept(ModEntityTypes.OWL.get(), OwlEntity.createAttributes());
         consumer.accept(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeEntity.createAttributes());
+        consumer.accept(ModEntityTypes.KOALA.get(), KoalaEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -61,6 +62,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.RACCOON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RaccoonEntity::checkRaccoonSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.OWL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, OwlEntity::checkOwlSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.ANCIENT_BLAZE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.KOALA.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, KoalaEntity::checkKoalaSpawnRules);
     }
 
 }
