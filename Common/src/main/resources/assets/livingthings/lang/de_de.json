@@ -74,5 +74,8 @@
     "item.livingthings.raccoon_spawn_egg": "Waschb\u00e4r-Spawn-Ei",
     "entity.livingthings.raccoon": "Waschb\u00e4r",
     "item.livingthings.owl_spawn_egg": "Eulen-Spawn-Ei",
-    "entity.livingthings.owl": "Eule"
+    "entity.livingthings.owl": "Eule",
+    "item.livingthings.ancient_blaze_spawn_egg": "Antike-Lohe-Spawn-Ei",
+    "entity.livingthings.ancient_blaze": "Antike Lohe",
+    "item.livingthings.ancient_helmet": "Antiker Helm"
 }

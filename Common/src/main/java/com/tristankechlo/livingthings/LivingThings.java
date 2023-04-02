@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacements.Type;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.MANTARAY.get(), MantarayEntity.createAttributes());
         consumer.accept(ModEntityTypes.RACCOON.get(), RaccoonEntity.createAttributes());
         consumer.accept(ModEntityTypes.OWL.get(), OwlEntity.createAttributes());
+        consumer.accept(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -58,6 +60,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.MANTARAY.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::checkMantaraySpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.RACCOON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RaccoonEntity::checkRaccoonSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.OWL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, OwlEntity::checkOwlSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.ANCIENT_BLAZE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
     }
 
 }

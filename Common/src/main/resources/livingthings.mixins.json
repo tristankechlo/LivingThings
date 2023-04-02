@@ -5,9 +5,12 @@
     "minVersion": "0.8",
     "mixins": [
         "ArgumentTypesMixin",
+        "PlayerMixin",
         "SpawnPlacementsInvoker"
     ],
     "client": [
+        "LivingEntityRendererAccessor",
+        "PlayerRendererMixin"
     ],
     "refmap": "livingthings.refmap.json"
 }

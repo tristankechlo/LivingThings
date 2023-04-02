@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.client.ModelLayer;
+import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.*;
 import com.tristankechlo.livingthings.client.renderer.*;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -31,6 +32,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.OWL.get(), OwlRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
     }
 
     private void registerLayerDefinitions() {
@@ -45,6 +47,8 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.MANTARAY, MantarayModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.OWL, OwlModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_BLAZE, AncientBlazeModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 
 }

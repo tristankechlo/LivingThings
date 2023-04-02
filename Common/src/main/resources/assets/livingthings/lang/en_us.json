@@ -14,6 +14,7 @@
     "item.livingthings.giraffe": "Raw Giraffe Meat",
     "item.livingthings.cooked_giraffe": "Cooked Giraffe Meat",
     "item.livingthings.ostrich_egg": "Ostrich Egg",
+    "item.livingthings.ancient_helmet": "Ancient Helmet",
     "block.livingthings.ostrich_nest": "Ostrich Nest",
     "item.livingthings.elephant_spawn_egg": "Elephant Spawn Egg",
     "item.livingthings.giraffe_spawn_egg": "Giraffe Spawn Egg",
@@ -26,6 +27,7 @@
     "item.livingthings.mantaray_spawn_egg": "Mantaray Spawn Egg",
     "item.livingthings.raccoon_spawn_egg": "Raccon Spawn Egg",
     "item.livingthings.owl_spawn_egg": "Owl Spawn Egg",
+    "item.livingthings.ancient_blaze_spawn_egg": "Ancient Blaze Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -74,5 +76,6 @@
     "entity.livingthings.mantaray": "Mantaray",
     "entity.livingthings.raccoon": "Raccon",
     "entity.livingthings.owl": "Owl",
+    "entity.livingthings.ancient_blaze": "Ancient Blaze",
     "container.livingthings.elephant": "Elephant"
 }

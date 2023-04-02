@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.client.ModelLayer;
+import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.*;
 import com.tristankechlo.livingthings.client.renderer.*;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -27,6 +28,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.OWL.get(), OwlRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
     }
 
     @SubscribeEvent
@@ -42,6 +44,8 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.MANTARAY, MantarayModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.OWL, OwlModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.ANCIENT_BLAZE, AncientBlazeModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 
 }
