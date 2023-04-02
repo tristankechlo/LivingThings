@@ -70,5 +70,7 @@
     "item.livingthings.crab_spawn_egg": "Krabben-Spawn-Ei",
     "entity.livingthings.crab": "Krabbe",
     "item.livingthings.mantaray_spawn_egg": "Mantaray-Spawn-Ei",
-    "entity.livingthings.mantaray": "Mantaray"
+    "entity.livingthings.mantaray": "Mantaray",
+    "item.livingthings.raccoon_spawn_egg": "Waschb\u00e4r-Spawn-Ei",
+    "entity.livingthings.raccoon": "Waschb\u00e4r"
 }

@@ -41,6 +41,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.FLAMINGO.get(), FlamingoEntity.createAttributes());
         consumer.accept(ModEntityTypes.CRAB.get(), CrabEntity.createAttributes());
         consumer.accept(ModEntityTypes.MANTARAY.get(), MantarayEntity.createAttributes());
+        consumer.accept(ModEntityTypes.RACCOON.get(), RaccoonEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -54,6 +55,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.FLAMINGO.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, FlamingoEntity::checkFlamingoSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.CRAB.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CrabEntity::checkCrabSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.MANTARAY.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MantarayEntity::checkMantaraySpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.RACCOON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RaccoonEntity::checkRaccoonSpawnRules);
     }
 
 }

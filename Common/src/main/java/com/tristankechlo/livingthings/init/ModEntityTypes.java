@@ -24,6 +24,7 @@ public final class ModEntityTypes {
     public static final RegistryObject<EntityType<FlamingoEntity>> FLAMINGO = ENTITY_TYPES.register("flamingo", () -> create("flamingo", FlamingoEntity::new, MobCategory.CREATURE, 0.6F, 1.25F));
     public static final RegistryObject<EntityType<CrabEntity>> CRAB = ENTITY_TYPES.register("crab", () -> create("crab", CrabEntity::new, MobCategory.CREATURE, 0.4F, 0.4F));
     public static final RegistryObject<EntityType<MantarayEntity>> MANTARAY = ENTITY_TYPES.register("mantaray", () -> create("mantaray", MantarayEntity::new, MobCategory.WATER_AMBIENT, 0.75F, 0.45F));
+    public static final RegistryObject<EntityType<RaccoonEntity>> RACCOON = ENTITY_TYPES.register("raccoon", () -> create("raccoon", RaccoonEntity::new, MobCategory.CREATURE, 0.5F, 0.75F));
 
     // create standard entity type
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {

@@ -29,6 +29,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.FLAMINGO.get(), FlamingoRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.CRAB.get(), CrabRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
     }
 
     private void registerLayerDefinitions() {
@@ -41,6 +42,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.FLAMINGO, FlamingoModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.CRAB, CrabModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.MANTARAY, MantarayModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.RACCOON, RaccoonModel::createBodyLayer);
     }
 
 }
