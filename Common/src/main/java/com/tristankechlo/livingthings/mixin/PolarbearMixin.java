@@ -1,0 +1,19 @@
+package com.tristankechlo.livingthings.mixin;
+
+import com.tristankechlo.livingthings.entity.PenguinEntity;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.PolarBear;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(PolarBear.class)
+public abstract class PolarbearMixin {
+
+    @Inject(at = @At("HEAD"), method = "registerGoals")
+    private void registerGoals(CallbackInfo ci) {
+        ((MobAccessor) this).getTargetSelector().addGoal(3, new NearestAttackableTargetGoal<>((PolarBear) (Object) this, PenguinEntity.class, 10, true, false, null));
+    }
+
+}

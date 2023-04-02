@@ -5,7 +5,9 @@
     "minVersion": "0.8",
     "mixins": [
         "ArgumentTypesMixin",
+        "MobAccessor",
         "PlayerMixin",
+        "PolarbearMixin",
         "SpawnPlacementsInvoker"
     ],
     "client": [
