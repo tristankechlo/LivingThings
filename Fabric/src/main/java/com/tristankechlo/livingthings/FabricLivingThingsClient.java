@@ -37,6 +37,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.SNAIL.get(), SnailRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.MONKEY.get(), MonkeyRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
     }
 
     private void registerLayerDefinitions() {
@@ -57,6 +58,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.MONKEY, MonkeyModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.MONKEY_SITTING, MonkeySittingModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.NETHER_KNIGHT, NetherKnightModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.SHROOMIE, ShroomieModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 

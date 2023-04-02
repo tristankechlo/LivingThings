@@ -85,5 +85,7 @@
     "item.livingthings.monkey_spawn_egg": "Affen-Spawn-Ei",
     "entity.livingthings.monkey": "Affe",
     "item.livingthings.nether_knight_spawn_egg": "Nether-Krieger-Spawn-Ei",
-    "entity.livingthings.nether_knight": "Nether Krieger"
+    "entity.livingthings.nether_knight": "Nether Krieger",
+    "item.livingthings.shroomie_spawn_egg": "Shroomie-Spawn-Ei",
+    "entity.livingthings.shroomie": "Shroomie"
 }

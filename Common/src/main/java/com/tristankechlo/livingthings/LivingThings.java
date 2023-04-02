@@ -49,6 +49,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.SNAIL.get(), SnailEntity.createAttributes());
         consumer.accept(ModEntityTypes.MONKEY.get(), MonkeyEntity.createAttributes());
         consumer.accept(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightEntity.createAttributes());
+        consumer.accept(ModEntityTypes.SHROOMIE.get(), ShroomieEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -69,6 +70,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.SNAIL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SnailEntity::checkSnailSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.MONKEY.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, MonkeyEntity::checkMonkeySpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.NETHER_KNIGHT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.SHROOMIE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::checkShroomieSpawnRules);
     }
 
 }
