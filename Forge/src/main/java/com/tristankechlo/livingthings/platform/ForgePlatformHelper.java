@@ -1,7 +1,11 @@
 package com.tristankechlo.livingthings.platform;
 
 import com.tristankechlo.livingthings.init.ForgeItemGroup;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -13,6 +17,11 @@ public final class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public String getPlatformName() {
         return "Forge";
+    }
+
+    @Override
+    public TagKey<Item> getBananaTag() {
+        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "fruits/banana"));
     }
 
     @Override

@@ -30,6 +30,7 @@
     "item.livingthings.ancient_blaze_spawn_egg": "Ancient Blaze Spawn Egg",
     "item.livingthings.koala_spawn_egg": "Koala Spawn Egg",
     "item.livingthings.snail_spawn_egg": "Snail Spawn Egg",
+    "item.livingthings.monkey_spawn_egg": "Monkey Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -81,5 +82,6 @@
     "entity.livingthings.ancient_blaze": "Ancient Blaze",
     "entity.livingthings.koala": "Koala",
     "entity.livingthings.snail": "Snail",
+    "entity.livingthings.monkey": "Monkey",
     "container.livingthings.elephant": "Elephant"
 }

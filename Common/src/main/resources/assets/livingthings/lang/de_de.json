@@ -81,5 +81,7 @@
     "item.livingthings.koala_spawn_egg": "Koala-Spawn-Ei",
     "entity.livingthings.koala": "Koala",
     "item.livingthings.snail_spawn_egg": "Schnecken-Spawn-Ei",
-    "entity.livingthings.snail": "Schnecke"
+    "entity.livingthings.snail": "Schnecke",
+    "item.livingthings.monkey_spawn_egg": "Affen-Spawn-Ei",
+    "entity.livingthings.monkey": "Affe"
 }

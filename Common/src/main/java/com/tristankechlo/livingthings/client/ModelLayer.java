@@ -22,6 +22,8 @@ public final class ModelLayer {
     public static final ModelLayerLocation ANCIENT_BLAZE = createLayerLocation("ancient_blaze");
     public static final ModelLayerLocation KOALA = createLayerLocation("koala");
     public static final ModelLayerLocation SNAIL = createLayerLocation("snail");
+    public static final ModelLayerLocation MONKEY = createLayerLocation("monkey");
+    public static final ModelLayerLocation MONKEY_SITTING = createLayerLocation("monkey_sitting");
 
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
     public static AncientArmorModel ANCIENT_ARMOR_MODEL = null;

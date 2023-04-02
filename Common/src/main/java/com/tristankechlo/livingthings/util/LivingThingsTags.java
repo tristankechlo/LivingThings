@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.util;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.material.Fluid;
 public final class LivingThingsTags {
 
     public static final TagKey<Block> DROPS_BANANAS = registerBlockTag("drops_bananas");
-    public static final TagKey<Item> BANANAS = registerItemTag("bananas");
+    public static final TagKey<Item> BANANAS = IPlatformHelper.INSTANCE.getBananaTag();
 
     public static final TagKey<Block> CRAP_SPAWNABLE_ON = spawnableOn("crap");
     public static final TagKey<Block> ELEPHANT_SPAWNABLE_ON = spawnableOn("elephant");
