@@ -30,6 +30,7 @@ public final class ModEntityTypes {
     public static final RegistryObject<EntityType<KoalaEntity>> KOALA = ENTITY_TYPES.register("koala", () -> create("koala", KoalaEntity::new, MobCategory.CREATURE, 0.6F, 0.75F));
     public static final RegistryObject<EntityType<SnailEntity>> SNAIL = ENTITY_TYPES.register("snail", () -> create("snail", SnailEntity::new, MobCategory.CREATURE, 0.6F, 0.7F));
     public static final RegistryObject<EntityType<MonkeyEntity>> MONKEY = ENTITY_TYPES.register("monkey", () -> create("monkey", MonkeyEntity::new, MobCategory.CREATURE, 0.6F, 0.7F));
+    public static final RegistryObject<EntityType<NetherKnightEntity>> NETHER_KNIGHT = ENTITY_TYPES.register("nether_knight", () -> EntityType.Builder.of(NetherKnightEntity::new, MobCategory.MONSTER).sized(0.7F, 2.3F).fireImmune().build(LivingThings.MOD_ID + ":nether_knight"));
 
     // create standard entity type
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {

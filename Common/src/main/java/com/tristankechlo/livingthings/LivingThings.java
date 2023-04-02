@@ -48,6 +48,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.KOALA.get(), KoalaEntity.createAttributes());
         consumer.accept(ModEntityTypes.SNAIL.get(), SnailEntity.createAttributes());
         consumer.accept(ModEntityTypes.MONKEY.get(), MonkeyEntity.createAttributes());
+        consumer.accept(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -67,6 +68,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.KOALA.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, KoalaEntity::checkKoalaSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.SNAIL.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SnailEntity::checkSnailSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.MONKEY.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, MonkeyEntity::checkMonkeySpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.NETHER_KNIGHT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
     }
 
 }
