@@ -1,0 +1,9 @@
+{
+	"type" : "minecraft:campfire_cooking",
+	"ingredient" : {
+		"item" : "livingthings:lion"
+	},
+	"result" : "livingthings:cooked_lion",
+	"experience" : 0.3,
+	"cookingtime" : 550
+}

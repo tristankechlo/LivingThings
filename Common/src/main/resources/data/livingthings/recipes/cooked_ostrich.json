@@ -1,0 +1,9 @@
+{
+	"type" : "minecraft:smelting",
+	"ingredient" : {
+		"item" : "livingthings:ostrich"
+	},
+	"result" : "livingthings:cooked_ostrich",
+	"experience" : 0.3,
+	"cookingtime" : 150
+}

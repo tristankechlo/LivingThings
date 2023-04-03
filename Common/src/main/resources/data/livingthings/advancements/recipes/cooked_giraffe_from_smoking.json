@@ -1,0 +1,43 @@
+{
+	"parent" : "minecraft:recipes/root",
+	"rewards" : {
+		"recipes" : [
+			"livingthings:cooked_giraffe_from_smoking"
+		]
+	},
+	"criteria" : {
+		"has_giraffe" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:giraffe"
+					}
+				]
+			}
+		},
+		"has_cooked_giraffe" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:cooked_giraffe"
+					}
+				]
+			}
+		},
+		"has_the_recipe" : {
+			"trigger" : "minecraft:recipe_unlocked",
+			"conditions" : {
+				"recipe" : "livingthings:cooked_giraffe_from_smoking"
+			}
+		}
+	},
+	"requirements" : [
+		 [
+			"has_giraffe",
+			"has_cooked_giraffe",
+			"has_the_recipe"
+		]
+	]
+}

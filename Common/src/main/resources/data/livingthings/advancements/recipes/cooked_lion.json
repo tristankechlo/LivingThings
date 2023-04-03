@@ -1,0 +1,43 @@
+{
+	"parent" : "minecraft:recipes/root",
+	"rewards" : {
+		"recipes" : [
+			"livingthings:cooked_lion"
+		]
+	},
+	"criteria" : {
+		"has_lion" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:lion"
+					}
+				]
+			}
+		},
+		"has_cooked_lion" : {
+			"trigger" : "minecraft:inventory_changed",
+			"conditions" : {
+				"items" : [
+					{
+						"item" : "livingthings:cooked_lion"
+					}
+				]
+			}
+		},
+		"has_the_recipe" : {
+			"trigger" : "minecraft:recipe_unlocked",
+			"conditions" : {
+				"recipe" : "livingthings:cooked_lion"
+			}
+		}
+	},
+	"requirements" : [
+		 [
+			"has_lion",
+			"has_cooked_lion",
+			"has_the_recipe"
+		]
+	]
+}

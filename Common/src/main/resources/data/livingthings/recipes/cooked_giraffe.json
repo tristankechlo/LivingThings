@@ -1,0 +1,9 @@
+{
+	"type" : "minecraft:smelting",
+	"ingredient" : {
+		"item" : "livingthings:giraffe"
+	},
+	"result" : "livingthings:cooked_giraffe",
+	"experience" : 0.3,
+	"cookingtime" : 150
+}
