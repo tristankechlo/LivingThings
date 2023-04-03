@@ -3,7 +3,7 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.SeahorseConfig;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.util.IMobVariants;
+import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

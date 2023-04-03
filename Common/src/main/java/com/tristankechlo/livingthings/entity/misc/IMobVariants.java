@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.util;
+package com.tristankechlo.livingthings.entity.misc;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;

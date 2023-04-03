@@ -35,6 +35,7 @@
     "item.livingthings.nether_knight_spawn_egg": "Nether Knight Spawn Egg",
     "item.livingthings.shroomie_spawn_egg": "Shroomie Spawn Egg",
     "item.livingthings.seahorse_spawn_egg": "Seahorse Spawn Egg",
+    "item.livingthings.baby_ender_dragon_spawn_egg": "Baby Enderdragon Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -90,5 +91,6 @@
     "entity.livingthings.nether_knight": "Nether Knight",
     "entity.livingthings.shroomie": "Shroomie",
     "entity.livingthings.seahorse": "Seahorse",
+    "entity.livingthings.baby_ender_dragon": "Baby Enderdragon",
     "container.livingthings.elephant": "Elephant"
 }

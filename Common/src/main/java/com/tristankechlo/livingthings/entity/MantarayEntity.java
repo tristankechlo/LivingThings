@@ -2,8 +2,8 @@ package com.tristankechlo.livingthings.entity;
 
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
-import com.tristankechlo.livingthings.util.IMobVariants;
-import com.tristankechlo.livingthings.util.IScaleableMob;
+import com.tristankechlo.livingthings.entity.misc.IMobVariants;
+import com.tristankechlo.livingthings.entity.misc.IScaleableMob;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -27,6 +27,8 @@ public final class ModelLayer {
     public static final ModelLayerLocation NETHER_KNIGHT = createLayerLocation("nether_knight");
     public static final ModelLayerLocation SHROOMIE = createLayerLocation("shroomie");
     public static final ModelLayerLocation SEAHORSE = createLayerLocation("seahorse");
+    public static final ModelLayerLocation BABY_ENDER_DRAGON = createLayerLocation("baby_ender_dragon");
+    public static final ModelLayerLocation BABY_ENDER_DRAGON_SITTING = createLayerLocation("baby_ender_dragon_sitting");
 
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
     public static AncientArmorModel ANCIENT_ARMOR_MODEL = null;

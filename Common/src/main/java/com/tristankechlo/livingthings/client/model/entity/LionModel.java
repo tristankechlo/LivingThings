@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
 import com.tristankechlo.livingthings.entity.LionEntity;
-import com.tristankechlo.livingthings.util.IGenderedMob;
+import com.tristankechlo.livingthings.entity.misc.IGenderedMob;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;

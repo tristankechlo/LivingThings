@@ -90,5 +90,7 @@
     "entity.livingthings.shroomie": "Shroomie",
     "item.livingthings.seahorse_spawn_egg": "Seepferdchen-Spawn-Ei",
     "entity.livingthings.seahorse": "Seepferdchen",
-    "item.livingthings.seahorse_bucket": "Seepferdchen Eimer"
+    "item.livingthings.seahorse_bucket": "Seepferdchen Eimer",
+    "item.livingthings.baby_ender_dragon_spawn_egg": "Baby-Enderdrache-Spawn-Ei",
+    "entity.livingthings.baby_ender_dragon": "Baby Enderdrache"
 }

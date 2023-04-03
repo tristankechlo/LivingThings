@@ -51,6 +51,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightEntity.createAttributes());
         consumer.accept(ModEntityTypes.SHROOMIE.get(), ShroomieEntity.createAttributes());
         consumer.accept(ModEntityTypes.SEAHORSE.get(), SeahorseEntity.createAttributes());
+        consumer.accept(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -73,6 +74,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.NETHER_KNIGHT.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.SHROOMIE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::checkShroomieSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.SEAHORSE.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SeahorseEntity::checkSeahorseSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.BABY_ENDER_DRAGON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BabyEnderDragonEntity::checkBabyEnderDragonSpawnRules);
     }
 
 }
