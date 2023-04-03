@@ -5,7 +5,5 @@
 
 # Other
 
-- ancient blaze spawning through block placement
-- baby ender dragon spawning through block placement
 - normal mob spawning in biomes
 - seahorse loot table
