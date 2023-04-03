@@ -5,10 +5,13 @@ import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.Registry;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public final class ModItems {
     public static final RegistryObject<Item> COOKED_LION = ITEMS.register("cooked_lion", () -> new Item(normalProps().food(ModFoods.COOKED_LION)));
     public static final RegistryObject<Item> GIRAFFE = ITEMS.register("giraffe", () -> new Item(normalProps().food(ModFoods.GIRAFFE)));
     public static final RegistryObject<Item> COOKED_GIRAFFE = ITEMS.register("cooked_giraffe", () -> new Item(normalProps().food(ModFoods.COOKED_GIRAFFE)));
-    //public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
+    public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, normalProps().stacksTo(1)));
 
     // register spawn eggs
     public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ITEMS.register("elephant_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ELEPHANT.get(), 0x000000, 0x4e4e4e, SPAWN_EGG_PROPS));
@@ -58,6 +61,7 @@ public final class ModItems {
     public static final RegistryObject<Item> MONKEY_SPAWN_EGG = ITEMS.register("monkey_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.MONKEY.get(), 10051392, 7555121, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> NETHER_KNIGHT_SPAWN_EGG = ITEMS.register("nether_knight_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.NETHER_KNIGHT.get(), 0x181a1c, 0xa32aa1, SPAWN_EGG_PROPS));
     public static final RegistryObject<Item> SHROOMIE_SPAWN_EGG = ITEMS.register("shroomie_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHROOMIE.get(), 0xb8968d, 0xdb380f, SPAWN_EGG_PROPS));
+    public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = ITEMS.register("seahorse_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SEAHORSE.get(), 0x22ff22, 0xdb380f, SPAWN_EGG_PROPS));
 
     public static Item.Properties normalProps() {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());
@@ -65,11 +69,11 @@ public final class ModItems {
 
     static {
         List<RegistryObject<Item>> items = List.of(SHARK_TOOTH, OSTRICH_EGG, CRAB, COOKED_CRAB, CRAB_SHELL, BANANA, OSTRICH, COOKED_OSTRICH,
-                ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE, ANCIENT_HELMET);
+                ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE, ANCIENT_HELMET, SEAHORSE_BUCKET);
         ALL_ITEMS.addAll(items);
         SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG, OSTRICH_SPAWN_EGG,
                 FLAMINGO_SPAWN_EGG, CRAB_SPAWN_EGG, MANTARAY_SPAWN_EGG, RACCOON_SPAWN_EGG, OWL_SPAWN_EGG, ANCIENT_BLAZE_SPAWN_EGG,
-                KOALA_SPAWN_EGG, SNAIL_SPAWN_EGG, MONKEY_SPAWN_EGG, NETHER_KNIGHT_SPAWN_EGG, SHROOMIE_SPAWN_EGG);
+                KOALA_SPAWN_EGG, SNAIL_SPAWN_EGG, MONKEY_SPAWN_EGG, NETHER_KNIGHT_SPAWN_EGG, SHROOMIE_SPAWN_EGG, SEAHORSE_SPAWN_EGG);
     }
 
 }

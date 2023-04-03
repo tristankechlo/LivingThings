@@ -87,5 +87,8 @@
     "item.livingthings.nether_knight_spawn_egg": "Nether-Krieger-Spawn-Ei",
     "entity.livingthings.nether_knight": "Nether Krieger",
     "item.livingthings.shroomie_spawn_egg": "Shroomie-Spawn-Ei",
-    "entity.livingthings.shroomie": "Shroomie"
+    "entity.livingthings.shroomie": "Shroomie",
+    "item.livingthings.seahorse_spawn_egg": "Seepferdchen-Spawn-Ei",
+    "entity.livingthings.seahorse": "Seepferdchen",
+    "item.livingthings.seahorse_bucket": "Seepferdchen Eimer"
 }

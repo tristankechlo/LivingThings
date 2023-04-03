@@ -7,3 +7,4 @@
 
 - ancient blaze spawning through block placement
 - normal mob spawning in biomes
+- seahorse loot table

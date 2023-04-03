@@ -15,6 +15,7 @@
     "item.livingthings.cooked_giraffe": "Cooked Giraffe Meat",
     "item.livingthings.ostrich_egg": "Ostrich Egg",
     "item.livingthings.ancient_helmet": "Ancient Helmet",
+    "item.livingthings.seahorse_bucket": "Seahorse Bucket",
     "block.livingthings.ostrich_nest": "Ostrich Nest",
     "item.livingthings.elephant_spawn_egg": "Elephant Spawn Egg",
     "item.livingthings.giraffe_spawn_egg": "Giraffe Spawn Egg",
@@ -33,6 +34,7 @@
     "item.livingthings.monkey_spawn_egg": "Monkey Spawn Egg",
     "item.livingthings.nether_knight_spawn_egg": "Nether Knight Spawn Egg",
     "item.livingthings.shroomie_spawn_egg": "Shroomie Spawn Egg",
+    "item.livingthings.seahorse_spawn_egg": "Seahorse Spawn Egg",
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -87,5 +89,6 @@
     "entity.livingthings.monkey": "Monkey",
     "entity.livingthings.nether_knight": "Nether Knight",
     "entity.livingthings.shroomie": "Shroomie",
+    "entity.livingthings.seahorse": "Seahorse",
     "container.livingthings.elephant": "Elephant"
 }

@@ -34,6 +34,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.MONKEY.get(), MonkeyRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
     }
 
     @SubscribeEvent
@@ -56,6 +57,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.MONKEY_SITTING, MonkeySittingModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.NETHER_KNIGHT, NetherKnightModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.SHROOMIE, ShroomieModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.SEAHORSE, SeahorseModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
     }
 

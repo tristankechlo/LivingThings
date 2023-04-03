@@ -22,7 +22,7 @@ public final class ConfigManager {
         CONFIGS = List.of(GeneralConfig.get(), PenguinConfig.get(), ElephantConfig.get(), GiraffeConfig.get(), LionConfig.get(),
                 SharkConfig.get(), OstrichConfig.get(), FlamingoConfig.get(), CrabConfig.get(), MantarayConfig.get(), RaccoonConfig.get(),
                 OwlConfig.get(), AncientBlazeConfig.get(), KoalaConfig.get(), SnailConfig.get(), MonkeyConfig.get(), NetherKnightConfig.get(),
-                ShroomieConfig.get());
+                ShroomieConfig.get(), SeahorseConfig.get());
     }
 
     public static void loadAndVerifyConfig() {
