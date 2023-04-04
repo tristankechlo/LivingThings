@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.block;
 
 import com.tristankechlo.livingthings.init.ModItems;
+import com.tristankechlo.livingthings.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -55,7 +56,7 @@ public class OstrichNestBlock extends Block {
         if (hasEgg && stack.isEmpty()) {
             //drop egg when present
             world.setBlock(pos, state.setValue(EGG, false).setValue(HATCH, 0), 2);
-            world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 0.7F, 0.9F);
+            world.playSound(player, pos, ModSounds.OSTRICH_EGG_REMOVED.get(), SoundSource.BLOCKS, 0.7F, 0.9F);
             if (!world.isClientSide) {
                 ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.OSTRICH_EGG.get()));
                 itemEntity.setDefaultPickUpDelay();
@@ -67,7 +68,7 @@ public class OstrichNestBlock extends Block {
             //place egg when empty
             state = state.setValue(EGG, true).setValue(HATCH, 0);
             world.setBlock(pos, state, 2);
-            world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundSource.BLOCKS, 0.7F, 0.9F);
+            world.playSound(player, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundSource.BLOCKS, 0.7F, 0.9F);
             if (!player.isCreative()) {
                 stack.shrink(1);
             }

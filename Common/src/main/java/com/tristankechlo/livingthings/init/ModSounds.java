@@ -29,6 +29,7 @@ public final class ModSounds {
 
     public static final RegistryObject<SoundEvent> OSTRICH_EGG_CRACKS = registerSound("ostrich_egg_cracks", "ostrich.egg.cracks");
     public static final RegistryObject<SoundEvent> OSTRICH_EGG_LAYING = registerSound("ostrich_egg_laying", "ostrich.egg.laying");
+    public static final RegistryObject<SoundEvent> OSTRICH_EGG_REMOVED = registerSound("ostrich_nest_egg_removed", "ostrich_nest.remove_egg");
     public static final RegistryObject<SoundEvent> OSTRICH_AMBIENT = registerSound("ostrich_ambient", "ostrich.ambient");
 
     public static final RegistryObject<SoundEvent> RACCOON_AMBIENT = registerSound("raccoon_ambient", "raccoon.ambient");
@@ -47,6 +48,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SHOOT = registerSound("ancient_blaze_shoot", "ancient_blaze.shoot");
     public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_SPAWN = registerSound("ancient_blaze_spawn", "ancient_blaze.spawn");
     public static final RegistryObject<SoundEvent> ANCIENT_BLAZE_CHARGE_UP = registerSound("ancient_blaze_charge_up", "ancient_blaze.charge_up");
+    public static final RegistryObject<SoundEvent> ANCIENT_ARMOR_EQUIP = registerSound("ancient_armor_equip", "ancient_armor.equip");
 
     public static final RegistryObject<SoundEvent> NETHER_KNIGHT_AMBIENT = registerSound("nether_knight_ambient", "nether_knight.ambient");
     public static final RegistryObject<SoundEvent> NETHER_KNIGHT_HURT = registerSound("nether_knight_hurt", "nether_knight.hurt");

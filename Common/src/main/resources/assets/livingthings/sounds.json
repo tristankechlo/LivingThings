@@ -360,5 +360,43 @@
             }
         ],
         "subtitle": "subtitles.livingthings.baby_ender_dragon.shoot"
+    },
+    "ostrich_nest.remove_egg": {
+        "sounds": [
+            {
+                "name": "item/sweet_berries/pick_from_bush1",
+                "pitch": 0.5
+            },
+            {
+                "name": "item/sweet_berries/pick_from_bush2",
+                "pitch": 0.5
+            }
+        ],
+        "subtitle": "subtitles.livingthings.ostrich_nest.remove_egg"
+    },
+    "ancient_armor.equip": {
+        "sounds": [
+            {
+                "name": "item/armor/equip_netherite1",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite2",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite3",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite4",
+                "pitch": 0.6,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.ancient_armor.equip"
     }
 }
