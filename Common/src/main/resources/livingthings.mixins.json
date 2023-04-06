@@ -6,9 +6,11 @@
     "mixins": [
         "ArgumentTypesMixin",
         "MobAccessor",
+        "NetherFortressStructureAccessor",
         "PlayerMixin",
         "PolarbearMixin",
-        "SpawnPlacementsInvoker"
+        "SpawnPlacementsInvoker",
+        "StructureMixin"
     ],
     "client": [
         "LivingEntityRendererAccessor",
