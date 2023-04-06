@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.mixin;
+package com.tristankechlo.livingthings.mixin.entity;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Mob.class)
 public interface MobAccessor {
 
-    @Accessor()
+    @Accessor("targetSelector")
     GoalSelector getTargetSelector();
 
 }

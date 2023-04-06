@@ -5,16 +5,16 @@
     "minVersion": "0.8",
     "mixins": [
         "ArgumentTypesMixin",
-        "MobAccessor",
-        "NetherFortressStructureAccessor",
         "PlayerMixin",
-        "PolarbearMixin",
         "SpawnPlacementsInvoker",
-        "StructureMixin"
+        "entity.MobAccessor",
+        "entity.PolarbearMixin",
+        "worldgen.NetherFortressStructureAccessor",
+        "worldgen.StructureMixin"
     ],
     "client": [
-        "LivingEntityRendererAccessor",
-        "PlayerRendererMixin"
+        "client.LivingEntityRendererAccessor",
+        "client.PlayerRendererMixin"
     ],
     "refmap": "livingthings.refmap.json"
 }

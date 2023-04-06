@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.mixin;
+package com.tristankechlo.livingthings.mixin.client;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -12,7 +12,7 @@ import java.util.List;
 @Mixin(LivingEntityRenderer.class)
 public interface LivingEntityRendererAccessor<T extends LivingEntity, M extends EntityModel<T>> {
 
-    @Accessor
+    @Accessor("layers")
     List<RenderLayer<T, M>> getLayers();
 
 }

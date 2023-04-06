@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.mixin;
+package com.tristankechlo.livingthings.mixin.worldgen;
 
 import com.tristankechlo.livingthings.config.entity.NetherKnightConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -27,7 +27,7 @@ public abstract class StructureMixin {
 
     //add Nether Knight to Fortress Spawns
     @Inject(at = @At("HEAD"), method = "spawnOverrides", cancellable = true)
-    private void spawnOverrides(CallbackInfoReturnable<Map<MobCategory, StructureSpawnOverride>> cir) {
+    private void LivingThings$spawnOverrides(CallbackInfoReturnable<Map<MobCategory, StructureSpawnOverride>> cir) {
         if (this.type() != StructureType.FORTRESS) {
             return;
         }

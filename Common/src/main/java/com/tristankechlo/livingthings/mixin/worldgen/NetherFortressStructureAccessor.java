@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.mixin;
+package com.tristankechlo.livingthings.mixin.worldgen;
 
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.level.biome.MobSpawnSettings;
