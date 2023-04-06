@@ -211,7 +211,7 @@ public class ElephantEntity extends Animal implements NeutralMob {
 
     @Override
     public double getPassengersRidingOffset() {
-        return 2.45D; //TODO set relative to height
+        return this.getDimensions(this.getPose()).height * 0.925D;
     }
 
     @Override
