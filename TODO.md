@@ -1,3 +1,0 @@
-# Other
-
-- seahorse loot table

@@ -15,6 +15,7 @@
     - flamingo
 - new ostrich nest texture
 - polar bears now hunt penguins
+- add loot_table for seahorses
 
 ### Version 1.18.2 - 1.5.0
 
