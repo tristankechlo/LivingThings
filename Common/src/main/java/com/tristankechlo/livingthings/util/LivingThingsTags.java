@@ -14,7 +14,7 @@ public final class LivingThingsTags {
     public static final TagKey<Block> DROPS_BANANAS = registerBlockTag("drops_bananas");
     public static final TagKey<Item> BANANAS = IPlatformHelper.INSTANCE.getBananaTag();
 
-    public static final TagKey<Block> CRAP_SPAWNABLE_ON = spawnableOn("crap");
+    public static final TagKey<Block> CRAB_SPAWNABLE_ON = spawnableOn("crab");
     public static final TagKey<Block> ELEPHANT_SPAWNABLE_ON = spawnableOn("elephant");
     public static final TagKey<Block> FLAMINGO_SPAWNABLE_ON = spawnableOn("flamingo");
     public static final TagKey<Block> GIRAFFE_SPAWNABLE_ON = spawnableOn("giraffe");

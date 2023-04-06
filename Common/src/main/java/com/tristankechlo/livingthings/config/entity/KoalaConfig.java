@@ -1,11 +1,17 @@
 package com.tristankechlo.livingthings.config.entity;
 
 import com.tristankechlo.livingthings.config.util.EntityConfig;
+import com.tristankechlo.livingthings.config.util.SpawnData;
 import com.tristankechlo.livingthings.config.values.IngredientValue;
+import com.tristankechlo.livingthings.config.values.ListValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.DoubleValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.IntegerValue;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.biome.Biomes;
+
+import java.util.List;
 
 public final class KoalaConfig extends EntityConfig {
 
@@ -15,10 +21,11 @@ public final class KoalaConfig extends EntityConfig {
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.17D, MIN_SPEED, MAX_SPEED);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
     public final IngredientValue temptationItems = new IngredientValue("temptationItems", Items.WHEAT);
+    public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private KoalaConfig() {
         super("koala");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, temptationItems);
+        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, temptationItems, spawnBiomes);
     }
 
     public static KoalaConfig get() {
@@ -39,6 +46,14 @@ public final class KoalaConfig extends EntityConfig {
 
     public static Ingredient temptationItems() {
         return INSTANCE.temptationItems.get();
+    }
+
+    private static List<SpawnData> createDefaultSpawns() {
+        return List.of(
+                new SpawnData(50, 3, 8, new ResourceKey[]{Biomes.JUNGLE, Biomes.SPARSE_JUNGLE}),
+                new SpawnData(25, 3, 8, new ResourceKey[]{Biomes.BAMBOO_JUNGLE}),
+                new SpawnData(10, 3, 8, new ResourceKey[]{Biomes.SAVANNA_PLATEAU})
+        );
     }
 
 }

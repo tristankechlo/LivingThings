@@ -1,11 +1,14 @@
 package com.tristankechlo.livingthings;
 
+import com.mojang.serialization.Codec;
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
+import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -13,12 +16,19 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 @Mod(LivingThings.MOD_ID)
 public final class ForgeLivingThings {
 
+    private static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, LivingThings.MOD_ID);
+    public static final RegistryObject<Codec<LivingThingsBiomeModifier>> BIOME_MODIFIER_CODEC = BIOME_MODIFIER.register("add_entity_spawns", () -> LivingThingsBiomeModifier.CODEC);
+
     public ForgeLivingThings() {
         LivingThings.init();
+        BIOME_MODIFIER.register(FMLJavaModLoadingContext.get().getModEventBus()); // needs to be registered before config is loaded
         ConfigManager.loadAndVerifyConfig();
 
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();

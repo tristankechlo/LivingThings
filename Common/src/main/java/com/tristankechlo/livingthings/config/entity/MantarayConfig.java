@@ -1,8 +1,14 @@
 package com.tristankechlo.livingthings.config.entity;
 
 import com.tristankechlo.livingthings.config.util.EntityConfig;
+import com.tristankechlo.livingthings.config.util.SpawnData;
+import com.tristankechlo.livingthings.config.values.ListValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.DoubleValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.IntegerValue;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biomes;
+
+import java.util.List;
 
 public final class MantarayConfig extends EntityConfig {
 
@@ -11,6 +17,7 @@ public final class MantarayConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 1.0D, MIN_SPEED, MAX_SPEED);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
+    public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     public final IntegerValue colorBlueVariant = new IntegerValue("colorBlueVariant", 50, 0, Integer.MAX_VALUE);
     public final IntegerValue colorBrownVariant = new IntegerValue("colorBrownVariant", 50, 0, Integer.MAX_VALUE);
@@ -22,7 +29,7 @@ public final class MantarayConfig extends EntityConfig {
 
     private MantarayConfig() {
         super("mantaray");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk);
+        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, spawnBiomes);
         this.registerForCategory("colorVariants", colorBlueVariant, colorBrownVariant);
         this.registerForCategory("scalingVariants", scalingNormalWeight, scalingSmallVariant, scalingLargeVariant, scalingExtraLargeWeight);
     }
@@ -41,6 +48,12 @@ public final class MantarayConfig extends EntityConfig {
 
     public static int maxSpawnedInChunk() {
         return INSTANCE.maxSpawnedInChunk.get();
+    }
+
+    private static List<SpawnData> createDefaultSpawns() {
+        return List.of(new SpawnData(12, 2, 5, new ResourceKey[]{Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.FROZEN_OCEAN,
+                Biomes.DEEP_FROZEN_OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_COLD_OCEAN, Biomes.WARM_OCEAN,
+                Biomes.LUKEWARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN, Biomes.RIVER}));
     }
 
 }

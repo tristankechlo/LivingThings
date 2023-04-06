@@ -2,14 +2,18 @@ package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
+import com.tristankechlo.livingthings.config.GeneralConfig;
 import com.tristankechlo.livingthings.events.BlockEvents;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,6 +44,16 @@ public final class FabricLivingThings implements ModInitializer {
                 return BlockEvents.onBlockPlace(world, player, pos, placedBlock);
             }
             return InteractionResult.PASS;
+        });
+
+        GeneralConfig.getSpawnData().forEach((biomeLocation, spawnDataList) -> {
+            spawnDataList.forEach((spawnerData) -> {
+                EntityType<?> entityType = spawnerData.type;
+                MobCategory category = entityType.getCategory();
+                BiomeModifications.addSpawn((selectionContext) -> {
+                    return selectionContext.getBiomeKey().location().equals(biomeLocation);
+                }, category, entityType, spawnerData.getWeight().asInt(), spawnerData.minCount, spawnerData.maxCount);
+            });
         });
     }
 

@@ -3,9 +3,9 @@ package com.tristankechlo.livingthings.entity;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.entity.CrabConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.entity.misc.IScaleableMob;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -90,7 +90,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     public static boolean checkCrabSpawnRules(EntityType<CrabEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return (world.isWaterAt(pos)) || world.getBlockState(pos.below()).is(LivingThingsTags.CRAP_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
+        return (world.isWaterAt(pos)) || (world.getBlockState(pos.below()).is(LivingThingsTags.CRAB_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos));
     }
 
     @Override

@@ -22,9 +22,8 @@ public final class AncientBlazeConfig extends EntityConfig {
 
     private AncientBlazeConfig() {
         super("ancient_blaze");
-        this.registerConfigValues(this.health, this.movementSpeed, this.attackDamage, this.chargingTime,
-                this.largeFireballAmount, this.largeFireballChance, this.blazeSpawnCount, this.canAttack,
-                this.canSpawn, this.peacefulDespawn);
+        this.registerConfigValues(health, movementSpeed, attackDamage, chargingTime, largeFireballAmount,
+                largeFireballChance, blazeSpawnCount, canAttack, canSpawn, peacefulDespawn);
     }
 
     public static AncientBlazeConfig get() {
