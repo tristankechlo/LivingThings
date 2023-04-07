@@ -2,19 +2,144 @@
 
 ### adds various new Mobs to Minecraft
 
-### currently added Mobs:
-
-| [Elephant](https://github.com/tristankechlo/Living-Things/wiki/Elephant) | [Giraffe](https://github.com/tristankechlo/Living-Things/wiki/Giraffe) | [Lion](https://github.com/tristankechlo/Living-Things/wiki/Lion) | [Shark](https://github.com/tristankechlo/Living-Things/wiki/Shark) | [Penguin](https://github.com/tristankechlo/Living-Things/wiki/Penguin) |
-| :-: | :-: | :-: | :-: | :-: |
-| [![Elephant](https://i.ibb.co/C1CKqhj/x150-elephant-screenshot-v1-5-0.png)](https://github.com/tristankechlo/Living-Things/wiki/Elephant)| [![Giraffe](https://i.ibb.co/7KVzm3X/x150-giraffe-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Giraffe) | [![Lion](https://i.ibb.co/G7xCNYp/x150-lion-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Lion) | [![Shark](https://i.ibb.co/bdPLmJ5/x150-shark-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Shark) | [![Penguin](https://i.ibb.co/sbtdkFv/x150-penguin-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Penguin) |
-| **[Ostrich](https://github.com/tristankechlo/Living-Things/wiki/Ostrich)** | **[Flamingo](https://github.com/tristankechlo/Living-Things/wiki/Flamingo)** | **[Crab](https://github.com/tristankechlo/Living-Things/wiki/Crab)** | **[Mantaray](https://github.com/tristankechlo/Living-Things/wiki/Mantaray)** | **[Raccoon](https://github.com/tristankechlo/Living-Things/wiki/Raccoon)** |
-| [![Ostrich](https://i.ibb.co/4YZ3Jjb/x150-ostrich-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Ostrich) | [![Flamingo](https://i.ibb.co/CsbSpzh/x150-flamingo-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Flamingo) | [![Crab](https://i.ibb.co/ZgktRkJ/x150-crab-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Crab) | [![Mantaray](https://i.ibb.co/kMRm8b1/x150-mantaray-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Mantaray) | [![Raccoon](https://i.ibb.co/wNVkBd4/x150-raccoon-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Raccoon) |
-| **[Owl](https://github.com/tristankechlo/Living-Things/wiki/Owl)** | **[Ancient Blaze](https://github.com/tristankechlo/Living-Things/wiki/Ancient-Blaze)** | **[Koala](https://github.com/tristankechlo/Living-Things/wiki/Koala)** | **[Snail](https://github.com/tristankechlo/Living-Things/wiki/Snail)** | **[Monkey](https://github.com/tristankechlo/Living-Things/wiki/Monkey)** |
-| [![Owl](https://i.ibb.co/Y831ZD5/x150-owl-brown-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Owl) | [![Ancient Blaze](https://i.ibb.co/tmNFGCg/x150-ancient-blaze-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Ancient-Blaze) | [![Koala](https://i.ibb.co/3TTqm0g/x150-koala-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Koala) | [![Snail](https://i.ibb.co/vDsCBGT/empty.png)](https://github.com/tristankechlo/Living-Things/wiki/Snail) | [![Monkey](https://i.ibb.co/Jpn5BF8/x150-monkey-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Monkey) |
-| **[Nether Knight](https://github.com/tristankechlo/LivingThings/wiki/Nether-Knight)** | **[Shroomie](https://github.com/tristankechlo/LivingThings/wiki/Shroomie)** | **[Seahorse](https://github.com/tristankechlo/LivingThings/wiki/Seahorse)** |||
-| [![Nether Knight](https://i.ibb.co/tYS2LcY/x150-nether-knight-screenshot.png)](https://github.com/tristankechlo/Living-Things/wiki/Nether-Knight) | [![Shroomie](https://i.ibb.co/jWn3yLn/x150-shroomie-red-screenshot.png)](https://github.com/tristankechlo/LivingThings/wiki/Shroomie) | [![Seahorse](https://i.ibb.co/nfHcNFH/x150-seahorse-blue-screenshot.png)](https://github.com/tristankechlo/LivingThings/wiki/Seahorse) |||
-
-
-
-more Mobs will be added soon
-
+<table>
+    <tbody align="center">
+        <tr>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Elephant">Elephant</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Giraffe">Giraffe</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Lion">Lion</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Shark">Shark</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Penguin">Penguin</a></b></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Elephant" alt="Elephant">
+                    <img src="https://i.ibb.co/FmTrk3V/x150-elephant.png" alt="Elephant">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Giraffe" alt="Giraffe">
+                    <img src="https://i.ibb.co/BsKygRH/x150-giraffe-1.png" alt="Giraffe">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Lion" alt="Lion">
+                    <img src="https://i.ibb.co/42NdLHJ/x150-lion.png" alt="Lion">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Shark" alt="Shark">
+                    <img src="https://i.ibb.co/TT37Srs/x150-shark.png" alt="Shark">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Penguin" alt="Penguin">
+                    <img src="https://i.ibb.co/3Nsz7QJ/x150-penguin.png" alt="Penguin">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Ostrich">Ostrich</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Flamingo">Flamingo</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Crab">Crab</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Mantaray">Mantaray</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Raccoon">Raccoon</a></b></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Ostrich" alt="Ostrich">
+                    <img src="https://i.ibb.co/1bVQWM7/x150-ostrich.png" alt="Ostrich">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Flamingo" alt="Flamingo">
+                    <img src="https://i.ibb.co/cD25F5X/x150-flamingo.png" alt="Flamingo">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Crab" alt="Crab">
+                    <img src="https://i.ibb.co/4jBC2W6/x150-crab-red.png" alt="Crab">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Mantaray" alt="Mantaray">
+                    <img src="https://i.ibb.co/yFdCLY5/x150-mantaray-blue.png" alt="Mantaray">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Raccoon" alt="Raccoon">
+                    <img src="https://i.ibb.co/603nvTx/x150-raccoon.png" alt="Raccoon">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Owl">Owl</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Ancient-Blaze">Ancient Blaze</a></b>
+            </td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Koala">Koala</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Snail">Snail</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Monkey">Monkey</a></b></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Owl" alt="Owl">
+                    <img src="https://i.ibb.co/HGRhkV1/x150-owl-brown.png" alt="Owl">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Ancient-Blaze" alt="Ancient-Blaze">
+                    <img src="https://i.ibb.co/KmFhmKP/x150-ancient-blaze.png" alt="Ancient-Blaze">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Koala" alt="Koala">
+                    <img src="https://i.ibb.co/7bjDt6t/x150-koala.png" alt="Koala">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Snail" alt="Snail">
+                    <img src="https://i.ibb.co/3TbdjV6/x150-snail-blue.png" alt="Snail">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Monkey" alt="Monkey">
+                    <img src="https://i.ibb.co/vBP62Dc/x150-monkey.png" alt="Monkey">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Nether-Knight">Nether Knight</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Shroomie">Shroomie</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Seahorse">Seahorse</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Baby-Enderdragon">Baby Enderdragon</a></b></td>
+            <td><b><a href="https://github.com/tristankechlo/Living-Things/wiki/Peacock">Peacock</a></b></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Nether-Knight" alt="Nether-Knight">
+                    <img src="https://i.ibb.co/mChdgsc/x150-nether-knight.png" alt="Nether-Knight">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Shroomie" alt="Shroomie">
+                    <img src="https://i.ibb.co/wRHq7bv/x150-shroomie-red.png" alt="Shroomie">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Seahorse" alt="Seahorse">
+                    <img src="https://i.ibb.co/4Ty45xG/x150-seahorse-blue.png" alt="Seahorse">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Baby-Enderdragon" alt="Baby-Enderdragon">
+                    <img src="https://i.ibb.co/nQdkC9g/x150-baby-ender-dragon.png" alt="Baby-Enderdragon">
+                </a>
+            </td>
+            <td>
+                <a href="https://github.com/tristankechlo/Living-Things/wiki/Peacock" alt="Peacock">
+                    <img src="https://i.ibb.co/GpKcwTn/x150-peacock.png" alt="Peacock">
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
