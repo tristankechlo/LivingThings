@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.config.values.NumberValue.DoubleValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.IntegerValue;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biomes;
 
 import java.util.List;
@@ -65,8 +66,8 @@ public final class CrabConfig extends EntityConfig {
         return INSTANCE.maxSpawnedInChunk.get();
     }
 
-    public static IngredientValue temptationItems() {
-        return INSTANCE.temptationItems;
+    public static Ingredient temptationItems() {
+        return INSTANCE.temptationItems.get();
     }
 
     private static List<SpawnData> createDefaultSpawns() {

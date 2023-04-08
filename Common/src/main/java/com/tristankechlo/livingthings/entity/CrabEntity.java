@@ -48,7 +48,6 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     private static final EntityDataAccessor<Byte> CRAB_VARIANT = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> CRAB_SCALING = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private static final Ingredient BREEDING_ITEMS = Ingredient.of(Items.COD);
     private int angerTime;
     private UUID angerTarget;
 
@@ -157,7 +156,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return BREEDING_ITEMS.test(stack);
+        return CrabConfig.temptationItems().test(stack);
     }
 
     @Override
