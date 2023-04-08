@@ -22,7 +22,6 @@ public final class ModItems {
     public static void init() {}
 
     public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registry.ITEM, LivingThings.MOD_ID);
-    private static final Item.Properties SPAWN_EGG_PROPS = new Item.Properties();
     public static final List<RegistryObject<? extends Item>> ALL_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<Item>> SPAWN_EGGS;
 
@@ -45,25 +44,25 @@ public final class ModItems {
     public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, normalProps().stacksTo(1)));
 
     // register spawn eggs
-    public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ITEMS.register("elephant_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ELEPHANT.get(), 0x000000, 0x4e4e4e, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> GIRAFFE_SPAWN_EGG = ITEMS.register("giraffe_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.GIRAFFE.get(), 0xebb26c, 0x785f40, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.LION.get(), 0xebb26c, 0xFFFFFF, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> SHARK_SPAWN_EGG = ITEMS.register("shark_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHARK.get(), 0x707187, 0x595a6b, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> PENGUIN_SPAWN_EGG = ITEMS.register("penguin_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.PENGUIN.get(), 0x000000, 0xFFFFFF, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> OSTRICH_SPAWN_EGG = ITEMS.register("ostrich_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OSTRICH.get(), 0x130d08, 0xa56f5b, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> FLAMINGO_SPAWN_EGG = ITEMS.register("flamingo_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.FLAMINGO.get(), 0xf38989, 0x2d0404, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> CRAB_SPAWN_EGG = ITEMS.register("crab_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.CRAB.get(), 0xeb4034, 0x73706f, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> MANTARAY_SPAWN_EGG = ITEMS.register("mantaray_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.MANTARAY.get(), 0x000896, 0x595a6b, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> RACCOON_SPAWN_EGG = ITEMS.register("raccoon_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.RACCOON.get(), 0x6e6e6e, 0x000000, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OWL.get(), 0xedd7d5, 0x6e3834, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> ANCIENT_BLAZE_SPAWN_EGG = ITEMS.register("ancient_blaze_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ANCIENT_BLAZE.get(), 0xF6B200, 0xFFF87D, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> KOALA_SPAWN_EGG = ITEMS.register("koala_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.KOALA.get(), 0x565050, 0x8f8686, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> SNAIL_SPAWN_EGG = ITEMS.register("snail_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SNAIL.get(), 0x2206464, 0x53588, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> MONKEY_SPAWN_EGG = ITEMS.register("monkey_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.MONKEY.get(), 10051392, 7555121, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> NETHER_KNIGHT_SPAWN_EGG = ITEMS.register("nether_knight_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.NETHER_KNIGHT.get(), 0x181a1c, 0xa32aa1, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> SHROOMIE_SPAWN_EGG = ITEMS.register("shroomie_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHROOMIE.get(), 0xb8968d, 0xdb380f, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = ITEMS.register("seahorse_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SEAHORSE.get(), 0x22ff22, 0xdb380f, SPAWN_EGG_PROPS));
-    public static final RegistryObject<Item> BABY_ENDER_DRAGON_SPAWN_EGG = ITEMS.register("baby_ender_dragon_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.BABY_ENDER_DRAGON.get(), 0x201e24, 0xff59cd, SPAWN_EGG_PROPS));
+    public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ITEMS.register("elephant_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ELEPHANT.get(), 0x000000, 0x4e4e4e, normalProps()));
+    public static final RegistryObject<Item> GIRAFFE_SPAWN_EGG = ITEMS.register("giraffe_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.GIRAFFE.get(), 0xebb26c, 0x785f40, normalProps()));
+    public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.LION.get(), 0xebb26c, 0xFFFFFF, normalProps()));
+    public static final RegistryObject<Item> SHARK_SPAWN_EGG = ITEMS.register("shark_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHARK.get(), 0x707187, 0x595a6b, normalProps()));
+    public static final RegistryObject<Item> PENGUIN_SPAWN_EGG = ITEMS.register("penguin_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.PENGUIN.get(), 0x000000, 0xFFFFFF, normalProps()));
+    public static final RegistryObject<Item> OSTRICH_SPAWN_EGG = ITEMS.register("ostrich_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OSTRICH.get(), 0x130d08, 0xa56f5b, normalProps()));
+    public static final RegistryObject<Item> FLAMINGO_SPAWN_EGG = ITEMS.register("flamingo_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.FLAMINGO.get(), 0xf38989, 0x2d0404, normalProps()));
+    public static final RegistryObject<Item> CRAB_SPAWN_EGG = ITEMS.register("crab_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.CRAB.get(), 0xeb4034, 0x73706f, normalProps()));
+    public static final RegistryObject<Item> MANTARAY_SPAWN_EGG = ITEMS.register("mantaray_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.MANTARAY.get(), 0x000896, 0x595a6b, normalProps()));
+    public static final RegistryObject<Item> RACCOON_SPAWN_EGG = ITEMS.register("raccoon_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.RACCOON.get(), 0x6e6e6e, 0x000000, normalProps()));
+    public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.OWL.get(), 0xedd7d5, 0x6e3834, normalProps()));
+    public static final RegistryObject<Item> ANCIENT_BLAZE_SPAWN_EGG = ITEMS.register("ancient_blaze_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ANCIENT_BLAZE.get(), 0xF6B200, 0xFFF87D, normalProps()));
+    public static final RegistryObject<Item> KOALA_SPAWN_EGG = ITEMS.register("koala_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.KOALA.get(), 0x565050, 0x8f8686, normalProps()));
+    public static final RegistryObject<Item> SNAIL_SPAWN_EGG = ITEMS.register("snail_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SNAIL.get(), 0x2206464, 0x53588, normalProps()));
+    public static final RegistryObject<Item> MONKEY_SPAWN_EGG = ITEMS.register("monkey_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.MONKEY.get(), 10051392, 7555121, normalProps()));
+    public static final RegistryObject<Item> NETHER_KNIGHT_SPAWN_EGG = ITEMS.register("nether_knight_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.NETHER_KNIGHT.get(), 0x181a1c, 0xa32aa1, normalProps()));
+    public static final RegistryObject<Item> SHROOMIE_SPAWN_EGG = ITEMS.register("shroomie_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SHROOMIE.get(), 0xb8968d, 0xdb380f, normalProps()));
+    public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = ITEMS.register("seahorse_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.SEAHORSE.get(), 0x22ff22, 0xdb380f, normalProps()));
+    public static final RegistryObject<Item> BABY_ENDER_DRAGON_SPAWN_EGG = ITEMS.register("baby_ender_dragon_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.BABY_ENDER_DRAGON.get(), 0x201e24, 0xff59cd, normalProps()));
 
     public static Item.Properties normalProps() {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());

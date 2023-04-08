@@ -21,7 +21,7 @@ public class ForgeItemGroup extends CreativeModeTab {
 
     @Override
     public void fillItemList(NonNullList<ItemStack> stacks) {
-        super.fillItemList(stacks);
+        ModItems.ALL_ITEMS.forEach(item -> stacks.add(item.get().getDefaultInstance()));
         ModItems.SPAWN_EGGS.forEach(spawnEgg -> stacks.add(spawnEgg.get().getDefaultInstance()));
     }
 
