@@ -2,11 +2,14 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
@@ -24,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
-public class FlamingoEntity extends Animal {
+public class FlamingoEntity extends Animal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> LEFT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> RIGHT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class, EntityDataSerializers.BOOLEAN);
@@ -108,6 +111,11 @@ public class FlamingoEntity extends Animal {
 
     public void setRightLegUp(boolean up) {
         this.entityData.set(RIGHT_LEG_UP, up);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.FLAMINGO;
     }
 
     static class LiftLegsGoal extends Goal {

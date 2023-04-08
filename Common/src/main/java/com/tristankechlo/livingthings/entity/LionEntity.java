@@ -3,16 +3,19 @@ package com.tristankechlo.livingthings.entity;
 import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.entity.LionConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.entity.misc.IGenderedMob;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -38,7 +41,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import java.util.Optional;
 import java.util.UUID;
 
-public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob {
+public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> MALE = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> LION_VARIANT = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BYTE);
@@ -243,6 +246,11 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     @Override
     public void startPersistentAngerTimer() {
         this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.LION;
     }
 
 }

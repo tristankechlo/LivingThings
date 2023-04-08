@@ -5,12 +5,15 @@ import com.tristankechlo.livingthings.config.entity.AncientBlazeConfig;
 import com.tristankechlo.livingthings.entity.ai.AncientBlazeChargeUpGoal;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -37,7 +40,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob {
+public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> SHOOTS = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Integer> INVULNERABLE_TIME = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.INT);
@@ -296,6 +299,11 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public boolean isPowered() {
         return this.entityData.get(INVULNERABLE_TIME) > 0;
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.ANCIENT_BLAZE;
     }
 
 }

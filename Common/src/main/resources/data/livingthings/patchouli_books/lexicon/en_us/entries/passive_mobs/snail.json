@@ -1,0 +1,19 @@
+{
+	"name" : "Snail",
+	"icon" : "livingthings:snail_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br2)$(bold)Health: $()2 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Carrots$(li)Apples$(br2)can be recolored by (sneak-)rightclicking the snail with any dye$(br2)$(bold)Drops:$()$(br)$(li)1-2 Slime Balls"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:snail",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"text" : "Can be found in nearly all various biomes like $(bold)Forests$(), $(bold)Swamps$() or $(bold)Plains$()."
+		}
+	]
+}

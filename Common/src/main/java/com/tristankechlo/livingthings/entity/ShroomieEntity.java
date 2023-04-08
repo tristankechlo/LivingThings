@@ -2,14 +2,17 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.entity.ai.ShroomiePlantMushroomGoal;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
+import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -29,7 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-public class ShroomieEntity extends Animal implements IMobVariants {
+public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
@@ -171,6 +174,11 @@ public class ShroomieEntity extends Animal implements IMobVariants {
             return;
         }
         this.entityData.set(VARIANT, type);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.SHROOMIE;
     }
 
 }

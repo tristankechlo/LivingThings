@@ -16,6 +16,7 @@
     "item.livingthings.ostrich_egg": "Ostrich Egg",
     "item.livingthings.ancient_helmet": "Ancient Helmet",
     "item.livingthings.seahorse_bucket": "Seahorse Bucket",
+    "item.livingthings.lexicon": "LivingThings Lexicon",
     "block.livingthings.ostrich_nest": "Ostrich Nest",
     "item.livingthings.elephant_spawn_egg": "Elephant Spawn Egg",
     "item.livingthings.giraffe_spawn_egg": "Giraffe Spawn Egg",
@@ -94,5 +95,8 @@
     "entity.livingthings.shroomie": "Shroomie",
     "entity.livingthings.seahorse": "Seahorse",
     "entity.livingthings.baby_ender_dragon": "Baby Enderdragon",
-    "container.livingthings.elephant": "Elephant"
+    "container.livingthings.elephant": "Elephant",
+    "messages.livingthings.nopatchouli.title" : "Can't use this!",
+    "messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed.",
+    "messages.livingthings.nopatchouli.wiki" : "More information about the mod can be found here: %s"
 }

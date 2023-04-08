@@ -2,9 +2,12 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.SharkConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -32,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public class SharkEntity extends WaterAnimal implements NeutralMob {
+public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
     private int angerTime;
@@ -164,6 +167,11 @@ public class SharkEntity extends WaterAnimal implements NeutralMob {
     @Override
     public void startPersistentAngerTimer() {
         this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.SHARK;
     }
 
 }

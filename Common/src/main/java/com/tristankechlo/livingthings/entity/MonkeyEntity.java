@@ -3,12 +3,15 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.MonkeyConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public class MonkeyEntity extends TamableAnimal {
+public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(MonkeyEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(MonkeyEntity.class, EntityDataSerializers.BYTE);
@@ -224,6 +227,9 @@ public class MonkeyEntity extends TamableAnimal {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (this.level.isClientSide()) {
+            if (ILexiconEntry.isLexicon(stack)) {
+                return InteractionResult.PASS;
+            }
             boolean flag = this.isOwnedBy(player) || this.isTame() || this.isFood(stack) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
@@ -253,6 +259,11 @@ public class MonkeyEntity extends TamableAnimal {
             }
             return super.mobInteract(player, hand);
         }
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.MONKEY;
     }
 
     public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {

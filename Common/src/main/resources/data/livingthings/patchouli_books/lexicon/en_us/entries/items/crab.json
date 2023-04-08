@@ -1,0 +1,16 @@
+{
+	"name" : "Raw Crab Meat",
+	"icon" : "livingthings:crab",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be dropped by Crabs"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:crab",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten$(li)can be smelted to Cooked Crab Meat"
+		}
+	]
+}

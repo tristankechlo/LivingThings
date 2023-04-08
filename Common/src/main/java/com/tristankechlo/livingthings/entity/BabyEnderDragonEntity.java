@@ -5,13 +5,17 @@ import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
 import com.tristankechlo.livingthings.entity.ai.CustomSitWhenOrderedToSitGoal;
 import com.tristankechlo.livingthings.entity.misc.CustomDragonFireball;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -46,7 +50,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, RangedAttackMob, FlyingAnimal {
+public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, RangedAttackMob, FlyingAnimal, ILexiconEntry {
 
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
@@ -113,9 +117,9 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         if (this.level.isClientSide) {
-            //if (item == ModItems.LEXICON.get()) {
-            //    return InteractionResult.PASS;
-            //}
+            if (item == ModItems.LEXICON.get()) {
+                return InteractionResult.PASS;
+            }
             boolean flag = this.isOwnedBy(player) || this.isTame() || isFood(itemstack) && !this.isTame() && !this.isAngry();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
@@ -336,6 +340,11 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
             this.setTarget((LivingEntity) target);
         }
         return super.hurt(source, damage);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.BABY_ENDER_DRAGON;
     }
 
 }

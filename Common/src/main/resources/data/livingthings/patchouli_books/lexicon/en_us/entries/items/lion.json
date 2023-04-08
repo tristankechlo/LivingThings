@@ -1,0 +1,16 @@
+{
+	"name" : "Raw Lion Meat",
+	"icon" : "livingthings:lion",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be dropped by Lions"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:lion",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten$(li)can be smelted to Cooked Lion Meat"
+		}
+	]
+}

@@ -2,11 +2,14 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
@@ -21,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
-public class KoalaEntity extends Animal {
+public class KoalaEntity extends Animal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(KoalaEntity.class, EntityDataSerializers.BYTE);
 
@@ -112,6 +115,11 @@ public class KoalaEntity extends Animal {
     @Override
     protected int calculateFallDamage(float distance, float damageMultiplier) {
         return (int) (super.calculateFallDamage(distance, (damageMultiplier)) * 0.5D);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.KOALA;
     }
 
 }

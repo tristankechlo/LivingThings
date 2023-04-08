@@ -3,9 +3,12 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.NetherKnightConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -36,7 +39,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 
-public class NetherKnightEntity extends Monster {
+public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
     public NetherKnightEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -215,6 +218,11 @@ public class NetherKnightEntity extends Monster {
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
         return (effect.getEffect() == MobEffects.WITHER) ? false : super.canBeAffected(effect);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.NETHER_KNIGHT;
     }
 
 }

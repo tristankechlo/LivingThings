@@ -7,12 +7,15 @@ import com.tristankechlo.livingthings.init.ModBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -27,8 +30,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -38,7 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
-public class OstrichEntity extends Animal implements ItemSteerable {
+public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_BUILDING_NEST = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.BOOLEAN);
@@ -190,8 +191,8 @@ public class OstrichEntity extends Animal implements ItemSteerable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         boolean breedingItem = this.isFood(player.getItemInHand(hand));
-        //boolean isLexicon = player.getMainHandItem().getItem() == ModItems.LEXICON.get();
-        if (!breedingItem /*&& !isLexicon*/ && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
+        boolean isLexicon = player.getMainHandItem().getItem() == ModItems.LEXICON.get();
+        if (!breedingItem && !isLexicon && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
             if (!this.level.isClientSide && OstrichConfig.canBeRidden()) {
                 player.startRiding(this);
             }
@@ -224,6 +225,11 @@ public class OstrichEntity extends Animal implements ItemSteerable {
     @Override
     public double getPassengersRidingOffset() {
         return 1.0D;
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.OSTRICH;
     }
 
     private static class LayEggGoal extends MoveToBlockGoal {

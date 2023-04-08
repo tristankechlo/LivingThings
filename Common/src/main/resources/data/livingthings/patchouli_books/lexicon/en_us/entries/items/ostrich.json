@@ -1,0 +1,16 @@
+{
+	"name" : "Raw Ostrich Meat",
+	"icon" : "livingthings:ostrich",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be dropped by Ostrichs"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:ostrich",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten$(li)can be smelted to Cooked Ostrich Meat"
+		}
+	]
+}

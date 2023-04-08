@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +34,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import java.awt.*;
 import java.util.List;
 
-public class SnailEntity extends Animal {
+public class SnailEntity extends Animal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> SHELL_COLOR_F = SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
@@ -229,6 +231,11 @@ public class SnailEntity extends Animal {
     @Override
     public int getMaxSpawnClusterSize() {
         return SnailConfig.maxSpawnedInChunk();
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.SNAIL;
     }
 
     static enum SnailVariants {

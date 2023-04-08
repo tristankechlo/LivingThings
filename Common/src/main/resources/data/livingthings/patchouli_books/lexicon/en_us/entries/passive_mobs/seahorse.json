@@ -1,0 +1,20 @@
+{
+	"name" : "Seahorse",
+	"icon" : "livingthings:seahorse_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Colorful animal that wanders through the ocean in groups.$(br2)$(bold)Health: $()2 Hearts"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:seahorse",
+			"rotate" : false,
+			"scale" : 1.4,
+			"default_rotation" : 40,
+			"offset" : -0.1,
+			"text" : "Can be found in $(bold)Warm$() and $(bold)Luke Warm Oceans$()."
+		}
+	]
+}

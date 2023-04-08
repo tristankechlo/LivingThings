@@ -4,12 +4,15 @@ import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.entity.misc.IScaleableMob;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
@@ -33,7 +36,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.Optional;
 
-public class MantarayEntity extends AbstractSchoolingFish implements IMobVariants, IScaleableMob {
+public class MantarayEntity extends AbstractSchoolingFish implements IMobVariants, IScaleableMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> MANTARAY_VARIANT = SynchedEntityData.defineId(MantarayEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> MANTARAY_SCALING = SynchedEntityData.defineId(MantarayEntity.class, EntityDataSerializers.BYTE);
@@ -182,6 +185,11 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     protected SoundEvent getFlopSound() {
         // required by AbstractFishEntity
         return null;
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.MANTARAY;
     }
 
     static class SwimGoal extends RandomSwimmingGoal {

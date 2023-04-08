@@ -1,0 +1,16 @@
+{
+	"name" : "Cooked Ostrich Meat",
+	"icon" : "livingthings:cooked_ostrich",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be obtained by smelting Raw Ostrich Meat"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_ostrich",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten"
+		}
+	]
+}

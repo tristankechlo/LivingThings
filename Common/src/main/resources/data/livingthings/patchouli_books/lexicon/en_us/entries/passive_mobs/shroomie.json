@@ -1,0 +1,19 @@
+{
+	"name" : "Shroomie",
+	"icon" : "livingthings:shroomie_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Helpful animal that will plant at least one mushroom when you give them one.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(li)Wheat$(br2)$(bold)Drops:$()$(li)1-2 Red Mushroom$(br)    --- or ---$(li)1-2 Brown Mushroom"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:shroomie{ShroomieType:1}",
+			"rotate" : false,
+			"default_rotation" : 30,
+			"offset" : 0.1,
+			"text" : "Can be found in all $(bold)Mushroom Fields$()."
+		}
+	]
+}

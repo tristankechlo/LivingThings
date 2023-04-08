@@ -1,0 +1,16 @@
+{
+	"name" : "Ostrich Egg",
+	"icon" : "livingthings:ostrich_egg",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)If an ostrich nest contains an egg and a player right-clicks it, the egg can be dropped$(br2)Can be dropped by an ostrich that was about do build its nest"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:ostrich_egg",
+			"text" : "$(br)$(bold)Usage:$()$(br)can be placed in an ostrich nest, to hatch a baby ostrich"
+		}
+	]
+}

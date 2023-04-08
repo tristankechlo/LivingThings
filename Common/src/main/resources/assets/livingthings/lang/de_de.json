@@ -94,5 +94,9 @@
     "item.livingthings.baby_ender_dragon_spawn_egg": "Baby-Enderdrache-Spawn-Ei",
     "entity.livingthings.baby_ender_dragon": "Baby Enderdrache",
     "subtitles.livingthings.ostrich_nest.remove_egg": "Strau\u00dfen Ei wird entfernt",
-    "subtitles.livingthings.ancient_armor.equip": "Antike R\u00fcstung wird angelegt"
+    "subtitles.livingthings.ancient_armor.equip": "Antike R\u00fcstung wird angelegt",
+    "item.livingthings.lexicon": "LivingThings Lexikon",
+    "messages.livingthings.nopatchouli.title": "Fehler!",
+    "messages.livingthings.nopatchouli.subtitle": "Mod Patchouli ist nicht installiert.",
+    "messages.livingthings.nopatchouli.wiki": "Mehr Information \u00fcber den Mod findest du hier: %s"
 }

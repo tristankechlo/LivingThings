@@ -4,7 +4,10 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -15,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
@@ -47,7 +51,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ElephantEntity extends Animal implements NeutralMob {
+public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
     private static final Component CONTAINER_NAME = Component.translatable("container." + LivingThings.MOD_ID + ".elephant");
@@ -440,12 +444,12 @@ public class ElephantEntity extends Animal implements NeutralMob {
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide());
 
-        } /*else if (stack.getItem() == ModItems.LEXICON.get()) {
+        } else if (stack.getItem() == ModItems.LEXICON.get()) {
 
             // prevent any use when item is lexicon
             return InteractionResult.PASS;
 
-        }*/ else if (this.isFood(stack)) {
+        } else if (this.isFood(stack)) {
 
             if (this.isBaby()) {
                 // age up
@@ -539,6 +543,11 @@ public class ElephantEntity extends Animal implements NeutralMob {
     @Override
     public boolean canBreed() {
         return true;
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.ELEPHANT;
     }
 
     private static class NewHurtByTargetGoal extends HurtByTargetGoal {

@@ -18,6 +18,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC"
     implementation project(":Common")
 }
 

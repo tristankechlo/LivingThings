@@ -1,0 +1,20 @@
+{
+	"name" : "Giraffe",
+	"icon" : "livingthings:giraffe_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Huge animals that will be angry when you attack them!$(br2)$(bold)Health: $()15 Hearts$(br)$(bold)Attack-Damage: $()2 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:giraffe",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"offset" : 0.1,
+			"text" : "Can be found in all $(bold)Savanna$() biomes."
+		}
+	]
+}

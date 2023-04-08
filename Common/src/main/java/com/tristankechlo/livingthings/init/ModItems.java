@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
+import com.tristankechlo.livingthings.item.LexiconItem;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
@@ -30,7 +31,7 @@ public final class ModItems {
     public static final RegistryObject<Item> CRAB = ITEMS.register("crab", () -> new Item(normalProps().food(ModFoods.CRAB)));
     public static final RegistryObject<Item> COOKED_CRAB = ITEMS.register("cooked_crab", () -> new Item(normalProps().food(ModFoods.COOKED_CRAB)));
     public static final RegistryObject<Item> CRAB_SHELL = ITEMS.register("crab_shell", () -> new Item(normalProps()));
-    //public static final RegistryObject<Item> LEXICON = ITEMS.register("lexicon", () -> new LexiconItem(new Properties().tab(ModItemGroups.GENERAL).stacksTo(1)));
+    public static final RegistryObject<Item> LEXICON = ITEMS.register("lexicon", () -> new LexiconItem(normalProps().stacksTo(1)));
     public static final RegistryObject<Item> BANANA = ITEMS.register("banana", () -> new Item(normalProps().food(ModFoods.BANANA)));
     public static final RegistryObject<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> new ArmorItem(ModArmorMaterial.ANCIENT, EquipmentSlot.HEAD, normalProps().stacksTo(1)));
     public static final RegistryObject<Item> OSTRICH = ITEMS.register("ostrich", () -> new Item(normalProps().food(ModFoods.OSTRICH)));
@@ -70,7 +71,7 @@ public final class ModItems {
 
     static {
         List<RegistryObject<Item>> items = List.of(SHARK_TOOTH, OSTRICH_EGG, CRAB, COOKED_CRAB, CRAB_SHELL, BANANA, OSTRICH, COOKED_OSTRICH,
-                ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE, ANCIENT_HELMET, SEAHORSE_BUCKET);
+                ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE, ANCIENT_HELMET, SEAHORSE_BUCKET, LEXICON);
         ALL_ITEMS.addAll(items);
         SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG, OSTRICH_SPAWN_EGG,
                 FLAMINGO_SPAWN_EGG, CRAB_SPAWN_EGG, MANTARAY_SPAWN_EGG, RACCOON_SPAWN_EGG, OWL_SPAWN_EGG, ANCIENT_BLAZE_SPAWN_EGG,

@@ -6,9 +6,12 @@ import com.tristankechlo.livingthings.entity.ai.BreakOstrichEggGoal;
 import com.tristankechlo.livingthings.entity.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -29,7 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 
 import java.util.UUID;
 
-public class RaccoonEntity extends Animal implements NeutralMob {
+public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
     private int angerTime;
@@ -149,6 +152,11 @@ public class RaccoonEntity extends Animal implements NeutralMob {
     @Override
     public void startPersistentAngerTimer() {
         this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.RACCOON;
     }
 
 }

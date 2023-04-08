@@ -4,12 +4,15 @@ import com.tristankechlo.livingthings.config.entity.OwlConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -34,7 +37,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
-public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants {
+public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> OWL_VARIANT = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.BYTE);
     public float flap;
@@ -247,6 +250,11 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     @Override
     public void setVariant(byte variant) {
         this.entityData.set(OWL_VARIANT, variant);
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.OWL;
     }
 
 }

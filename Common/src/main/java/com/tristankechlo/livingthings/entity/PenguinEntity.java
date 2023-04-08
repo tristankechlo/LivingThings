@@ -3,8 +3,11 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -20,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-public class PenguinEntity extends Animal {
+public class PenguinEntity extends Animal implements ILexiconEntry {
 
     public PenguinEntity(EntityType<PenguinEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
@@ -97,6 +100,11 @@ public class PenguinEntity extends Animal {
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.PENGUIN_DEATH.get();
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.PENGUIN;
     }
 
 }

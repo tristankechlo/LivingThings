@@ -6,12 +6,15 @@ import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.entity.misc.IScaleableMob;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -40,7 +43,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CrabEntity extends Animal implements IMobVariants, NeutralMob, IScaleableMob {
+public class CrabEntity extends Animal implements IMobVariants, NeutralMob, IScaleableMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> CRAB_VARIANT = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> CRAB_SCALING = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
@@ -251,6 +254,11 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     @Override
     public void startPersistentAngerTimer() {
         this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.CRAB;
     }
 
 }

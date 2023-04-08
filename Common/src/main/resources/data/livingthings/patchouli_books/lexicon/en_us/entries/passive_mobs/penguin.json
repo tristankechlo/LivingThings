@@ -1,0 +1,19 @@
+{
+	"name" : "Penguin",
+	"icon" : "livingthings:penguin_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "A cute animal that is very talkative.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Raw Salmon$(li)Raw Cod$(li)Pufferfish"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:penguin",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"text" : "Can be found in $(bold)Snowy$() biomes."
+		}
+	]
+}

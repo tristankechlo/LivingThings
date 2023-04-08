@@ -1,15 +1,18 @@
 package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.SeahorseConfig;
+import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.entity.misc.IMobVariants;
+import com.tristankechlo.livingthings.util.ILexiconEntry;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -26,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariants {
+public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(SeahorseEntity.class, EntityDataSerializers.BYTE);
 
@@ -104,6 +107,11 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
         super.saveToBucketTag(stack);
         CompoundTag compoundnbt = stack.getOrCreateTag();
         compoundnbt.putByte("BucketSeahorseVariantTag", this.getVariant());
+    }
+
+    @Override
+    public ResourceLocation getLexiconEntry() {
+        return LexiconEntries.SEAHORSE;
     }
 
     @Override

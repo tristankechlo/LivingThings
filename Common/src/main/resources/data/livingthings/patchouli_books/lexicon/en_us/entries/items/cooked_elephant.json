@@ -1,0 +1,16 @@
+{
+	"name" : "Cooked Elephant Meat",
+	"icon" : "livingthings:cooked_elephant",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)Obtaining:$()$(br)can be obtained by smelting Raw Elephant Meat"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_elephant",
+			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten"
+		}
+	]
+}
