@@ -1,9 +1,9 @@
 package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.OwlConfig;
+import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
-import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
@@ -187,8 +187,8 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        return this.isBaby() ? 0.45F : 0.9F;
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+        return size.height * 0.9F;
     }
 
     @Override

@@ -167,10 +167,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        if (this.isBaby()) {
-            return size.height * 0.9F;
-        }
-        return this.getDimensions(pose).height * 0.9F;
+        return size.height * 0.9F;
     }
 
     @Override
