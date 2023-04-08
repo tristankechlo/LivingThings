@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.Fluids;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class ModItems {
 
@@ -25,23 +26,23 @@ public final class ModItems {
     public static final List<RegistryObject<? extends Item>> ALL_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<Item>> SPAWN_EGGS;
 
-    public static final RegistryObject<Item> SHARK_TOOTH = ITEMS.register("shark_tooth", () -> new Item(normalProps()));
-    public static final RegistryObject<Item> OSTRICH_EGG = ITEMS.register("ostrich_egg", () -> new Item(normalProps().stacksTo(16)));
-    public static final RegistryObject<Item> CRAB = ITEMS.register("crab", () -> new Item(normalProps().food(ModFoods.CRAB)));
-    public static final RegistryObject<Item> COOKED_CRAB = ITEMS.register("cooked_crab", () -> new Item(normalProps().food(ModFoods.COOKED_CRAB)));
-    public static final RegistryObject<Item> CRAB_SHELL = ITEMS.register("crab_shell", () -> new Item(normalProps()));
-    public static final RegistryObject<Item> LEXICON = ITEMS.register("lexicon", () -> new LexiconItem(normalProps().stacksTo(1)));
-    public static final RegistryObject<Item> BANANA = ITEMS.register("banana", () -> new Item(normalProps().food(ModFoods.BANANA)));
-    public static final RegistryObject<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> new ArmorItem(ModArmorMaterial.ANCIENT, EquipmentSlot.HEAD, normalProps().stacksTo(1)));
-    public static final RegistryObject<Item> OSTRICH = ITEMS.register("ostrich", () -> new Item(normalProps().food(ModFoods.OSTRICH)));
-    public static final RegistryObject<Item> COOKED_OSTRICH = ITEMS.register("cooked_ostrich", () -> new Item(normalProps().food(ModFoods.COOKED_OSTRICH)));
-    public static final RegistryObject<Item> ELEPHANT = ITEMS.register("elephant", () -> new Item(normalProps().food(ModFoods.ELEPHANT)));
-    public static final RegistryObject<Item> COOKED_ELEPHANT = ITEMS.register("cooked_elephant", () -> new Item(normalProps().food(ModFoods.COOKED_ELEPHANT)));
-    public static final RegistryObject<Item> LION = ITEMS.register("lion", () -> new Item(normalProps().food(ModFoods.LION)));
-    public static final RegistryObject<Item> COOKED_LION = ITEMS.register("cooked_lion", () -> new Item(normalProps().food(ModFoods.COOKED_LION)));
-    public static final RegistryObject<Item> GIRAFFE = ITEMS.register("giraffe", () -> new Item(normalProps().food(ModFoods.GIRAFFE)));
-    public static final RegistryObject<Item> COOKED_GIRAFFE = ITEMS.register("cooked_giraffe", () -> new Item(normalProps().food(ModFoods.COOKED_GIRAFFE)));
-    public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, normalProps().stacksTo(1)));
+    public static final RegistryObject<Item> SHARK_TOOTH = registerItem("shark_tooth", () -> new Item(normalProps()));
+    public static final RegistryObject<Item> OSTRICH_EGG = registerItem("ostrich_egg", () -> new Item(normalProps().stacksTo(16)));
+    public static final RegistryObject<Item> CRAB = registerItem("crab", () -> new Item(normalProps().food(ModFoods.CRAB)));
+    public static final RegistryObject<Item> COOKED_CRAB = registerItem("cooked_crab", () -> new Item(normalProps().food(ModFoods.COOKED_CRAB)));
+    public static final RegistryObject<Item> CRAB_SHELL = registerItem("crab_shell", () -> new Item(normalProps()));
+    public static final RegistryObject<Item> LEXICON = registerItem("lexicon", () -> new LexiconItem(normalProps().stacksTo(1)));
+    public static final RegistryObject<Item> BANANA = registerItem("banana", () -> new Item(normalProps().food(ModFoods.BANANA)));
+    public static final RegistryObject<Item> ANCIENT_HELMET = registerItem("ancient_helmet", () -> new ArmorItem(ModArmorMaterial.ANCIENT, EquipmentSlot.HEAD, normalProps().stacksTo(1)));
+    public static final RegistryObject<Item> OSTRICH = registerItem("ostrich", () -> new Item(normalProps().food(ModFoods.OSTRICH)));
+    public static final RegistryObject<Item> COOKED_OSTRICH = registerItem("cooked_ostrich", () -> new Item(normalProps().food(ModFoods.COOKED_OSTRICH)));
+    public static final RegistryObject<Item> ELEPHANT = registerItem("elephant", () -> new Item(normalProps().food(ModFoods.ELEPHANT)));
+    public static final RegistryObject<Item> COOKED_ELEPHANT = registerItem("cooked_elephant", () -> new Item(normalProps().food(ModFoods.COOKED_ELEPHANT)));
+    public static final RegistryObject<Item> LION = registerItem("lion", () -> new Item(normalProps().food(ModFoods.LION)));
+    public static final RegistryObject<Item> COOKED_LION = registerItem("cooked_lion", () -> new Item(normalProps().food(ModFoods.COOKED_LION)));
+    public static final RegistryObject<Item> GIRAFFE = registerItem("giraffe", () -> new Item(normalProps().food(ModFoods.GIRAFFE)));
+    public static final RegistryObject<Item> COOKED_GIRAFFE = registerItem("cooked_giraffe", () -> new Item(normalProps().food(ModFoods.COOKED_GIRAFFE)));
+    public static final RegistryObject<Item> SEAHORSE_BUCKET = registerItem("seahorse_bucket", () -> new MobBucketItem(ModEntityTypes.SEAHORSE.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, normalProps().stacksTo(1)));
 
     // register spawn eggs
     public static final RegistryObject<Item> ELEPHANT_SPAWN_EGG = ITEMS.register("elephant_spawn_egg", () -> new SpawnEggItem(ModEntityTypes.ELEPHANT.get(), 0x000000, 0x4e4e4e, normalProps()));
@@ -68,13 +69,17 @@ public final class ModItems {
         return new Item.Properties().tab(IPlatformHelper.getCreativeTab());
     }
 
+    private static RegistryObject<Item> registerItem(String name, Supplier<Item> item) {
+        RegistryObject<Item> registeredItem = ITEMS.register(name, item);
+        ALL_ITEMS.add(registeredItem);
+        return registeredItem;
+    }
+
     static {
-        List<RegistryObject<Item>> items = List.of(SHARK_TOOTH, OSTRICH_EGG, CRAB, COOKED_CRAB, CRAB_SHELL, BANANA, OSTRICH, COOKED_OSTRICH,
-                ELEPHANT, COOKED_ELEPHANT, LION, COOKED_LION, GIRAFFE, COOKED_GIRAFFE, ANCIENT_HELMET, SEAHORSE_BUCKET, LEXICON);
-        ALL_ITEMS.addAll(items);
         SPAWN_EGGS = List.of(ELEPHANT_SPAWN_EGG, GIRAFFE_SPAWN_EGG, LION_SPAWN_EGG, SHARK_SPAWN_EGG, PENGUIN_SPAWN_EGG, OSTRICH_SPAWN_EGG,
                 FLAMINGO_SPAWN_EGG, CRAB_SPAWN_EGG, MANTARAY_SPAWN_EGG, RACCOON_SPAWN_EGG, OWL_SPAWN_EGG, ANCIENT_BLAZE_SPAWN_EGG,
-                KOALA_SPAWN_EGG, SNAIL_SPAWN_EGG, MONKEY_SPAWN_EGG, NETHER_KNIGHT_SPAWN_EGG, SHROOMIE_SPAWN_EGG, SEAHORSE_SPAWN_EGG, BABY_ENDER_DRAGON_SPAWN_EGG);
+                KOALA_SPAWN_EGG, SNAIL_SPAWN_EGG, MONKEY_SPAWN_EGG, NETHER_KNIGHT_SPAWN_EGG, SHROOMIE_SPAWN_EGG, SEAHORSE_SPAWN_EGG,
+                BABY_ENDER_DRAGON_SPAWN_EGG);
     }
 
 }
