@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings;
 
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.*;
@@ -21,19 +22,19 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
     }
 
     private void registerRenderers() {
-        EntityRendererRegistry.register(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.ELEPHANT.get(), LivingThingsClient.ELEPHANT_RENDERER);
         EntityRendererRegistry.register(ModEntityTypes.GIRAFFE.get(), GiraffeRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.LION.get(), LionRenderer::new);
-        EntityRendererRegistry.register(ModEntityTypes.SHARK.get(), SharkRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.SHARK.get(), LivingThingsClient.SHARK_RENDERER);
         EntityRendererRegistry.register(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
-        EntityRendererRegistry.register(ModEntityTypes.OSTRICH.get(), OstrichRenderer::new);
-        EntityRendererRegistry.register(ModEntityTypes.FLAMINGO.get(), FlamingoRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.OSTRICH.get(), LivingThingsClient.OSTRICH_RENDERER);
+        EntityRendererRegistry.register(ModEntityTypes.FLAMINGO.get(), LivingThingsClient.FLAMINGO_RENDERER);
         EntityRendererRegistry.register(ModEntityTypes.CRAB.get(), CrabRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
-        EntityRendererRegistry.register(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.RACCOON.get(), LivingThingsClient.RACCOON_RENDERER);
         EntityRendererRegistry.register(ModEntityTypes.OWL.get(), OwlRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
-        EntityRendererRegistry.register(ModEntityTypes.KOALA.get(), KoalaRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.KOALA.get(), LivingThingsClient.KOALA_RENDERER);
         EntityRendererRegistry.register(ModEntityTypes.SNAIL.get(), SnailRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.MONKEY.get(), MonkeyRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightRenderer::new);

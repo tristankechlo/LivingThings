@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.MonkeyModel;
 import com.tristankechlo.livingthings.client.model.entity.MonkeySittingModel;
@@ -13,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<MonkeyEntity>> {
 
-    private static final ResourceLocation TEXTURE = ModelLayer.getEntityTexture("monkey/monkey.png");
+    private static final ResourceLocation TEXTURE = LivingThingsClient.getEntityTexture("monkey/monkey.png");
     private final MonkeyModel<MonkeyEntity> modelNormal;
     private final MonkeySittingModel<MonkeyEntity> modelSitting;
     private byte lastAction;

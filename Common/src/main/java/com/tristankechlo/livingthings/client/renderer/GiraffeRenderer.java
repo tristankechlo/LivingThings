@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client.renderer;
 
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.GiraffeModel;
 import com.tristankechlo.livingthings.entity.GiraffeEntity;
@@ -9,9 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 
 public class GiraffeRenderer extends MobRenderer<GiraffeEntity, GiraffeModel<GiraffeEntity>> {
 
-    protected static final ResourceLocation TEXTURE_1 = ModelLayer.getEntityTexture("giraffe/giraffe_1.png");
-    protected static final ResourceLocation TEXTURE_2 = ModelLayer.getEntityTexture("giraffe/giraffe_2.png");
-    protected static final ResourceLocation TEXTURE_WHITE = ModelLayer.getEntityTexture("giraffe/giraffe_white.png");
+    protected static final ResourceLocation TEXTURE_1 = LivingThingsClient.getEntityTexture("giraffe/giraffe_1.png");
+    protected static final ResourceLocation TEXTURE_2 = LivingThingsClient.getEntityTexture("giraffe/giraffe_2.png");
+    protected static final ResourceLocation TEXTURE_WHITE = LivingThingsClient.getEntityTexture("giraffe/giraffe_white.png");
 
     public GiraffeRenderer(Context context) {
         super(context, new GiraffeModel<>(context.bakeLayer(ModelLayer.GIRAFFE)), 0.8F);

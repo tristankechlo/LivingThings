@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonModel;
 import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonSittingModel;
@@ -14,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, EntityModel<BabyEnderDragonEntity>> {
 
-    private static final ResourceLocation TEXTURE = ModelLayer.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
+    private static final ResourceLocation TEXTURE = LivingThingsClient.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
     private final BabyEnderDragonModel modelNormal;
     private final BabyEnderDragonSittingModel modelSitting;
 

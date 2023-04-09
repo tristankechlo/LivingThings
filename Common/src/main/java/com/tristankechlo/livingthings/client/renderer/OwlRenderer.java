@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.OwlModel;
 import com.tristankechlo.livingthings.entity.OwlEntity;
@@ -11,9 +12,9 @@ import net.minecraft.util.Mth;
 
 public class OwlRenderer extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
-    protected static final ResourceLocation TEXTURE_BROWN = ModelLayer.getEntityTexture("owl/owl_brown.png");
-    protected static final ResourceLocation TEXTURE_WHITE = ModelLayer.getEntityTexture("owl/owl_white.png");
-    protected static final ResourceLocation TEXTURE_BLACK = ModelLayer.getEntityTexture("owl/owl_black.png");
+    protected static final ResourceLocation TEXTURE_BROWN = LivingThingsClient.getEntityTexture("owl/owl_brown.png");
+    protected static final ResourceLocation TEXTURE_WHITE = LivingThingsClient.getEntityTexture("owl/owl_white.png");
+    protected static final ResourceLocation TEXTURE_BLACK = LivingThingsClient.getEntityTexture("owl/owl_black.png");
 
     public OwlRenderer(Context context) {
         super(context, new OwlModel<>(context.bakeLayer(ModelLayer.OWL)), 0.29F);

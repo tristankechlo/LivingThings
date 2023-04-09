@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.tristankechlo.livingthings.client.ModelLayer;
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.entity.BabyEnderDragonEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BabyEnderDragonCollarLayer extends RenderLayer<BabyEnderDragonEntity, EntityModel<BabyEnderDragonEntity>> {
 
-    private static final ResourceLocation COLLAR = ModelLayer.getEntityTexture("baby_ender_dragon/baby_ender_dragon_collar.png");
+    private static final ResourceLocation COLLAR = LivingThingsClient.getEntityTexture("baby_ender_dragon/baby_ender_dragon_collar.png");
 
     public BabyEnderDragonCollarLayer(RenderLayerParent<BabyEnderDragonEntity, EntityModel<BabyEnderDragonEntity>> renderLayerParent) {
         super(renderLayerParent);

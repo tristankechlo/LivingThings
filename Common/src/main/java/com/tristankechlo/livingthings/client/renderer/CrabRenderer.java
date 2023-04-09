@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.CrabModel;
 import com.tristankechlo.livingthings.entity.CrabEntity;
@@ -10,9 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 
 public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>> {
 
-    protected static final ResourceLocation TEXTURE_WHITE = ModelLayer.getEntityTexture("crab/crab_white.png");
-    protected static final ResourceLocation TEXTURE_RED = ModelLayer.getEntityTexture("crab/crab_red.png");
-    protected static final ResourceLocation TEXTURE_BLUE = ModelLayer.getEntityTexture("crab/crab_blue.png");
+    protected static final ResourceLocation TEXTURE_WHITE = LivingThingsClient.getEntityTexture("crab/crab_white.png");
+    protected static final ResourceLocation TEXTURE_RED = LivingThingsClient.getEntityTexture("crab/crab_red.png");
+    protected static final ResourceLocation TEXTURE_BLUE = LivingThingsClient.getEntityTexture("crab/crab_blue.png");
 
     public CrabRenderer(Context context) {
         super(context, new CrabModel<>(context.bakeLayer(ModelLayer.CRAB)), 0.4F);

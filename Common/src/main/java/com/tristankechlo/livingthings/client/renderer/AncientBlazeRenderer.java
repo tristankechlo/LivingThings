@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client.renderer;
 
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.AncientBlazeModel;
 import com.tristankechlo.livingthings.client.renderer.layer.AncientBlazeChargedLayer;
@@ -11,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, AncientBlazeModel<AncientBlazeEntity>> {
 
-    private static final ResourceLocation TEXTURE = ModelLayer.getEntityTexture("ancient_blaze/ancient_blaze.png");
+    private static final ResourceLocation TEXTURE = LivingThingsClient.getEntityTexture("ancient_blaze/ancient_blaze.png");
 
     public AncientBlazeRenderer(Context context) {
         super(context, new AncientBlazeModel<>(context.bakeLayer(ModelLayer.ANCIENT_BLAZE)), 0.5F);

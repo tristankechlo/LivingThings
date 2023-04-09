@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.client.renderer;
 
+import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.SeahorseModel;
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
@@ -9,11 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SeahorseRenderer extends MobRenderer<SeahorseEntity, SeahorseModel<SeahorseEntity>> {
 
-    private static final ResourceLocation GREEN = ModelLayer.getEntityTexture("seahorse/seahorse_green.png");
-    private static final ResourceLocation BLUE = ModelLayer.getEntityTexture("seahorse/seahorse_blue.png");
-    private static final ResourceLocation PURPLE = ModelLayer.getEntityTexture("seahorse/seahorse_purple.png");
-    private static final ResourceLocation RED = ModelLayer.getEntityTexture("seahorse/seahorse_red.png");
-    private static final ResourceLocation YELLOW = ModelLayer.getEntityTexture("seahorse/seahorse_yellow.png");
+    private static final ResourceLocation GREEN = LivingThingsClient.getEntityTexture("seahorse/seahorse_green.png");
+    private static final ResourceLocation BLUE = LivingThingsClient.getEntityTexture("seahorse/seahorse_blue.png");
+    private static final ResourceLocation PURPLE = LivingThingsClient.getEntityTexture("seahorse/seahorse_purple.png");
+    private static final ResourceLocation RED = LivingThingsClient.getEntityTexture("seahorse/seahorse_red.png");
+    private static final ResourceLocation YELLOW = LivingThingsClient.getEntityTexture("seahorse/seahorse_yellow.png");
 
     public SeahorseRenderer(Context context) {
         super(context, new SeahorseModel<>(context.bakeLayer(ModelLayer.SEAHORSE)), 0.2F);
