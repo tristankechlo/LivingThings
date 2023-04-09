@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
@@ -62,10 +65,13 @@ minecraft {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
+
     implementation 'org.spongepowered:mixin:0.8.4:processor'
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+    implementation 'org.codehaus.groovy:groovy-json:3.0.16'
 }
 
 tasks.withType(JavaCompile) {
@@ -83,6 +89,13 @@ processResources {
     //filesMatching('*.mixins.json') {
     //    expand "refmap_target": "${mod_id}."
     //}
+
+    // minify json files
+    doLast {
+        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
+            File file -> file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+        }
+    }
 }
 
 jar.finalizedBy('reobfJar')
