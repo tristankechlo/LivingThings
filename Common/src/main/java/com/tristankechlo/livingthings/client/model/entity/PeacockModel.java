@@ -46,7 +46,6 @@ public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
     public void setupAnim(PeacockEntity peacock, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount;
         this.RightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount;
-        this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
         this.LeftWing.yRot = 0.0F;
         this.RightWing.yRot = 0.0F;
         setRotationAngle(Tail1, -0.436332F, 0.0F, 0.0F);
@@ -61,6 +60,16 @@ public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
         if (peacock.isInPanic()) {
             this.LeftWing.yRot = -0.436332F - Mth.cos(ageInTicks) * 0.5F;
             this.RightWing.yRot = 0.436332F + Mth.cos(ageInTicks) * 0.5F;
+        }
+
+        //animate head when eating
+        if (peacock.isEatingCrops()) {
+            this.Head.yRot = 0.0F;
+            this.Head.xRot = 1.74533F + Mth.cos(ageInTicks) * 0.5F;
+            this.LeftWing.yRot = -0.436332F - Mth.cos(ageInTicks) * 0.25F;
+            this.RightWing.yRot = 0.436332F + Mth.cos(ageInTicks) * 0.25F;
+        } else {
+            this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
         }
 
         // move tail up

@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.entity;
 
 import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.config.entity.PeacockConfig;
+import com.tristankechlo.livingthings.entity.ai.PeacockEatCropBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
@@ -28,11 +29,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class PeacockEntity extends Animal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> PANIC = SynchedEntityData.defineId(PeacockEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLUFFED = SynchedEntityData.defineId(PeacockEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EATING = SynchedEntityData.defineId(PeacockEntity.class, EntityDataSerializers.BOOLEAN);
     private static final UniformInt FLUFFED_TIME = TimeUtil.rangeOfSeconds(10, 60);
     private int fluffedTime;
 
@@ -52,9 +56,10 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, KoalaConfig.temptationItems(), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new PeacockEatCropBlocks(this));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -62,6 +67,7 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
         super.defineSynchedData();
         this.entityData.define(PANIC, false);
         this.entityData.define(FLUFFED, false);
+        this.entityData.define(EATING, false);
     }
 
     @Override
@@ -111,6 +117,7 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
 
     public void startFluffing() {
         this.fluffedTime = FLUFFED_TIME.sample(this.random);
+        this.entityData.set(FLUFFED, true);
     }
 
     @Override
@@ -128,15 +135,24 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        if (!this.level.isClientSide()) {
-            if (this.fluffedTime > 0) {
-                this.fluffedTime--;
-                if (this.fluffedTime == 0) {
-                    this.entityData.set(FLUFFED, false);
-                }
+    public void aiStep() {
+        super.aiStep();
+        //spawn particles when eating
+        if (this.isEatingCrops() && this.random.nextInt(5) == 0) {
+            BlockPos pos = this.blockPosition();
+            this.level.levelEvent(2001, pos, Block.getId(Blocks.FARMLAND.defaultBlockState()));
+        }
+        //if currently fluffed, count down and 'unfluff' when done
+        if (this.fluffedTime > 0) {
+            this.fluffedTime--;
+            if (this.fluffedTime == 0) {
+                this.entityData.set(FLUFFED, false);
+                return;
             }
+        }
+        //if not fluffed, randomly start fluffing
+        if (!this.entityData.get(FLUFFED) && this.random.nextInt(4000) == 0) {
+            this.startFluffing();
         }
     }
 
@@ -163,6 +179,14 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.PEACOCK_DEATH.get();
+    }
+
+    public boolean isEatingCrops() {
+        return this.entityData.get(EATING);
+    }
+
+    public void setEatingCrops(boolean eating) {
+        this.entityData.set(EATING, eating);
     }
 
     private static class PeacockPanicGoal extends PanicGoal {
