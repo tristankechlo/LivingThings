@@ -20,12 +20,13 @@ public final class PeacockConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 8.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
+    public final IntegerValue talkInterval = new IntegerValue("talkInterval", 200, 0, Integer.MAX_VALUE);
     public final IngredientValue temptationItems = new IngredientValue("temptationItems", Items.WHEAT);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private PeacockConfig() {
         super("peacock");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, temptationItems, spawnBiomes);
+        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, talkInterval, temptationItems, spawnBiomes);
     }
 
     public static PeacockConfig get() {

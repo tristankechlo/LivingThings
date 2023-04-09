@@ -3,6 +3,7 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.config.entity.PeacockConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
@@ -145,18 +146,23 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
+    public int getAmbientSoundInterval() {
+        return PeacockConfig.get().talkInterval.get();
+    }
+
+    @Override
     protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound(); //TODO
+        return ModSounds.PEACOCK_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return super.getHurtSound(source); //TODO
+        return ModSounds.PEACOCK_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return super.getDeathSound(); //TODO
+        return ModSounds.PEACOCK_DEATH.get();
     }
 
     private static class PeacockPanicGoal extends PanicGoal {

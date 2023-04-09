@@ -63,6 +63,10 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_FLAP = registerSound("baby_ender_dragon.flap");
     public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_SHOOT = registerSound("baby_ender_dragon.shoot");
 
+    public static final RegistryObject<SoundEvent> PEACOCK_AMBIENT = registerSound("peacock.ambient");
+    public static final RegistryObject<SoundEvent> PEACOCK_HURT = registerSound("peacock.hurt");
+    public static final RegistryObject<SoundEvent> PEACOCK_DEATH = registerSound("peacock.death");
+
     private static RegistryObject<SoundEvent> registerSound(String soundName) {
         return SOUNDS.register(soundName, () -> new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, soundName)));
     }

@@ -100,5 +100,8 @@
     "messages.livingthings.nopatchouli.subtitle": "Mod Patchouli ist nicht installiert.",
     "messages.livingthings.nopatchouli.wiki": "Mehr Information \u00fcber den Mod findest du hier: %s",
     "item.livingthings.peacock_spawn_egg": "Pfau-Spawn-Ei",
-    "entity.livingthings.peacock": "Pfau"
+    "entity.livingthings.peacock": "Pfau",
+    "subtitles.livingthings.peacock.ambient": "Pfau ruft",
+    "subtitles.livingthings.peacock.hurt": "Pfau nimmt Schaden",
+    "subtitles.livingthings.peacock.death": "Pfau stirbt"
 }
