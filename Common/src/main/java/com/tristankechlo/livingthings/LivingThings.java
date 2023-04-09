@@ -52,6 +52,7 @@ public final class LivingThings {
         consumer.accept(ModEntityTypes.SHROOMIE.get(), ShroomieEntity.createAttributes());
         consumer.accept(ModEntityTypes.SEAHORSE.get(), SeahorseEntity.createAttributes());
         consumer.accept(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonEntity.createAttributes());
+        consumer.accept(ModEntityTypes.PEACOCK.get(), PeacockEntity.createAttributes());
     }
 
     public static void registerSpawnPlacements() {
@@ -75,6 +76,7 @@ public final class LivingThings {
         SpawnPlacementsInvoker.register(ModEntityTypes.SHROOMIE.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::checkShroomieSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.SEAHORSE.get(), Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SeahorseEntity::checkSeahorseSpawnRules);
         SpawnPlacementsInvoker.register(ModEntityTypes.BABY_ENDER_DRAGON.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BabyEnderDragonEntity::checkBabyEnderDragonSpawnRules);
+        SpawnPlacementsInvoker.register(ModEntityTypes.PEACOCK.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PeacockEntity::checkPeacockSpawnRules);
     }
 
 }

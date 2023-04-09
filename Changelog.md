@@ -16,6 +16,9 @@
 - new ostrich nest texture
 - polar bears now hunt penguins
 - add loot_table for seahorses
+- add new mob `peacock`
+    - can be tamed with wheat
+    - can be found in jungles and savannas
 
 ### Version 1.18.2 - 1.5.0
 

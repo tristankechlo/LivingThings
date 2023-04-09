@@ -67,6 +67,7 @@ public final class GeneralConfig extends EntityConfig {
         builder.put(ModEntityTypes.SHARK.get(), SharkConfig.get().spawnBiomes::get);
         builder.put(ModEntityTypes.SHROOMIE.get(), ShroomieConfig.get().spawnBiomes::get);
         builder.put(ModEntityTypes.SNAIL.get(), SnailConfig.get().spawnBiomes::get);
+        builder.put(ModEntityTypes.PEACOCK.get(), PeacockConfig.get().spawnBiomes::get);
         return builder.build();
     }
 

@@ -41,6 +41,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.PEACOCK.get(), LivingThingsClient.PEACOCK_RENDERER);
     }
 
     private void registerLayerDefinitions() {
@@ -66,6 +67,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.BABY_ENDER_DRAGON, BabyEnderDragonModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.BABY_ENDER_DRAGON_SITTING, BabyEnderDragonSittingModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModelLayer.PEACOCK, PeacockModel::createBodyLayer);
     }
 
 }

@@ -31,6 +31,7 @@ public final class LivingThingsTags {
     public static final TagKey<Block> SHROOMIE_SPAWNABLE_ON = spawnableOn("shroomie");
     public static final TagKey<Block> SNAIL_SPAWNABLE_ON = spawnableOn("snail");
     public static final TagKey<Block> BABY_ENDER_DRAGON_SPAWNABLE_ON = spawnableOn("baby_ender_dragon");
+    public static final TagKey<Block> PEACOCK_SPAWNABLE_ON = spawnableOn("peacock");
 
     private static TagKey<Block> spawnableOn(String name) {
         return registerBlockTag(name + "_spawnable_on");

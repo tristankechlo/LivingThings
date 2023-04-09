@@ -27,7 +27,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation SEAHORSE = createLayerLocation("seahorse");
     public static final ModelLayerLocation BABY_ENDER_DRAGON = createLayerLocation("baby_ender_dragon");
     public static final ModelLayerLocation BABY_ENDER_DRAGON_SITTING = createLayerLocation("baby_ender_dragon_sitting");
-
+    public static final ModelLayerLocation PEACOCK = createLayerLocation("peacock");
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
 
     private static ModelLayerLocation createLayerLocation(final String name) {

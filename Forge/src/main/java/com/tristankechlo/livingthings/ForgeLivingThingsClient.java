@@ -37,6 +37,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.PEACOCK.get(), LivingThingsClient.PEACOCK_RENDERER);
     }
 
     @SubscribeEvent
@@ -63,6 +64,7 @@ public final class ForgeLivingThingsClient {
         event.registerLayerDefinition(ModelLayer.BABY_ENDER_DRAGON, BabyEnderDragonModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.BABY_ENDER_DRAGON_SITTING, BabyEnderDragonSittingModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayer.ANCIENT_ARMOR, AncientArmorModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayer.PEACOCK, PeacockModel::createBodyLayer);
     }
 
 }

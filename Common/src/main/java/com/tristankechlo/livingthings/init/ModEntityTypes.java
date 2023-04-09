@@ -34,6 +34,7 @@ public final class ModEntityTypes {
     public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE = ENTITY_TYPES.register("shroomie", () -> create("shroomie", ShroomieEntity::new, MobCategory.CREATURE, 0.5F, 0.99F));
     public static final RegistryObject<EntityType<SeahorseEntity>> SEAHORSE = ENTITY_TYPES.register("seahorse", () -> create("seahorse", SeahorseEntity::new, MobCategory.WATER_AMBIENT, 0.2F, 0.7F));
     public static final RegistryObject<EntityType<BabyEnderDragonEntity>> BABY_ENDER_DRAGON = ENTITY_TYPES.register("baby_ender_dragon", () -> create("baby_ender_dragon", BabyEnderDragonEntity::new, MobCategory.CREATURE, 0.75F, 0.75F));
+    public static final RegistryObject<EntityType<PeacockEntity>> PEACOCK = ENTITY_TYPES.register("peacock", () -> create("peacock", PeacockEntity::new, MobCategory.CREATURE, 0.6F, 1.25F));
 
     // create standard entity type
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {

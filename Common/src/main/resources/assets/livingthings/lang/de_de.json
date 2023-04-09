@@ -98,5 +98,7 @@
     "item.livingthings.lexicon": "LivingThings Lexikon",
     "messages.livingthings.nopatchouli.title": "Fehler!",
     "messages.livingthings.nopatchouli.subtitle": "Mod Patchouli ist nicht installiert.",
-    "messages.livingthings.nopatchouli.wiki": "Mehr Information \u00fcber den Mod findest du hier: %s"
+    "messages.livingthings.nopatchouli.wiki": "Mehr Information \u00fcber den Mod findest du hier: %s",
+    "item.livingthings.peacock_spawn_egg": "Pfau-Spawn-Ei",
+    "entity.livingthings.peacock": "Pfau"
 }

@@ -26,6 +26,7 @@ public final class LexiconEntries {
     public static final ResourceLocation SHARK = create("neutral_mobs/shark");
     public static final ResourceLocation SHROOMIE = create("passive_mobs/shroomie");
     public static final ResourceLocation SNAIL = create("passive_mobs/snail");
+    public static final ResourceLocation PEACOCK = create("passive_mobs/peacock");
 
 
     private static ResourceLocation create(String path) {

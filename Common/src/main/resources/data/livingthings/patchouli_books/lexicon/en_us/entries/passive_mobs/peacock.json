@@ -1,0 +1,20 @@
+{
+	"name" : "Peacock",
+	"icon" : "livingthings:peacock_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "Peacocks are a type of large pheasant known for their beautiful colored feathers.$(br2)$(bold)Health: $()4 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:peacock",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 40,
+			"offset" : 0.2,
+			"text" : "Can be found in $(bold)Savannas$() and in $(bold)Jungles$()."
+		}
+	]
+}
