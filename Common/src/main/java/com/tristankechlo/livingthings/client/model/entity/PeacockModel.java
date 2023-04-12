@@ -63,7 +63,7 @@ public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
         }
 
         //animate head when eating
-        if (peacock.isEatingCrops()) {
+        if (peacock.isDestroyingCrops()) {
             this.Head.yRot = 0.0F;
             this.Head.xRot = 1.74533F + Mth.cos(ageInTicks) * 0.5F;
             this.LeftWing.yRot = -0.436332F - Mth.cos(ageInTicks) * 0.25F;

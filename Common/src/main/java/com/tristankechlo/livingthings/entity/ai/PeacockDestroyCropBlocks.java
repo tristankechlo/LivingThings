@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 
-public class PeacockEatCropBlocks extends MoveToBlockGoal {
+public class PeacockDestroyCropBlocks extends MoveToBlockGoal {
 
     private final PeacockEntity peacock;
     private boolean reachedTarget = false;
 
-    public PeacockEatCropBlocks(PeacockEntity entity) {
+    public PeacockDestroyCropBlocks(PeacockEntity entity) {
         super(entity, 1.0D, 16);
         this.peacock = entity;
     }
@@ -36,7 +36,7 @@ public class PeacockEatCropBlocks extends MoveToBlockGoal {
             return;
         }
         //animate peacock picking the plant
-        this.peacock.setEatingCrops(true);
+        this.peacock.setDestroyingCrops(true);
         //destroy the plant and start fluffing
         if (this.peacock.getRandom().nextInt(100) == 0) {
             this.peacock.level.destroyBlock(targetPos, false);
@@ -80,7 +80,7 @@ public class PeacockEatCropBlocks extends MoveToBlockGoal {
     @Override
     public void stop() {
         super.stop();
-        this.peacock.setEatingCrops(false);
+        this.peacock.setDestroyingCrops(false);
     }
 
 }
