@@ -7,12 +7,9 @@
     - now json based
     - allow to change temptation items for mobs
 - new textures for entities
-    - penguin
-    - crab
-    - mantaray
-    - shark
-    - lion
-    - flamingo
+    - penguin, crab, mantaray, shark, lion, flamingo
+- slightly improved textures for entities
+    - owl, giraffe, ostrich, monkey
 - new ostrich nest texture
 - ostrich eggs are now throwable
     - do half a heart of damage
