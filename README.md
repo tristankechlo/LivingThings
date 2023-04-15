@@ -19,7 +19,7 @@
             </td>
             <td>
                 <a href="https://github.com/tristankechlo/Living-Things/wiki/Giraffe" alt="Giraffe">
-                    <img src="https://i.ibb.co/BsKygRH/x150-giraffe-1.png" alt="Giraffe">
+                    <img src="https://i.ibb.co/zSqZdg1/x150-giraffe-1.png" alt="Giraffe">
                 </a>
             </td>
             <td>
@@ -48,7 +48,7 @@
         <tr>
             <td>
                 <a href="https://github.com/tristankechlo/Living-Things/wiki/Ostrich" alt="Ostrich">
-                    <img src="https://i.ibb.co/1bVQWM7/x150-ostrich.png" alt="Ostrich">
+                    <img src="https://i.ibb.co/Hp3pSkb/x150-ostrich.png" alt="Ostrich">
                 </a>
             </td>
             <td>
@@ -83,7 +83,7 @@
         <tr>
             <td>
                 <a href="https://github.com/tristankechlo/Living-Things/wiki/Owl" alt="Owl">
-                    <img src="https://i.ibb.co/HGRhkV1/x150-owl-brown.png" alt="Owl">
+                    <img src="https://i.ibb.co/PYjzN6N/x150-owl-brown.png" alt="Owl">
                 </a>
             </td>
             <td>
@@ -103,7 +103,7 @@
             </td>
             <td>
                 <a href="https://github.com/tristankechlo/Living-Things/wiki/Monkey" alt="Monkey">
-                    <img src="https://i.ibb.co/vBP62Dc/x150-monkey.png" alt="Monkey">
+                    <img src="https://i.ibb.co/FDhLcWf/x150-monkey.png" alt="Monkey">
                 </a>
             </td>
         </tr>
