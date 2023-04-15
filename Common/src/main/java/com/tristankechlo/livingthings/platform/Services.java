@@ -10,7 +10,7 @@ public final class Services {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        LivingThings.LOGGER.info("Loaded {} for service {}", loadedService, clazz);
+        LivingThings.LOGGER.info("Loaded {} for service {}", loadedService.getClass().getSimpleName(), clazz.getSimpleName());
         return loadedService;
     }
 
