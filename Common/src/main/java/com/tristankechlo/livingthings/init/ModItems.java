@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.item.LexiconItem;
+import com.tristankechlo.livingthings.item.OstrichEggItem;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
@@ -27,7 +28,7 @@ public final class ModItems {
     public static final List<RegistryObject<Item>> SPAWN_EGGS;
 
     public static final RegistryObject<Item> SHARK_TOOTH = registerItem("shark_tooth", () -> new Item(normalProps()));
-    public static final RegistryObject<Item> OSTRICH_EGG = registerItem("ostrich_egg", () -> new Item(normalProps().stacksTo(16)));
+    public static final RegistryObject<Item> OSTRICH_EGG = registerItem("ostrich_egg", () -> new OstrichEggItem(normalProps().stacksTo(16)));
     public static final RegistryObject<Item> CRAB = registerItem("crab", () -> new Item(normalProps().food(ModFoods.CRAB)));
     public static final RegistryObject<Item> COOKED_CRAB = registerItem("cooked_crab", () -> new Item(normalProps().food(ModFoods.COOKED_CRAB)));
     public static final RegistryObject<Item> CRAB_SHELL = registerItem("crab_shell", () -> new Item(normalProps()));

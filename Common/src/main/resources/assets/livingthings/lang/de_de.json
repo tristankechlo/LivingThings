@@ -103,5 +103,6 @@
     "entity.livingthings.peacock": "Pfau",
     "subtitles.livingthings.peacock.ambient": "Pfau ruft",
     "subtitles.livingthings.peacock.hurt": "Pfau nimmt Schaden",
-    "subtitles.livingthings.peacock.death": "Pfau stirbt"
+    "subtitles.livingthings.peacock.death": "Pfau stirbt",
+    "entity.livingthings.thrown_ostrich_egg": "Geworfenes Strau\u00dfen Ei"
 }

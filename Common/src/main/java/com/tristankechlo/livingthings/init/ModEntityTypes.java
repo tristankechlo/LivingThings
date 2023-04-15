@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.entity.*;
+import com.tristankechlo.livingthings.entity.projectile.ThrownOstrichEgg;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.Registry;
@@ -35,6 +36,7 @@ public final class ModEntityTypes {
     public static final RegistryObject<EntityType<SeahorseEntity>> SEAHORSE = ENTITY_TYPES.register("seahorse", () -> create("seahorse", SeahorseEntity::new, MobCategory.WATER_AMBIENT, 0.2F, 0.7F));
     public static final RegistryObject<EntityType<BabyEnderDragonEntity>> BABY_ENDER_DRAGON = ENTITY_TYPES.register("baby_ender_dragon", () -> create("baby_ender_dragon", BabyEnderDragonEntity::new, MobCategory.CREATURE, 0.75F, 0.75F));
     public static final RegistryObject<EntityType<PeacockEntity>> PEACOCK = ENTITY_TYPES.register("peacock", () -> create("peacock", PeacockEntity::new, MobCategory.CREATURE, 0.6F, 1.25F));
+    public static final RegistryObject<EntityType<ThrownOstrichEgg>> THROWN_OSTRICH_EGG = ENTITY_TYPES.register("thrown_ostrich_egg", () -> EntityType.Builder.<ThrownOstrichEgg>of(ThrownOstrichEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(LivingThings.MOD_ID + ":thrown_ostrich_egg"));
 
     // create standard entity type
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {

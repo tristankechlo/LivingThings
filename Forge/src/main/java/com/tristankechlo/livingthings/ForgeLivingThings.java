@@ -15,6 +15,7 @@ import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,6 +33,7 @@ public final class ForgeLivingThings {
         ConfigManager.loadAndVerifyConfig();
 
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
+        modbus.addListener(this::commonSetup);
         modbus.addListener(this::onAttributeRegister);
         modbus.addListener(this::onSpawnPlacementsRegister);
 
@@ -39,6 +41,10 @@ public final class ForgeLivingThings {
         MinecraftForge.EVENT_BUS.addListener(this::onBlockBreak);
         MinecraftForge.EVENT_BUS.addListener(this::onBlockPlace);
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(LivingThings::registerDispenserBehavior);
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {

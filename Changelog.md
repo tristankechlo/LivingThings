@@ -14,6 +14,9 @@
     - lion
     - flamingo
 - new ostrich nest texture
+- ostrich eggs are now throwable
+    - do half a heart of damage
+    - does **not** spawn a baby ostrich on impact
 - polar bears now hunt penguins
 - add loot_table for seahorses
 - add new mob `peacock`

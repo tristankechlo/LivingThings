@@ -11,6 +11,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 
 @Environment(EnvType.CLIENT)
 public final class FabricLivingThingsClient implements ClientModInitializer {
@@ -42,6 +43,7 @@ public final class FabricLivingThingsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.PEACOCK.get(), LivingThingsClient.PEACOCK_RENDERER);
+        EntityRendererRegistry.register(ModEntityTypes.THROWN_OSTRICH_EGG.get(), ThrownItemRenderer::new);
     }
 
     private void registerLayerDefinitions() {

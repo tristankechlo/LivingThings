@@ -26,6 +26,7 @@ public final class FabricLivingThings implements ModInitializer {
         ConfigManager.loadAndVerifyConfig();
         LivingThings.registerMobAttributes(FabricDefaultAttributeRegistry::register);
         LivingThings.registerSpawnPlacements();
+        LivingThings.registerDispenserBehavior();
 
         // register commands
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, environment) -> {

@@ -6,6 +6,7 @@ import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.*;
 import com.tristankechlo.livingthings.client.renderer.*;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -38,6 +39,7 @@ public final class ForgeLivingThingsClient {
         event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.PEACOCK.get(), LivingThingsClient.PEACOCK_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.THROWN_OSTRICH_EGG.get(), ThrownItemRenderer::new);
     }
 
     @SubscribeEvent
