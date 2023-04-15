@@ -22,6 +22,7 @@
 - add new mob `peacock`
     - can be tamed with wheat
     - can be found in jungles and savannas
+    - will destroy crops
 
 ### Version 1.18.2 - 1.5.0
 
