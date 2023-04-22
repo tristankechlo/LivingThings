@@ -9,7 +9,7 @@ modId="livingthings"
 version="${version}"
 displayName="Living Things"
 displayURL="https://github.com/tristankechlo/LivingThings"
-#logoFile="examplemod.png"
+logoFile="banner.png"
 authors="Buecher_wurm"
 description='''adds various new mobs to Minecraft'''
 
