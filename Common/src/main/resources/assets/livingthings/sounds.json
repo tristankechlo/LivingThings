@@ -1,0 +1,420 @@
+{
+    "lion.ambient": {
+        "sounds": [
+            "livingthings:lion/lion_roar1",
+            "livingthings:lion/lion_roar2"
+        ],
+        "subtitle": "subtitles.livingthings.lion.ambient"
+    },
+    "lion.hurt": {
+        "sounds": [
+            "livingthings:lion/lion_roar2"
+        ],
+        "subtitle": "subtitles.livingthings.lion.hurt"
+    },
+    "lion.death": {
+        "sounds": [
+            "livingthings:lion/lion_death1"
+        ],
+        "subtitle": "subtitles.livingthings.lion.death"
+    },
+    "penguin.ambient": {
+        "sounds": [
+            "livingthings:penguin/penguin_ambient1",
+            "livingthings:penguin/penguin_ambient2"
+        ],
+        "subtitle": "subtitles.livingthings.penguin.ambient"
+    },
+    "penguin.hurt": {
+        "sounds": [
+            "mob/parrot/hurt1",
+            "mob/parrot/hurt2"
+        ],
+        "subtitle": "subtitles.livingthings.penguin.hurt"
+    },
+    "penguin.death": {
+        "sounds": [
+            "mob/parrot/death1",
+            "mob/parrot/death2",
+            "mob/parrot/death3",
+            "mob/parrot/death4"
+        ],
+        "subtitle": "subtitles.livingthings.penguin.death"
+    },
+    "elephant.ambient": {
+        "sounds": [
+            "livingthings:elephant/elephant_ambient1"
+        ],
+        "subtitle": "subtitles.livingthings.elephant.ambient"
+    },
+    "elephant.hurt": {
+        "sounds": [
+            "livingthings:elephant/elephant_hurt1"
+        ],
+        "subtitle": "subtitles.livingthings.elephant.hurt"
+    },
+    "elephant.death": {
+        "sounds": [
+            "livingthings:elephant/elephant_death1"
+        ],
+        "subtitle": "subtitles.livingthings.elephant.death"
+    },
+    "elephant.equip.chest": {
+        "sounds": [
+            "mob/chicken/plop"
+        ],
+        "subtitle": "subtitles.livingthings.elephant.chest"
+    },
+    "elephant.equip.saddle": {
+        "sounds": [
+            "mob/horse/leather"
+        ],
+        "subtitle": "subtitles.livingthings.elephant.saddle"
+    },
+    "ostrich.egg.cracks": {
+        "sounds": [
+            "mob/turtle/egg/egg_crack1",
+            "mob/turtle/egg/egg_crack2",
+            "mob/turtle/egg/egg_crack3",
+            "mob/turtle/egg/egg_crack4",
+            "mob/turtle/egg/egg_crack5"
+        ],
+        "subtitle": "subtitles.livingthings.ostrich.egg.cracks"
+    },
+    "ostrich.egg.laying": {
+        "sounds": [
+            "mob/turtle/egg/drop_egg1",
+            "mob/turtle/egg/drop_egg2"
+        ],
+        "subtitle": "subtitles.livingthings.ostrich.egg.laying"
+    },
+    "ostrich.ambient": {
+        "sounds": [
+            "livingthings:ostrich/ostrich_ambient1",
+            "livingthings:ostrich/ostrich_ambient2",
+            "livingthings:ostrich/ostrich_ambient3"
+        ],
+        "subtitle": "subtitles.livingthings.ostrich.ambient"
+    },
+    "raccoon.ambient": {
+        "sounds": [
+            "livingthings:raccoon/raccoon_ambient1",
+            "livingthings:raccoon/raccoon_ambient2",
+            "livingthings:raccoon/raccoon_ambient3"
+        ],
+        "subtitle": "subtitles.livingthings.raccoon.ambient"
+    },
+    "raccoon.hurt": {
+        "sounds": [
+            {
+                "name": "mob/fox/hurt1",
+                "volume": 0.75
+            },
+            {
+                "name": "mob/fox/hurt2",
+                "volume": 0.75
+            },
+            {
+                "name": "mob/fox/hurt3",
+                "volume": 0.75
+            },
+            {
+                "name": "mob/fox/hurt4",
+                "volume": 0.75
+            }
+        ],
+        "subtitle": "subtitles.livingthings.raccoon.hurt"
+    },
+    "raccoon.death": {
+        "sounds": [
+            {
+                "name": "mob/fox/death1",
+                "volume": 0.9
+            },
+            {
+                "name": "mob/fox/death2",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.livingthings.raccoon.death"
+    },
+    "owl.ambient": {
+        "sounds": [
+            "livingthings:owl/owl_ambient1",
+            "livingthings:owl/owl_ambient2"
+        ],
+        "subtitle": "subtitles.livingthings.owl.ambient"
+    },
+    "owl.hurt": {
+        "sounds": [
+            "livingthings:owl/owl_hurt1",
+            "livingthings:owl/owl_hurt2"
+        ],
+        "subtitle": "subtitles.livingthings.owl.hurt"
+    },
+    "owl.death": {
+        "sounds": [
+            "livingthings:owl/owl_death1",
+            "livingthings:owl/owl_death2"
+        ],
+        "subtitle": "subtitles.livingthings.owl.death"
+    },
+    "owl.fly": {
+        "sounds": [
+            "mob/parrot/fly1",
+            "mob/parrot/fly2",
+            "mob/parrot/fly3",
+            "mob/parrot/fly4",
+            "mob/parrot/fly5",
+            "mob/parrot/fly6",
+            "mob/parrot/fly7",
+            "mob/parrot/fly8"
+        ],
+        "subtitle": "subtitles.livingthings.owl.fly"
+    },
+    "ancient_blaze.ambient": {
+        "sounds": [
+            "mob/blaze/breathe1",
+            "mob/blaze/breathe2",
+            "mob/blaze/breathe3",
+            "mob/blaze/breathe4"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.ambient"
+    },
+    "ancient_blaze.burn": {
+        "sounds": [
+            "fire/fire"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.burn"
+    },
+    "ancient_blaze.death": {
+        "sounds": [
+            "mob/blaze/death"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.death"
+    },
+    "ancient_blaze.hurt": {
+        "sounds": [
+            "mob/blaze/hit1",
+            "mob/blaze/hit2",
+            "mob/blaze/hit3",
+            "mob/blaze/hit4"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.hurt"
+    },
+    "ancient_blaze.shoot": {
+        "sounds": [
+            "mob/ghast/fireball4"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.shoot"
+    },
+    "ancient_blaze.spawn": {
+        "sounds": [
+            "mob/wither/spawn"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.spawn"
+    },
+    "ancient_blaze.charge_up": {
+        "sounds": [
+            "livingthings:ancient_blaze/ancient_blaze_charge_up1"
+        ],
+        "subtitle": "subtitles.livingthings.ancient_blaze.charge_up"
+    },
+    "nether_knight.ambient": {
+        "sounds": [
+            "mob/wither_skeleton/idle1",
+            "mob/wither_skeleton/idle2",
+            "mob/wither_skeleton/idle3"
+        ],
+        "subtitle": "subtitles.livingthings.nether_knight.ambient"
+    },
+    "nether_knight.hurt": {
+        "sounds": [
+            "mob/wither_skeleton/hurt1",
+            "mob/wither_skeleton/hurt2",
+            "mob/wither_skeleton/hurt3",
+            "mob/wither_skeleton/hurt4"
+        ],
+        "subtitle": "subtitles.livingthings.nether_knight.hurt"
+    },
+    "nether_knight.death": {
+        "sounds": [
+            "mob/wither_skeleton/death1",
+            "mob/wither_skeleton/death2"
+        ],
+        "subtitle": "subtitles.livingthings.nether_knight.death"
+    },
+    "nether_knight.step": {
+        "sounds": [
+            "mob/wither_skeleton/step1",
+            "mob/wither_skeleton/step2",
+            "mob/wither_skeleton/step3",
+            "mob/wither_skeleton/step4"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "seahorse.flop": {
+        "sounds": [
+            {
+                "name": "entity/fish/flop1",
+                "volume": 0.3
+            },
+            {
+                "name": "entity/fish/flop2",
+                "volume": 0.3
+            },
+            {
+                "name": "entity/fish/flop3",
+                "volume": 0.3
+            },
+            {
+                "name": "entity/fish/flop4",
+                "volume": 0.3
+            }
+        ],
+        "subtitle": "subtitles.livingthings.seahorse.flop"
+    },
+    "baby_ender_dragon.ambient": {
+        "sounds": [
+            {
+                "name": "livingthings:baby_enderdragon/growl",
+                "pitch": 1.2
+            },
+            {
+                "name": "livingthings:baby_enderdragon/growl"
+            },
+            {
+                "name": "livingthings:baby_enderdragon/growl",
+                "pitch": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.ambient"
+    },
+    "baby_ender_dragon.hurt": {
+        "sounds": [
+            {
+                "name": "mob/enderdragon/hit1",
+                "pitch": 1.5
+            },
+            {
+                "name": "mob/enderdragon/hit2",
+                "pitch": 1.5
+            },
+            {
+                "name": "mob/enderdragon/hit3",
+                "pitch": 1.5
+            },
+            {
+                "name": "mob/enderdragon/hit4",
+                "pitch": 1.5
+            }
+        ],
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.hurt"
+    },
+    "baby_ender_dragon.death": {
+        "sounds": [
+            {
+                "name": "mob/panda/death1",
+                "volume": 0.82
+            }
+        ],
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.death"
+    },
+    "baby_ender_dragon.flap": {
+        "sounds": [
+            "mob/enderdragon/wings1",
+            "mob/enderdragon/wings2",
+            "mob/enderdragon/wings3",
+            "mob/enderdragon/wings4",
+            "mob/enderdragon/wings5",
+            "mob/enderdragon/wings6"
+        ],
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.flap"
+    },
+    "baby_ender_dragon.shoot": {
+        "sounds": [
+            {
+                "name": "mob/ghast/fireball4",
+                "pitch": 1.5
+            }
+        ],
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.shoot"
+    },
+    "ostrich_nest.remove_egg": {
+        "sounds": [
+            {
+                "name": "item/sweet_berries/pick_from_bush1",
+                "pitch": 0.5
+            },
+            {
+                "name": "item/sweet_berries/pick_from_bush2",
+                "pitch": 0.5
+            }
+        ],
+        "subtitle": "subtitles.livingthings.ostrich_nest.remove_egg"
+    },
+    "ancient_armor.equip": {
+        "sounds": [
+            {
+                "name": "item/armor/equip_netherite1",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite2",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite3",
+                "pitch": 0.6,
+                "volume": 0.8
+            },
+            {
+                "name": "item/armor/equip_netherite4",
+                "pitch": 0.6,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.ancient_armor.equip"
+    },
+    "peacock.ambient": {
+        "sounds": [
+            {
+                "name": "livingthings:peacock/ambient_1",
+                "volume": 0.8
+            },
+            {
+                "name": "livingthings:peacock/ambient_2",
+                "volume": 0.8
+            },
+            {
+                "name": "livingthings:peacock/ambient_3",
+                "volume": 0.8
+            },
+            {
+                "name": "livingthings:peacock/ambient_full",
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.peacock.ambient"
+    },
+    "peacock.hurt": {
+        "sounds": [
+            {
+                "name": "livingthings:peacock/hurt",
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.peacock.hurt"
+    },
+    "peacock.death": {
+        "sounds": [
+            {
+                "name": "livingthings:peacock/death",
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.livingthings.peacock.death"
+    }
+}

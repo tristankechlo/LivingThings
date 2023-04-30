@@ -1,0 +1,70 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:heart_of_the_sea",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:binomial",
+                                "n": 1,
+                                "p": 0.25
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:kelp",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 5
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": {
+                "min": 0,
+                "max": 1
+            },
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:brain_coral"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:tube_coral"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:bubble_coral"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:fire_coral"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:horn_coral"
+                }
+            ]
+        }
+    ]
+}

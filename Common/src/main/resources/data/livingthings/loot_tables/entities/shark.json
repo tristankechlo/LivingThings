@@ -1,0 +1,71 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:cod",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2,
+                                "type": "minecraft:uniform"
+                            }
+                        },
+                        {
+                            "function": "minecraft:looting_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 1
+                            }
+                        },
+                        {
+                            "function": "minecraft:furnace_smelt",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_properties",
+                                    "entity": "this",
+                                    "predicate": {
+                                        "flags": {
+                                            "is_on_fire": true
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "livingthings:shark_tooth",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 0,
+                                "max": 3,
+                                "type": "minecraft:uniform"
+                            }
+                        },
+                        {
+                            "function": "minecraft:looting_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

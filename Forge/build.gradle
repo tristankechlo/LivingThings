@@ -1,0 +1,101 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "${minecraft_version}-${mod_version}"
+archivesBaseName = "${mod_id}-forge"
+
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Client'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args "-mixin.config=${mod_id}.mixins.json"
+            mods {
+                modClientRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Server'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args "-mixin.config=${mod_id}.mixins.json"
+            mods {
+                modServerRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly project(":Common")
+
+    implementation 'org.spongepowered:mixin:0.8.4:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+    implementation 'org.codehaus.groovy:groovy-json:3.0.16'
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+
+    //filesMatching('*.mixins.json') {
+    //    expand "refmap_target": "${mod_id}."
+    //}
+
+    // minify json files
+    doLast {
+        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
+            File file -> file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+        }
+    }
+}
+
+jar.finalizedBy('reobfJar')

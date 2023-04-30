@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Sponge Snapshots'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven { url 'https://maven.blamejared.com' }
+    }
+}
+
+rootProject.name = 'LivingThings'
+include("Common", "Fabric", "Forge")
