@@ -3,7 +3,6 @@ package com.tristankechlo.livingthings.mixin.client;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.renderer.layer.AncientArmorLayer;
-import com.tristankechlo.livingthings.mixin.client.LivingEntityRendererAccessor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import org.spongepowered.asm.mixin.Mixin;
