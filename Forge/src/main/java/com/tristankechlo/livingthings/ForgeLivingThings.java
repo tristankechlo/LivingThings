@@ -4,6 +4,8 @@ import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import com.tristankechlo.livingthings.events.BlockEvents;
+import com.tristankechlo.livingthings.util.StructureAddon;
+import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -47,6 +49,7 @@ public final class ForgeLivingThings {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(LivingThings::registerDispenserBehavior);
+        event.enqueueWork(() -> ((StructureAddon) StructureFeatures.FORTRESS.value()).setupSpawnOverrides());
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {

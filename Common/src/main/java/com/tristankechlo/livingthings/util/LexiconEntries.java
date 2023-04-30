@@ -28,7 +28,6 @@ public final class LexiconEntries {
     public static final ResourceLocation SNAIL = create("passive_mobs/snail");
     public static final ResourceLocation PEACOCK = create("passive_mobs/peacock");
 
-
     private static ResourceLocation create(String path) {
         return new ResourceLocation(LivingThings.MOD_ID, path);
     }
