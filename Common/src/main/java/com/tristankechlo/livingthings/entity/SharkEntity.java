@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.*;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntry {
@@ -135,7 +135,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
         }
     }
 
-    public static boolean checkSharkSpawnRules(EntityType<SharkEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSharkSpawnRules(EntityType<? extends Mob> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getFluidState(pos).is(LivingThingsTags.SHARK_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.SHARK_SPAWNABLE_ON);
     }
 

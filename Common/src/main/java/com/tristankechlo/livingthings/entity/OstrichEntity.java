@@ -20,7 +20,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -39,6 +38,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
+
 public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.BOOLEAN);
@@ -54,7 +55,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         super(entityType, worldIn);
     }
 
-    public static boolean checkOstrichSpawnRules(EntityType<OstrichEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkOstrichSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.OSTRICH_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

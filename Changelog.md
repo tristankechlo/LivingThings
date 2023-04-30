@@ -1,8 +1,7 @@
 # Changelog
 
-### Version 1.19.2 - 2.0.0
+### Version 1.18.2 - 2.0.0
 
-- port to 1.19.2
 - new config format
     - now json based
     - allow to change temptation items for mobs

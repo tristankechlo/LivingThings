@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -23,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+
+import java.util.Random;
 
 public class KoalaEntity extends Animal implements ILexiconEntry {
 
@@ -69,7 +70,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
         }
     }
 
-    public static boolean checkKoalaSpawnRules(EntityType<KoalaEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkKoalaSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.KOALA_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

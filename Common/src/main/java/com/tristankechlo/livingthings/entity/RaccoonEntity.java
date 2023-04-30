@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
@@ -42,7 +42,7 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
         super(type, worldIn);
     }
 
-    public static boolean checkRaccoonSpawnRules(EntityType<RaccoonEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkRaccoonSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.RACCOON_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

@@ -15,7 +15,7 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
 
     public NetherKnightRenderer(Context context) {
         super(context, new NetherKnightModel<>(context.bakeLayer(ModelLayer.NETHER_KNIGHT)), 0.5F);
-        this.addLayer(new NetherKnightHeldItemLayer<>(this, context.getItemInHandRenderer()));
+        this.addLayer(new NetherKnightHeldItemLayer<>(this));
     }
 
     @Override

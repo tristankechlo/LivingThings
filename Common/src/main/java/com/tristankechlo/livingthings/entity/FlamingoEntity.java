@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class FlamingoEntity extends Animal implements ILexiconEntry {
 
@@ -39,7 +39,7 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
         this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
     }
 
-    public static boolean checkFlamingoSpawnRules(EntityType<FlamingoEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkFlamingoSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.FLAMINGO_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

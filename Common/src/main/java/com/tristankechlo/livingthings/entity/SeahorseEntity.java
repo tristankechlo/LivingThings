@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -29,6 +28,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import java.util.Random;
+
 public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(SeahorseEntity.class, EntityDataSerializers.BYTE);
@@ -37,7 +38,7 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
         super(type, world);
     }
 
-    public static boolean checkSeahorseSpawnRules(EntityType<SeahorseEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSeahorseSpawnRules(EntityType<? extends Mob> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getFluidState(pos).is(LivingThingsTags.SEAHORSE_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.SEAHORSE_SPAWNABLE_ON);
     }
 

@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,6 +29,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+
+import java.util.Random;
 
 public class PeacockEntity extends Animal implements ILexiconEntry {
 
@@ -89,7 +90,7 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
         return PeacockConfig.temptationItems().test(stack);
     }
 
-    public static <T extends Animal> boolean checkPeacockSpawnRules(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType mobSpawnType, BlockPos pos, RandomSource randomSource) {
+    public static <T extends Mob> boolean checkPeacockSpawnRules(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType mobSpawnType, BlockPos pos, Random randomSource) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.PEACOCK_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -23,7 +24,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -49,12 +49,13 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private static final Component CONTAINER_NAME = Component.translatable("container." + LivingThings.MOD_ID + ".elephant");
+    private static final Component CONTAINER_NAME = new TranslatableComponent("container." + LivingThings.MOD_ID + ".elephant");
     private static final EntityDataAccessor<Boolean> IS_SADDLED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_CHEST = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_TAMED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
@@ -72,7 +73,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         this.tameAmount = 0;
     }
 
-    public static boolean checkElephantSpawnRules(EntityType<ElephantEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkElephantSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.ELEPHANT_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

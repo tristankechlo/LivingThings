@@ -234,7 +234,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
-    public float getLightLevelDependentMagicValue() {
+    public float getBrightness() {
         return 1.0F;
     }
 

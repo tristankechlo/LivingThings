@@ -7,11 +7,10 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -38,6 +37,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
+import java.util.Random;
 
 public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
@@ -61,12 +61,12 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, SpawnGroupData data, CompoundTag nbt) {
         this.setCanPickUpLoot(false);
         this.setLeftHanded(world.getRandom().nextBoolean());
-        this.populateDefaultEquipmentSlots(random, difficultyInstance);
+        this.populateDefaultEquipmentSlots(difficultyInstance);
         return super.finalizeSpawn(world, difficultyInstance, spawnReason, data, nbt);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance $$1) {
+    protected void populateDefaultEquipmentSlots(DifficultyInstance $$1) {
         EquipmentSlot first = random.nextBoolean() ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         EquipmentSlot second = (first == EquipmentSlot.MAINHAND) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
         this.setItemSlot(first, createMainHandItem(random));
@@ -104,7 +104,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         return MobType.UNDEAD;
     }
 
-    private ItemStack createMainHandItem(RandomSource random) {
+    private ItemStack createMainHandItem(Random random) {
         ItemStack stack = new ItemStack(Items.NETHERITE_SWORD);
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
         String name = names.get(random.nextInt(names.size()));
@@ -118,11 +118,11 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
             stack.enchant(Enchantments.SHARPNESS, 2 + random.nextInt(3));
         }
         stack.enchant(Enchantments.MOB_LOOTING, 1);
-        stack.setHoverName(Component.literal(name));
+        stack.setHoverName(new TextComponent(name));
         return stack;
     }
 
-    private ItemStack createOffHandItem(RandomSource random) {
+    private ItemStack createOffHandItem(Random random) {
         ItemStack stack = new ItemStack(Items.NETHERITE_AXE);
         List<? extends String> names = NetherKnightConfig.get().axeNames.get();
         String name = names.get(random.nextInt(names.size()));
@@ -134,7 +134,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
             stack.enchant(Enchantments.BLOCK_EFFICIENCY, 1 + random.nextInt(3));
         }
         stack.enchant(Enchantments.SHARPNESS, 2);
-        stack.setHoverName(Component.literal(name));
+        stack.setHoverName(new TextComponent(name));
         return stack;
     }
 

@@ -14,7 +14,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -32,6 +31,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import java.util.Random;
+
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
@@ -44,7 +45,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         canPlantMushroom = false;
     }
 
-    public static boolean checkShroomieSpawnRules(EntityType<ShroomieEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkShroomieSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SHROOMIE_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

@@ -14,7 +14,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -35,6 +34,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.Optional;
+import java.util.Random;
 
 public class MantarayEntity extends AbstractSchoolingFish implements IMobVariants, IScaleableMob, ILexiconEntry {
 
@@ -95,7 +95,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public static byte getWeightedRandomScaling(RandomSource random) {
+    public static byte getWeightedRandomScaling(Random random) {
         int scaling1Weight = MantarayConfig.get().scalingSmallVariant.get();
         int scaling2Weight = MantarayConfig.get().scalingNormalWeight.get();
         int scaling3Weight = MantarayConfig.get().scalingLargeVariant.get();
@@ -111,7 +111,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
         return scaling.get().scaling;
     }
 
-    public static boolean checkMantaraySpawnRules(EntityType<MantarayEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkMantaraySpawnRules(EntityType<? extends Mob> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getFluidState(pos).is(LivingThingsTags.MANTARAY_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.MANTARAY_SPAWNABLE_ON);
     }
 

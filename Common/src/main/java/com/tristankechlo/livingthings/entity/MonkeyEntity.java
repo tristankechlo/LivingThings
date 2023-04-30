@@ -13,7 +13,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
@@ -266,7 +266,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         return LexiconEntries.MONKEY;
     }
 
-    public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkMonkeySpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.MONKEY_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

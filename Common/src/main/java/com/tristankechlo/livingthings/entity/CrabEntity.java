@@ -16,7 +16,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -33,14 +32,13 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 public class CrabEntity extends Animal implements IMobVariants, NeutralMob, IScaleableMob, ILexiconEntry {
@@ -91,7 +89,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
         this.targetSelector.addGoal(1, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
-    public static boolean checkCrabSpawnRules(EntityType<CrabEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkCrabSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return (world.isWaterAt(pos)) || (world.getBlockState(pos.below()).is(LivingThingsTags.CRAB_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos));
     }
 
@@ -113,7 +111,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public static byte getWeightedRandomScaling(RandomSource random) {
+    public static byte getWeightedRandomScaling(Random random) {
         int scaling1Weight = CrabConfig.get().scalingNormalWeight.get();
         int scaling2Weight = CrabConfig.get().scalingLargeWeight.get();
         int scaling3Weight = CrabConfig.get().scalingSmallWeight.get();

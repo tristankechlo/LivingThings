@@ -9,14 +9,14 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.tristankechlo.livingthings.util.ProjectLinks;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 public final class ProjectLinksArgumentType implements ArgumentType<ProjectLinks> {
 
-    private static final DynamicCommandExceptionType ERROR_INVALID = new DynamicCommandExceptionType((o) -> Component.literal("Invalid type: " + o));
+    private static final DynamicCommandExceptionType ERROR_INVALID = new DynamicCommandExceptionType((o) -> new TextComponent("Invalid type: " + o));
     private static final ProjectLinksArgumentType INSTANCE = new ProjectLinksArgumentType();
     private static final Collection<String> EXAMPLES = ProjectLinks.getNames().toList();
 

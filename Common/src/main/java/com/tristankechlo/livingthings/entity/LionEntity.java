@@ -18,7 +18,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -39,6 +38,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob, ILexiconEntry {
@@ -53,7 +53,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         super(entityType, worldIn);
     }
 
-    public static boolean checkLionSpawnRules(EntityType<LionEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkLionSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.LION_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -75,7 +75,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public static Gender getWeightedRandomGender(RandomSource random) {
+    public static Gender getWeightedRandomGender(Random random) {
         int maleWeight = LionConfig.get().maleWeight.get();
         int femaleWeight = LionConfig.get().femaleWeight.get();
         if (maleWeight <= 0 && femaleWeight <= 0) {

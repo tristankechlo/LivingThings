@@ -14,7 +14,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Random;
 
 public class SnailEntity extends Animal implements ILexiconEntry {
 
@@ -47,7 +47,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         super(type, worldIn);
     }
 
-    public static boolean checkSnailSpawnRules(EntityType<SnailEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSnailSpawnRules(EntityType<? extends Mob> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SNAIL_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -65,7 +65,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
             snailChild.setVariant(this.getVariant());
             return snailChild;
         }
-        RandomSource random = world.getRandom();
+        Random random = world.getRandom();
         if (entity instanceof SnailEntity) {
             // select randomly colors from parents
             SnailEntity parentSnail = (SnailEntity) entity;
@@ -270,7 +270,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
             return this.colorBackground;
         }
 
-        public static SnailVariants random(RandomSource rand) {
+        public static SnailVariants random(Random rand) {
             return VALUES[rand.nextInt(VALUES.length)];
         }
 

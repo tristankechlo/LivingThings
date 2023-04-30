@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -36,6 +35,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.Random;
+
 public class OstrichNestBlock extends Block implements ILexiconEntry {
 
     public static final BooleanProperty EGG = BooleanProperty.create("egg");
@@ -54,6 +55,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack stack = player.getMainHandItem();
         boolean hasEgg = state.getValue(EGG);
@@ -88,7 +90,8 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+    @SuppressWarnings("deprecation")
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         if (!state.getValue(EGG)) {
             return;
         }
@@ -119,16 +122,19 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return state.getValue(EGG) ? FULL_NEST_SHAPE : EMPTY_NEST_SHAPE;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }

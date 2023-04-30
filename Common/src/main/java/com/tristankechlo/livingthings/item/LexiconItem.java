@@ -6,6 +6,8 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -42,9 +44,9 @@ public class LexiconItem extends Item {
                 IPlatformHelper.INSTANCE.openBookGui(player, book);
             } else {
                 // send error messages
-                player.connection.send(new ClientboundSetTitleTextPacket(Component.translatable("messages.livingthings.nopatchouli.title")));
-                player.connection.send(new ClientboundSetSubtitleTextPacket(Component.translatable("messages.livingthings.nopatchouli.subtitle")));
-                player.sendSystemMessage(Component.translatable("messages.livingthings.nopatchouli.wiki", URL));
+                player.connection.send(new ClientboundSetTitleTextPacket(new TranslatableComponent("messages.livingthings.nopatchouli.title")));
+                player.connection.send(new ClientboundSetSubtitleTextPacket(new TranslatableComponent("messages.livingthings.nopatchouli.subtitle")));
+                player.sendMessage(new TranslatableComponent("messages.livingthings.nopatchouli.wiki", URL), player.getUUID());
             }
         }
         ItemStack stack = playerIn.getItemInHand(handIn);
@@ -82,16 +84,17 @@ public class LexiconItem extends Item {
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         // add the subtitle for the item
-        tooltip.add(getEdition().plainCopy().withStyle(ChatFormatting.GRAY));
+        boolean patchouliLoaded = IPlatformHelper.INSTANCE.isModLoaded("patchouli");
+        if (worldIn != null && worldIn.isClientSide() && patchouliLoaded) {
+            tooltip.add(getEdition().plainCopy().withStyle(ChatFormatting.GRAY));
+        }
     }
 
     public static Component getEdition() {
         if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
-            ResourceLocation book = Registry.ITEM.getKey(ModItems.LEXICON.get());
-            return IPlatformHelper.INSTANCE.getPatchouliSubtitle(book);
+            return IPlatformHelper.INSTANCE.getPatchouliSubtitle(ModItems.LEXICON.getId());
         }
-
-        return Component.literal("2nd Edition");
+        return new TextComponent("2nd Edition");
     }
 
 }

@@ -19,7 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
@@ -48,6 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, RangedAttackMob, FlyingAnimal, ILexiconEntry {
@@ -129,7 +129,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
                         itemstack.shrink(1);
                     }
                     this.heal((float) (item.getFoodProperties().getNutrition() / 2));
-                    this.gameEvent(GameEvent.ENTITY_INTERACT, this);
+                    this.gameEvent(GameEvent.MOB_INTERACT, this);
                     return InteractionResult.SUCCESS;
                 }
                 if (this.isOwnedBy(player) && (item instanceof DyeItem)) {
@@ -207,7 +207,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
                 .add(Attributes.FLYING_SPEED, BabyEnderDragonConfig.flyingSpeed());
     }
 
-    public static boolean checkBabyEnderDragonSpawnRules(EntityType<BabyEnderDragonEntity> entityType, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean checkBabyEnderDragonSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
         return level.getBlockState(pos.below()).is(LivingThingsTags.BABY_ENDER_DRAGON_SPAWNABLE_ON);
     }
 

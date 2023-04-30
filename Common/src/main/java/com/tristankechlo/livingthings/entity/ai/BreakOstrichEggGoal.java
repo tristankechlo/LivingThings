@@ -8,7 +8,6 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -19,6 +18,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Random;
 
 
 public class BreakOstrichEggGoal extends MoveToBlockGoal {
@@ -83,7 +84,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
         Level world = this.entity.level;
         BlockPos blockpos = this.entity.blockPosition();
         BlockPos blockpos1 = this.findTarget(blockpos, world);
-        RandomSource random = this.entity.getRandom();
+        Random random = this.entity.getRandom();
         if (this.isReachedTarget() && blockpos1 != null) {
             if (this.breakingTime > 0) {
                 Vec3 vector3d = this.entity.getDeltaMovement();

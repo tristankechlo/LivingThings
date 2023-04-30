@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -23,13 +22,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import java.util.Random;
+
 public class PenguinEntity extends Animal implements ILexiconEntry {
 
     public PenguinEntity(EntityType<PenguinEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
     }
 
-    public static boolean checkPenguinSpawnRules(EntityType<PenguinEntity> animal, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkPenguinSpawnRules(EntityType<? extends Mob> animal, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.PENGUIN_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

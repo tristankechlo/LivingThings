@@ -1,6 +1,5 @@
 package com.tristankechlo.livingthings.entity.misc;
 
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandom;
@@ -8,6 +7,7 @@ import net.minecraft.world.entity.AgeableMob;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public interface IMobVariants {
 
@@ -33,7 +33,7 @@ public interface IMobVariants {
         }
     }
 
-    default byte getRandomVariant(RandomSource random, byte[] variants, int[] weights) {
+    default byte getRandomVariant(Random random, byte[] variants, int[] weights) {
         if (weights.length != variants.length) {
             throw new IllegalArgumentException("Weights and Variants must have the same length.");
         }

@@ -54,6 +54,7 @@ public final class ConfigManager {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static void loadConfigFromFile(File file, EntityConfig config) {
         JsonObject json = null;
         try {

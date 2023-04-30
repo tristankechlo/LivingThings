@@ -4,9 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.tristankechlo.livingthings.entity.NetherKnightEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -16,11 +16,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightEntity> & ArmedModel> extends RenderLayer<NetherKnightEntity, M> {
 
-    private final ItemInHandRenderer itemRenderer;
 
-    public NetherKnightHeldItemLayer(RenderLayerParent<NetherKnightEntity, M> renderer, ItemInHandRenderer itemInHandRenderer) {
+    public NetherKnightHeldItemLayer(RenderLayerParent<NetherKnightEntity, M> renderer) {
         super(renderer);
-        this.itemRenderer = itemInHandRenderer;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightEntity>
             matrixStack.mulPose(new Quaternion(0.4f, 0, 0, false));
             boolean flag = hand == HumanoidArm.LEFT;
             matrixStack.translate(0, -0.14D, -0.76D);
-            itemRenderer.renderItem(entity, itemStack, transformType, flag, matrixStack, buffer, p_229135_7_);
+            Minecraft.getInstance().getItemInHandRenderer().renderItem(entity, itemStack, transformType, flag, matrixStack, buffer, p_229135_7_);
             matrixStack.popPose();
         }
     }

@@ -71,7 +71,7 @@ public final class CrabConfig extends EntityConfig {
     }
 
     private static List<SpawnData> createDefaultSpawns() {
-        return List.of(new SpawnData(60, 5, 8, new ResourceKey[]{Biomes.RIVER, Biomes.BEACH, Biomes.SWAMP, Biomes.MANGROVE_SWAMP}));
+        return List.of(new SpawnData(60, 5, 8, new ResourceKey[]{Biomes.RIVER, Biomes.BEACH, Biomes.SWAMP}));
     }
 
 }

@@ -2,6 +2,8 @@ package com.tristankechlo.livingthings.util;
 
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum ProjectLinks implements StringRepresentable {
@@ -13,9 +15,8 @@ public enum ProjectLinks implements StringRepresentable {
     CURSEFORGE("curseforge", "https://curseforge.com/minecraft/mc-mods/living-things", "Check out the CurseForge page here: "),
     MODRINTH("modrinth", "https://modrinth.com/mod/living-things", "Check out the Modrinth page here: ");
 
-    @SuppressWarnings("deprecation")
-    public static final StringRepresentable.EnumCodec<ProjectLinks> CODEC;
     public static final ProjectLinks[] VALUES = values();
+    public static final Map<String, ProjectLinks> BY_NAME;
     private final String name;
     private final String url;
     private final String message;
@@ -35,7 +36,7 @@ public enum ProjectLinks implements StringRepresentable {
     }
 
     public static ProjectLinks byName(String name, ProjectLinks fallback) {
-        ProjectLinks type = CODEC.byName(name);
+        ProjectLinks type = BY_NAME.get(name);
         return type != null ? type : fallback;
     }
 
@@ -49,7 +50,7 @@ public enum ProjectLinks implements StringRepresentable {
     }
 
     static {
-        CODEC = StringRepresentable.fromEnum(ProjectLinks::values);
+        BY_NAME = Stream.of(VALUES).collect(Collectors.toMap(ProjectLinks::getSerializedName, type -> type));
     }
 
 }

@@ -10,6 +10,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
@@ -27,13 +28,13 @@ public final class LivingThingsCommand {
         ProjectLinks type = context.getArgument("type", ProjectLinks.class);
         CommandSourceStack source = context.getSource();
         Component link = clickableLink(type.getUrl());
-        Component message = Component.literal(type.getMessage()).withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent(type.getMessage()).withStyle(ChatFormatting.WHITE).append(link);
         sendMessage(source, message, false);
         return 1;
     }
 
     private static MutableComponent start() {
-        return Component.literal("[" + LivingThings.MOD_NAME + "] ").withStyle(ChatFormatting.GOLD);
+        return new TextComponent("[" + LivingThings.MOD_NAME + "] ").withStyle(ChatFormatting.GOLD);
     }
 
     private static void sendMessage(CommandSourceStack source, Component message, boolean broadcastToOps) {
@@ -42,7 +43,7 @@ public final class LivingThingsCommand {
     }
 
     private static MutableComponent clickableLink(String url) {
-        MutableComponent mutableComponent = Component.literal(url);
+        MutableComponent mutableComponent = new TextComponent(url);
         mutableComponent.withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE);
         mutableComponent.withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)));
         return mutableComponent;
