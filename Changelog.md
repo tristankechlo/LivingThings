@@ -1,8 +1,8 @@
 # Changelog
 
-### Version 1.19.2 - 2.0.0
+### Version 1.19.4 - 2.0.0
 
-- port to 1.19.2
+- port to 1.19.4
 - new config format
     - now json based
     - allow to change temptation items for mobs
@@ -12,7 +12,7 @@
     - owl, giraffe, ostrich, monkey
 - new ostrich nest texture
 - ostrich eggs are now throwable
-    - do half a heart of damage
+    - does half a heart of damage
     - does **not** spawn a baby ostrich on impact
 - polar bears now hunt penguins
 - add loot_table for seahorses
