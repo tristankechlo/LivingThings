@@ -89,7 +89,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         this.entityData.define(HAS_EGG, false);
         this.entityData.define(IS_BUILDING_NEST, false);
         this.entityData.define(IS_LAYING_EGG, false);
-        this.entityData.define(SADDLED, false);
+        this.entityData.define(SADDLED, true);
         this.entityData.define(BOOST_TIME, 0);
     }
 
@@ -119,11 +119,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     @Override
     public int getMaxSpawnClusterSize() {
         return OstrichConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    public Entity getControllingPassenger() {
-        return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
     }
 
     @Override
@@ -203,8 +198,17 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    public void travel(Vec3 travelVector) {
-        this.travel(this, this.boostHelper, travelVector);
+    public LivingEntity getControllingPassenger() {
+        Entity passenger = this.getFirstPassenger();
+        if (passenger instanceof Player) {
+            return (Player) passenger;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isControlledByLocalInstance() {
+        return this.getControllingPassenger() != null;
     }
 
     @Override
@@ -213,12 +217,25 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    public void travelWithInput(Vec3 travelVec) {
-        super.travel(travelVec);
+    public void travel(Vec3 $$0) {
+        super.travel($$0);
     }
 
     @Override
-    public float getSteeringSpeed() {
+    protected void tickRidden(LivingEntity $$0, Vec3 $$1) {
+        super.tickRidden($$0, $$1);
+        this.setRot($$0.getYRot(), $$0.getXRot() * 0.5F);
+        this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
+        this.boostHelper.tickBoost();
+    }
+
+    @Override
+    protected Vec3 getRiddenInput(LivingEntity $$0, Vec3 travelVec) {
+        return new Vec3(0.0D, 0.0D, 1.0D);
+    }
+
+    @Override
+    protected float getRiddenSpeed(LivingEntity $$0) {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.9F;
     }
 

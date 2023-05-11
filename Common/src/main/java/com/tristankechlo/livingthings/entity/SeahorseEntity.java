@@ -94,7 +94,7 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
 
     @Override
     public void setVariant(byte variant) {
-        this.entityData.set(VARIANT, Mth.clamp(variant, (byte) 0, (byte) 4));
+        this.entityData.set(VARIANT, (byte) Mth.clamp(variant, 0, 4));
     }
 
     @Override

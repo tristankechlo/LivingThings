@@ -3,7 +3,7 @@ package com.tristankechlo.livingthings.init;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
@@ -11,7 +11,7 @@ public final class ModSounds {
 
     public static void init() {}
 
-    private static final RegistrationProvider<SoundEvent> SOUNDS = RegistrationProvider.get(Registry.SOUND_EVENT, LivingThings.MOD_ID);
+    private static final RegistrationProvider<SoundEvent> SOUNDS = RegistrationProvider.get(Registries.SOUND_EVENT, LivingThings.MOD_ID);
 
     public static final RegistryObject<SoundEvent> LION_AMBIENT = registerSound("lion.ambient");
     public static final RegistryObject<SoundEvent> LION_HURT = registerSound("lion.hurt");
@@ -68,7 +68,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> PEACOCK_DEATH = registerSound("peacock.death");
 
     private static RegistryObject<SoundEvent> registerSound(String soundName) {
-        return SOUNDS.register(soundName, () -> new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, soundName)));
+        return SOUNDS.register(soundName, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(LivingThings.MOD_ID, soundName)));
     }
 
 }

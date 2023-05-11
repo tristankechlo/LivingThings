@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.util;
 
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -38,15 +38,15 @@ public final class LivingThingsTags {
     }
 
     private static TagKey<Block> registerBlockTag(String name) {
-        return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.BLOCK, new ResourceLocation(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Item> registerItemTag(String name) {
-        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.ITEM, new ResourceLocation(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Fluid> registerFluidTag(String name) {
-        return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.FLUID, new ResourceLocation(LivingThings.MOD_ID, name));
     }
 
 }

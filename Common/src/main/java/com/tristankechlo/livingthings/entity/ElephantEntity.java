@@ -67,7 +67,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
     public ElephantEntity(EntityType<ElephantEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
-        this.maxUpStep = 1.0F;
+        this.setMaxUpStep(1.0F);
         this.initInventory();
         this.tameAmount = 0;
     }
@@ -186,7 +186,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     public boolean doHurtTarget(Entity target) {
         this.attackTimer = 10;
         this.level.broadcastEntityEvent(this, (byte) 4);
-        boolean flag = target.hurt(DamageSource.mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
+        boolean flag = target.hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         if (flag) {
             // throw target in the air
             target.setDeltaMovement(target.getDeltaMovement().add(0.0D, 0.7D, 0.0D));
@@ -319,7 +319,6 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                     forwardSpeed *= 0.2F;
                 }
 
-                this.flyingSpeed = this.getSpeed() * 0.1F;
                 if (this.isControlledByLocalInstance()) {
                     this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
                     super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
@@ -327,9 +326,8 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                     this.setDeltaMovement(Vec3.ZERO);
                 }
 
-                this.calculateEntityAnimation(this, false);
+                this.calculateEntityAnimation(false);
             } else {
-                this.flyingSpeed = 0.02F;
                 super.travel(travelVector);
             }
         }
@@ -339,8 +337,12 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         return ElephantConfig.get().tamingItems.get().test(stack);
     }
 
-    public Entity getControllingPassenger() {
-        return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
+    public LivingEntity getControllingPassenger() {
+        Entity passenger = this.getFirstPassenger();
+        if (passenger instanceof Player) {
+            return (Player) passenger;
+        }
+        return null;
     }
 
     public boolean isSaddled() {

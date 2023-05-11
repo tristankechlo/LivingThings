@@ -4,11 +4,15 @@ import com.mojang.serialization.Codec;
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
+import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -36,6 +40,7 @@ public final class ForgeLivingThings {
         modbus.addListener(this::commonSetup);
         modbus.addListener(this::onAttributeRegister);
         modbus.addListener(this::onSpawnPlacementsRegister);
+        modbus.addListener(this::registerCreativeTabs);
 
         MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
         MinecraftForge.EVENT_BUS.addListener(this::onBlockBreak);
@@ -68,6 +73,17 @@ public final class ForgeLivingThings {
         if (entity instanceof Player) {
             BlockEvents.onBlockPlace(event.getLevel(), (Player) entity, event.getPos(), event.getPlacedBlock());
         }
+    }
+
+    private void registerCreativeTabs(CreativeModeTabEvent.Register event) {
+        event.registerCreativeModeTab(new ResourceLocation(LivingThings.MOD_ID, "general"), (builder) -> {
+            builder.title(Component.translatable("itemGroup.livingthings.general"));
+            builder.icon(() -> ModItems.SHARK_TOOTH.get().getDefaultInstance());
+            builder.displayItems((parameters, output) -> {
+                ModItems.ALL_ITEMS.forEach(item -> output.accept(item.get().getDefaultInstance()));
+                ModItems.SPAWN_EGGS.forEach(spawnEgg -> output.accept(spawnEgg.get().getDefaultInstance()));
+            });
+        });
     }
 
 }

@@ -2,6 +2,7 @@ package com.tristankechlo.livingthings.platform;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -34,7 +35,7 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
         private Provider(String modId, ResourceKey<? extends Registry<T>> key) {
             this.modId = modId;
 
-            final var reg = Registry.REGISTRY.get(key.location());
+            final var reg = BuiltInRegistries.REGISTRY.get(key.location());
             if (reg == null) {
                 throw new RuntimeException("Registry with name " + key.location() + " was not found!");
             }
@@ -47,7 +48,6 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
             final var rl = new ResourceLocation(modId, name);
             final var obj = Registry.register(registry, rl, supplier.get());
@@ -71,7 +71,7 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
 
                 @Override
                 public Holder<I> asHolder() {
-                    return (Holder<I>) registry.getOrCreateHolder((ResourceKey<T>) this.key);
+                    return (Holder<I>) registry.wrapAsHolder(obj);
                 }
             };
             entries.add((RegistryObject<T>) ro);

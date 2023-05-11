@@ -68,8 +68,8 @@ dependencies {
 
     implementation 'org.spongepowered:mixin:0.8.4:processor'
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    //compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
     implementation 'org.codehaus.groovy:groovy-json:3.0.16'
 }

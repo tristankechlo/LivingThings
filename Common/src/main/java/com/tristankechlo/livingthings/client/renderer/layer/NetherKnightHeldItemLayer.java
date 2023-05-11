@@ -1,18 +1,18 @@
 package com.tristankechlo.livingthings.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.tristankechlo.livingthings.entity.NetherKnightEntity;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Quaternionf;
 
 public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightEntity> & ArmedModel> extends RenderLayer<NetherKnightEntity, M> {
 
@@ -32,23 +32,23 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightEntity>
         ItemStack itemstack1 = flag ? entity.getMainHandItem() : entity.getOffhandItem();
         if (!itemstack.isEmpty() || !itemstack1.isEmpty()) {
             mStack.pushPose();
-            this.renderArmWithItem(entity, itemstack1, TransformType.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, mStack, buffer, p_225628_3_);
-            this.renderArmWithItem(entity, itemstack, TransformType.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, mStack, buffer, p_225628_3_);
+            this.renderArmWithItem(entity, itemstack1, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, mStack, buffer, p_225628_3_);
+            this.renderArmWithItem(entity, itemstack, ItemDisplayContext.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, mStack, buffer, p_225628_3_);
             mStack.popPose();
         }
     }
 
-    private void renderArmWithItem(NetherKnightEntity entity, ItemStack itemStack, TransformType transformType,
+    private void renderArmWithItem(NetherKnightEntity entity, ItemStack itemStack, ItemDisplayContext context,
                                    HumanoidArm hand, PoseStack matrixStack, MultiBufferSource buffer, int p_229135_7_) {
         if (!itemStack.isEmpty()) {
             matrixStack.pushPose();
             this.getParentModel().translateToHand(hand, matrixStack);
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-            matrixStack.mulPose(new Quaternion(0.4f, 0, 0, false));
+            matrixStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+            matrixStack.mulPose(new Quaternionf(0.4f, 0f, 0f, 0f));
             boolean flag = hand == HumanoidArm.LEFT;
             matrixStack.translate(0, -0.14D, -0.76D);
-            itemRenderer.renderItem(entity, itemStack, transformType, flag, matrixStack, buffer, p_229135_7_);
+            itemRenderer.renderItem(entity, itemStack, context, flag, matrixStack, buffer, p_229135_7_);
             matrixStack.popPose();
         }
     }

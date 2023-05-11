@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -37,13 +37,13 @@ public enum ModArmorMaterial implements ArmorMaterial {
     }
 
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
+    public int getDurabilityForType(ArmorItem.Type slotIn) {
+        return MAX_DAMAGE_ARRAY[slotIn.ordinal()] * this.maxDamageFactor;
     }
 
     @Override
-    public int getDefenseForSlot(EquipmentSlot slotIn) {
-        return this.damageReductionAmountArray[slotIn.getIndex()];
+    public int getDefenseForType(ArmorItem.Type slotIn) {
+        return this.damageReductionAmountArray[slotIn.ordinal()];
     }
 
     @Override

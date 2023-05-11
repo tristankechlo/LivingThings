@@ -1,6 +1,6 @@
 {
     "parent" : "item/generated",
     "textures" : {
-        "layer0" : "livingthings:items/banana"
+        "layer0" : "livingthings:item/banana"
     }
 }

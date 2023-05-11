@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.util.IConfig;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
@@ -113,7 +113,7 @@ public final class IngredientValue implements IConfig.Value<Ingredient> {
         }
         if (json.has("tag")) {
             ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, resourceLocation);
+            TagKey<Item> tagKey = TagKey.create(Registries.ITEM, resourceLocation);
             return Either.right(tagKey);
         }
         throw new JsonParseException("An ingredient entry needs either a tag or an item");

@@ -4,7 +4,7 @@ import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -38,7 +38,7 @@ public class LexiconItem extends Item {
             ServerPlayer player = (ServerPlayer) playerIn;
             if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
                 // open the lexicon
-                final ResourceLocation book = Registry.ITEM.getKey(ModItems.LEXICON.get());
+                final ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
                 IPlatformHelper.INSTANCE.openBookGui(player, book);
             } else {
                 // send error messages
@@ -56,7 +56,7 @@ public class LexiconItem extends Item {
         boolean patchouliLoaded = IPlatformHelper.INSTANCE.isModLoaded("patchouli");
         if (target.level.isClientSide() && patchouliLoaded && (target instanceof ILexiconEntry)) {
             // open lexicon page for the corresponding entity
-            final ResourceLocation book = Registry.ITEM.getKey(ModItems.LEXICON.get());
+            final ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
             final ResourceLocation entry = ((ILexiconEntry) target).getLexiconEntry();
             IPlatformHelper.INSTANCE.openBookEntry(book, entry, 0);
             return InteractionResult.SUCCESS;
@@ -70,7 +70,7 @@ public class LexiconItem extends Item {
         boolean patchouliLoaded = IPlatformHelper.INSTANCE.isModLoaded("patchouli");
         if (context.getLevel().isClientSide() && patchouliLoaded && (block instanceof ILexiconEntry)) {
             // open lexicon page for the corresponding block
-            final ResourceLocation book = Registry.ITEM.getKey(ModItems.LEXICON.get());
+            final ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
             final ResourceLocation entry = ((ILexiconEntry) block).getLexiconEntry();
             IPlatformHelper.INSTANCE.openBookEntry(book, entry, 0);
             return InteractionResult.SUCCESS;
@@ -87,7 +87,7 @@ public class LexiconItem extends Item {
 
     public static Component getEdition() {
         if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
-            ResourceLocation book = Registry.ITEM.getKey(ModItems.LEXICON.get());
+            ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
             return IPlatformHelper.INSTANCE.getPatchouliSubtitle(book);
         }
 

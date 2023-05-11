@@ -48,7 +48,6 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
             final var obj = registry.<I>register(name, supplier);
             final var ro = new RegistryObject<I>() {

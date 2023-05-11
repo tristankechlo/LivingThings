@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.tristankechlo.livingthings.LivingThings;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -74,11 +73,11 @@ public final class SpawnData {
                 LivingThings.LOGGER.error("Ignoring invalid biome: {}", biomeString);
                 continue;
             }
-            Biome biome = BuiltinRegistries.BIOME.get(biomeLoc); // only to check if valid biome
+            /*Biome biome = BuiltinRegistries.BIOME.get(biomeLoc); // only to check if valid biome
             if (biome == null) {
                 LivingThings.LOGGER.error("Ignoring unknown biome: {}", biomeString);
                 continue;
-            }
+            }*/
             biomes.add(biomeLoc);
         }
 
