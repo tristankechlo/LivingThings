@@ -1,0 +1,32 @@
+name: Feature Request
+description: Suggest an idea for this project.
+title: "[Feature]: "
+labels: ["feature request"]
+assignees:
+  - tristankechlo
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: idea
+    attributes:
+      label: What is your idea?
+      description: A clear and concise description of what you have in mind and how this should work.
+    validations:
+      required: true
+  - type: textarea
+    id: relatedproblem
+    attributes:
+      label: Related to another problem or bug
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: I'm always frustrated when [...]
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature request here. If you have screenshots you can attach them here.
+    validations:
+      required: false
