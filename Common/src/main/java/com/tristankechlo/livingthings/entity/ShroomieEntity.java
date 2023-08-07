@@ -80,7 +80,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide && this.mushroomCooldown > 0) {
+        if (!this.level().isClientSide && this.mushroomCooldown > 0) {
             this.mushroomCooldown--;
         }
     }
@@ -119,7 +119,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         ItemStack stack = player.getItemInHand(hand);
         if ((this.getVariant() == 1 && stack.is(Items.RED_MUSHROOM))
                 || (this.getVariant() == 0 && stack.is(Items.BROWN_MUSHROOM))) {
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 return InteractionResult.CONSUME;
             } else {
                 if (!this.canPlantMushroom) {

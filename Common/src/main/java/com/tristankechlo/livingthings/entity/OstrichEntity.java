@@ -112,7 +112,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         super.aiStep();
         if (this.isAlive() && this.isBuildingNest() && this.nestBuildingCounter >= 1 && this.nestBuildingCounter % 7 == 0) {
             BlockPos pos = this.blockPosition();
-            this.level.levelEvent(2001, pos, Block.getId(Blocks.SAND.defaultBlockState()));
+            this.level().levelEvent(2001, pos, Block.getId(Blocks.SAND.defaultBlockState()));
         }
     }
 
@@ -123,7 +123,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (BOOST_TIME.equals(key) && this.level.isClientSide) {
+        if (BOOST_TIME.equals(key) && this.level().isClientSide) {
             this.boostHelper.onSynced();
         }
         super.onSyncedDataUpdated(key);
@@ -188,10 +188,10 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         boolean breedingItem = this.isFood(player.getItemInHand(hand));
         boolean isLexicon = player.getMainHandItem().getItem() == ModItems.LEXICON.get();
         if (!breedingItem && !isLexicon && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
-            if (!this.level.isClientSide && OstrichConfig.canBeRidden()) {
+            if (!this.level().isClientSide && OstrichConfig.canBeRidden()) {
                 player.startRiding(this);
             }
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(player, hand);
         }
@@ -222,7 +222,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    protected void tickRidden(LivingEntity $$0, Vec3 $$1) {
+    protected void tickRidden(Player $$0, Vec3 $$1) {
         super.tickRidden($$0, $$1);
         this.setRot($$0.getYRot(), $$0.getXRot() * 0.5F);
         this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
@@ -230,12 +230,12 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    protected Vec3 getRiddenInput(LivingEntity $$0, Vec3 travelVec) {
+    protected Vec3 getRiddenInput(Player $$0, Vec3 travelVec) {
         return new Vec3(0.0D, 0.0D, 1.0D);
     }
 
     @Override
-    protected float getRiddenSpeed(LivingEntity $$0) {
+    protected float getRiddenSpeed(Player $$0) {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.9F;
     }
 
@@ -278,7 +278,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 
         @Override
         protected BlockPos getMoveToTarget() {
-            if (this.ostrich.level.getBlockState(this.blockPos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
+            if (this.ostrich.level().getBlockState(this.blockPos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
                 return this.blockPos;
             }
             return this.blockPos.above();
@@ -299,7 +299,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
                 --this.tryTicks;
             }
             if (!this.ostrich.isInWater() && this.isReachedTarget()) {
-                Level world = this.ostrich.level;
+                Level world = this.ostrich.level();
                 if (world.getBlockState(this.blockPos).getBlock() == ModBlocks.OSTRICH_NEST.get()) {
                     BlockState state = world.getBlockState(this.blockPos);
                     if (!state.getValue(OstrichNestBlock.EGG)) {

@@ -18,11 +18,11 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -114,18 +114,18 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public void aiStep() {
         // slow falling
-        if (!this.onGround && this.getDeltaMovement().y < 0.0D) {
+        if (!this.onGround() && this.getDeltaMovement().y < 0.0D) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
         }
-        if (this.level.isClientSide() && this.getInvulnerableTime() == 0) {
+        if (this.level().isClientSide() && this.getInvulnerableTime() == 0) {
             // burn sound
             if (this.random.nextInt(24) == 0 && !this.isSilent()) {
-                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), ModSounds.ANCIENT_BLAZE_BURN.get(),
+                this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), ModSounds.ANCIENT_BLAZE_BURN.get(),
                         this.getSoundSource(), 1.0F + this.random.nextFloat(), this.random.nextFloat() * 0.7F + 0.3F, false);
             }
             // smoke particles
             for (int i = 0; i < 2; ++i) {
-                this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(ParticleTypes.LARGE_SMOKE, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
             }
         }
         super.aiStep();
@@ -164,7 +164,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public boolean hurt(DamageSource source, float amount) {
         // dont get damaged while charging up
-        if (this.getInvulnerableTime() > 0 && source.typeHolder().is(DamageTypes.OUT_OF_WORLD.location())) {
+        if (this.getInvulnerableTime() > 0 && source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return false;
             // catch large fireballs
         } else if (source.getDirectEntity() instanceof LargeFireball && source.getEntity() instanceof Player) {
@@ -186,7 +186,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
         // don't attack if disabled in config
-        boolean peaceful = (this.level.getDifficulty() == Difficulty.PEACEFUL);
+        boolean peaceful = (this.level().getDifficulty() == Difficulty.PEACEFUL);
         boolean ambientMode = GeneralConfig.get().ambientMode.get();
         if (peaceful || ambientMode || !AncientBlazeConfig.canAttack()) {
             return;
@@ -201,25 +201,25 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
 
         if (this.random.nextDouble() < chance && shoots > 0) {
             this.setShoots((byte) (shoots - 1));
-            LargeFireball fireballentity = new LargeFireball(this.level, this, d1, d2, d3, 1);
+            LargeFireball fireballentity = new LargeFireball(this.level(), this, d1, d2, d3, 1);
             fireballentity.setPos(fireballentity.getX(), this.getY(0.5D) + 0.5D, fireballentity.getZ());
-            this.level.addFreshEntity(fireballentity);
+            this.level().addFreshEntity(fireballentity);
         } else {
-            SmallFireball smallfireballentity = new SmallFireball(this.level, this, d1, d2, d3);
+            SmallFireball smallfireballentity = new SmallFireball(this.level(), this, d1, d2, d3);
             smallfireballentity.setPos(smallfireballentity.getX(), this.getY(0.5D) + 0.5D, smallfireballentity.getZ());
-            this.level.addFreshEntity(smallfireballentity);
+            this.level().addFreshEntity(smallfireballentity);
         }
-        if (!this.level.isClientSide()) {
-            this.level.playSound(null, this.blockPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundSource.HOSTILE, 2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+        if (!this.level().isClientSide()) {
+            this.level().playSound(null, this.blockPosition(), ModSounds.ANCIENT_BLAZE_SHOOT.get(), SoundSource.HOSTILE, 2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
     }
 
     @Override
     public void remove(Entity.RemovalReason reason) {
         int amount = AncientBlazeConfig.blazeSpawnCount();
-        if (!this.level.isClientSide() && amount >= 1 && this.isDeadOrDying()) {
+        if (!this.level().isClientSide() && amount >= 1 && this.isDeadOrDying()) {
             for (int i = 0; i < amount; i++) {
-                Blaze blaze = new Blaze(EntityType.BLAZE, this.level);
+                Blaze blaze = new Blaze(EntityType.BLAZE, this.level());
                 if (this.isPersistenceRequired()) {
                     blaze.setPersistenceRequired();
                 }
@@ -227,7 +227,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
                 blaze.setNoAi(this.isNoAi());
                 blaze.setInvulnerable(this.isInvulnerable());
                 blaze.moveTo(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
-                this.level.addFreshEntity(blaze);
+                this.level().addFreshEntity(blaze);
             }
         }
         super.remove(reason);

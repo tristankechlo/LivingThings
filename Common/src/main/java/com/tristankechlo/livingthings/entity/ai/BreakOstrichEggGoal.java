@@ -39,7 +39,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        if (!this.entity.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (!this.entity.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return false;
         } else if (this.nextStartTick > 0) {
             --this.nextStartTick;
@@ -54,7 +54,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
     }
 
     private boolean shouldMoveToDestination() {
-        return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true : this.findNearestBlock();
+        return this.blockPos != null && this.isValidTarget(this.mob.level(), this.blockPos) ? true : this.findNearestBlock();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
     @Override
     public void tick() {
         super.tick();
-        Level world = this.entity.level;
+        Level world = this.entity.level();
         BlockPos blockpos = this.entity.blockPosition();
         BlockPos blockpos1 = this.findTarget(blockpos, world);
         RandomSource random = this.entity.getRandom();

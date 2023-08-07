@@ -44,4 +44,6 @@ public interface IPlatformHelper {
 
     SpawnEggItem createSpawnEgg(Supplier<EntityType<?>> type, int primaryColor, int secondaryColor, Item.Properties props);
 
+    CreativeModeTab.Builder getCreativeModeTab();
+
 }

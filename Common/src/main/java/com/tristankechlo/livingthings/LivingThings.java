@@ -2,10 +2,7 @@ package com.tristankechlo.livingthings;
 
 import com.tristankechlo.livingthings.entity.*;
 import com.tristankechlo.livingthings.entity.projectile.ThrownOstrichEgg;
-import com.tristankechlo.livingthings.init.ModBlocks;
-import com.tristankechlo.livingthings.init.ModEntityTypes;
-import com.tristankechlo.livingthings.init.ModItems;
-import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.init.*;
 import com.tristankechlo.livingthings.mixin.SpawnPlacementsInvoker;
 import net.minecraft.Util;
 import net.minecraft.core.Position;
@@ -37,6 +34,7 @@ public final class LivingThings {
         ModBlocks.init();
         ModSounds.init();
         ModEntityTypes.init();
+        ModCreativeTabs.init();
     }
 
     public static void registerMobAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> consumer) {

@@ -21,14 +21,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -44,7 +44,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     private static final VoxelShape FULL_NEST_SHAPE = Shapes.join(EMPTY_NEST_SHAPE, Block.box(4, 0, 4, 12, 8, 12), BooleanOp.OR);
 
     public OstrichNestBlock() {
-        super(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_BROWN).strength(0.5F).randomTicks());
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).strength(0.5F).randomTicks());
         registerDefaultState(this.defaultBlockState().setValue(HATCH, 0).setValue(EGG, false));
     }
 
@@ -126,11 +126,6 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
-    }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
 
     @Override

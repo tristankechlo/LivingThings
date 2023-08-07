@@ -50,7 +50,7 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entityIn) {
-        GiraffeEntity entityChild = ModEntityTypes.GIRAFFE.get().create(this.level);
+        GiraffeEntity entityChild = ModEntityTypes.GIRAFFE.get().create(this.level());
         entityChild.setVariant(this.getVariantFromParents(this, entityIn));
         return entityChild;
     }
@@ -103,9 +103,7 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getByte("GiraffeVariant"));
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override

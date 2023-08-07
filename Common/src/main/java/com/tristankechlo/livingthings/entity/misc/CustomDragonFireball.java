@@ -41,9 +41,9 @@ public class CustomDragonFireball extends DragonFireball {
             this.gameEvent(GameEvent.PROJECTILE_LAND, this.getOwner());
         }
         if (hitResult.getType() != HitResult.Type.ENTITY || !this.ownedBy(((EntityHitResult) hitResult).getEntity())) {
-            if (!this.level.isClientSide) {
-                List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
-                AreaEffectCloud effectcloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
+            if (!this.level().isClientSide) {
+                List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
+                AreaEffectCloud effectcloud = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
                 Entity entity = this.getOwner();
                 if (entity instanceof LivingEntity) {
                     effectcloud.setOwner((LivingEntity) entity);
@@ -64,8 +64,8 @@ public class CustomDragonFireball extends DragonFireball {
                     }
                 }
 
-                this.level.levelEvent(2006, this.blockPosition(), this.isSilent() ? -1 : 1);
-                this.level.addFreshEntity(effectcloud);
+                this.level().levelEvent(2006, this.blockPosition(), this.isSilent() ? -1 : 1);
+                this.level().addFreshEntity(effectcloud);
                 this.discard();
             }
         }

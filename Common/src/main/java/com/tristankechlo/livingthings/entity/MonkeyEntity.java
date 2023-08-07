@@ -110,7 +110,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.setBesideClimbableBlock(this.horizontalCollision);
         }
     }
@@ -118,7 +118,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     @Override
     public void aiStep() {
         if (this.jukeboxPosition == null || !this.jukeboxPosition.closerToCenterThan(this.position(), 3.46D)
-                || !this.level.getBlockState(this.jukeboxPosition).is(Blocks.JUKEBOX)) {
+                || !this.level().getBlockState(this.jukeboxPosition).is(Blocks.JUKEBOX)) {
             this.partying = false;
             this.jukeboxPosition = null;
         }
@@ -226,7 +226,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        if (this.level.isClientSide()) {
+        if (this.level().isClientSide()) {
             if (ILexiconEntry.isLexicon(stack)) {
                 return InteractionResult.PASS;
             }
@@ -251,9 +251,9 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
                 if (this.random.nextInt(4) == 0) {
                     this.tame(player);
                     this.setSitting(true);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
                 return InteractionResult.SUCCESS;
             }

@@ -87,7 +87,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
-        ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level);
+        ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level());
         if (this.isTame() || ((ElephantEntity) parent).isTame()) {
             child.setTame(true);
         }
@@ -118,9 +118,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
         this.setSaddled(compound.getBoolean("Saddled"));
         this.setHasChest(compound.getBoolean("Chested"));
         this.setTame(compound.getBoolean("Tamed"));
@@ -185,7 +183,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     @Override
     public boolean doHurtTarget(Entity target) {
         this.attackTimer = 10;
-        this.level.broadcastEntityEvent(this, (byte) 4);
+        this.level().broadcastEntityEvent(this, (byte) 4);
         boolean flag = target.hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         if (flag) {
             // throw target in the air
@@ -258,13 +256,13 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                 double d0 = this.random.nextGaussian() * 0.03D;
                 double d1 = this.random.nextGaussian() * 0.03D;
                 double d2 = this.random.nextGaussian() * 0.03D;
-                this.level.addParticle(particle, this.getRandomX(1.5D), this.getRandomY() + 0.5D, this.getRandomZ(1.5D), d0, d1, d2);
+                this.level().addParticle(particle, this.getRandomX(1.5D), this.getRandomY() + 0.5D, this.getRandomZ(1.5D), d0, d1, d2);
             }
         }
     }
 
     private void doPlayerRide(Player player) {
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             player.setYRot(this.getYRot());
             player.setXRot(this.getXRot());
             player.startRiding(this);
@@ -444,7 +442,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                 // start riding
                 this.doPlayerRide(player);
             }
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
 
         } else if (stack.getItem() == ModItems.LEXICON.get()) {
 
@@ -460,7 +458,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                     stack.shrink(1);
                 }
                 this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
-                return InteractionResult.sidedSuccess(this.level.isClientSide());
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
             }
 
             if (this.isTame()) {
@@ -469,7 +467,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                 if (this.getHealth() < this.getMaxHealth()) {
 
                     // heal entity
-                    if (!this.level.isClientSide()) {
+                    if (!this.level().isClientSide()) {
                         float healAmount = 3.0F;
                         this.heal(healAmount);
                         if (!player.getAbilities().instabuild) {
@@ -481,7 +479,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                     // if already full health
                 } else {
                     // set in love
-                    if (!this.level.isClientSide() && !this.isBaby() && this.canBreed()) {
+                    if (!this.level().isClientSide() && !this.isBaby() && this.canBreed()) {
                         if (!player.getAbilities().instabuild) {
                             stack.shrink(1);
                         }
@@ -495,7 +493,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         } else if (this.isTamingItem(stack) && !this.isBaby() && !this.isTame()) {
 
             // progress taming
-            if (!this.level.isClientSide()) {
+            if (!this.level().isClientSide()) {
                 this.addTameAmount(200);
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
@@ -507,9 +505,9 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                     if (player instanceof ServerPlayer) {
                         CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer) player, this);
                     }
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 }
             }
             return InteractionResult.SUCCESS;
@@ -517,7 +515,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         } else if (this.isTame() && stack.getItem() == Items.SADDLE && !this.isBaby()) {
 
             // saddle entity
-            if (!this.level.isClientSide() && !this.isSaddled()) {
+            if (!this.level().isClientSide() && !this.isSaddled()) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
@@ -529,7 +527,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         } else if (this.isTame() && this.isSaddled() && stack.getItem() == Items.CHEST && !this.isBaby()) {
 
             // add chest to entity
-            if (!this.level.isClientSide() && !this.hasChest()) {
+            if (!this.level().isClientSide() && !this.hasChest()) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }

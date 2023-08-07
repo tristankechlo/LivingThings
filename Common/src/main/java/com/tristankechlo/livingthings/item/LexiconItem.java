@@ -54,7 +54,7 @@ public class LexiconItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         boolean patchouliLoaded = IPlatformHelper.INSTANCE.isModLoaded("patchouli");
-        if (target.level.isClientSide() && patchouliLoaded && (target instanceof ILexiconEntry)) {
+        if (target.level().isClientSide() && patchouliLoaded && (target instanceof ILexiconEntry)) {
             // open lexicon page for the corresponding entity
             final ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
             final ResourceLocation entry = ((ILexiconEntry) target).getLexiconEntry();

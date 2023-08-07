@@ -35,8 +35,8 @@ public class ThrownOstrichEgg extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte) 3);
+        if (!this.level().isClientSide) {
+            this.level().broadcastEntityEvent(this, (byte) 3);
             this.discard();
         }
     }
@@ -46,7 +46,7 @@ public class ThrownOstrichEgg extends ThrowableItemProjectile {
         if (eventID == 3) {
             double offset = 0.18D;
             for (int i = 0; i < 8; ++i) {
-                this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset);
+                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset);
             }
         }
     }

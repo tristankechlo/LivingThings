@@ -64,7 +64,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.setBesideClimbableBlock(this.horizontalCollision);
         }
     }

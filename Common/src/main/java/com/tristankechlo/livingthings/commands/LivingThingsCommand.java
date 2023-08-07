@@ -38,7 +38,7 @@ public final class LivingThingsCommand {
 
     private static void sendMessage(CommandSourceStack source, Component message, boolean broadcastToOps) {
         MutableComponent start = start().append(message);
-        source.sendSuccess(start, broadcastToOps);
+        source.sendSuccess(() -> start, broadcastToOps);
     }
 
     private static MutableComponent clickableLink(String url) {

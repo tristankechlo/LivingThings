@@ -18,7 +18,7 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        boolean peaceful = (this.mob.level.getDifficulty() == Difficulty.PEACEFUL);
+        boolean peaceful = (this.mob.level().getDifficulty() == Difficulty.PEACEFUL);
         boolean ambientMode = GeneralConfig.get().ambientMode.get();
         if (peaceful || ambientMode || !this.canEntityAttack()) {
             return false;
@@ -28,7 +28,7 @@ public class BetterMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canContinueToUse() {
-        boolean peaceful = (this.mob.level.getDifficulty() == Difficulty.PEACEFUL);
+        boolean peaceful = (this.mob.level().getDifficulty() == Difficulty.PEACEFUL);
         boolean ambientMode = GeneralConfig.get().ambientMode.get();
         if (peaceful || ambientMode || !this.canEntityAttack()) {
             return false;

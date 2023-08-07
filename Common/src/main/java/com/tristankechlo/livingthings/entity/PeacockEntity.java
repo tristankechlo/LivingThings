@@ -140,7 +140,7 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
         //spawn particles when eating
         if (this.isDestroyingCrops() && this.random.nextInt(5) == 0) {
             BlockPos pos = this.blockPosition();
-            this.level.levelEvent(2001, pos, Block.getId(Blocks.FARMLAND.defaultBlockState()));
+            this.level().levelEvent(2001, pos, Block.getId(Blocks.FARMLAND.defaultBlockState()));
         }
         //if currently fluffed, count down and 'unfluff' when done
         if (this.fluffedTime > 0) {

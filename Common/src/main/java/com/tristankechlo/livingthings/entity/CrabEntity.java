@@ -33,8 +33,6 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -59,7 +57,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        CrabEntity entityChild = ModEntityTypes.CRAB.get().create(this.level);
+        CrabEntity entityChild = ModEntityTypes.CRAB.get().create(this.level());
         entityChild.setVariant(this.getVariantFromParents(this, entity));
         entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
@@ -149,9 +147,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getByte("CrabVariant"));
         this.setScaling(compound.getByte("CrabScaling"));
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override

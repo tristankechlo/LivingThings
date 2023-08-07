@@ -45,10 +45,10 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
             this.isAboveDestination = true;
             --this.tryTicks;
         }
-        if (this.shroomie.canPlantMushroom() && this.isReachedTarget() && this.shroomie.level.getBlockState(blockpos).isAir()) {
+        if (this.shroomie.canPlantMushroom() && this.isReachedTarget() && this.shroomie.level().getBlockState(blockpos).isAir()) {
             Block block = this.shroomie.getVariant() == 0 ? Blocks.BROWN_MUSHROOM : Blocks.RED_MUSHROOM;
-            this.shroomie.level.playSound(null, blockpos, SoundEvents.LILY_PAD_PLACE, SoundSource.BLOCKS, 0.9F, 0.9F);
-            this.shroomie.level.setBlockAndUpdate(blockpos, block.defaultBlockState());
+            this.shroomie.level().playSound(null, blockpos, SoundEvents.LILY_PAD_PLACE, SoundSource.BLOCKS, 0.9F, 0.9F);
+            this.shroomie.level().setBlockAndUpdate(blockpos, block.defaultBlockState());
             this.shroomie.plantedMushroom();
         }
     }

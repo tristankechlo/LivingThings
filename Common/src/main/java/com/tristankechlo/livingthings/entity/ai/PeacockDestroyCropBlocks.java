@@ -39,7 +39,7 @@ public class PeacockDestroyCropBlocks extends MoveToBlockGoal {
         this.peacock.setDestroyingCrops(true);
         //destroy the plant and start fluffing
         if (this.peacock.getRandom().nextInt(100) == 0) {
-            this.peacock.level.destroyBlock(targetPos, false);
+            this.peacock.level().destroyBlock(targetPos, false);
             this.peacock.startFluffing();
         }
     }

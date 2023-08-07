@@ -84,9 +84,7 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override

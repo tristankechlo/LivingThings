@@ -93,7 +93,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     @Override
     protected void customServerAiStep() {
         // slow falling
-        if (!this.onGround && this.getDeltaMovement().y < 0.0D) {
+        if (!this.onGround() && this.getDeltaMovement().y < 0.0D) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
         }
         // float down when ordered to sit
@@ -116,7 +116,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             if (item == ModItems.LEXICON.get()) {
                 return InteractionResult.PASS;
             }
@@ -158,9 +158,9 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
                     this.navigation.stop();
                     this.setTarget(null);
                     this.setOrderedToSit(true);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -178,7 +178,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         super.readAdditionalSaveData(nbt);
         this.setCollarColor(DyeColor.byId(nbt.getInt("CollarColor")));
         this.setOrderedToSit(nbt.getBoolean("Sitting"));
-        this.readPersistentAngerSaveData(level, nbt);
+        this.readPersistentAngerSaveData(level(), nbt);
     }
 
     @Override
@@ -263,7 +263,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     @Override
     public void performRangedAttack(LivingEntity entity, float distanceFactor) {
         // don't attack if disabled in config
-        boolean peaceful = (this.level.getDifficulty() == Difficulty.PEACEFUL);
+        boolean peaceful = (this.level().getDifficulty() == Difficulty.PEACEFUL);
         boolean ambientMode = GeneralConfig.get().ambientMode.get();
         if (peaceful || ambientMode || !BabyEnderDragonConfig.canAttack()) {
             return;
@@ -278,11 +278,11 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         double d4 = entity.getX() - d1;
         double d5 = entity.getY(0.5) - d2;
         double d6 = entity.getZ() - d3;
-        CustomDragonFireball dragonfireball = new CustomDragonFireball(this.level, this, d4, d5, d6);
+        CustomDragonFireball dragonfireball = new CustomDragonFireball(this.level(), this, d4, d5, d6);
         dragonfireball.moveTo(d1, d2, d3, 0.0F, 0.0F);
-        this.level.addFreshEntity(dragonfireball);
-        if (!this.level.isClientSide() && !this.isSilent()) {
-            this.level.playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_SHOOT.get(),
+        this.level().addFreshEntity(dragonfireball);
+        if (!this.level().isClientSide() && !this.isSilent()) {
+            this.level().playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_SHOOT.get(),
                     SoundSource.HOSTILE, 2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
     }
@@ -298,7 +298,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     @Override
     public boolean isFlying() {
-        return !this.isOnGround();
+        return !this.onGround();
     }
 
     @Override
@@ -328,7 +328,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     @Override
     protected void onFlap() {
-        this.level.playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_FLAP.get(), SoundSource.AMBIENT,
+        this.level().playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_FLAP.get(), SoundSource.AMBIENT,
                 2.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
     }
 

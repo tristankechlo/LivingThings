@@ -120,10 +120,10 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
         super.tick();
         // random moving when on land
         if (!this.isInWaterRainOrBubble()) {
-            if (this.onGround) {
+            if (this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
                 this.setYRot(this.random.nextFloat() * 360.0F);
-                this.onGround = false;
+                this.setOnGround(false);
                 this.hasImpulse = true;
             }
         }

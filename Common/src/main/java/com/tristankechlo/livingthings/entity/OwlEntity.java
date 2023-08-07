@@ -122,23 +122,23 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!this.isTame() && OwlConfig.tamingItems().test(stack)) {
-            if (!this.level.isClientSide()) {
+            if (!this.level().isClientSide()) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
                 if (this.random.nextInt(5) == 0) {
                     this.tame(player);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
             }
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
 
         } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && OwlConfig.tamingItems().test(stack)) {
 
             this.setOrderedToSit(!this.isOrderedToSit());
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
 
         } else {
             return super.mobInteract(player, hand);
@@ -148,15 +148,15 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     private void calculateFlapping() {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
-        this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
+        this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround() && !this.isPassenger() ? 4 : -1) * 0.3D);
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround && this.flapping < 1.0F) {
+        if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping = (float) ((double) this.flapping * 0.9D);
         Vec3 vector3d = this.getDeltaMovement();
-        if (!this.onGround && vector3d.y < 0.0D) {
+        if (!this.onGround() && vector3d.y < 0.0D) {
             this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
         }
 
@@ -239,7 +239,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     public boolean isFlying() {
-        return !this.onGround;
+        return !this.onGround();
     }
 
     @Override

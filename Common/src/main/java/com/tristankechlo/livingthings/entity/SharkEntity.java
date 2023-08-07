@@ -8,7 +8,6 @@ import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -82,9 +81,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override
@@ -92,10 +89,10 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
         super.tick();
         // random moving when on land
         if (!this.isInWaterRainOrBubble()) {
-            if (this.onGround) {
+            if (this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
                 this.setYRot(this.random.nextFloat() * 360.0F);
-                this.onGround = false;
+                this.setOnGround(false);
                 this.hasImpulse = true;
             }
         }

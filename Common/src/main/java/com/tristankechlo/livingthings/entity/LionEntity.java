@@ -59,7 +59,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entityIn) {
-        LionEntity entityChild = ModEntityTypes.LION.get().create(this.level);
+        LionEntity entityChild = ModEntityTypes.LION.get().create(this.level());
         entityChild.setGender(LionEntity.getWeightedRandomGender(this.random));
         entityChild.setVariant(this.getVariantFromParents(this, entityIn));
         return entityChild;
@@ -141,9 +141,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
             this.setGender(Gender.FEMALE);
         }
         this.setVariant(compound.getByte("LionVariant"));
-        if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
-        }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override

@@ -4,34 +4,21 @@ import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import com.tristankechlo.livingthings.events.BlockEvents;
-import com.tristankechlo.livingthings.init.ModItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class FabricLivingThings implements ModInitializer {
-
-    private static final CreativeModeTab GENERAL = FabricItemGroup.builder(new ResourceLocation(LivingThings.MOD_ID, "general"))
-            .icon(() -> ModItems.SHARK_TOOTH.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                ModItems.ALL_ITEMS.forEach(item -> output.accept(item.get().getDefaultInstance()));
-                ModItems.SPAWN_EGGS.forEach(spawnEgg -> output.accept(spawnEgg.get().getDefaultInstance()));
-            })
-            .build();
 
     @Override
     public void onInitialize() {
