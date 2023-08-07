@@ -1,24 +1,16 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
+plugins {
+    id 'idea'
+    id 'net.minecraftforge.gradle'
+    id 'org.spongepowered.mixin'
 }
-apply plugin: 'java'
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
 
-version = "${minecraft_version}-${mod_version}"
-archivesBaseName = "${mod_id}-forge"
-
+base {
+    version = "${minecraft_version}-${mod_version}"
+    archivesBaseName = "${mod_id}-forge"
+}
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
@@ -36,7 +28,6 @@ minecraft {
             taskName 'Client'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -51,7 +42,6 @@ minecraft {
             taskName 'Server'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 modServerRun {
                     source sourceSets.main
@@ -83,10 +73,6 @@ processResources {
     filesMatching("META-INF/mods.toml") {
         expand "version": project.version
     }
-
-    //filesMatching('*.mixins.json') {
-    //    expand "refmap_target": "${mod_id}."
-    //}
 
     // minify json files
     doLast {

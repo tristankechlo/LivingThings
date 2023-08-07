@@ -2,12 +2,14 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'idea'
+    id 'fabric-loom'
 }
 
-version = "${minecraft_version}-${mod_version}"
-archivesBaseName = "${mod_id}-fabric"
+base {
+    version = "${minecraft_version}-${mod_version}"
+    archivesBaseName = "${mod_id}-fabric"
+}
 
 repositories {
     maven {
@@ -55,10 +57,6 @@ processResources {
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
-
-    //filesMatching('*.mixins.json') {
-    //    expand "refmap_target": "${archivesBaseName}-"
-    //}
 
     // minify json files
     doLast {
