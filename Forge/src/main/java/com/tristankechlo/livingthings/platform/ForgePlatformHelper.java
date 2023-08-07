@@ -50,21 +50,17 @@ public final class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public Component getPatchouliSubtitle(ResourceLocation bookId) {
-        // TODO reimplement this
-        //return vazkii.patchouli.api.PatchouliAPI.get().getSubtitle(bookId);
-        return null;
+        return vazkii.patchouli.api.PatchouliAPI.get().getSubtitle(bookId);
     }
 
     @Override
     public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
-        // TODO reimplement this
-        //vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
+        vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
     }
 
     @Override
     public void openBookGui(ServerPlayer player, ResourceLocation bookId) {
-        // TODO reimplement this
-        //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
+        vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
     }
 
     @Override

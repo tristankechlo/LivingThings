@@ -4,7 +4,7 @@
 	"version" : 2,
 	"book_texture" : "patchouli:textures/gui/book_blue.png",
 	"model" : "livingthings:lexicon",
-	"creative_tab" : "LivingThings",
+	"creative_tab" : "livingthings:general",
 	"progress_bar_color" : "18313F",
 	"pause_game" : true,
 	"dont_generate_book" : true,
