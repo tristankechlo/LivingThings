@@ -294,15 +294,10 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     }
 
     @Override
-    public boolean isControlledByLocalInstance() {
-        return this.getControllingPassenger() instanceof Player;
-    }
-
-    @Override
     public void travel(Vec3 travelVector) {
         if (this.isAlive()) {
             if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
-                LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
+                LivingEntity livingentity = this.getControllingPassenger();
                 this.setYRot(livingentity.getYRot());
                 this.yRotO = this.getYRot();
                 this.setXRot(livingentity.getXRot() * 0.5F);

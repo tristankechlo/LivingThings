@@ -207,35 +207,25 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    public boolean isControlledByLocalInstance() {
-        return this.getControllingPassenger() != null;
-    }
-
-    @Override
     public boolean boost() {
         return this.boostHelper.boost(this.getRandom());
     }
 
     @Override
-    public void travel(Vec3 $$0) {
-        super.travel($$0);
-    }
-
-    @Override
-    protected void tickRidden(Player $$0, Vec3 $$1) {
-        super.tickRidden($$0, $$1);
-        this.setRot($$0.getYRot(), $$0.getXRot() * 0.5F);
+    protected void tickRidden(Player player, Vec3 vec3) {
+        super.tickRidden(player, vec3);
+        this.setRot(player.getYRot(), player.getXRot() * 0.5F);
         this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
         this.boostHelper.tickBoost();
     }
 
     @Override
-    protected Vec3 getRiddenInput(Player $$0, Vec3 travelVec) {
+    protected Vec3 getRiddenInput(Player player, Vec3 travelVec) {
         return new Vec3(0.0D, 0.0D, 1.0D);
     }
 
     @Override
-    protected float getRiddenSpeed(Player $$0) {
+    protected float getRiddenSpeed(Player player) {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.9F;
     }
 
