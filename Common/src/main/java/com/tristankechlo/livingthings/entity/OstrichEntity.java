@@ -123,11 +123,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    public Entity getControllingPassenger() {
-        return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
-    }
-
-    @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (BOOST_TIME.equals(key) && this.level.isClientSide) {
             this.boostHelper.onSynced();
@@ -201,6 +196,17 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         } else {
             return super.mobInteract(player, hand);
         }
+    }
+
+    @Override
+    public Entity getControllingPassenger() {
+        return this.getFirstPassenger();
+    }
+
+    @Override
+    public boolean canBeControlledByRider() {
+        Entity entity = this.getControllingPassenger();
+        return entity instanceof Player;
     }
 
     @Override
