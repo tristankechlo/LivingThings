@@ -207,18 +207,8 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    public boolean isControlledByLocalInstance() {
-        return this.getControllingPassenger() != null;
-    }
-
-    @Override
     public boolean boost() {
         return this.boostHelper.boost(this.getRandom());
-    }
-
-    @Override
-    public void travel(Vec3 $$0) {
-        super.travel($$0);
     }
 
     @Override
