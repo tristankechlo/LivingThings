@@ -3,6 +3,7 @@
 ### Version 1.19.4 - 2.0.1
 
 - fix ostrich and elephant not moving
+- fix not rendering items in hand of nether_knight
 
 ### Version 1.19.4 - 2.0.0
 
