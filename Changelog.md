@@ -3,6 +3,9 @@
 ### Version 1.18.2 - 2.0.1
 
 - fix ostrich not moving when ridden
+- fix not rendering items in hand of nether_knight
+- slightly improved elephant model and animations
+    - should fix the elephant tusk moving strangely
 
 ### Version 1.18.2 - 2.0.0
 
