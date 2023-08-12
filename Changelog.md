@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.19.2 - 2.0.1
+
+- slightly improved elephant model and animations
+    - should fix the elephant tusk moving strangely
+
 ### Version 1.19.2 - 2.0.0
 
 - port to 1.19.2

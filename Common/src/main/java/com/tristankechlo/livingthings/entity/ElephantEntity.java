@@ -21,7 +21,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -37,7 +36,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -48,20 +47,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Optional;
 import java.util.UUID;
 
-public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry {
+public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexiconEntry {
 
+    public static final int ANGER_TIME = 10;
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
     private static final Component CONTAINER_NAME = Component.translatable("container." + LivingThings.MOD_ID + ".elephant");
     private static final EntityDataAccessor<Boolean> IS_SADDLED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_CHEST = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_TAMED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.INT);
     protected SimpleContainer entityInventory;
     private int tameAmount;
-    private int angerTime;
     private int attackTimer;
     private UUID angerTarget;
 
@@ -81,8 +78,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         super.defineSynchedData();
         this.getEntityData().define(IS_SADDLED, false);
         this.getEntityData().define(HAS_CHEST, false);
-        this.getEntityData().define(IS_TAMED, false);
-        this.getEntityData().define(OWNER_UNIQUE_ID, Optional.empty());
+        this.getEntityData().define(REMAINING_ANGER_TIME, 0);
     }
 
     @Override
@@ -119,26 +115,15 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (this.level instanceof ServerLevel) {
-            this.readPersistentAngerSaveData((ServerLevel) this.level, compound);
+            this.readPersistentAngerSaveData(this.level, compound);
         }
         this.setSaddled(compound.getBoolean("Saddled"));
         this.setHasChest(compound.getBoolean("Chested"));
         this.setTame(compound.getBoolean("Tamed"));
-        this.setTameAmount(compound.getInt("TameAmount"));
+        this.tameAmount = compound.getInt("TameAmount");
 
         this.entityInventory.fromTag(compound.getList("Inventory", 10));
         this.initInventory();
-
-        UUID uuid;
-        if (compound.hasUUID("Owner")) {
-            uuid = compound.getUUID("Owner");
-        } else {
-            String string = compound.getString("Owner");
-            uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), string);
-        }
-        if (uuid != null) {
-            this.setOwnerUniqueId(uuid);
-        }
     }
 
     @Override
@@ -148,29 +133,27 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         compound.putBoolean("Saddled", this.isSaddled());
         compound.putBoolean("Chested", this.hasChest());
         compound.putBoolean("Tamed", this.isTame());
-        compound.putInt("TameAmount", this.getTameAmount());
+        compound.putInt("TameAmount", this.tameAmount);
         compound.put("Inventory", this.entityInventory.createTag());
-        if (this.getOwnerUniqueId() != null) {
-            compound.putUUID("Owner", this.getOwnerUniqueId());
-        }
     }
 
-    protected void initInventory() {
+    private void initInventory() {
         SimpleContainer inventory = this.entityInventory;
         this.entityInventory = new SimpleContainer(27);
-        if (inventory != null) {
-            int invSize = Math.min(inventory.getContainerSize(), this.entityInventory.getContainerSize());
+        if (inventory == null) {
+            return;
+        }
 
-            for (int i = 0; i < invSize; ++i) {
-                ItemStack itemstack = inventory.getItem(i);
-                if (!itemstack.isEmpty()) {
-                    this.entityInventory.setItem(i, itemstack.copy());
-                }
+        int invSize = Math.min(inventory.getContainerSize(), this.entityInventory.getContainerSize());
+        for (int i = 0; i < invSize; ++i) {
+            ItemStack itemstack = inventory.getItem(i);
+            if (!itemstack.isEmpty()) {
+                this.entityInventory.setItem(i, itemstack.copy());
             }
         }
     }
 
-    public void openInventory(Player player) {
+    private void openInventory(Player player) {
         // elephant inv is a generic chest
         player.openMenu(new SimpleMenuProvider((id, playerInv, playerIn) -> {
             return new ChestMenu(MenuType.GENERIC_9x3, id, player.getInventory(), this.entityInventory, 3);
@@ -184,7 +167,6 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        this.attackTimer = 10;
         this.level.broadcastEntityEvent(this, (byte) 4);
         boolean flag = target.hurt(DamageSource.mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         if (flag) {
@@ -200,6 +182,15 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         super.tick();
         if (this.attackTimer > 0) {
             --this.attackTimer;
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel) this.level, true);
         }
     }
 
@@ -236,19 +227,15 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     @Override
     public void handleEntityEvent(byte id) {
         switch (id) {
-            case 4: // start attack animation
-                this.attackTimer = 10;
-                break;
-            case 6: // entity tamed
+            case 4 -> // start attack animation
+                    this.attackTimer = ANGER_TIME;
+            case 6 -> { // entity tamed
                 this.spawnParticle(ParticleTypes.ENCHANTED_HIT);
                 this.spawnParticle(ParticleTypes.FIREWORK);
-                break;
-            case 7: // progress while taming
-                this.spawnParticle(ParticleTypes.COMPOSTER);
-                break;
-            default:
-                super.handleEntityEvent(id);
-                break;
+            }
+            case 7 -> // progress while taming
+                    this.spawnParticle(ParticleTypes.COMPOSTER);
+            default -> super.handleEntityEvent(id);
         }
     }
 
@@ -344,56 +331,19 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
     }
 
     public boolean isSaddled() {
-        return this.getEntityData().get(IS_SADDLED);
-    }
-
-    /**
-     * get the current taming amount
-     */
-    public int getTameAmount() {
-        return this.tameAmount;
-    }
-
-    /**
-     * override the taming progress
-     */
-    public void setTameAmount(int amount) {
-        this.tameAmount = amount;
-    }
-
-    /**
-     * add to the current taming amount
-     */
-    public void addTameAmount(int amount) {
-        this.tameAmount = this.getTameAmount() + amount;
+        return this.entityData.get(IS_SADDLED);
     }
 
     public void setSaddled(boolean saddled) {
-        this.getEntityData().set(IS_SADDLED, saddled);
+        this.entityData.set(IS_SADDLED, saddled);
     }
 
     public boolean hasChest() {
-        return this.getEntityData().get(HAS_CHEST);
+        return this.entityData.get(HAS_CHEST);
     }
 
     public void setHasChest(boolean chested) {
-        this.getEntityData().set(HAS_CHEST, chested);
-    }
-
-    public boolean isTame() {
-        return this.getEntityData().get(IS_TAMED);
-    }
-
-    public void setTame(boolean tamed) {
-        this.getEntityData().set(IS_TAMED, tamed);
-    }
-
-    public UUID getOwnerUniqueId() {
-        return this.getEntityData().get(OWNER_UNIQUE_ID).orElse(null);
-    }
-
-    public void setOwnerUniqueId(UUID uniqueId) {
-        this.getEntityData().set(OWNER_UNIQUE_ID, Optional.ofNullable(uniqueId));
+        this.entityData.set(HAS_CHEST, chested);
     }
 
     public int getAttackTimer() {
@@ -402,12 +352,12 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
     @Override
     public int getRemainingPersistentAngerTime() {
-        return this.angerTime;
+        return this.entityData.get(REMAINING_ANGER_TIME);
     }
 
     @Override
     public void setRemainingPersistentAngerTime(int time) {
-        this.angerTime = time;
+        this.entityData.set(REMAINING_ANGER_TIME, time);
     }
 
     @Override
@@ -427,32 +377,24 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (hand == InteractionHand.OFF_HAND) { // prevent offhand use
-            return InteractionResult.PASS;
-        }
         ItemStack stack = player.getMainHandItem();
+
+        if (stack.is(ModItems.LEXICON.get())) {
+            return InteractionResult.PASS; // prevent any use when item is lexicon
+        }
 
         if (stack.isEmpty() && this.isTame() && !this.isBaby()) {
 
             if (player.isCrouching() && this.hasChest()) {
-                // open inv
                 this.openInventory(player);
-
             } else if (this.getPassengers().isEmpty() && this.isSaddled()) {
-                // start riding
                 this.doPlayerRide(player);
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide());
 
-        } else if (stack.getItem() == ModItems.LEXICON.get()) {
-
-            // prevent any use when item is lexicon
-            return InteractionResult.PASS;
-
         } else if (this.isFood(stack)) {
 
-            if (this.isBaby()) {
-                // age up
+            if (this.isBaby()) { // age up
                 int age = this.getAge();
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
@@ -462,11 +404,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
             }
 
             if (this.isTame()) {
-
-                // if needs health
-                if (this.getHealth() < this.getMaxHealth()) {
-
-                    // heal entity
+                if (this.getHealth() < this.getMaxHealth()) { // if needs health
                     if (!this.level.isClientSide()) {
                         float healAmount = 3.0F;
                         this.heal(healAmount);
@@ -475,10 +413,7 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                         }
                         return InteractionResult.SUCCESS;
                     }
-
-                    // if already full health
-                } else {
-                    // set in love
+                } else { // if already full health
                     if (!this.level.isClientSide() && !this.isBaby() && this.canBreed()) {
                         if (!player.getAbilities().instabuild) {
                             stack.shrink(1);
@@ -487,21 +422,20 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
                         return InteractionResult.SUCCESS;
                     }
                 }
-
             }
 
         } else if (this.isTamingItem(stack) && !this.isBaby() && !this.isTame()) {
 
             // progress taming
             if (!this.level.isClientSide()) {
-                this.addTameAmount(200);
+                this.tameAmount += 200;
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                // if entity shall be set as tamed now
-                if (this.getTameAmount() >= 1000) {
+                // mark as tamed if taming amount is reached
+                if (this.tameAmount >= 1000) {
                     this.setTame(true);
-                    this.setOwnerUniqueId(player.getUUID());
+                    this.setOwnerUUID(player.getUUID());
                     if (player instanceof ServerPlayer) {
                         CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer) player, this);
                     }
@@ -557,17 +491,14 @@ public class ElephantEntity extends Animal implements NeutralMob, ILexiconEntry 
         }
 
         @Override
-        public boolean canUse() {
-            LivingEntity livingentity = this.mob.getLastHurtByMob();
-            if (livingentity instanceof Player) {
-                UUID ownerID = ((ElephantEntity) this.mob).getOwnerUniqueId();
-                if (ownerID != null) {
-                    if (ownerID == ((Player) livingentity).getUUID()) {
-                        return false;
-                    }
+        protected boolean canAttack(LivingEntity entity, TargetingConditions conditions) {
+            if (entity instanceof Player) {
+                UUID ownerID = ((ElephantEntity) this.mob).getOwnerUUID();
+                if (ownerID != null && entity.getUUID().equals(ownerID)) {
+                    return false;
                 }
             }
-            return super.canUse();
+            return super.canAttack(entity, conditions);
         }
 
     }
