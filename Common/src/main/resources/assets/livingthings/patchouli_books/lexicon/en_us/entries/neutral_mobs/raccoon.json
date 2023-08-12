@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Medium-sized mammals that clean their food thoroughly before eating it.$(br2)$(bold)Health: $()5 Hearts$(br)$(bold)Attack-Damage: $()1 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat$(li)Apple$(li)Carrot$(li)Potato$(li)Beetroot"
+			"text" : "Medium-sized mammals that clean their food thoroughly before eating it.$(br2)$(bold)Health: $()5 Hearts$(br)$(bold)Attack-Damage: $()1 Hearts$(br2)$(bold)Breeding Items: $()$(li)Wheat$(li)Apple$(li)Carrot$(li)Potato$(li)Beetroot"
 		},
 		{
 			"type" : "entity",

@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:shark_tooth",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be used for arrows$(li)can be crafted to bone meal"
+			"text" : "$(br)$(bold)Usage:$()$(li)can be used for arrows$(li)can be crafted to bone meal"
 		}
 	]
 }

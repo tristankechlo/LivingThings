@@ -6,6 +6,7 @@
 - fix not rendering items in hand of nether_knight
 - slightly improved elephant model and animations
     - should fix the elephant tusk moving strangely
+- remove unnecessary empty lines in patchouli book
 
 ### Version 1.20.1 - 2.0.0
 
