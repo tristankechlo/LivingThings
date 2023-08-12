@@ -3,11 +3,13 @@
 ### Version 1.20.1 - 2.0.1
 
 - fix ostrich and elephant not moving
+- fix not rendering items in hand of nether_knight
+- slightly improved elephant model and animations
+    - should fix the elephant tusk moving strangely
 
 ### Version 1.20.1 - 2.0.0
 
 - port to 1.20.1
-- fix not rendering items in hand of nether_knight
 
 ### Version 1.19.4 - 2.0.0
 
