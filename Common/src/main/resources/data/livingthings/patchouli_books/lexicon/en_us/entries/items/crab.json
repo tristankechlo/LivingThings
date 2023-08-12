@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:crab",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten$(li)can be smelted to Cooked Crab Meat"
+			"text" : "$(br)$(bold)Usage:$()$(li)can be eaten$(li)can be smelted to Cooked Crab Meat"
 		}
 	]
 }

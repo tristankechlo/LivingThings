@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Peacocks are a type of large pheasant known for their beautiful colored feathers.$(br2)$(bold)Health: $()4 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Wheat"
+			"text" : "Peacocks are a type of large pheasant known for their beautiful colored feathers.$(br2)$(bold)Health: $()4 Hearts$(br2)$(bold)Breeding Items: $()$(li)Wheat"
 		},
 		{
 			"type" : "entity",
