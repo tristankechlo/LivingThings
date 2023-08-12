@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:crab_shell",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)no known usages"
+			"text" : "$(br)$(bold)Usage:$()$(li)no known usages"
 		}
 	]
 }

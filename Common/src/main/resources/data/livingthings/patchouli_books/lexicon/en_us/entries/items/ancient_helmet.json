@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:ancient_helmet",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)adds Fire Resistance Effect when worn"
+			"text" : "$(br)$(bold)Usage:$()$(li)adds Fire Resistance Effect when worn"
 		}
 	]
 }
