@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:giraffe",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten$(li)can be smelted to Cooked Giraffe Meat"
+			"text" : "$(br)$(bold)Usage:$()$(li)can be eaten$(li)can be smelted to Cooked Giraffe Meat"
 		}
 	]
 }

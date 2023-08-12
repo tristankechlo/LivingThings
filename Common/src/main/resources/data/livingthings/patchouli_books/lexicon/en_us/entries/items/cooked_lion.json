@@ -10,7 +10,7 @@
 		{
 			"type" : "spotlight",
 			"item" : "livingthings:cooked_lion",
-			"text" : "$(br)$(bold)Usage:$()$(br)$(li)can be eaten"
+			"text" : "$(br)$(bold)Usage:$()$(li)can be eaten"
 		}
 	]
 }

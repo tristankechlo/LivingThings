@@ -5,7 +5,7 @@
 	"pages" : [
 		{
 			"type" : "text",
-			"text" : "Nocturnal bird that can spawn in different color variations.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(br)$(li)Melon Seeds$(li)Pumpkin Seeds$(li)Beetroot Seeds$(br2)$(bold)Taming Item: $()$(br)$(li)Wheat Seeds"
+			"text" : "Nocturnal bird that can spawn in different color variations.$(br2)$(bold)Health: $()5 Hearts$(br2)$(bold)Breeding Items: $()$(li)Melon Seeds$(li)Pumpkin Seeds$(li)Beetroot Seeds$(br2)$(bold)Taming Item: $()$(li)Wheat Seeds"
 		},
 		{
 			"type" : "entity",
