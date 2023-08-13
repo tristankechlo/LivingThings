@@ -26,8 +26,6 @@ a list of all translations, their translators, and the modversion they are creat
 
 | Language  | up to modversion | Translator                                                 |
 |:---------:|:----------------:|:-----------------------------------------------------------|
-| **en_us** |      2.0.0       | tristankechlo ([Github](https://github.com/tristankechlo)) |
-| **de_de** |      2.0.0       | tristankechlo ([Github](https://github.com/tristankechlo)) |
-| **pt_br** |      1.2.0       | Mikeliro ([Github](https://github.com/Mikeliro))           | 
-| **ru_ru** |      1.2.3       | Intaria ([Github](https://github.com/Intaria))             |
-| **zh_cn** |      2.0.0       | Rad233 ([Github](https://github.com/Rad233))             |
+| **en_us** |      2.0.1       | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **de_de** |      2.0.1       | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **zh_cn** |      2.0.1       | Rad233 ([Github](https://github.com/Rad233))               |
