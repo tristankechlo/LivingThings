@@ -5,6 +5,7 @@
 - slightly improved elephant model and animations
     - should fix the elephant tusk moving strangely
 - remove unnecessary empty lines in patchouli book
+- add *zh_cn* translation
 
 ### Version 1.19.2 - 2.0.0
 
