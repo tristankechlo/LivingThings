@@ -74,6 +74,7 @@
   "subtitles.livingthings.nether_knight.hurt":"下界骑士：受伤",
   "subtitles.livingthings.nether_knight.death":"下界骑士：死亡",
   "subtitles.livingthings.seahorse.flop":"海马：翻转",
+  "subtitles.livingthings.mantaray.flop":"蝠鲼：翻转",
   "subtitles.livingthings.baby_ender_dragon.ambient":"幼年末影龙：咆哮",
   "subtitles.livingthings.baby_ender_dragon.hurt":"幼年末影龙：受伤",
   "subtitles.livingthings.baby_ender_dragon.death":"幼年末影龙：死亡",
@@ -106,8 +107,6 @@
   "entity.livingthings.baby_ender_dragon":"幼年末影龙",
   "entity.livingthings.peacock":"孔雀",
   "entity.livingthings.thrown_ostrich_egg":"被掷出的鸵鸟蛋",
-
-  "container.livingthings.elephant":"大象",
 
   "messages.livingthings.nopatchouli.title":"无法使用！",
   "messages.livingthings.nopatchouli.subtitle":"帕秋莉手册模组未安装。",
