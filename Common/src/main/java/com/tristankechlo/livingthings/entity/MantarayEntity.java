@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.tristankechlo.livingthings.config.entity.MantarayConfig;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.entity.misc.IScaleableMob;
+import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
@@ -116,27 +117,13 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        // random moving when on land
-        if (!this.isInWaterRainOrBubble()) {
-            if (this.onGround()) {
-                this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-                this.setYRot(this.random.nextFloat() * 360.0F);
-                this.setOnGround(false);
-                this.hasImpulse = true;
-            }
-        }
-    }
-
-    @Override
     public boolean canBeLeashed(Player player) {
         return true;
     }
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
+        return !this.hasCustomName();
     }
 
     @Override
@@ -184,7 +171,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     @Override
     protected SoundEvent getFlopSound() {
         // required by AbstractFishEntity
-        return null;
+        return ModSounds.MANTARAY_FLOP.get();
     }
 
     @Override
@@ -200,10 +187,6 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
             this.fish = fish;
         }
 
-        /**
-         * Returns whether execution should begin. You can also read and cache any state
-         * necessary for execution in this method as well.
-         */
         @Override
         public boolean canUse() {
             return this.fish.canRandomSwim() && super.canUse();
