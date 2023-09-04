@@ -1,5 +1,6 @@
 {
     "itemGroup.livingthings.general": "Living Things",
+
     "item.livingthings.shark_tooth": "Shark Tooth",
     "item.livingthings.crab": "Raw Crab Meat",
     "item.livingthings.cooked_crab": "Cooked Crab Meat",
@@ -18,6 +19,7 @@
     "item.livingthings.seahorse_bucket": "Seahorse Bucket",
     "item.livingthings.lexicon": "LivingThings Lexicon",
     "block.livingthings.ostrich_nest": "Ostrich Nest",
+
     "item.livingthings.elephant_spawn_egg": "Elephant Spawn Egg",
     "item.livingthings.giraffe_spawn_egg": "Giraffe Spawn Egg",
     "item.livingthings.lion_spawn_egg": "Lion Spawn Egg",
@@ -38,6 +40,7 @@
     "item.livingthings.seahorse_spawn_egg": "Seahorse Spawn Egg",
     "item.livingthings.baby_ender_dragon_spawn_egg": "Baby Enderdragon Spawn Egg",
     "item.livingthings.peacock_spawn_egg": "Peacock Spawn Egg",
+
     "subtitles.livingthings.lion.ambient": "Lion roaring",
     "subtitles.livingthings.lion.hurt": "Lion hurts",
     "subtitles.livingthings.lion.death": "Lion dies",
@@ -70,6 +73,7 @@
     "subtitles.livingthings.nether_knight.hurt": "Nether Knight hurts",
     "subtitles.livingthings.nether_knight.death": "Nether Knight dies",
     "subtitles.livingthings.seahorse.flop": "Seahorse flops",
+    "subtitles.livingthings.mantaray.flop": "Mantaray flops",
     "subtitles.livingthings.baby_ender_dragon.ambient": "Baby Enderdragon roars",
     "subtitles.livingthings.baby_ender_dragon.hurt": "Baby Enderdragon hurts",
     "subtitles.livingthings.baby_ender_dragon.death": "Baby Enderdragon dies",
@@ -80,6 +84,7 @@
     "subtitles.livingthings.peacock.ambient": "Peacock calls",
     "subtitles.livingthings.peacock.hurt": "Peacock hurts",
     "subtitles.livingthings.peacock.death": "Peacock dies",
+
     "entity.livingthings.elephant": "Elephant",
     "entity.livingthings.giraffe": "Giraffe",
     "entity.livingthings.lion": "Lion",
@@ -101,7 +106,7 @@
     "entity.livingthings.baby_ender_dragon": "Baby Enderdragon",
     "entity.livingthings.peacock": "Peacock",
     "entity.livingthings.thrown_ostrich_egg": "Thrown Ostrich Egg",
-    "container.livingthings.elephant": "Elephant",
+
     "messages.livingthings.nopatchouli.title" : "Can't use this!",
     "messages.livingthings.nopatchouli.subtitle" : "The mod Patchouli is not installed.",
     "messages.livingthings.nopatchouli.wiki" : "More information about the mod can be found here: %s"

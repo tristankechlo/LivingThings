@@ -1,6 +1,5 @@
 package com.tristankechlo.livingthings.entity;
 
-import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.ElephantConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
@@ -15,7 +14,6 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -54,7 +52,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
 
     public static final int ANGER_TIME = 10;
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private static final Component CONTAINER_NAME = new TranslatableComponent("container." + LivingThings.MOD_ID + ".elephant");
+    private static Component CONTAINER_NAME = null;
     private static final EntityDataAccessor<Boolean> IS_SADDLED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_CHEST = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.INT);
@@ -155,6 +153,9 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     }
 
     private void openInventory(Player player) {
+        if (CONTAINER_NAME == null) {
+            CONTAINER_NAME = ModEntityTypes.ELEPHANT.get().getDescription();
+        }
         // elephant inv is a generic chest
         player.openMenu(new SimpleMenuProvider((id, playerInv, playerIn) -> {
             return new ChestMenu(MenuType.GENERIC_9x3, id, player.getInventory(), this.entityInventory, 3);

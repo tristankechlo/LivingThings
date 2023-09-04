@@ -57,6 +57,8 @@ public final class ModSounds {
 
     public static final RegistryObject<SoundEvent> SEAHORSE_FLOP = registerSound("seahorse.flop");
 
+    public static final RegistryObject<SoundEvent> MANTARAY_FLOP = registerSound("mantaray.flop");
+
     public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_AMBIENT = registerSound("baby_ender_dragon.ambient");
     public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_HURT = registerSound("baby_ender_dragon.hurt");
     public static final RegistryObject<SoundEvent> BABY_ENDER_DRAGON_DEATH = registerSound("baby_ender_dragon.death");

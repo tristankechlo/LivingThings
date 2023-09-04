@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.18.2 - 2.0.2
+
+- fix game crashing by mantarays
+
 ### Version 1.18.2 - 2.0.1
 
 - fix ostrich not moving when ridden

@@ -113,7 +113,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
+        return !this.hasCustomName();
     }
 
     @Override
