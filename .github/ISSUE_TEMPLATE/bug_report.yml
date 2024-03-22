@@ -4,6 +4,7 @@ title: "[Bug]: "
 labels: ["bug"]
 assignees:
   - tristankechlo
+projects: ["tristankechlo/2"]
 body:
   - type: markdown
     attributes:
@@ -43,6 +44,7 @@ body:
       options:
         - Forge
         - Fabric
+        - NeoForge
         - Quilt
         - Other
     validations:

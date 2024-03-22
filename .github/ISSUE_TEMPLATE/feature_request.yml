@@ -4,6 +4,7 @@ title: "[Feature]: "
 labels: ["feature request"]
 assignees:
   - tristankechlo
+projects: ["tristankechlo/2"]
 body:
   - type: markdown
     attributes:
