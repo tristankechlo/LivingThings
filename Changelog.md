@@ -1,8 +1,9 @@
 # Changelog
 
-### Version 1.20.6 - 2.0.2
+### Version 1.20.6 - 2.0.3
 
 - port to 1.20.6
+- fix missing subtitle for sound `livingthings:baby_ender_dragon.flap` 
 
 ### Version 1.20.4 - 2.0.2
 
