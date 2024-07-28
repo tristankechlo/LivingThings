@@ -40,6 +40,7 @@ repositories {
 
 jar {
     from rootProject.file('LICENSE')
+    from rootProject.file('CREDITS.md')
 
     manifest {
         attributes([
