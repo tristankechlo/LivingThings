@@ -54,8 +54,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
 
-    implementation 'org.spongepowered:mixin:0.8.5:processor'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
     //compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE:api")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
 }
@@ -71,3 +70,9 @@ processResources {
 }
 
 jar.finalizedBy('reobfJar')
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}

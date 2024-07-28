@@ -30,7 +30,6 @@ public final class ForgeLivingThings {
     public ForgeLivingThings() {
         LivingThings.init();
         BIOME_MODIFIER.register(FMLJavaModLoadingContext.get().getModEventBus()); // needs to be registered before config is loaded
-        ConfigManager.loadAndVerifyConfig();
 
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         modbus.addListener(this::commonSetup);
@@ -52,6 +51,7 @@ public final class ForgeLivingThings {
     }
 
     private void onAttributeRegister(final EntityAttributeCreationEvent event) {
+        ConfigManager.loadAndVerifyConfig();
         LivingThings.registerMobAttributes((entityType, builder) -> event.put(entityType, builder.build()));
     }
 

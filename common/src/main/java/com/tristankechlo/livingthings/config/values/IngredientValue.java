@@ -32,7 +32,7 @@ public final class IngredientValue implements IConfig.Value<Ingredient> {
     @Override
     public JsonElement serialize(JsonObject json) {
         JsonElement element = Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, this.get()).resultOrPartial((string) -> {
-            LivingThings.LOGGER.error("An error occurred while attempting to serialize the config.");
+            LivingThings.LOGGER.error("[serialize] An error occurred while attempting to serialize the config.");
             LivingThings.LOGGER.error("==> {}", string);
         }).orElseThrow();
         json.add(this.getIdentifier(), element);
@@ -44,7 +44,10 @@ public final class IngredientValue implements IConfig.Value<Ingredient> {
         if (json.has(this.getIdentifier())) {
             try {
                 JsonElement element = json.get(this.getIdentifier());
-                this.value = Ingredient.CODEC.parse(JsonOps.INSTANCE, element).result().orElseThrow();
+                this.value = Ingredient.CODEC.parse(JsonOps.INSTANCE, element).resultOrPartial((message) -> {
+                    LivingThings.LOGGER.error("[deserialize] An error occurred while attempting to deserialize the config.");
+                    LivingThings.LOGGER.error("==> {}", message);
+                }).orElseThrow();
             } catch (Exception e) {
                 LivingThings.LOGGER.warn("Failed to parse value '{}' as Ingredient, using default value.", this.getIdentifier());
                 LivingThings.LOGGER.warn(e.getMessage());
