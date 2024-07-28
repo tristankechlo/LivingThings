@@ -52,17 +52,18 @@ public final class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public Component getPatchouliSubtitle(ResourceLocation bookId) {
-        return vazkii.patchouli.api.PatchouliAPI.get().getSubtitle(bookId);
+        // Patchouli no longer available for Forge
+        return Component.literal("2nd Edition");
     }
 
     @Override
     public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
-        vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
+        // Patchouli no longer available for Forge
     }
 
     @Override
     public void openBookGui(ServerPlayer player, ResourceLocation bookId) {
-        vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
+        // Patchouli no longer available for Forge
     }
 
     @Override

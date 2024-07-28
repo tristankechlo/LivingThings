@@ -63,11 +63,6 @@ public class PenguinEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     protected float getWaterSlowDown() {
         return 0.98F;
     }

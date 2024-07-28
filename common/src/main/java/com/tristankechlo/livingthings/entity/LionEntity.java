@@ -37,6 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -97,13 +98,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false, LionConfig::canAttack) {
-            @Override
-            public double getAttackReachSqr(LivingEntity attackTarget) {
-                return (double) (this.mob.getBbWidth() * 1.8F * this.mob.getBbWidth() * 1.8F
-                        + attackTarget.getBbWidth());
-            }
-        });
+        this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.1D, false, LionConfig::canAttack));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.9D));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.95D));
@@ -142,6 +137,11 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         }
         this.setVariant(compound.getByte("LionVariant"));
         this.readPersistentAngerSaveData(this.level(), compound);
+    }
+
+    @Override
+    protected AABB getAttackBoundingBox() {
+        return super.getAttackBoundingBox().inflate(1.8D);
     }
 
     @Override

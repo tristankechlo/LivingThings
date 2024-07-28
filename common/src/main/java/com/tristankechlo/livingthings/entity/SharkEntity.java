@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
@@ -57,12 +58,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false, SharkConfig::canAttack) {
-            @Override
-            public double getAttackReachSqr(LivingEntity attackTarget) {
-                return (this.mob.getBbWidth() * 1.25F * this.mob.getBbWidth() * 1.25F + attackTarget.getBbWidth());
-            }
-        });
+        this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false, SharkConfig::canAttack));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 35));
         this.goalSelector.addGoal(3, new FollowBoatGoal(this));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
@@ -119,6 +115,11 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     }
 
     @Override
+    protected AABB getAttackBoundingBox() {
+        return super.getAttackBoundingBox().inflate(1.25D);
+    }
+
+    @Override
     public void travel(Vec3 vector) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), vector);
@@ -134,11 +135,6 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
 
     public static boolean checkSharkSpawnRules(EntityType<SharkEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return world.getFluidState(pos).is(LivingThingsTags.SHARK_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.SHARK_SPAWNABLE_ON);
-    }
-
-    @Override
-    public boolean canBreatheUnderwater() {
-        return true;
     }
 
     @Override

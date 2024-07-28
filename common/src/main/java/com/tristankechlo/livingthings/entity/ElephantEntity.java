@@ -45,6 +45,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -205,8 +206,8 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return this.getDimensions(this.getPose()).height * 0.925D;
+    protected Vector3f getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
+        return new Vector3f(0.0F, dimensions.height - 0.925F * scale, 0.0F);
     }
 
     @Override

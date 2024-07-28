@@ -166,11 +166,6 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     protected float getWaterSlowDown() {
         return 0.98F;
     }

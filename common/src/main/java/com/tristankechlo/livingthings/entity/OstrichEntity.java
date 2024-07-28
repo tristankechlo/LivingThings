@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntry {
 
@@ -147,11 +148,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         return size.height * 0.98F;
     }
 
-    @Override
-    public boolean canBreatheUnderwater() {
-        return false;
-    }
-
     public boolean isBuildingNest() {
         return this.entityData.get(IS_BUILDING_NEST);
     }
@@ -227,11 +223,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     @Override
     protected float getRiddenSpeed(Player player) {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.9F;
-    }
-
-    @Override
-    public double getPassengersRidingOffset() {
-        return 1.0D;
     }
 
     @Override

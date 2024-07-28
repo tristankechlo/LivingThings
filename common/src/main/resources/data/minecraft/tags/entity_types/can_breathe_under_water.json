@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "livingthings:crab",
+        "livingthings:mantaray",
+        "livingthings:penguin",
+        "livingthings:seahorse",
+        "livingthings:shark"
+    ]
+}
