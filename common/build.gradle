@@ -15,10 +15,3 @@ minecraft {
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
 }
-
-processResources {
-    def buildProps = project.properties.clone()
-    filesMatching(['pack.mcmeta']) {
-        expand buildProps
-    }
-}

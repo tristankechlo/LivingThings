@@ -27,10 +27,13 @@
         "livingthings.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.14",
+        "fabricloader": ">=${fabric_loader_min}",
         "fabric": "*",
-        "minecraft": ">=1.20",
-        "java": ">=17"
+        "minecraft": ">=${fabric_range_min_inclusive} <${fabric_range_max_exclusive}",
+        "java": ">=${java_version}"
+    },
+    "recommends": {
+        "patchouli": "*"
     },
     "custom": {
         "modmenu": {

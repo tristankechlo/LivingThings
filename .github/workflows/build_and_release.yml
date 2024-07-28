@@ -1,0 +1,126 @@
+name: Build and Publish Release
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  MODID: "livingthings"
+  CURSEFORGE_ID: 397252
+  CURSEFORGE_LINK: "https://www.curseforge.com/minecraft/mc-mods/living-things"
+  MODRINTH_ID: "UKDLi1GJ"
+  MODRINTH_LINK: "https://modrinth.com/mod/living-things"
+  MODRINTH_FEATURED: true # if this version should be featured on modrinth
+  DISCORD_COLOR: 4037621
+  DISCORD_MENTION: "<@&890143122913370112>"
+  DISCORD_TITLE: "New version for LivingThings just released :exclamation:"
+  DISCORD_THUMBNAIL: "https://cdn.modrinth.com/data/UKDLi1GJ/d345468b19bfd5ffffa1ed070297a6a74535e9d6.png"
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      java-version: ${{ steps.properties.outputs.java_version }}
+      mc-version: ${{ steps.properties.outputs.minecraft_version }}
+      mod-version: ${{ steps.properties.outputs.mod_version }}
+      version-range: ${{ steps.properties.outputs.version_range }}
+    steps:
+      - name: Checkout Sourcecode
+        uses: actions/checkout@v4
+
+      - name: calculate versions
+        id: properties
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: 'gradle.properties'
+          properties: 'minecraft_version mod_version version_range java_version'
+
+      - name: Changelog
+        shell: bash
+        run: |
+          echo "# Changelog ${{ steps.properties.outputs.minecraft_version }} - ${{ steps.properties.outputs.mod_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "${{ github.event.release.body }}" >> $GITHUB_STEP_SUMMARY
+
+  build-and-release:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Sourcecode
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: ${{ needs.prepare.outputs.java-version }}
+          cache: "gradle"
+          cache-dependency-path: "gradle.properties"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Execute Gradle build
+        run: ./gradlew build
+
+      - name: copy jar-files
+        shell: bash
+        run: |
+          mkdir ./dist
+          mv ./forge/build/libs/${{ env.MODID }}-*.jar ./dist
+          mv ./fabric/build/libs/${{ env.MODID }}-*.jar ./dist
+          echo -e "$(ls -lahG ./dist)"
+
+      - name: Add files to GitHub-Release
+        uses: shogo82148/actions-upload-release-asset@v1.7.5
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./dist/${{ env.MODID }}-*.jar"
+          overwrite: true
+
+      - name: publish mod files
+        uses: tristankechlo/publish-mc-mod@v1.0.0
+        if: ${{ contains(github.event.release.name, '[RELEASE]') }}
+        with:
+          mc-version: ${{ needs.prepare.outputs.mc-version }}
+          mod-version: ${{ needs.prepare.outputs.mod-version }}
+          curseforge-id: ${{ env.CURSEFORGE_ID }}
+          modrinth-id: ${{ env.MODRINTH_ID }}
+          changelog: ${{ github.event.release.body }}
+          featured: ${{ env.MODRINTH_FEATURED }}
+          forge: true
+          fabric: true
+          neoforge: false
+          version-range: ${{ needs.prepare.outputs.version-range }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+  send-discord-embed:
+    needs: [ "prepare", "build-and-release" ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make embed
+        uses: tristankechlo/create-discord-embed@v1.0.0
+        with:
+          released: ${{ contains(github.event.release.name, '[RELEASE]') }}
+          changelog: "${{ github.event.release.body }}"
+          version: "${{ needs.prepare.outputs.mc-version }} - ${{ needs.prepare.outputs.mod-version }}"
+          color: ${{ env.DISCORD_COLOR }}
+          content: "${{ contains(github.event.release.name, '[RELEASE]') && '${{ env.DISCORD_MENTION }}' || 'This update will not be published!'}}"
+          title: ${{ env.DISCORD_TITLE }}
+          description: "${{ contains(github.event.release.name, '[RELEASE]') && 'The update is available for *Forge* and *Fabric*' || 'The update will *not* be released to Curseforge or Modrinth'}}"
+          curseforge: ${{ env.CURSEFORGE_LINK }}
+          modrinth: ${{ env.MODRINTH_LINK }}
+          github: ${{ github.event.release.html_url }}
+          thumbnail: ${{ env.DISCORD_THUMBNAIL }}
+
+      - name: Send Discord Message
+        uses: tsickert/discord-webhook@v6.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          raw-data: ./embed.json
