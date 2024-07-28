@@ -216,6 +216,11 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
+    protected Vector3f getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
+        return new Vector3f(0.0F, dimensions.height * 0.7F * scale, 0.0F);
+    }
+
+    @Override
     protected Vec3 getRiddenInput(Player player, Vec3 travelVec) {
         return new Vec3(0.0D, 0.0D, 1.0D);
     }

@@ -207,7 +207,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
 
     @Override
     protected Vector3f getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
-        return new Vector3f(0.0F, dimensions.height - 0.925F * scale, 0.0F);
+        return new Vector3f(0.0F, dimensions.height * 0.975F * scale, 0.0F);
     }
 
     @Override
