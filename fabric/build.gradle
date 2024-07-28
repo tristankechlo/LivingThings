@@ -1,6 +1,7 @@
 plugins {
+    id 'java'
     id 'idea'
-    id 'fabric-loom'
+    id 'fabric-loom' version '1.4-SNAPSHOT'
 }
 
 base {
@@ -28,7 +29,10 @@ dependencies {
 }
 
 loom {
-    mixin.defaultRefmapName = "livingthings.refmap.json"
+    //mixin {
+    //    defaultRefmapName.set("${mod_id}.refmap.json")
+    //}
+
     //accessWidenerPath = file("src/main/resources/explorations.accesswidener")
     runs {
         client {
@@ -51,5 +55,8 @@ processResources {
 }
 
 tasks.withType(JavaCompile) {
+    source(project(":common").sourceSets.main.allSource)
+}
+tasks.withType(JavaCompile).configureEach {
     source(project(":common").sourceSets.main.allSource)
 }

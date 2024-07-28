@@ -1,7 +1,8 @@
 plugins {
     id 'idea'
-    id 'net.minecraftforge.gradle'
-    id 'org.spongepowered.mixin'
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
 base {
@@ -53,16 +54,18 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
 
-    implementation 'org.spongepowered:mixin:0.8.4:processor'
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
+    implementation 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    //compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE:api")
+    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
 }
 
 tasks.withType(JavaCompile) {
     source(project(":common").sourceSets.main.allSource)
 }
-
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
+}
 processResources {
     from project(":common").sourceSets.main.resources
 }
