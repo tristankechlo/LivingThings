@@ -45,19 +45,17 @@ public final class NeoForgeRegistrationFactory implements RegistrationProvider.F
 
         @Override
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
-            final var rl = new ResourceLocation(modId, name);
             final var obj = registry.<I>register(name, supplier);
-            final var key = ResourceKey.create((ResourceKey<? extends Registry<I>>) registry.getRegistryKey(), rl);
             final var ro = new RegistryObject<I>() {
 
                 @Override
                 public ResourceKey<I> getResourceKey() {
-                    return key;
+                    return (ResourceKey<I>) obj.getKey();
                 }
 
                 @Override
                 public ResourceLocation getId() {
-                    return rl;
+                    return obj.getId();
                 }
 
                 @Override
@@ -67,7 +65,7 @@ public final class NeoForgeRegistrationFactory implements RegistrationProvider.F
 
                 @Override
                 public Holder<I> asHolder() {
-                    return Holder.direct(obj.get());
+                    return (Holder<I>) obj;
                 }
             };
             entries.add((RegistryObject<T>) ro);
