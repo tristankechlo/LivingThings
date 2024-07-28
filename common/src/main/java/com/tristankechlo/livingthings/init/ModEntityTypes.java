@@ -45,7 +45,7 @@ public final class ModEntityTypes {
 
     // create standard entity type with special eye height
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height, float eyeHeight) {
-        return EntityType.Builder.of(factory, category).sized(width, height).eyeHeight(eyeHeight).build(LivingThings.MOD_ID + ":" + name);
+        return EntityType.Builder.of(factory, category).sized(width, height).eyeHeight(height * eyeHeight).build(LivingThings.MOD_ID + ":" + name);
     }
 
 }
