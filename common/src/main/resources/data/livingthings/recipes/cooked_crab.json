@@ -1,9 +1,11 @@
 {
-	"type" : "minecraft:smelting",
-	"ingredient" : {
-		"item" : "livingthings:crab"
-	},
-	"result" : "livingthings:cooked_crab",
-	"experience" : 0.3,
-	"cookingtime" : 150
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "livingthings:crab"
+    },
+    "result": {
+        "id": "livingthings:cooked_crab"
+    },
+    "experience": 0.3,
+    "cookingtime": 150
 }

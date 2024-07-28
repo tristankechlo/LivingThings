@@ -1,9 +1,11 @@
 {
-	"type" : "minecraft:campfire_cooking",
-	"ingredient" : {
-		"item" : "livingthings:giraffe"
-	},
-	"result" : "livingthings:cooked_giraffe",
-	"experience" : 0.3,
-	"cookingtime" : 550
+    "type": "minecraft:campfire_cooking",
+    "ingredient": {
+        "item": "livingthings:giraffe"
+    },
+    "result": {
+        "id": "livingthings:cooked_giraffe"
+    },
+    "experience": 0.3,
+    "cookingtime": 550
 }

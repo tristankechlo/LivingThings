@@ -1,9 +1,11 @@
 {
-	"type" : "minecraft:smelting",
-	"ingredient" : {
-		"item" : "livingthings:lion"
-	},
-	"result" : "livingthings:cooked_lion",
-	"experience" : 0.3,
-	"cookingtime" : 150
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "livingthings:lion"
+    },
+    "result": {
+        "id": "livingthings:cooked_lion"
+    },
+    "experience": 0.3,
+    "cookingtime": 150
 }

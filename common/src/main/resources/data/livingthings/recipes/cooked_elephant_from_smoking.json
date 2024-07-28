@@ -1,9 +1,11 @@
 {
-	"type" : "minecraft:smoking",
-	"ingredient" : {
-		"item" : "livingthings:elephant"
-	},
-	"result" : "livingthings:cooked_elephant",
-	"experience" : 0.3,
-	"cookingtime" : 100
+    "type": "minecraft:smoking",
+    "ingredient": {
+        "item": "livingthings:elephant"
+    },
+    "result": {
+        "id": "livingthings:cooked_elephant"
+    },
+    "experience": 0.3,
+    "cookingtime": 100
 }
