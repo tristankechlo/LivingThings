@@ -74,6 +74,7 @@ jobs:
           mkdir ./dist
           mv ./forge/build/libs/${{ env.MODID }}-*.jar ./dist
           mv ./fabric/build/libs/${{ env.MODID }}-*.jar ./dist
+          mv ./neoforge/build/libs/${{ env.MODID }}-*.jar ./dist
           echo -e "$(ls -lahG ./dist)"
 
       - name: Add files to GitHub-Release
@@ -95,7 +96,7 @@ jobs:
           featured: ${{ env.MODRINTH_FEATURED }}
           forge: true
           fabric: true
-          neoforge: false
+          neoforge: true
           version-range: ${{ needs.prepare.outputs.version-range }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
