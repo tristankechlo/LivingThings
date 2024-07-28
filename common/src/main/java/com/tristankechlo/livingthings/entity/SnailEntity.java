@@ -98,13 +98,13 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
         // select randomly a preset
         SnailVariants data = SnailVariants.random(worldIn.getRandom());
         this.setVariant(data.getVariant());
         this.setShellColor(PatternType.FOREGROUND, data.getForegroundColor());
         this.setShellColor(PatternType.BACKGROUND, data.getBackgroundColor());
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
 
     @Override
@@ -120,11 +120,11 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, SnailVariants.NORMAL.getVariant());
-        this.entityData.define(SHELL_COLOR_F, SnailVariants.NORMAL.getForegroundColor());
-        this.entityData.define(SHELL_COLOR_B, SnailVariants.NORMAL.getBackgroundColor());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, SnailVariants.NORMAL.getVariant());
+        builder.define(SHELL_COLOR_F, SnailVariants.NORMAL.getForegroundColor());
+        builder.define(SHELL_COLOR_B, SnailVariants.NORMAL.getBackgroundColor());
     }
 
     @Override
@@ -164,11 +164,6 @@ public class SnailEntity extends Animal implements ILexiconEntry {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return super.mobInteract(player, hand);
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.93F;
     }
 
     public ResourceLocation getBodyTexture() {

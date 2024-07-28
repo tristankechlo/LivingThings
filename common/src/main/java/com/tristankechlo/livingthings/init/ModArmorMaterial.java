@@ -1,79 +1,38 @@
 package com.tristankechlo.livingthings.init;
 
 import com.tristankechlo.livingthings.LivingThings;
-import net.minecraft.sounds.SoundEvent;
+import com.tristankechlo.livingthings.platform.RegistrationProvider;
+import com.tristankechlo.livingthings.platform.RegistryObject;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
 
-public enum ModArmorMaterial implements ArmorMaterial {
+public final class ModArmorMaterial {
 
-    ANCIENT("ancient", 30, new int[]{3, 6, 8, 3}, 20, ModSounds.ANCIENT_ARMOR_EQUIP, 2.0F, 0.0F, Items.NETHERITE_INGOT);
+    public static void init() {}
 
-    private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
-    private final String name;
-    private final int maxDamageFactor;
-    private final int[] damageReductionAmountArray;
-    private final int enchantability;
-    private final Supplier<SoundEvent> soundEvent;
-    private final float toughness;
-    private final float knockbackResistance;
-    private final Ingredient repairMaterial;
+    private static final RegistrationProvider<ArmorMaterial> MATERIALS = RegistrationProvider.get(Registries.ARMOR_MATERIAL, LivingThings.MOD_ID);
 
-    private ModArmorMaterial(String name, int maxDamageFactor, int[] damageReduction, int enchantability,
-                             Supplier<SoundEvent> sound, float toughness, float knockbackResistance, ItemLike... repairMaterial) {
-        this.name = name;
-        this.maxDamageFactor = maxDamageFactor;
-        this.damageReductionAmountArray = damageReduction;
-        this.enchantability = enchantability;
-        this.soundEvent = sound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairMaterial = Ingredient.of(repairMaterial);
-    }
+    public static final RegistryObject<ArmorMaterial> ANCIENT = MATERIALS.register("ancient", ModArmorMaterial::makeMaterial);
 
-    @Override
-    public int getDurabilityForType(ArmorItem.Type slotIn) {
-        return MAX_DAMAGE_ARRAY[slotIn.ordinal()] * this.maxDamageFactor;
-    }
+    private static ArmorMaterial makeMaterial() {
+        EnumMap<ArmorItem.Type, Integer> types = new EnumMap<>(ArmorItem.Type.class);
+        types.put(ArmorItem.Type.BOOTS, 3);
+        types.put(ArmorItem.Type.LEGGINGS, 6);
+        types.put(ArmorItem.Type.CHESTPLATE, 8);
+        types.put(ArmorItem.Type.HELMET, 3);
+        types.put(ArmorItem.Type.BODY, 5);
 
-    @Override
-    public int getDefenseForType(ArmorItem.Type slotIn) {
-        return this.damageReductionAmountArray[slotIn.ordinal()];
-    }
+        Ingredient repairMaterial = Ingredient.of(Items.NETHERITE_INGOT);
+        List<ArmorMaterial.Layer> layers = new ArrayList<>();
 
-    @Override
-    public int getEnchantmentValue() {
-        return this.enchantability;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return this.soundEvent.get();
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairMaterial;
-    }
-
-    @Override
-    public float getToughness() {
-        return this.toughness;
-    }
-
-    @Override
-    public float getKnockbackResistance() {
-        return this.knockbackResistance;
-    }
-
-    @Override
-    public String getName() {
-        return LivingThings.MOD_ID + ":" + this.name;
+        return new ArmorMaterial(types, 20, ModSounds.ANCIENT_ARMOR_EQUIP.asHolder(), () -> repairMaterial, layers, 2f, 0f);
     }
 
 }

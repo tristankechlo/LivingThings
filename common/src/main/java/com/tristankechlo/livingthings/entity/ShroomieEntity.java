@@ -86,17 +86,17 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, (byte) 0);
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData data, CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData data) {
         final int brownWeight = ShroomieConfig.get().colorBrownWeight.get();
         final int redWeight = ShroomieConfig.get().colorRedWeight.get();
         this.setVariant(this.getRandomVariant(random, new byte[]{0, 1}, new int[]{brownWeight, redWeight}));
-        return super.finalizeSpawn(world, difficulty, reason, data, tag);
+        return super.finalizeSpawn(world, difficulty, reason, data);
     }
 
     @Override
@@ -107,11 +107,6 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public int getMaxSpawnClusterSize() {
         return ShroomieConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.55F;
     }
 
     @Override

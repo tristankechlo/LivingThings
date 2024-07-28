@@ -38,7 +38,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntry {
 
@@ -85,13 +84,13 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(HAS_EGG, false);
-        this.entityData.define(IS_BUILDING_NEST, false);
-        this.entityData.define(IS_LAYING_EGG, false);
-        this.entityData.define(SADDLED, true);
-        this.entityData.define(BOOST_TIME, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(HAS_EGG, false);
+        builder.define(IS_BUILDING_NEST, false);
+        builder.define(IS_LAYING_EGG, false);
+        builder.define(SADDLED, true);
+        builder.define(BOOST_TIME, 0);
     }
 
     @Override
@@ -141,11 +140,6 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         if (this.hasEgg()) {
             this.spawnAtLocation(ModItems.OSTRICH_EGG.get());
         }
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.98F;
     }
 
     public boolean isBuildingNest() {
@@ -216,8 +210,8 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    protected Vector3f getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
-        return new Vector3f(0.0F, dimensions.height * 0.7F * scale, 0.0F);
+    protected Vec3 getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
+        return new Vec3(0.0F, dimensions.height() * 0.7F * scale, 0.0F);
     }
 
     @Override

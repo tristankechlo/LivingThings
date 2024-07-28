@@ -13,7 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -54,13 +54,12 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        ItemStack stack = player.getMainHandItem();
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         boolean hasEgg = state.getValue(EGG);
 
         // prevent any use when rightclicked with lexicon
         if (player.getMainHandItem().getItem() == ModItems.LEXICON.get()) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         if (hasEgg && stack.isEmpty()) {
@@ -72,7 +71,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
                 itemEntity.setDefaultPickUpDelay();
                 world.addFreshEntity(itemEntity);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         if (!hasEgg && stack.is(ModItems.OSTRICH_EGG.get())) {
             //place egg when empty
@@ -82,9 +81,9 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
             if (!player.isCreative()) {
                 stack.shrink(1);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return super.use(state, world, pos, player, handIn, hit);
+        return super.useItemOn(stack, state, world, pos, player, handIn, hit);
     }
 
     @Override

@@ -34,7 +34,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
@@ -49,8 +49,8 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public OwlEntity(EntityType<? extends OwlEntity> type, Level worldIn) {
         super(type, worldIn);
         this.moveControl = new FlyingMoveControl(this, 10, false);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
     }
 
     @Override
@@ -67,13 +67,13 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
         int colorBrownWeight = OwlConfig.get().colorBrownWeight.get();
         int colorWhiteWeight = OwlConfig.get().colorWhiteWeight.get();
         int colorBlackWeight = OwlConfig.get().colorBlackWeight.get();
         byte variant = this.getRandomVariant(random, new byte[]{0, 1, 2}, new int[]{colorBrownWeight, colorWhiteWeight, colorBlackWeight});
         this.setVariant(variant);
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
 
     @Override
@@ -91,9 +91,9 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(OWL_VARIANT, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(OWL_VARIANT, (byte) 0);
     }
 
     @Override
@@ -184,11 +184,6 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     @Override
     public int getMaxSpawnClusterSize() {
         return OwlConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.9F;
     }
 
     @Override

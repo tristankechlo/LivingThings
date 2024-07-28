@@ -63,11 +63,11 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(PANIC, false);
-        this.entityData.define(FLUFFED, false);
-        this.entityData.define(DESTROYING_CROPS, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(PANIC, false);
+        builder.define(FLUFFED, false);
+        builder.define(DESTROYING_CROPS, false);
     }
 
     @Override

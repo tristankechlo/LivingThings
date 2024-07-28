@@ -11,6 +11,7 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -18,6 +19,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandom;
@@ -67,13 +69,13 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
         this.setGender(LionEntity.getWeightedRandomGender(this.random));
         int color1Weight = LionConfig.get().color1Weight.get();
         int colorWhiteWeight = LionConfig.get().colorWhiteWeight.get();
         byte variant = this.getRandomVariant(random, new byte[]{0, 1}, new int[]{color1Weight, colorWhiteWeight});
         this.setVariant(variant);
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
 
     public static Gender getWeightedRandomGender(RandomSource random) {
@@ -111,10 +113,10 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(MALE, false);
-        this.entityData.define(LION_VARIANT, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(MALE, false);
+        builder.define(LION_VARIANT, (byte) 0);
     }
 
     @Override
@@ -165,7 +167,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
 
     @Override
     public boolean isFood(ItemStack stack) {
-        boolean isMeat = stack.getItem().isEdible() && stack.getItem().getFoodProperties().isMeat();
+        boolean isMeat = stack.has(DataComponents.FOOD) && stack.is(ItemTags.MEAT);
         return LionConfig.temptationItems().test(stack) || (LionConfig.allowAllMeatAsFood() && isMeat);
     }
 
@@ -187,11 +189,6 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     @Override
     public int getMaxSpawnClusterSize() {
         return LionConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.96F;
     }
 
     @Override

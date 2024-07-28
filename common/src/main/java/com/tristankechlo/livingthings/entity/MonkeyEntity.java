@@ -7,6 +7,7 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -52,12 +53,12 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         UUID uuid = this.getOwnerUUID();
         if (uuid != null) {
             monkey.setOwnerUUID(uuid);
-            monkey.setTame(true);
+            monkey.setTame(true, false);
         } else if (entity instanceof TamableAnimal) {
             UUID uuid2 = ((TamableAnimal) entity).getOwnerUUID();
             if (uuid2 != null) {
                 monkey.setOwnerUUID(uuid2);
-                monkey.setTame(true);
+                monkey.setTame(true, false);
             }
         }
         return monkey;
@@ -82,10 +83,10 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SITTING, false);
-        this.entityData.define(CLIMBING, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SITTING, false);
+        builder.define(CLIMBING, (byte) 0);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -197,11 +198,6 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.95F;
-    }
-
-    @Override
     protected PathNavigation createNavigation(Level worldIn) {
         return new WallClimberNavigation(this, worldIn);
     }
@@ -234,11 +230,11 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
             if (this.isTame()) {
-                if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
+                if (this.isFood(stack) && stack.has(DataComponents.FOOD) && this.getHealth() < this.getMaxHealth()) {
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
-                    this.heal(item.getFoodProperties().getNutrition());
+                    this.heal(stack.get(DataComponents.FOOD).nutrition());
                     return InteractionResult.SUCCESS;
                 } else if (stack.isEmpty()) {
                     this.setSitting(!this.isCrouching());

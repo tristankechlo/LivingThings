@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.util;
 
+import com.mojang.serialization.MapCodec;
 import com.tristankechlo.livingthings.NeoForgeLivingThings;
-import com.mojang.serialization.Codec;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -20,7 +20,7 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
 
     private Map<ResourceLocation, List<MobSpawnSettings.SpawnerData>> spawnData = null;
     private static final LivingThingsBiomeModifier INSTANCE = new LivingThingsBiomeModifier();
-    public static final Codec<LivingThingsBiomeModifier> CODEC = Codec.unit(INSTANCE);
+    public static final MapCodec<LivingThingsBiomeModifier> CODEC = MapCodec.unit(INSTANCE);
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
@@ -42,7 +42,7 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return NeoForgeLivingThings.BIOME_MODIFIER_CODEC.get();
     }
 

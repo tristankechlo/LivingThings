@@ -6,7 +6,7 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -34,7 +34,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
@@ -43,10 +43,10 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
 
     public NetherKnightEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.LAVA, 0.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -58,11 +58,11 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, SpawnGroupData data, CompoundTag nbt) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, SpawnGroupData data) {
         this.setCanPickUpLoot(false);
         this.setLeftHanded(world.getRandom().nextBoolean());
         this.populateDefaultEquipmentSlots(random, difficultyInstance);
-        return super.finalizeSpawn(world, difficultyInstance, spawnReason, data, nbt);
+        return super.finalizeSpawn(world, difficultyInstance, spawnReason, data);
     }
 
     @Override
@@ -99,11 +99,6 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
-    @Override
-    public MobType getMobType() {
-        return MobType.UNDEAD;
-    }
-
     private ItemStack createMainHandItem(RandomSource random) {
         ItemStack stack = new ItemStack(Items.NETHERITE_SWORD);
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
@@ -117,8 +112,8 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         } else {
             stack.enchant(Enchantments.SHARPNESS, 2 + random.nextInt(3));
         }
-        stack.enchant(Enchantments.MOB_LOOTING, 1);
-        stack.setHoverName(Component.literal(name));
+        stack.enchant(Enchantments.LOOTING, 1);
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }
 
@@ -129,12 +124,12 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's War Axe";
             stack.enchant(Enchantments.MENDING, 1);
-            stack.enchant(Enchantments.BLOCK_EFFICIENCY, 3 + random.nextInt(3));
+            stack.enchant(Enchantments.EFFICIENCY, 3 + random.nextInt(3));
         } else {
-            stack.enchant(Enchantments.BLOCK_EFFICIENCY, 1 + random.nextInt(3));
+            stack.enchant(Enchantments.EFFICIENCY, 1 + random.nextInt(3));
         }
         stack.enchant(Enchantments.SHARPNESS, 2);
-        stack.setHoverName(Component.literal(name));
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }
 

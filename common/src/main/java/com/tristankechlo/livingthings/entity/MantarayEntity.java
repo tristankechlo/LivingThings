@@ -20,7 +20,10 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -33,7 +36,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 import java.util.Optional;
 
@@ -44,7 +47,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
 
     public MantarayEntity(EntityType<? extends MantarayEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.setPathfindingMalus(PathType.WATER, 0.0F);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
@@ -66,10 +69,10 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(MANTARAY_VARIANT, (byte) 0);
-        this.entityData.define(MANTARAY_SCALING, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(MANTARAY_VARIANT, (byte) 0);
+        builder.define(MANTARAY_SCALING, (byte) 0);
     }
 
     @Override
@@ -87,13 +90,13 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
         int colorBlueVariant = MantarayConfig.get().colorBlueVariant.get();
         int colorBrownVariant = MantarayConfig.get().colorBrownVariant.get();
         byte variant = this.getRandomVariant(random, new byte[]{0, 1}, new int[]{colorBlueVariant, colorBrownVariant});
         this.setVariant(variant);
         this.setScaling(MantarayEntity.getWeightedRandomScaling(this.random));
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
 
     public static byte getWeightedRandomScaling(RandomSource random) {
@@ -129,11 +132,6 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     @Override
     public int getMaxSpawnClusterSize() {
         return MantarayConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.5F;
     }
 
     @Override

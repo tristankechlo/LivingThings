@@ -8,6 +8,7 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -17,7 +18,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -25,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -55,9 +60,9 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, (byte) 0);
     }
 
     @Override
@@ -83,11 +88,6 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.85F;
-    }
-
-    @Override
     public byte getVariant() {
         return this.entityData.get(VARIANT);
     }
@@ -105,8 +105,9 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     @Override
     public void saveToBucketTag(ItemStack stack) {
         super.saveToBucketTag(stack);
-        CompoundTag compoundnbt = stack.getOrCreateTag();
-        compoundnbt.putByte("BucketSeahorseVariantTag", this.getVariant());
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, (tag) -> {
+            tag.putInt("BucketSeahorseVariantTag", this.getVariant());
+        });
     }
 
     @Override
@@ -115,26 +116,21 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag tag) {
-        entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData, tag);
-        if (tag != null && tag.contains("BucketSeahorseVariantTag", 1)) {
-            this.setVariant(tag.getByte("BucketSeahorseVariantTag"));
-            return entityData;
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData) {
+        entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+        byte variant = 0;
+        if (entityData instanceof SeahorseData) {
+            variant = ((SeahorseData) entityData).variant;
+            entityData = new SeahorseData(this, variant);
         } else {
-            byte variant = 0;
-            if (entityData instanceof SeahorseData) {
-                variant = ((SeahorseData) entityData).variant;
-                entityData = new SeahorseData(this, variant);
-            } else {
-                final int blueWeight = SeahorseConfig.get().colorBlueWeight.get();
-                final int greenWeight = SeahorseConfig.get().colorGreenWeight.get();
-                final int purpleWeight = SeahorseConfig.get().colorPurpleWeight.get();
-                final int yellowWeight = SeahorseConfig.get().colorYellowWeight.get();
-                final int redWeight = SeahorseConfig.get().colorRedWeight.get();
-                variant = getRandomVariant(random, new byte[]{0, 1, 2, 3, 4}, new int[]{blueWeight, greenWeight, purpleWeight, yellowWeight, redWeight});
-            }
-            this.setVariant(variant);
+            final int blueWeight = SeahorseConfig.get().colorBlueWeight.get();
+            final int greenWeight = SeahorseConfig.get().colorGreenWeight.get();
+            final int purpleWeight = SeahorseConfig.get().colorPurpleWeight.get();
+            final int yellowWeight = SeahorseConfig.get().colorYellowWeight.get();
+            final int redWeight = SeahorseConfig.get().colorRedWeight.get();
+            variant = getRandomVariant(random, new byte[]{0, 1, 2, 3, 4}, new int[]{blueWeight, greenWeight, purpleWeight, yellowWeight, redWeight});
         }
+        this.setVariant(variant);
         return entityData;
     }
 

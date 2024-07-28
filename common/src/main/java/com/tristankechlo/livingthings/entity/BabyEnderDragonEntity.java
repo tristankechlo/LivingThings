@@ -11,6 +11,7 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -60,7 +61,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     public BabyEnderDragonEntity(EntityType<? extends BabyEnderDragonEntity> entity, Level level) {
         super(entity, level);
-        this.setTame(false);
+        this.setTame(false, false);
         this.moveControl = new FlyingMoveControl(this, 10, true);
     }
 
@@ -83,11 +84,11 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
-        this.entityData.define(REMAINING_ANGER_TIME, 0);
-        this.entityData.define(SITTING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(COLLAR_COLOR, DyeColor.RED.getId());
+        builder.define(REMAINING_ANGER_TIME, 0);
+        builder.define(SITTING, false);
     }
 
     @Override
@@ -124,11 +125,11 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
             if (this.isTame()) {
-                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                if (this.isFood(itemstack) && itemstack.has(DataComponents.FOOD) && this.getHealth() < this.getMaxHealth()) {
                     if (!player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
-                    this.heal((float) (item.getFoodProperties().getNutrition() / 2));
+                    this.heal((float) (itemstack.get(DataComponents.FOOD).nutrition() / 2));
                     this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                     return InteractionResult.SUCCESS;
                 }
@@ -255,7 +256,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         UUID uuid = this.getOwnerUUID();
         if (uuid != null) {
             child.setOwnerUUID(uuid);
-            child.setTame(true);
+            child.setTame(true, false);
         }
         return child;
     }

@@ -113,11 +113,6 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.93F;
-    }
-
-    @Override
     public int getMaxSpawnClusterSize() {
         return RaccoonConfig.maxSpawnedInChunk();
     }

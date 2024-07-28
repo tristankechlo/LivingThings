@@ -36,7 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -51,8 +51,8 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     public CrabEntity(EntityType<? extends CrabEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.setMaxUpStep(1.0F);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
+        //this.setMaxUpStep(1.0F);
+        this.setPathfindingMalus(PathType.WATER, 1.0F);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
         int colorRedWeight = CrabConfig.get().colorRedWeight.get();
         int colorWhiteWeight = CrabConfig.get().colorWhiteWeight.get();
         int colorBlueWeight = CrabConfig.get().colorBlueWeight.get();
@@ -108,7 +108,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
             this.setHealth(this.getMaxHealth());
         }
 
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
 
     public static byte getWeightedRandomScaling(RandomSource random) {
@@ -128,10 +128,10 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(CRAB_VARIANT, (byte) 0);
-        this.entityData.define(CRAB_SCALING, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CRAB_VARIANT, (byte) 0);
+        builder.define(CRAB_SCALING, (byte) 0);
     }
 
     @Override
@@ -158,11 +158,6 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     @Override
     public int getMaxSpawnClusterSize() {
         return CrabConfig.maxSpawnedInChunk();
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.9F;
     }
 
     @Override
@@ -211,7 +206,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    protected EntityDimensions getDefaultDimensions(Pose pose) {
         if (this.isBaby()) {
             return super.getDimensions(pose);
         }

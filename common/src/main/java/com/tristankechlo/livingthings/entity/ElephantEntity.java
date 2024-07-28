@@ -45,7 +45,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -64,7 +63,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
 
     public ElephantEntity(EntityType<ElephantEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
-        this.setMaxUpStep(1.0F);
+        //this.setMaxUpStep(1.0F);
         this.initInventory();
         this.tameAmount = 0;
     }
@@ -74,18 +73,18 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(IS_SADDLED, false);
-        this.getEntityData().define(HAS_CHEST, false);
-        this.getEntityData().define(REMAINING_ANGER_TIME, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(IS_SADDLED, false);
+        builder.define(HAS_CHEST, false);
+        builder.define(REMAINING_ANGER_TIME, 0);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
         ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level());
         if (this.isTame() || ((ElephantEntity) parent).isTame()) {
-            child.setTame(true);
+            child.setTame(true, false);
         }
         return child;
     }
@@ -117,10 +116,10 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         this.readPersistentAngerSaveData(this.level(), compound);
         this.setSaddled(compound.getBoolean("Saddled"));
         this.setHasChest(compound.getBoolean("Chested"));
-        this.setTame(compound.getBoolean("Tamed"));
+        this.setTame(compound.getBoolean("Tamed"), false);
         this.tameAmount = compound.getInt("TameAmount");
 
-        this.entityInventory.fromTag(compound.getList("Inventory", 10));
+        this.entityInventory.fromTag(compound.getList("Inventory", 10), this.registryAccess());
         this.initInventory();
     }
 
@@ -132,7 +131,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         compound.putBoolean("Chested", this.hasChest());
         compound.putBoolean("Tamed", this.isTame());
         compound.putInt("TameAmount", this.tameAmount);
-        compound.put("Inventory", this.entityInventory.createTag());
+        compound.put("Inventory", this.entityInventory.createTag(this.registryAccess()));
     }
 
     private void initInventory() {
@@ -201,13 +200,8 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.85F;
-    }
-
-    @Override
-    protected Vector3f getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
-        return new Vector3f(0.0F, dimensions.height * 0.975F * scale, 0.0F);
+    protected Vec3 getPassengerAttachmentPoint(Entity rider, EntityDimensions dimensions, float scale) {
+        return new Vec3(0.0F, dimensions.height() * 0.975F * scale, 0.0F);
     }
 
     @Override
@@ -432,7 +426,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
                 }
                 // mark as tamed if taming amount is reached
                 if (this.tameAmount >= 1000) {
-                    this.setTame(true);
+                    this.setTame(true, true);
                     this.setOwnerUUID(player.getUUID());
                     if (player instanceof ServerPlayer) {
                         CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer) player, this);

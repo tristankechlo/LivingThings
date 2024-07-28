@@ -69,7 +69,7 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public MobBucketItem createMobBucketItem(RegistryObject<EntityType<SeahorseEntity>> type, Fluid fluid, SoundEvent sound, Item.Properties props) {
-        return new MobBucketItem(type, () -> fluid, () -> sound, props);
+        return new MobBucketItem(type.get(), fluid, sound, props);
     }
 
     @Override

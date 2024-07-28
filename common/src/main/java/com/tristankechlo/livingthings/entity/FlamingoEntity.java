@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -31,12 +31,12 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> LEFT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> RIGHT_LEG_UP = SynchedEntityData.defineId(FlamingoEntity.class, EntityDataSerializers.BOOLEAN);
-    protected DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
+    private DeepWaterAvoidingRandomWalkingGoal randomWalkingGoal;
 
     public FlamingoEntity(EntityType<? extends FlamingoEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.setMaxUpStep(1.0F);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 1.0F);
+        //this.setMaxUpStep(1.0F);
+        this.setPathfindingMalus(PathType.WATER, 1.0F);
     }
 
     public static boolean checkFlamingoSpawnRules(EntityType<FlamingoEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -71,20 +71,15 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(LEFT_LEG_UP, false);
-        this.entityData.define(RIGHT_LEG_UP, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(LEFT_LEG_UP, false);
+        builder.define(RIGHT_LEG_UP, false);
     }
 
     @Override
     public boolean isFood(ItemStack stack) {
         return FlamingoConfig.temptationItems().test(stack);
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.99F;
     }
 
     @Override
@@ -156,14 +151,14 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
         public void tick() {
             if (this.leftLegCounter > 0) {
                 this.leftLegCounter--;
-            } else if (this.leftLegCounter <= 0) {
+            } else {
                 this.leftLegCounter = 0;
                 this.flamingo.setLeftLegUp(false);
             }
 
             if (this.rightLegCounter > 0) {
                 this.rightLegCounter--;
-            } else if (this.rightLegCounter <= 0) {
+            } else {
                 this.rightLegCounter = 0;
                 this.flamingo.setRightLegUp(false);
             }
@@ -206,7 +201,7 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
 
     }
 
-    static class DeepWaterAvoidingRandomWalkingGoal extends RandomStrollGoal {
+    private static class DeepWaterAvoidingRandomWalkingGoal extends RandomStrollGoal {
 
         private final FlamingoEntity flamingo;
 

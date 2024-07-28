@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings;
 
+import com.mojang.serialization.MapCodec;
 import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
 import com.mojang.serialization.Codec;
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
@@ -24,8 +25,8 @@ import java.util.function.Supplier;
 @Mod(LivingThings.MOD_ID)
 public final class NeoForgeLivingThings {
 
-    private static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, LivingThings.MOD_ID);
-    public static final Supplier<Codec<? extends BiomeModifier>> BIOME_MODIFIER_CODEC = BIOME_MODIFIER.register("add_entity_spawns", () -> LivingThingsBiomeModifier.CODEC);
+    private static final DeferredRegister<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, LivingThings.MOD_ID);
+    public static final Supplier<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER_CODEC = BIOME_MODIFIER.register("add_entity_spawns", () -> LivingThingsBiomeModifier.CODEC);
 
     public NeoForgeLivingThings(IEventBus modbus) {
         LivingThings.init();
