@@ -1,0 +1,78 @@
+plugins {
+    id 'java-library'
+}
+
+base {
+    archivesName = "${mod_id}-${project.name}-${minecraft_version}-${mod_version}"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+}
+
+repositories {
+    mavenCentral()
+    // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Sponge'
+                url = 'https://repo.spongepowered.org/repository/maven-public'
+            }
+        }
+        filter { includeGroupAndSubgroups("org.spongepowered") }
+    }
+    maven {
+        name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf /Patchouli )'
+        url = "https://maven.blamejared.com"
+    }
+    //maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
+
+// Declare capabilities on the outgoing configurations.
+// Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
+['apiElements', 'runtimeElements'].each { variant ->
+    configurations."$variant".outgoing {
+        capability("$group:$mod_id-${project.name}-${minecraft_version}:$version")
+        capability("$group:$mod_id:$version")
+    }
+}
+
+jar {
+    from rootProject.file('LICENSE')
+
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_name,
+                'Specification-Vendor'    : mod_author,
+                'Specification-Version'   : project.jar.archiveVersion,
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_author,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'Timestamp'               : System.currentTimeMillis(),
+                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                'Build-On-Minecraft'      : minecraft_version
+        ])
+    }
+}
+
+processResources {
+    def expandProps = [
+            "version"                   : "${minecraft_version}-${mod_version}",
+            "version_range"             : version_range,
+            "minecraft_version"         : minecraft_version,
+            "java_version"              : java_version,
+            "fabric_loader_min"         : fabric_loader_min,
+            "fabric_range_min_inclusive": fabric_range_min_inclusive,
+            "fabric_range_max_exclusive": fabric_range_max_exclusive,
+            "forge_loader_range"        : forge_loader_range,
+            "neoforge_loader_range"     : neoforge_loader_range,
+            "neoforge_range"            : neoforge_range
+    ]
+
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+        expand expandProps
+    }
+    inputs.properties(expandProps)
+}
