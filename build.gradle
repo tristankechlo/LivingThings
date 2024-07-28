@@ -1,6 +1,11 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
+plugins {
+    // Required for NeoGradle
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+}
+
 subprojects {
     apply plugin: 'java'
     java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
@@ -55,7 +60,9 @@ subprojects {
                 "fabric_loader_min"         : fabric_loader_min,
                 "fabric_range_min_inclusive": fabric_range_min_inclusive,
                 "fabric_range_max_exclusive": fabric_range_max_exclusive,
-                "forge_loader_range"        : forge_loader_range
+                "forge_loader_range"        : forge_loader_range,
+                "neoforge_loader_range"     : neoforge_loader_range,
+                "neoforge_range"            : neoforge_range
         ]
         filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
             expand expandProps

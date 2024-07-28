@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="${neoforge_loader_range}"
+license="CC BY-NC-ND 4.0"
+showAsResourcePack=false
+
+[[mods]]
+modId="livingthings"
+version="${version}"
+displayName="Living Things"
+displayURL="https://github.com/tristankechlo/LivingThings"
+logoFile="banner.png"
+authors="Buecher_wurm"
+description='''adds various new mobs to Minecraft'''
+
+[[mixins]]
+config = "livingthings.mixins.json"
+
+[[dependencies.livingthings]]
+modId="neoforge"
+type="required"
+versionRange = "${neoforge_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.livingthings]]
+modId="minecraft"
+type="required"
+versionRange="${version_range}"
+ordering="NONE"
+side="BOTH"

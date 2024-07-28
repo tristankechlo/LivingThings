@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
@@ -42,7 +43,7 @@ public interface IPlatformHelper {
 
     MobBucketItem createMobBucketItem(RegistryObject<EntityType<SeahorseEntity>> type, Fluid fluid, SoundEvent sound, Item.Properties props);
 
-    SpawnEggItem createSpawnEgg(Supplier<EntityType<?>> type, int primaryColor, int secondaryColor, Item.Properties props);
+    SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props);
 
     CreativeModeTab.Builder getCreativeModeTab();
 

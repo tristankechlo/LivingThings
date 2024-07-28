@@ -2,8 +2,8 @@ package com.tristankechlo.livingthings.platform;
 
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
 import com.tristankechlo.livingthings.init.ModItems;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.loader.api.FabricLoader;
+import com.tristankechlo.livingthings.platform.IPlatformHelper;
+import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,35 +17,39 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
 import java.nio.file.Path;
 import java.util.function.Supplier;
 
-public final class FabricPlatformHelper implements IPlatformHelper {
+public final class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public String getPlatformName() {
-        return "Fabric";
+        return "NeoForge";
     }
 
     @Override
     public TagKey<Item> getBananaTag() {
-        return TagKey.create(Registries.ITEM, new ResourceLocation("c", "fruits/bananas"));
+        return TagKey.create(Registries.ITEM, new ResourceLocation("forge", "fruits/banana"));
     }
 
     @Override
     public boolean isModLoaded(String modId) {
-        return FabricLoader.getInstance().isModLoaded(modId);
+        return ModList.get().isLoaded(modId);
     }
 
     @Override
     public boolean isDevelopmentEnvironment() {
-        return FabricLoader.getInstance().isDevelopmentEnvironment();
+        return !FMLLoader.isProduction();
     }
 
     @Override
     public Path getConfigDirectory() {
-        return FabricLoader.getInstance().getConfigDir();
+        return FMLPaths.CONFIGDIR.get();
     }
 
     @Override
@@ -65,17 +69,17 @@ public final class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public MobBucketItem createMobBucketItem(RegistryObject<EntityType<SeahorseEntity>> type, Fluid fluid, SoundEvent sound, Item.Properties props) {
-        return new MobBucketItem(type.get(), fluid, sound, props);
+        return new MobBucketItem(type, () -> fluid, () -> sound, props);
     }
 
     @Override
     public SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props) {
-        return new SpawnEggItem((EntityType<? extends Mob>) type.get(), primaryColor, secondaryColor, props);
+        return new DeferredSpawnEggItem(type, primaryColor, secondaryColor, props);
     }
 
     @Override
     public CreativeModeTab.Builder getCreativeModeTab() {
-        return FabricItemGroup.builder()
+        return CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.livingthings.general"))
                 .icon(() -> ModItems.SHARK_TOOTH.get().getDefaultInstance())
                 .displayItems((parameters, output) -> {
