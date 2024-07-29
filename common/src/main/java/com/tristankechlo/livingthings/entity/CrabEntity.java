@@ -208,9 +208,9 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     @Override
     protected EntityDimensions getDefaultDimensions(Pose pose) {
         if (this.isBaby()) {
-            return super.getDimensions(pose);
+            return super.getDefaultDimensions(pose);
         }
-        return super.getDimensions(pose).scale(0.85F + (0.1F * this.getScaling()));
+        return super.getDefaultDimensions(pose).scale(0.85F + (0.1F * this.getScaling()));
     }
 
     @Override

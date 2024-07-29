@@ -1,11 +1,10 @@
 package com.tristankechlo.livingthings;
 
 import com.mojang.serialization.MapCodec;
-import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
-import com.mojang.serialization.Codec;
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
+import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;

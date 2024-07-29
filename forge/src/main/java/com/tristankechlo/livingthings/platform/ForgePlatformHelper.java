@@ -51,12 +51,6 @@ public final class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public Component getPatchouliSubtitle(ResourceLocation bookId) {
-        // Patchouli no longer available for Forge
-        return Component.literal("2nd Edition");
-    }
-
-    @Override
     public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
         // Patchouli no longer available for Forge
     }

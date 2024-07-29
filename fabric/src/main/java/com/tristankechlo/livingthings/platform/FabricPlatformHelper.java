@@ -49,11 +49,6 @@ public final class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public Component getPatchouliSubtitle(ResourceLocation bookId) {
-        return vazkii.patchouli.api.PatchouliAPI.get().getSubtitle(bookId);
-    }
-
-    @Override
     public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
         vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
     }

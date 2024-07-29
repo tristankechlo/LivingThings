@@ -5,7 +5,7 @@ import com.tristankechlo.livingthings.entity.*;
 import com.tristankechlo.livingthings.entity.projectile.ThrownOstrichEgg;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -14,7 +14,7 @@ public final class ModEntityTypes {
 
     public static void init() {}
 
-    private static final RegistrationProvider<EntityType<?>> ENTITY_TYPES = RegistrationProvider.get(Registries.ENTITY_TYPE, LivingThings.MOD_ID);
+    private static final RegistrationProvider<EntityType<?>> ENTITY_TYPES = RegistrationProvider.get(BuiltInRegistries.ENTITY_TYPE, LivingThings.MOD_ID);
 
     public static final RegistryObject<EntityType<ElephantEntity>> ELEPHANT = ENTITY_TYPES.register("elephant", () -> create("elephant", ElephantEntity::new, MobCategory.CREATURE, 1.85F, 2.7F, 0.85F));
     public static final RegistryObject<EntityType<GiraffeEntity>> GIRAFFE = ENTITY_TYPES.register("giraffe", () -> create("giraffe", GiraffeEntity::new, MobCategory.CREATURE, 1.5F, 3.2F, 0.98F));

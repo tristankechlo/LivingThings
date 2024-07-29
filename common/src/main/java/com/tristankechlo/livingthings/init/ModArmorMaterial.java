@@ -3,7 +3,7 @@ package com.tristankechlo.livingthings.init;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
@@ -17,7 +17,7 @@ public final class ModArmorMaterial {
 
     public static void init() {}
 
-    private static final RegistrationProvider<ArmorMaterial> MATERIALS = RegistrationProvider.get(Registries.ARMOR_MATERIAL, LivingThings.MOD_ID);
+    private static final RegistrationProvider<ArmorMaterial> MATERIALS = RegistrationProvider.get(BuiltInRegistries.ARMOR_MATERIAL, LivingThings.MOD_ID);
 
     public static final RegistryObject<ArmorMaterial> ANCIENT = MATERIALS.register("ancient", ModArmorMaterial::makeMaterial);
 

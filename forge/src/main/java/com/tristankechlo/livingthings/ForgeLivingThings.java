@@ -1,6 +1,5 @@
 package com.tristankechlo.livingthings;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;

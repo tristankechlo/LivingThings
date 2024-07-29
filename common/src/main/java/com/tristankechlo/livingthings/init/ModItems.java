@@ -6,7 +6,7 @@ import com.tristankechlo.livingthings.item.OstrichEggItem;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -20,7 +20,7 @@ public final class ModItems {
 
     public static void init() {}
 
-    public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registries.ITEM, LivingThings.MOD_ID);
+    public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(BuiltInRegistries.ITEM, LivingThings.MOD_ID);
     public static final List<RegistryObject<? extends Item>> ALL_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<Item>> SPAWN_EGGS;
 

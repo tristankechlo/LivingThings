@@ -35,8 +35,6 @@ public interface IPlatformHelper {
 
     Path getConfigDirectory();
 
-    Component getPatchouliSubtitle(ResourceLocation bookId);
-
     void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page);
 
     void openBookGui(ServerPlayer player, ResourceLocation bookId);

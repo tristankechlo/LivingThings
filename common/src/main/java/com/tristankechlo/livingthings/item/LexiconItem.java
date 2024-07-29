@@ -6,6 +6,7 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +28,7 @@ import java.util.List;
 public class LexiconItem extends Item {
 
     private static final String URL = "https://github.com/tristankechlo/Living-Things/wiki";
+    private static final MutableComponent SUBTITLE = Component.literal("2nd Edition").withStyle(ChatFormatting.GRAY);
 
     public LexiconItem(Properties properties) {
         super(properties);
@@ -82,16 +84,7 @@ public class LexiconItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
         // add the subtitle for the item
-        tooltip.add(getEdition().plainCopy().withStyle(ChatFormatting.GRAY));
-    }
-
-    public static Component getEdition() {
-        if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
-            ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());
-            return IPlatformHelper.INSTANCE.getPatchouliSubtitle(book);
-        }
-
-        return Component.literal("2nd Edition");
+        tooltip.add(SUBTITLE);
     }
 
 }

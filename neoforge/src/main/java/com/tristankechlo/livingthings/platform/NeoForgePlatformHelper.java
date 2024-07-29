@@ -2,8 +2,6 @@ package com.tristankechlo.livingthings.platform;
 
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
 import com.tristankechlo.livingthings.init.ModItems;
-import com.tristankechlo.livingthings.platform.IPlatformHelper;
-import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -50,11 +48,6 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public Path getConfigDirectory() {
         return FMLPaths.CONFIGDIR.get();
-    }
-
-    @Override
-    public Component getPatchouliSubtitle(ResourceLocation bookId) {
-        return vazkii.patchouli.api.PatchouliAPI.get().getSubtitle(bookId);
     }
 
     @Override
