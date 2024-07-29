@@ -114,7 +114,7 @@ jobs:
           color: ${{ env.DISCORD_COLOR }}
           content: "${{ contains(github.event.release.name, '[RELEASE]') && env.DISCORD_MENTION || 'This update will not be published!'}}"
           title: ${{ env.DISCORD_TITLE }}
-          description: "${{ contains(github.event.release.name, '[RELEASE]') && 'The update is available for *Forge* and *Fabric*' || 'The update will *not* be released to Curseforge or Modrinth'}}"
+          description: "${{ contains(github.event.release.name, '[RELEASE]') && 'The update is available for *Forge*, *Fabric* and *NeoForge*' || 'The update will *not* be released to Curseforge or Modrinth'}}"
           curseforge: ${{ env.CURSEFORGE_LINK }}
           modrinth: ${{ env.MODRINTH_LINK }}
           github: ${{ github.event.release.html_url }}
