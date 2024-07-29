@@ -40,7 +40,7 @@ public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
 
         if (this.young) {
             matrixStackIn.scale(0.6F, 0.6F, 0.6F);

@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -39,7 +40,7 @@ import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.Vec3;
 
 public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
 
@@ -139,8 +140,8 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
-    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
-        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+    protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHitIn) {
+        super.dropCustomDeathLoot(level, source, recentlyHitIn);
         ItemEntity itementity = this.spawnAtLocation(ModItems.ANCIENT_HELMET.get());
         if (itementity != null) {
             itementity.setExtendedLifetime();
@@ -176,7 +177,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
             }
             return true;
             // random chance for arrows, tridents,.. to be blocked
-        } else if (source.isIndirect()) {
+        } else if (!source.isDirect()) {
             return this.random.nextInt(4) != 0 && super.hurt(source, amount);
         } else {
             // normal damage handling
@@ -202,11 +203,11 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
 
         if (this.random.nextDouble() < chance && shoots > 0) {
             this.setShoots((byte) (shoots - 1));
-            LargeFireball fireballentity = new LargeFireball(this.level(), this, d1, d2, d3, 1);
+            LargeFireball fireballentity = new LargeFireball(this.level(), this, new Vec3(d1, d2, d3), 1);
             fireballentity.setPos(fireballentity.getX(), this.getY(0.5D) + 0.5D, fireballentity.getZ());
             this.level().addFreshEntity(fireballentity);
         } else {
-            SmallFireball smallfireballentity = new SmallFireball(this.level(), this, d1, d2, d3);
+            SmallFireball smallfireballentity = new SmallFireball(this.level(), this, new Vec3(d1, d2, d3));
             smallfireballentity.setPos(smallfireballentity.getX(), this.getY(0.5D) + 0.5D, smallfireballentity.getZ());
             this.level().addFreshEntity(smallfireballentity);
         }

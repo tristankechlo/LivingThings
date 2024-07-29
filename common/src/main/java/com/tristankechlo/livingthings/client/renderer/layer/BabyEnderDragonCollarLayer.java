@@ -20,8 +20,8 @@ public class BabyEnderDragonCollarLayer extends RenderLayer<BabyEnderDragonEntit
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, BabyEnderDragonEntity entity,
                        float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity.isTame() && !entity.isInvisible()) {
-            float[] afloat = entity.getCollarColor().getTextureDiffuseColors();
-            renderColoredCutoutModel(this.getParentModel(), COLLAR, poseStack, buffer, packedLight, entity, afloat[0], afloat[1], afloat[2]);
+            int color = entity.getCollarColor().getTextureDiffuseColor();
+            renderColoredCutoutModel(this.getParentModel(), COLLAR, poseStack, buffer, packedLight, entity, color);
         }
     }
 }

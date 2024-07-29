@@ -52,7 +52,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     private static final ResourceLocation textureLocation(String name) {
-        return new ResourceLocation(LivingThings.MOD_ID, "textures/entity/snail/" + name);
+        return ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/entity/snail/" + name);
     }
 
     @Override
@@ -181,14 +181,6 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
     private short getShellVariant() {
         return (short) this.getVariant();
-    }
-
-    public float[] getShellColorScheme(PatternType type) {
-        int colorValue = this.getShellColor(type);
-        int i = (colorValue & 16711680) >> 16;
-        int j = (colorValue & '\uff00') >> 8;
-        int k = (colorValue & 255) >> 0;
-        return new float[]{(float) i / 255.0F, (float) j / 255.0F, (float) k / 255.0F};
     }
 
     public int getVariant() {

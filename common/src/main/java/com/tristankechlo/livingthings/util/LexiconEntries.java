@@ -30,7 +30,7 @@ public final class LexiconEntries {
 
 
     private static ResourceLocation create(String path) {
-        return new ResourceLocation(LivingThings.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, path);
     }
 
 }

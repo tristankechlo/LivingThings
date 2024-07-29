@@ -45,8 +45,8 @@ public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+        Body.render(matrixStack, buffer, packedLight, packedOverlay, color);
     }
 
     @SuppressWarnings("unused")

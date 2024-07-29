@@ -150,8 +150,8 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        Body.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+        Body.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 
     @Override

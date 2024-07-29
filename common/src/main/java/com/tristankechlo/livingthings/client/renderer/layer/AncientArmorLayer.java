@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class AncientArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
-    private static final ResourceLocation ANCIENT_ARMOR = new ResourceLocation(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
+    private static final ResourceLocation ANCIENT_ARMOR = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
     private final AncientArmorModel model;
 
     public AncientArmorLayer(RenderLayerParent<T, M> parent, AncientArmorModel model) {
@@ -42,8 +42,8 @@ public class AncientArmorLayer<T extends LivingEntity, M extends HumanoidModel<T
         this.model.head.visible = true;
         this.model.hat.visible = true;
         this.model.Head.visible = true;
-        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(ANCIENT_ARMOR), false, false);
-        this.model.renderToBuffer(poseStack, vertexConsumer, var3, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(ANCIENT_ARMOR), false);
+        this.model.renderToBuffer(poseStack, vertexConsumer, var3, OverlayTexture.NO_OVERLAY);
 
     }
 

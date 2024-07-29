@@ -25,7 +25,7 @@ public final class LivingThingsClient {
     public final static EntityRendererProvider<PeacockEntity> PEACOCK_RENDERER = context -> new SimpleEntityRenderer<>(context, 0.3F, PEACOCK_TEXTURE, ModelLayer.PEACOCK, PeacockModel::new);
 
     public static ResourceLocation getEntityTexture(String texture) {
-        return new ResourceLocation(LivingThings.MOD_ID, "textures/entity/" + texture);
+        return ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/entity/" + texture);
     }
 
 }

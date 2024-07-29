@@ -1,8 +1,6 @@
 package com.tristankechlo.livingthings.client.model.armor;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -27,11 +25,6 @@ public class AncientArmorModel extends HumanoidModel<LivingEntity> {
     @Override
     protected Iterable<ModelPart> bodyParts() {
         return ImmutableList.of();
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.renderToBuffer(pose, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     @Override

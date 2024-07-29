@@ -120,7 +120,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return true;
     }
 

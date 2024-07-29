@@ -30,7 +30,7 @@ public final class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public TagKey<Item> getBananaTag() {
-        return TagKey.create(Registries.ITEM, new ResourceLocation("c", "fruits/bananas"));
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "fruits/bananas"));
     }
 
     @Override

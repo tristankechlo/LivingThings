@@ -12,6 +12,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class CustomDragonFireball extends DragonFireball {
     private float spreadSpeed = 1.0F;
 
     public CustomDragonFireball(Level level, LivingEntity owner, double d1, double d2, double d3) {
-        super(level, owner, d1, d2, d3);
+        super(level, owner, new Vec3(d1, d2, d3));
     }
 
     @Override

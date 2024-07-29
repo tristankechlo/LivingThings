@@ -95,7 +95,7 @@ public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
 
         if (this.young) {
             matrixStack.scale(0.6F, 0.6F, 0.6F);

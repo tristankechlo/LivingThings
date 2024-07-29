@@ -45,8 +45,8 @@ public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
+        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, color);
     }
 
     @SuppressWarnings("unused")

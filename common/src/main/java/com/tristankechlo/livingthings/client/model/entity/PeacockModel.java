@@ -97,7 +97,7 @@ public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
         if (this.young) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.translate(0, 1.5D, 0);

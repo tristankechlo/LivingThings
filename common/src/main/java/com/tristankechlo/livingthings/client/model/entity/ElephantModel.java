@@ -49,7 +49,7 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         if (this.young) {
             poseStack.scale(0.6F, 0.6F, 0.6F);
             poseStack.translate(0, 1, 0);

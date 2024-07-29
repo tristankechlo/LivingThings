@@ -42,7 +42,7 @@ public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
 
         if (this.young) {
             matrixStackIn.pushPose();
@@ -50,19 +50,19 @@ public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
             float f = 0.55F;
             matrixStackIn.scale(f, f, f);
             matrixStackIn.translate(0.0D, 1.32D, 0.02D);
-            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
             matrixStackIn.popPose();
 
             matrixStackIn.pushPose();
             float f1 = 0.5F;
             matrixStackIn.scale(f1, f1, f1);
             matrixStackIn.translate(0.0D, 1.5D, 0.0D);
-            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
             matrixStackIn.popPose();
         } else {
             this.Beak.setPos(0.0F, -1.75F, -3.75F);
-            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
         }
     }
 

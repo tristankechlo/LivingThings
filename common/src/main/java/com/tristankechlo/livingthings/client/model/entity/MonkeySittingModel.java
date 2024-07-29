@@ -36,7 +36,7 @@ public class MonkeySittingModel<T extends MonkeyEntity> extends AdvancedEntityMo
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
         if (this.young) {
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
             matrixStackIn.translate(0, 1.5D, 0);

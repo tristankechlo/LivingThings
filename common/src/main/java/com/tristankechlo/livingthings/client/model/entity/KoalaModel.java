@@ -34,7 +34,7 @@ public class KoalaModel<T extends KoalaEntity> extends AdvancedEntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         if (this.young) {
             matrixStack.scale(0.5F, 0.5F, 0.5F);
             matrixStack.translate(0, 1.5D, 0);

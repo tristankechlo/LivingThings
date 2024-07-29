@@ -31,7 +31,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
 
     private static ModelLayerLocation createLayerLocation(final String name) {
-        return new ModelLayerLocation(new ResourceLocation(LivingThings.MOD_ID, name), "main");
+        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name), "main");
     }
 
 }

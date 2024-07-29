@@ -38,15 +38,15 @@ public final class LivingThingsTags {
     }
 
     private static TagKey<Block> registerBlockTag(String name) {
-        return TagKey.create(Registries.BLOCK, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Item> registerItemTag(String name) {
-        return TagKey.create(Registries.ITEM, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Fluid> registerFluidTag(String name) {
-        return TagKey.create(Registries.FLUID, new ResourceLocation(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
 }

@@ -10,6 +10,8 @@ import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -43,7 +46,8 @@ public final class BlockEvents {
         }
         ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty()) {
-            int silktouchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack);
+            Registry<Enchantment> registry = world.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
+            int silktouchLevel = EnchantmentHelper.getItemEnchantmentLevel(registry.getHolderOrThrow(Enchantments.SILK_TOUCH), stack);
             if (silktouchLevel > 0 || stack.getItem() instanceof ShearsItem) {
                 return;
             }

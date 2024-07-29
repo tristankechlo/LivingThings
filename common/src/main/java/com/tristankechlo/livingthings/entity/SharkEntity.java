@@ -95,7 +95,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return true;
     }
 

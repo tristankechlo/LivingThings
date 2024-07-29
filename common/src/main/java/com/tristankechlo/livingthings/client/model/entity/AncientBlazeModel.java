@@ -76,7 +76,7 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 

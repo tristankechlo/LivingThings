@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -49,7 +50,7 @@ public class AncientBlazeChargeUpGoal extends Goal {
             for (int i = 0; i < 4; i++) {
                 double accelX = Math.pow(-1, i) * 90;
                 double accelZ = (i < 2) ? 90 : -90;
-                SmallFireball smallfireballentity = new SmallFireball(this.blaze.level(), this.blaze, accelX, -15D, accelZ);
+                SmallFireball smallfireballentity = new SmallFireball(this.blaze.level(), this.blaze, new Vec3(accelX, -15D, accelZ));
                 smallfireballentity.setPos(smallfireballentity.getX(), this.blaze.getY(0.5D), smallfireballentity.getZ());
                 this.blaze.level().addFreshEntity(smallfireballentity);
             }
@@ -57,7 +58,7 @@ public class AncientBlazeChargeUpGoal extends Goal {
             for (int i = 0; i < 4; i++) {
                 double accelX = (i > 1) ? Math.pow(-1, i) * 90 : 0;
                 double accelZ = (i < 2) ? Math.pow(-1, i) * 90 : 0;
-                LargeFireball smallfireballentity = new LargeFireball(this.blaze.level(), this.blaze, accelX, -15D, accelZ, 1);
+                LargeFireball smallfireballentity = new LargeFireball(this.blaze.level(), this.blaze, new Vec3(accelX, -15D, accelZ), 1);
                 smallfireballentity.setPos(smallfireballentity.getX(), this.blaze.getY(0.5D) + 0.5D, smallfireballentity.getZ());
                 this.blaze.level().addFreshEntity(smallfireballentity);
             }

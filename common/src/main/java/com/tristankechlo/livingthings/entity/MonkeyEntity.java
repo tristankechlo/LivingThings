@@ -72,7 +72,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, MonkeyConfig.temptationItems(), true));
         this.goalSelector.addGoal(5, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(7, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(7, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F)); // TODO check what boolean was for
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D, 60));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));

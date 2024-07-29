@@ -6,7 +6,9 @@ import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -28,6 +30,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -103,16 +106,17 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_SWORD);
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
         String name = names.get(random.nextInt(names.size()));
+        Registry<Enchantment> registry = this.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's War Sword";
-            stack.enchant(Enchantments.SHARPNESS, 4 + random.nextInt(6));
-            stack.enchant(Enchantments.FIRE_ASPECT, 1 + random.nextInt(2));
-            stack.enchant(Enchantments.KNOCKBACK, 1 + random.nextInt(2));
-            stack.enchant(Enchantments.UNBREAKING, 1 + random.nextInt(3));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 4 + random.nextInt(6));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.FIRE_ASPECT), 1 + random.nextInt(2));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.KNOCKBACK), 1 + random.nextInt(2));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.UNBREAKING), 1 + random.nextInt(3));
         } else {
-            stack.enchant(Enchantments.SHARPNESS, 2 + random.nextInt(3));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 2 + random.nextInt(3));
         }
-        stack.enchant(Enchantments.LOOTING, 1);
+        stack.enchant(registry.getHolderOrThrow(Enchantments.LOOTING), 1);
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }
@@ -121,14 +125,15 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_AXE);
         List<? extends String> names = NetherKnightConfig.get().axeNames.get();
         String name = names.get(random.nextInt(names.size()));
+        Registry<Enchantment> registry = this.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's War Axe";
-            stack.enchant(Enchantments.MENDING, 1);
-            stack.enchant(Enchantments.EFFICIENCY, 3 + random.nextInt(3));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.MENDING), 1);
+            stack.enchant(registry.getHolderOrThrow(Enchantments.EFFICIENCY), 3 + random.nextInt(3));
         } else {
-            stack.enchant(Enchantments.EFFICIENCY, 1 + random.nextInt(3));
+            stack.enchant(registry.getHolderOrThrow(Enchantments.EFFICIENCY), 1 + random.nextInt(3));
         }
-        stack.enchant(Enchantments.SHARPNESS, 2);
+        stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 2);
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }

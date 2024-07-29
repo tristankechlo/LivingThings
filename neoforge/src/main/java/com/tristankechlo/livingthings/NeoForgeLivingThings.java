@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -53,7 +53,7 @@ public final class NeoForgeLivingThings {
         LivingThings.registerMobAttributes((entityType, builder) -> event.put(entityType, builder.build()));
     }
 
-    private void onSpawnPlacementsRegister(final SpawnPlacementRegisterEvent event) {
+    private void onSpawnPlacementsRegister(final RegisterSpawnPlacementsEvent event) {
         LivingThings.registerSpawnPlacements();
     }
 

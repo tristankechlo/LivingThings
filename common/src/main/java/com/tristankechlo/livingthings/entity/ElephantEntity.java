@@ -41,6 +41,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -168,11 +169,10 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     @Override
     public boolean doHurtTarget(Entity target) {
         this.level().broadcastEntityEvent(this, (byte) 4);
-        boolean flag = target.hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
+        boolean flag = super.doHurtTarget(target);
         if (flag) {
             // throw target in the air
             target.setDeltaMovement(target.getDeltaMovement().add(0.0D, 0.7D, 0.0D));
-            this.doEnchantDamageEffects(this, target);
         }
         return flag;
     }
@@ -264,7 +264,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         if (this.entityInventory != null) {
             for (int i = 0; i < this.entityInventory.getContainerSize(); ++i) {
                 ItemStack itemstack = this.entityInventory.getItem(i);
-                if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
+                if (!itemstack.isEmpty() && !EnchantmentHelper.has(itemstack, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)) {
                     this.spawnAtLocation(itemstack);
                 }
             }
