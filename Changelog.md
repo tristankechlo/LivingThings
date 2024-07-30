@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.19.2 - 2.0.3
+
+- fix missing subtitle for sound `livingthings:baby_ender_dragon.flap`
+
 ### Version 1.19.2 - 2.0.2
 
 - fix game crashing by mantarays
