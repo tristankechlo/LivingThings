@@ -1,8 +1,12 @@
 # Changelog
 
-### Version 1.21 - 2.0.3
+### Version 1.21 - 2.1.0
 
 - port to 1.21
+- fix ostrich nest always dropping itself
+- fix incorrect recipe for arrows from shark teeth (only a problem on fabric and neoforge)
+- fix neoforge biome modifier, mobs now spawn naturally
+- fix neoforge banana tag, monkey now accept the banana again
 
 ### Version 1.20.6 - 2.0.3
 
