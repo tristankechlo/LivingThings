@@ -111,7 +111,7 @@ jobs:
           changelog: "${{ github.event.release.body }}"
           version: "${{ needs.prepare.outputs.mc-version }} - ${{ needs.prepare.outputs.mod-version }}"
           color: ${{ env.DISCORD_COLOR }}
-          content: "${{ contains(github.event.release.name, '[RELEASE]') && '${{ env.DISCORD_MENTION }}' || 'This update will not be published!'}}"
+          content: "${{ contains(github.event.release.name, '[RELEASE]') && env.DISCORD_MENTION || 'This update will not be published!'}}"
           title: ${{ env.DISCORD_TITLE }}
           description: "${{ contains(github.event.release.name, '[RELEASE]') && 'The update is available for *Forge* and *Fabric*' || 'The update will *not* be released to Curseforge or Modrinth'}}"
           curseforge: ${{ env.CURSEFORGE_LINK }}
