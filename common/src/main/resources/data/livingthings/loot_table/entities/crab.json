@@ -6,44 +6,19 @@
             "entries": [
                 {
                     "type": "minecraft:item",
+                    "name": "livingthings:crab",
                     "functions": [
                         {
                             "function": "minecraft:set_count",
                             "count": {
-                                "min": 1.0,
-                                "max": 2.0,
-                                "type": "minecraft:uniform"
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
                             }
                         },
                         {
-                            "function": "minecraft:looting_enchant",
-                            "count": {
-                                "min": 0.0,
-                                "max": 1.0
-                            }
-                        }
-                    ],
-                    "name": "minecraft:leather"
-                }
-            ]
-        },
-        {
-            "rolls": 1,
-            "entries": [
-                {
-                    "type": "minecraft:item",
-                    "name": "livingthings:giraffe",
-                    "functions": [
-                        {
-                            "function": "minecraft:set_count",
-                            "count": {
-                                "min": 2,
-                                "max": 3,
-                                "type": "minecraft:uniform"
-                            }
-                        },
-                        {
-                            "function": "minecraft:looting_enchant",
+                            "function": "minecraft:enchanted_count_increase",
+                            "enchantment": "minecraft:looting",
                             "count": {
                                 "min": 0,
                                 "max": 2
@@ -62,6 +37,25 @@
                                     }
                                 }
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "livingthings:crab_shell",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 0,
+                                "max": 1
+                            }
                         }
                     ]
                 }

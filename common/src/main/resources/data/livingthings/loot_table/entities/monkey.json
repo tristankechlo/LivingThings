@@ -6,21 +6,22 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:feather",
+                    "name": "minecraft:leather",
                     "functions": [
                         {
                             "function": "minecraft:set_count",
                             "count": {
+                                "type": "minecraft:uniform",
                                 "min": 1,
-                                "max": 2,
-                                "type": "minecraft:uniform"
+                                "max": 2
                             }
                         },
                         {
-                            "function": "minecraft:looting_enchant",
+                            "function": "minecraft:enchanted_count_increase",
+                            "enchantment": "minecraft:looting",
                             "count": {
                                 "min": 0,
-                                "max": 2
+                                "max": 1
                             }
                         }
                     ]
@@ -32,17 +33,19 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:pink_dye",
+                    "name": "livingthings:banana",
                     "functions": [
                         {
-                            "function": "minecraft:looting_enchant",
+                            "function": "minecraft:set_count",
                             "count": {
+                                "type": "minecraft:uniform",
                                 "min": 0,
                                 "max": 1
                             }
                         },
                         {
-                            "function": "minecraft:set_count",
+                            "function": "minecraft:enchanted_count_increase",
+                            "enchantment": "minecraft:looting",
                             "count": {
                                 "min": 0,
                                 "max": 1
