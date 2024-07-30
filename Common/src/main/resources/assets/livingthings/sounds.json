@@ -329,7 +329,7 @@
             "mob/enderdragon/wings5",
             "mob/enderdragon/wings6"
         ],
-        "subtitle": "subtitles.livingthings.baby_ender_dragon.flap"
+        "subtitle": "subtitles.livingthings.baby_ender_dragon.flaps"
     },
     "baby_ender_dragon.shoot": {
         "sounds": [
