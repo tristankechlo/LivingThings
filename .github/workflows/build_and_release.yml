@@ -10,7 +10,7 @@ env:
   CURSEFORGE_LINK: "https://www.curseforge.com/minecraft/mc-mods/living-things"
   MODRINTH_ID: "UKDLi1GJ"
   MODRINTH_LINK: "https://modrinth.com/mod/living-things"
-  MODRINTH_FEATURED: true # if this version should be featured on modrinth
+  MODRINTH_FEATURED: false # if this version should be featured on modrinth
   DISCORD_COLOR: 4037621
   DISCORD_MENTION: "<@&890143122913370112>"
   DISCORD_TITLE: "New version for LivingThings just released :exclamation:"
