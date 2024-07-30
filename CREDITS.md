@@ -26,6 +26,6 @@ a list of all translations, their translators, and the modversion they are creat
 
 | Language  | up to modversion | Translator                                                 |
 |:---------:|:----------------:|:-----------------------------------------------------------|
-| **en_us** |      2.0.2       | tristankechlo ([Github](https://github.com/tristankechlo)) |
-| **de_de** |      2.0.2       | tristankechlo ([Github](https://github.com/tristankechlo)) |
-| **zh_cn** |      2.0.2       | Rad233 ([Github](https://github.com/Rad233))               |
+| **en_us** |      2.0.3       | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **de_de** |      2.0.3       | tristankechlo ([Github](https://github.com/tristankechlo)) |
+| **zh_cn** |      2.0.3       | Rad233 ([Github](https://github.com/Rad233))               |
