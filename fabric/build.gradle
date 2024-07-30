@@ -1,6 +1,3 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 plugins {
     id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'idea'
@@ -50,22 +47,6 @@ loom {
 
 processResources {
     from project(":common").sourceSets.main.resources
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-
-    //filesMatching('*.mixins.json') {
-    //    expand "refmap_target": "${archivesBaseName}-"
-    //}
-
-    // minify json files
-    doLast {
-        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
-            File file -> file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-        }
-    }
 }
 
 tasks.withType(JavaCompile) {
