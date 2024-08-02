@@ -5,6 +5,7 @@
 - fix incorrect recipe for arrow from shark teeth
 - fix incorrect advancement format
 - fix crashes on fabric when wearing the ancient helmet
+- fix monkey teleporting to player, even though they were ordered to sit
 
 ### Version 1.18.2 - 2.0.3
 

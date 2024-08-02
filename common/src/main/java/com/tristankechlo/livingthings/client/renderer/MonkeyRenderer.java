@@ -32,7 +32,7 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, EntityModel<Monkey
 
     @Override
     public void render(MonkeyEntity monkey, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        byte monkeyAction = (byte) ((monkey.isCrouching()) ? 1 : 0);
+        byte monkeyAction = (byte) ((monkey.isInSittingPose()) ? 1 : 0);
         if (monkeyAction != this.lastAction) {
             if (monkeyAction == 1) {
                 this.model = this.modelSitting;
