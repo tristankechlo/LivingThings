@@ -3,6 +3,7 @@
 ### Version 1.18.2 - 2.1.0
 
 - fix incorrect recipe for arrow from shark teeth
+- fix incorrect advancement format
 
 ### Version 1.18.2 - 2.0.3
 
