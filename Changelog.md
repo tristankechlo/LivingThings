@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.18.2 - 2.1.0
+
+- fix incorrect recipe for arrow from shark teeth
+
 ### Version 1.18.2 - 2.0.3
 
 - fix missing subtitle for sound `livingthings:baby_ender_dragon.flap`
