@@ -48,7 +48,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexiconEntry {
+public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexiconEntry, HasCustomInventoryScreen {
 
     public static final int ANGER_TIME = 10;
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
@@ -150,6 +150,11 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
                 this.entityInventory.setItem(i, itemstack.copy());
             }
         }
+    }
+
+    @Override
+    public void openCustomInventoryScreen(Player player) {
+        this.openInventory(player);
     }
 
     private void openInventory(Player player) {
