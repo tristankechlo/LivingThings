@@ -13,6 +13,7 @@
         "worldgen.StructureMixin"
     ],
     "client": [
+        "client.HumanoidArmorLayerMixin",
         "client.LivingEntityRendererAccessor",
         "client.PlayerRendererMixin"
     ],

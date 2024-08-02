@@ -44,7 +44,6 @@ public class AncientArmorLayer<T extends LivingEntity, M extends HumanoidModel<T
         this.model.Head.visible = true;
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(ANCIENT_ARMOR), false, false);
         this.model.renderToBuffer(poseStack, vertexConsumer, var3, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-
     }
 
 }

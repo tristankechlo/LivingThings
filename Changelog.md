@@ -4,6 +4,7 @@
 
 - fix incorrect recipe for arrow from shark teeth
 - fix incorrect advancement format
+- fix crashes on fabric when wearing the ancient helmet
 
 ### Version 1.18.2 - 2.0.3
 
