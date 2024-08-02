@@ -37,7 +37,6 @@ import java.util.UUID;
 
 public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
-    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(MonkeyEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(MonkeyEntity.class, EntityDataSerializers.BYTE);
     private BlockPos jukeboxPosition;
     private boolean partying;
@@ -84,7 +83,6 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(SITTING, false);
         this.entityData.define(CLIMBING, (byte) 0);
     }
 
@@ -98,13 +96,13 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putBoolean("Sitting", this.isCrouching());
+        compound.putBoolean("Sitting", this.isOrderedToSit());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setSitting(compound.getBoolean("Sitting"));
+        this.setOrderedToSit(compound.getBoolean("Sitting"));
     }
 
     @Override
@@ -171,17 +169,6 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         return this.partying;
     }
 
-    @Override
-    public boolean isCrouching() {
-        return this.entityData.get(SITTING);
-    }
-
-    public void setSitting(boolean sitting) {
-        this.entityData.set(SITTING, sitting);
-        this.navigation.stop();
-        this.setTarget((LivingEntity) null);
-    }
-
     public boolean isBesideClimbableBlock() {
         return (this.entityData.get(CLIMBING) & 1) != 0;
     }
@@ -208,7 +195,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (this.isCrouching()) {
+        if (this.isOrderedToSit()) {
             if (this.getNavigation().getPath() != null) {
                 this.getNavigation().stop();
             }
@@ -241,7 +228,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
                     this.heal(item.getFoodProperties().getNutrition());
                     return InteractionResult.SUCCESS;
                 } else if (stack.isEmpty()) {
-                    this.setSitting(!this.isCrouching());
+                    this.setOrderedToSit(!this.isOrderedToSit());
                     return InteractionResult.SUCCESS;
                 }
             } else if (this.isFood(stack)) {
@@ -250,7 +237,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
                 }
                 if (this.random.nextInt(4) == 0) {
                     this.tame(player);
-                    this.setSitting(true);
+                    this.setOrderedToSit(true);
                     this.level.broadcastEntityEvent(this, (byte) 7);
                 } else {
                     this.level.broadcastEntityEvent(this, (byte) 6);
