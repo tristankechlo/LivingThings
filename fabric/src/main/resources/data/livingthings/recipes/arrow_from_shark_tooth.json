@@ -11,7 +11,7 @@
 			"item" : "livingthings:shark_tooth"
 		},
 		"I" : {
-			"tag" : "c:rods/wooden"
+			"item" : "minecraft:stick"
 		},
 		"F" : {
 			"item" : "minecraft:feather"
