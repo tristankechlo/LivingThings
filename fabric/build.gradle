@@ -29,9 +29,9 @@ dependencies {
 }
 
 loom {
-    //mixin {
-    //    defaultRefmapName.set("${mod_id}.refmap.json")
-    //}
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
 
     //accessWidenerPath = file("src/main/resources/explorations.accesswidener")
     runs {
