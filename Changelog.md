@@ -3,6 +3,7 @@
 ### Version 1.20.4 - 2.1.0
 
 - fix incorrect recipe for arrow from shark tooth
+- fix neoforge item tag for bananas in incorrect namespace
 
 ### Version 1.20.4 - 2.0.3
 

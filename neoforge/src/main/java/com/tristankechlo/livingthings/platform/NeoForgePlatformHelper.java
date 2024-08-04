@@ -34,7 +34,7 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public TagKey<Item> getBananaTag() {
-        return TagKey.create(Registries.ITEM, new ResourceLocation("forge", "fruits/banana"));
+        return TagKey.create(Registries.ITEM, new ResourceLocation("c", "fruits/bananas"));
     }
 
     @Override
