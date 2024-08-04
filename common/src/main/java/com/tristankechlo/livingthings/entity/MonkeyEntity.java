@@ -96,13 +96,11 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putBoolean("Sitting", this.isOrderedToSit());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setOrderedToSit(compound.getBoolean("Sitting"));
     }
 
     @Override
@@ -195,7 +193,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (this.isOrderedToSit()) {
+        if (this.isInSittingPose()) {
             if (this.getNavigation().getPath() != null) {
                 this.getNavigation().stop();
             }
@@ -213,39 +211,33 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        if (this.level.isClientSide()) {
-            if (ILexiconEntry.isLexicon(stack)) {
-                return InteractionResult.PASS;
-            }
-            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isFood(stack) && !this.isTame();
-            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (this.isTame()) {
-                if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-                    this.heal(item.getFoodProperties().getNutrition());
-                    return InteractionResult.SUCCESS;
-                } else if (stack.isEmpty()) {
-                    this.setOrderedToSit(!this.isOrderedToSit());
-                    return InteractionResult.SUCCESS;
-                }
-            } else if (this.isFood(stack)) {
+        if (ILexiconEntry.isLexicon(stack)) {
+            return InteractionResult.PASS;
+        }
+        if (this.isTame()) {
+            if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                if (this.random.nextInt(4) == 0) {
-                    this.tame(player);
-                    this.setOrderedToSit(true);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
-                return InteractionResult.SUCCESS;
+                this.heal(item.getFoodProperties().getNutrition());
+            } else if (stack.isEmpty() && this.isOwnedBy(player)) {
+                this.setOrderedToSit(!this.isOrderedToSit());
             }
-            return super.mobInteract(player, hand);
+            return InteractionResult.sidedSuccess(this.level.isClientSide());
+        } else if (!this.isTame() && this.isFood(stack)) {
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+            if (this.random.nextInt(4) == 0) {
+                this.tame(player);
+                this.setOrderedToSit(true);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 6);
+            }
+            return InteractionResult.sidedSuccess(this.level.isClientSide());
         }
+        return super.mobInteract(player, hand);
     }
 
     @Override
