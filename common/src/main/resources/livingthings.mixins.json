@@ -6,6 +6,7 @@
     "mixins": [
         "ArgumentTypesMixin",
         "PlayerMixin",
+        "ServerGamePacketListenerImplMixin",
         "SpawnPlacementsInvoker",
         "entity.MobAccessor",
         "entity.PolarbearMixin",
@@ -15,6 +16,7 @@
     "client": [
         "client.HumanoidArmorLayerMixin",
         "client.LivingEntityRendererAccessor",
+        "client.MultiPlayerGameModeMixin",
         "client.PlayerRendererMixin"
     ],
     "refmap": "livingthings.refmap.json"

@@ -152,7 +152,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         }
     }
 
-    private void openInventory(Player player) {
+    public void openInventory(Player player) {
         if (CONTAINER_NAME == null) {
             CONTAINER_NAME = ModEntityTypes.ELEPHANT.get().getDescription();
         }
