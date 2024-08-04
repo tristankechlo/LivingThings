@@ -1,0 +1,24 @@
+{
+	"type" : "minecraft:crafting_shaped",
+	"group" : "arrow",
+	"pattern" : [
+		"T",
+		"I",
+		"F"
+	],
+	"key" : {
+		"T" : {
+			"item" : "livingthings:shark_tooth"
+		},
+		"I" : {
+			"item" : "minecraft:stick"
+		},
+		"F" : {
+			"item" : "minecraft:feather"
+		}
+	},
+	"result" : {
+		"item" : "minecraft:arrow",
+		"count" : 4
+	}
+}
