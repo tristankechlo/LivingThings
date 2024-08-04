@@ -9,6 +9,7 @@
 - fix incorrect advancement format
 - fix monkey teleporting to player, even though they were ordered to sit
 - elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
+- add `cherry_grove` to the default config of snails, raccoons and owls
 
 ### Version 1.20.6 - 2.0.3
 
