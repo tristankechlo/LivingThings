@@ -61,7 +61,8 @@ public final class RaccoonConfig extends EntityConfig {
 
     private static List<SpawnData> createDefaultSpawns() {
         return List.of(new SpawnData(16, 2, 5, new ResourceKey[]{Biomes.PLAINS, Biomes.FOREST, Biomes.BIRCH_FOREST,
-                Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.SUNFLOWER_PLAINS, Biomes.DARK_FOREST, Biomes.FLOWER_FOREST}));
+                Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.SUNFLOWER_PLAINS, Biomes.DARK_FOREST, Biomes.FLOWER_FOREST,
+                Biomes.CHERRY_GROVE}));
     }
 
 }
