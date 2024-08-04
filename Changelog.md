@@ -7,6 +7,7 @@
 - fix neoforge biome modifier in incorrect folder (mobs did not spawn naturally)
 - fix incorrect advancement format
 - fix monkey teleporting to player, even though they were ordered to sit
+- elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
 
 ### Version 1.20.4 - 2.0.3
 
