@@ -1,43 +1,47 @@
 {
-	"parent" : "minecraft:recipes/root",
-	"rewards" : {
-		"recipes" : [
-			"livingthings:arrow_from_shark_tooth"
-		]
-	},
-	"criteria" : {
-		"has_feather" : {
-			"trigger" : "minecraft:inventory_changed",
-			"conditions" : {
-				"items" : [
-					{
-						"item" : "minecraft:feather"
-					}
-				]
-			}
-		},
-		"has_tooth" : {
-			"trigger" : "minecraft:inventory_changed",
-			"conditions" : {
-				"items" : [
-					{
-						"item" : "livingthings:shark_tooth"
-					}
-				]
-			}
-		},
-		"has_the_recipe" : {
-			"trigger" : "minecraft:recipe_unlocked",
-			"conditions" : {
-				"recipe" : "livingthings:arrow_from_shark_tooth"
-			}
-		}
-	},
-	"requirements" : [
-		 [
-			"has_feather",
-			"has_tooth",
-			"has_the_recipe"
-		]
-	]
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "livingthings:arrow_from_shark_tooth"
+        ]
+    },
+    "criteria": {
+        "has_feather": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "minecraft:feather"
+                        ]
+                    }
+                ]
+            }
+        },
+        "has_tooth": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "livingthings:shark_tooth"
+                        ]
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "livingthings:arrow_from_shark_tooth"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_feather",
+            "has_tooth",
+            "has_the_recipe"
+        ]
+    ]
 }

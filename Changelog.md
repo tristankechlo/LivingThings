@@ -6,6 +6,7 @@
 - fix ostrich nest always dropping itself
 - fix neoforge item tag for bananas in incorrect namespace
 - fix neoforge biome modifier in incorrect folder (mobs did not spawn naturally)
+- fix incorrect advancement format
 
 ### Version 1.20.6 - 2.0.3
 
