@@ -3,6 +3,7 @@
 ### Version 1.20.6 - 2.1.0
 
 - fix incorrect recipe for arrow from shark tooth
+- fix ostrich nest always dropping itself
 
 ### Version 1.20.6 - 2.0.3
 
