@@ -10,6 +10,9 @@
 - elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
 - fix game crashing on startup
 - add `cherry_grove` to the default config of snails, raccoons and owls
+- improve interaction with elephants
+    - no automatic riding when equipping a saddle or chest
+    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any effect)
 
 ### Version 1.20.4 - 2.0.3
 
