@@ -7,6 +7,7 @@
 - fix incorrect recipe for arrows from shark teeth (only a problem on fabric and neoforge)
 - fix neoforge biome modifier, mobs now spawn naturally
 - fix neoforge banana tag, monkey now accept the banana again
+- fix monkey teleporting to player, even though they were ordered to sit
 
 ### Version 1.20.6 - 2.0.3
 
