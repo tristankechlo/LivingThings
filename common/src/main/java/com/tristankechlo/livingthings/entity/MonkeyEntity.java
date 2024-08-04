@@ -211,6 +211,9 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
+        if (ILexiconEntry.isLexicon(stack)) {
+            return InteractionResult.PASS;
+        }
         if (this.isTame()) {
             if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
                 if (!player.getAbilities().instabuild) {
