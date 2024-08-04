@@ -66,7 +66,7 @@ public final class OwlConfig extends EntityConfig {
     private static List<SpawnData> createDefaultSpawns() {
         return List.of(new SpawnData(22, 3, 6, new ResourceKey[]{Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST,
                 Biomes.DARK_FOREST, Biomes.FLOWER_FOREST, Biomes.WOODED_BADLANDS, Biomes.TAIGA,
-                Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA}));
+                Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA, Biomes.CHERRY_GROVE}));
     }
 
 }
