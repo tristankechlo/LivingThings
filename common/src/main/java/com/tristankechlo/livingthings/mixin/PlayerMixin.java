@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Player.class)
 public abstract class PlayerMixin {
 
-    private final MobEffectInstance effect = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 0, false, false, true);
+    private final MobEffectInstance livingthings$effect = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 0, false, false, true);
 
     @Inject(at = @At("HEAD"), method = "turtleHelmetTick")
-    private void LivingThings$onArmorTick(CallbackInfo ci) {
+    private void livingThings$onArmorTick(CallbackInfo ci) {
         ItemStack helmet = this.getItemBySlot(EquipmentSlot.HEAD);
         if (helmet.is(ModItems.ANCIENT_HELMET.get())) {
-            ((Player) (Object) this).addEffect(effect);
+            ((Player) (Object) this).addEffect(livingthings$effect);
         }
     }
 

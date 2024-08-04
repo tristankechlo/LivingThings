@@ -49,7 +49,7 @@ public final class ForgeLivingThings {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(LivingThings::registerDispenserBehavior);
-        event.enqueueWork(() -> ((StructureAddon) StructureFeatures.FORTRESS.value()).setupSpawnOverrides());
+        event.enqueueWork(() -> ((StructureAddon) StructureFeatures.FORTRESS.value()).livingthings$setupSpawnOverrides());
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {

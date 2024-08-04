@@ -24,7 +24,7 @@ import java.util.Map;
 public abstract class StructureMixin implements StructureAddon {
 
     @Override
-    public void setupSpawnOverrides() {
+    public void livingthings$setupSpawnOverrides() {
         MobSpawnSettings.SpawnerData netherKnightSpawnData = new MobSpawnSettings.SpawnerData(ModEntityTypes.NETHER_KNIGHT.get(),
                 NetherKnightConfig.get().spawnWeight.get(),
                 NetherKnightConfig.get().minSpawnCount.get(),

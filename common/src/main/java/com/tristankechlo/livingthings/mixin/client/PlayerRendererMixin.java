@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerRendererMixin {
 
     @Inject(at = @At("RETURN"), method = "<init>")
-    private void LivingThings$PlayerRendererMixin(EntityRendererProvider.Context context, boolean $$1, CallbackInfo info) {
+    private void livingThings$PlayerRendererMixin(EntityRendererProvider.Context context, boolean $$1, CallbackInfo info) {
         AncientArmorModel model = new AncientArmorModel(context.bakeLayer(ModelLayer.ANCIENT_ARMOR));
         ((LivingEntityRendererAccessor) this).getLayers().add(new AncientArmorLayer<>((PlayerRenderer) (Object) this, model));
     }

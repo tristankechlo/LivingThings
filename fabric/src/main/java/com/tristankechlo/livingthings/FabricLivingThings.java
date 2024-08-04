@@ -59,7 +59,7 @@ public final class FabricLivingThings implements ModInitializer {
             });
         });
 
-        ((StructureAddon) StructureFeatures.FORTRESS.value()).setupSpawnOverrides();
+        ((StructureAddon) StructureFeatures.FORTRESS.value()).livingthings$setupSpawnOverrides();
     }
 
 }

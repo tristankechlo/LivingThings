@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ArgumentTypesMixin {
 
     @Inject(at = @At("HEAD"), method = "bootStrap")
-    private static void LivingThings$bootstrap(CallbackInfo ci) {
+    private static void livingThings$bootstrap(CallbackInfo ci) {
         // register custom argument type
         register(LivingThings.MOD_ID + ":sampler_types", ProjectLinksArgumentType.class, new EmptyArgumentSerializer<>(ProjectLinksArgumentType::get));
     }
