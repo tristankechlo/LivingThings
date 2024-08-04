@@ -8,11 +8,12 @@
 - fix neoforge biome modifier in incorrect folder (mobs did not spawn naturally)
 - fix incorrect advancement format
 - fix monkey teleporting to player, even though they were ordered to sit
+- elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
 
 ### Version 1.20.6 - 2.0.3
 
 - port to 1.20.6
-- fix missing subtitle for sound `livingthings:baby_ender_dragon.flap` 
+- fix missing subtitle for sound `livingthings:baby_ender_dragon.flap`
 
 ### Version 1.20.4 - 2.0.2
 
