@@ -50,7 +50,8 @@ public final class SnailConfig extends EntityConfig {
 
     private static List<SpawnData> createDefaultSpawns() {
         return List.of(
-                new SpawnData(12, 3, 5, new ResourceKey[]{Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SWAMP, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST, Biomes.RIVER}),
+                new SpawnData(12, 3, 5, new ResourceKey[]{Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SWAMP, Biomes.FOREST,
+                        Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST, Biomes.RIVER, Biomes.CHERRY_GROVE}),
                 new SpawnData(10, 4, 6, new ResourceKey[]{Biomes.MUSHROOM_FIELDS})
         );
     }
