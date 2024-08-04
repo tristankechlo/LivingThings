@@ -153,6 +153,9 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
     }
 
     public void openInventory(Player player) {
+        if (!this.hasChest()) {
+            return;
+        }
         if (CONTAINER_NAME == null) {
             CONTAINER_NAME = ModEntityTypes.ELEPHANT.get().getDescription();
         }
@@ -398,32 +401,27 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
 
             if (this.isBaby()) { // age up
                 int age = this.getAge();
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+                this.usePlayerItem(player, hand, stack);
                 this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
                 return InteractionResult.sidedSuccess(this.level.isClientSide());
             }
 
             if (this.isTame()) {
-                if (this.getHealth() < this.getMaxHealth()) { // if needs health
+                if (this.getHealth() < this.getMaxHealth()) {
+                    // try healing the mob
                     if (!this.level.isClientSide()) {
                         float healAmount = 3.0F;
                         this.heal(healAmount);
-                        if (!player.getAbilities().instabuild) {
-                            stack.shrink(1);
-                        }
-                        return InteractionResult.SUCCESS;
+                        this.usePlayerItem(player, hand, stack);
                     }
-                } else { // if already full health
+                } else {
+                    // if already full health, fall in love
                     if (!this.level.isClientSide() && !this.isBaby() && this.canBreed()) {
-                        if (!player.getAbilities().instabuild) {
-                            stack.shrink(1);
-                        }
+                        this.usePlayerItem(player, hand, stack);
                         this.setInLove(player);
-                        return InteractionResult.SUCCESS;
                     }
                 }
+                return InteractionResult.sidedSuccess(this.level.isClientSide());
             }
 
         } else if (this.isTamingItem(stack) && !this.isBaby() && !this.isTame()) {
@@ -431,9 +429,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
             // progress taming
             if (!this.level.isClientSide()) {
                 this.tameAmount += 200;
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+                this.usePlayerItem(player, hand, stack);
                 // mark as tamed if taming amount is reached
                 if (this.tameAmount >= 1000) {
                     this.setTame(true);
@@ -448,29 +444,25 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
             }
             return InteractionResult.SUCCESS;
 
-        } else if (this.isTame() && stack.getItem() == Items.SADDLE && !this.isBaby()) {
+        } else if (this.isTame() && stack.is(Items.SADDLE) && !this.isBaby() && !this.isSaddled()) {
 
             // saddle entity
-            if (!this.level.isClientSide() && !this.isSaddled()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+            if (!this.level.isClientSide()) {
+                this.usePlayerItem(player, hand, stack);
                 this.setSaddled(true);
                 this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
-                return InteractionResult.SUCCESS;
             }
+            return InteractionResult.sidedSuccess(this.level.isClientSide());
 
-        } else if (this.isTame() && this.isSaddled() && stack.getItem() == Items.CHEST && !this.isBaby()) {
+        } else if (this.isTame() && this.isSaddled() && stack.is(Items.CHEST) && !this.isBaby() && !this.hasChest()) {
 
             // add chest to entity
-            if (!this.level.isClientSide() && !this.hasChest()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+            if (!this.level.isClientSide()) {
+                this.usePlayerItem(player, hand, stack);
                 this.setHasChest(true);
                 this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
-                return InteractionResult.SUCCESS;
             }
+            return InteractionResult.sidedSuccess(this.level.isClientSide());
         }
 
         return InteractionResult.PASS;
@@ -478,7 +470,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
 
     @Override
     public boolean canBreed() {
-        return true;
+        return this.canFallInLove();
     }
 
     @Override
