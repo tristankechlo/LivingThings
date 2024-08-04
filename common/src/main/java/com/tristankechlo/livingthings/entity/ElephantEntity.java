@@ -49,7 +49,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
-public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexiconEntry {
+public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCustomInventoryScreen, ILexiconEntry {
 
     public static final int ANGER_TIME = 10;
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
@@ -159,6 +159,11 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         player.openMenu(new SimpleMenuProvider((id, playerInv, playerIn) -> {
             return new ChestMenu(MenuType.GENERIC_9x3, id, player.getInventory(), this.entityInventory, 3);
         }, CONTAINER_NAME));
+    }
+
+    @Override
+    public void openCustomInventoryScreen(Player player) {
+        this.openInventory(player);
     }
 
     @Override

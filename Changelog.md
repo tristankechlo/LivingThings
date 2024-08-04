@@ -8,6 +8,7 @@
 - fix neoforge biome modifier, mobs now spawn naturally
 - fix neoforge banana tag, monkey now accept the banana again
 - fix monkey teleporting to player, even though they were ordered to sit
+- elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
 
 ### Version 1.20.6 - 2.0.3
 
