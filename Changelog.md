@@ -4,6 +4,7 @@
 
 - fix incorrect recipe for arrow from shark tooth
 - fix incorrect advancement format
+- fix monkey teleporting to player, even though they were ordered to sit
 
 ### Version 1.19.4 - 2.0.3
 
