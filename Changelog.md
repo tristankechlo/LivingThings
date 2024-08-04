@@ -6,6 +6,9 @@
 - fix incorrect advancement format
 - fix monkey teleporting to player, even though they were ordered to sit
 - elephant inventory can now be opened while riding (pressing the `open-inventory`-key) 
+- improve interaction with elephants
+    - no automatic riding when equipping a saddle or chest
+    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any effect)
 
 ### Version 1.19.2 - 2.0.3
 
