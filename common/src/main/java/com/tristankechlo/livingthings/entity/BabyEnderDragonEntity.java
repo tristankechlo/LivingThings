@@ -25,6 +25,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -338,6 +339,10 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         if ((target instanceof LivingEntity) && !this.isOwnedBy((LivingEntity) target)) {
             this.setOrderedToSit(false);
             this.setTarget((LivingEntity) target);
+        }
+        if ((source instanceof EntityDamageSource) && (source.getDirectEntity() instanceof AreaEffectCloud)) {
+            // can not be damaged by own AreaEffectCloud
+            return this == source.getEntity();
         }
         return super.hurt(source, damage);
     }

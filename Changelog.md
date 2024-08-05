@@ -9,7 +9,10 @@
 - elephant inventory can now be opened while riding (pressing the `open-inventory`-key)
 - improve interaction with elephants
     - no automatic riding when equipping a saddle or chest
-    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any effect)
+    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any
+      effect)
+- improved AI of baby enderdragon
+    - can not take damage from own attacks any more (immune to own area effect clouds that do damage)
 
 ### Version 1.18.2 - 2.0.3
 
