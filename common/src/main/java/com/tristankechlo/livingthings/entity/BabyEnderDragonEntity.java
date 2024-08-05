@@ -3,7 +3,7 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import com.tristankechlo.livingthings.config.entity.BabyEnderDragonConfig;
 import com.tristankechlo.livingthings.entity.ai.CustomSitWhenOrderedToSitGoal;
-import com.tristankechlo.livingthings.entity.misc.CustomDragonFireball;
+import com.tristankechlo.livingthings.entity.projectile.CustomDragonFireball;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
