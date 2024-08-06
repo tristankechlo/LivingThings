@@ -2,26 +2,19 @@ package com.tristankechlo.livingthings.entity.ai;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.goal.Goal;
-
-import java.util.EnumSet;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 
 /**
  * similar to SitWhenOrderedToGoal, except the mob can start sitting when in the
  * air
  */
-public class CustomSitWhenOrderedToSitGoal extends Goal {
+public class CustomSitWhenOrderedToSitGoal extends SitWhenOrderedToGoal {
 
     private final TamableAnimal mob;
 
     public CustomSitWhenOrderedToSitGoal(TamableAnimal entity) {
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        super(entity);
         this.mob = entity;
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return this.mob.isOrderedToSit();
     }
 
     @Override
@@ -38,17 +31,6 @@ public class CustomSitWhenOrderedToSitGoal extends Goal {
                 return this.mob.distanceToSqr(livingentity) < 144.0D && livingentity.getLastHurtByMob() != null ? false : this.mob.isOrderedToSit();
             }
         }
-    }
-
-    @Override
-    public void start() {
-        this.mob.getNavigation().stop();
-        this.mob.setInSittingPose(true);
-    }
-
-    @Override
-    public void stop() {
-        this.mob.setInSittingPose(false);
     }
 
 }

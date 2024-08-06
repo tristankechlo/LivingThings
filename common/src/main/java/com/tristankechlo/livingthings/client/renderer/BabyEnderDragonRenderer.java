@@ -33,7 +33,7 @@ public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, 
 
     @Override
     public void render(BabyEnderDragonEntity entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        if (entity.isTame() && entity.isOrderedToSit() && !entity.isFlying()) {
+        if (entity.isTame() && entity.isInSittingPose() && !entity.isFlying()) {
             this.model = this.modelSitting;
         } else {
             this.model = this.modelNormal;
