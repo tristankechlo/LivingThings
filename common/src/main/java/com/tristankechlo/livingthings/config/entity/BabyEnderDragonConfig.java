@@ -16,13 +16,14 @@ public final class BabyEnderDragonConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.3D, MIN_SPEED, MAX_SPEED);
     public final DoubleValue flyingSpeed = new DoubleValue("flyingSpeed", 0.5D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue followRange = new DoubleValue("followRange", 64.0D, 0.0D, 2048.0D); // twice the default FOLLOW_RANGE
     public final BooleanValue canSpawn = new BooleanValue("canSpawn", true);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
     public final IngredientValue temptationItems = new IngredientValue("temptationItems", Items.CHORUS_FRUIT);
 
     private BabyEnderDragonConfig() {
         super("baby_ender_dragon");
-        this.registerConfigValues(canAttack, health, movementSpeed, flyingSpeed, canSpawn, maxSpawnedInChunk, temptationItems);
+        this.registerConfigValues(canAttack, health, movementSpeed, flyingSpeed, followRange, canSpawn, maxSpawnedInChunk, temptationItems);
     }
 
     public static BabyEnderDragonConfig get() {
@@ -55,6 +56,10 @@ public final class BabyEnderDragonConfig extends EntityConfig {
 
     public static Ingredient temptationItems() {
         return INSTANCE.temptationItems.get();
+    }
+
+    public static double followRange() {
+        return INSTANCE.followRange.get();
     }
 
 }
