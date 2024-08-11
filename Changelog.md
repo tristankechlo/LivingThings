@@ -12,6 +12,7 @@
       effect)
 - improved AI of baby enderdragon
     - can not take damage from own attacks any more (immune to own area effect clouds that do damage)
+    - once tamed, no longer tries to shoot other players
 
 ### Version 1.19.2 - 2.0.3
 
