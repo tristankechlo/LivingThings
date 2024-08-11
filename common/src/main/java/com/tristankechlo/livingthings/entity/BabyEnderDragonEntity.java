@@ -54,7 +54,6 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private UUID persistentAngerTarget;
 
@@ -78,7 +77,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, null));
+        this.targetSelector.addGoal(4, new NonTameRandomTargetGoal<>(this, Player.class, true, this::isAngryAt));
         this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
@@ -87,7 +86,6 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         super.defineSynchedData();
         this.entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
         this.entityData.define(REMAINING_ANGER_TIME, 0);
-        this.entityData.define(SITTING, false);
     }
 
     @Override
@@ -114,58 +112,47 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        Item item = itemstack.getItem();
-        if (this.level.isClientSide) {
-            if (item == ModItems.LEXICON.get()) {
-                return InteractionResult.PASS;
+        ItemStack stack = player.getItemInHand(hand);
+        Item item = stack.getItem();
+        if (stack.is(ModItems.LEXICON.get())) {
+            return InteractionResult.PASS;
+        }
+        if (this.isTame()) {
+            if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
+                this.usePlayerItem(player, hand, stack);
+                this.heal((float) (item.getFoodProperties().getNutrition() / 2));
+                this.gameEvent(GameEvent.ENTITY_INTERACT, this);
+                return InteractionResult.SUCCESS;
             }
-            boolean flag = this.isOwnedBy(player) || this.isTame() || isFood(itemstack) && !this.isTame() && !this.isAngry();
-            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (this.isTame()) {
-                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().instabuild) {
-                        itemstack.shrink(1);
-                    }
-                    this.heal((float) (item.getFoodProperties().getNutrition() / 2));
-                    this.gameEvent(GameEvent.ENTITY_INTERACT, this);
-                    return InteractionResult.SUCCESS;
-                }
-                if (this.isOwnedBy(player) && (item instanceof DyeItem)) {
-                    DyeColor dyecolor = ((DyeItem) item).getDyeColor();
-                    if (dyecolor != this.getCollarColor()) {
-                        this.setCollarColor(dyecolor);
-                        if (!player.getAbilities().instabuild) {
-                            itemstack.shrink(1);
-                        }
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-                if (itemstack.isEmpty() && this.isOwnedBy(player)) {
-                    this.setOrderedToSit(!this.isOrderedToSit());
-                    this.jumping = false;
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    return InteractionResult.SUCCESS;
-                }
-            } else if (isFood(itemstack) && !this.isAngry()) {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-                if (this.random.nextInt(5) == 0) {
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.setOrderedToSit(true);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+            if (this.isOwnedBy(player) && (item instanceof DyeItem)) {
+                DyeColor dyecolor = ((DyeItem) item).getDyeColor();
+                if (dyecolor != this.getCollarColor()) {
+                    this.setCollarColor(dyecolor);
+                    this.usePlayerItem(player, hand, stack);
                 }
                 return InteractionResult.SUCCESS;
             }
-            return InteractionResult.PASS;
+            if (stack.isEmpty() && this.isOwnedBy(player)) {
+                this.setOrderedToSit(!this.isOrderedToSit());
+                this.jumping = false;
+                this.navigation.stop();
+                this.setTarget(null);
+                return InteractionResult.SUCCESS;
+            }
+        } else if (!this.isTame() && this.isFood(stack) && !this.isAngry()) {
+            this.usePlayerItem(player, hand, stack);
+            if (this.random.nextInt(5) == 0 && !this.level.isClientSide()) {
+                this.tame(player);
+                this.navigation.stop();
+                this.setTarget(null);
+                this.setOrderedToSit(true);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 6);
+            }
+            return InteractionResult.SUCCESS;
         }
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -177,7 +164,6 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         this.setCollarColor(DyeColor.byId(nbt.getInt("CollarColor")));
-        this.setOrderedToSit(nbt.getBoolean("Sitting"));
         this.readPersistentAngerSaveData(level, nbt);
     }
 
@@ -185,19 +171,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putShort("CollarColor", (short) this.getCollarColor().getId());
-        nbt.putBoolean("Sitting", this.isOrderedToSit());
         this.addPersistentAngerSaveData(nbt);
-    }
-
-    @Override
-    public void setOrderedToSit(boolean sitting) {
-        super.setOrderedToSit(sitting);
-        this.entityData.set(SITTING, sitting);
-    }
-
-    @Override
-    public boolean isOrderedToSit() {
-        return this.entityData.get(SITTING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -334,16 +308,19 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     @Override
     public boolean hurt(DamageSource source, float damage) {
-        Entity target = source.getEntity();
-        if ((target instanceof LivingEntity) && !this.isOwnedBy((LivingEntity) target)) {
-            this.setOrderedToSit(false);
-            this.setTarget((LivingEntity) target);
+        if (this.isInvulnerableTo(source)) {
+            return false;
         }
         if (source.getDirectEntity() instanceof AreaEffectCloud) {
             // can not be damaged by own AreaEffectCloud
             return this == source.getEntity();
         }
         return super.hurt(source, damage);
+    }
+
+    @Override
+    public boolean isAngryAtAllPlayers(Level level) {
+        return !this.isTame();
     }
 
     @Override
