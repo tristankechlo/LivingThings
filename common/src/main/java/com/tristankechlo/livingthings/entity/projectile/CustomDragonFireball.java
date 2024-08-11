@@ -1,4 +1,4 @@
-package com.tristankechlo.livingthings.entity.misc;
+package com.tristankechlo.livingthings.entity.projectile;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
