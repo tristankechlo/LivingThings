@@ -69,7 +69,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new CustomSitWhenOrderedToSitGoal(this));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, BabyEnderDragonConfig.temptationItems(), false));
-        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.1D, 120, 240, 25.0F));
+        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.1D, 120, 240, (float) BabyEnderDragonConfig.followRange()));
         this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.3D, 10.0F, 3.0F));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomFlyingGoal(this, 1.2D));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -179,7 +179,8 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, BabyEnderDragonConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, BabyEnderDragonConfig.movementSpeed())
-                .add(Attributes.FLYING_SPEED, BabyEnderDragonConfig.flyingSpeed());
+                .add(Attributes.FLYING_SPEED, BabyEnderDragonConfig.flyingSpeed())
+                .add(Attributes.FOLLOW_RANGE, BabyEnderDragonConfig.followRange());
     }
 
     public static boolean checkBabyEnderDragonSpawnRules(EntityType<BabyEnderDragonEntity> entityType, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
