@@ -9,7 +9,10 @@
 - add `cherry_grove` to the default config of snails, raccoons and owls
 - improve interaction with elephants
     - no automatic riding when equipping a saddle or chest
-    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any effect)
+    - only consume temptation items when the elephants can fall in love (before: could eat infinite items without any
+      effect)
+- improved AI of baby enderdragon
+    - can not take damage from own attacks any more (immune to own area effect clouds that do damage)
 
 ### Version 1.20.1 - 2.0.3
 
