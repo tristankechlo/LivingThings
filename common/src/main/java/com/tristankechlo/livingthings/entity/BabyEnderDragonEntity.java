@@ -339,6 +339,10 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
             this.setOrderedToSit(false);
             this.setTarget((LivingEntity) target);
         }
+        if (source.getDirectEntity() instanceof AreaEffectCloud) {
+            // can not be damaged by own AreaEffectCloud
+            return this == source.getEntity();
+        }
         return super.hurt(source, damage);
     }
 
