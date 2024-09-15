@@ -27,11 +27,11 @@ public final class ForgeLivingThings {
     private static final DeferredRegister<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, LivingThings.MOD_ID);
     public static final RegistryObject<MapCodec<LivingThingsBiomeModifier>> BIOME_MODIFIER_CODEC = BIOME_MODIFIER.register("add_entity_spawns", () -> LivingThingsBiomeModifier.CODEC);
 
-    public ForgeLivingThings() {
+    public ForgeLivingThings(FMLJavaModLoadingContext context) {
         LivingThings.init();
-        BIOME_MODIFIER.register(FMLJavaModLoadingContext.get().getModEventBus()); // needs to be registered before config is loaded
+        IEventBus modbus = context.getModEventBus();
+        BIOME_MODIFIER.register(modbus); // needs to be registered before config is loaded
 
-        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         modbus.addListener(this::commonSetup);
         modbus.addListener(this::onAttributeRegister);
         modbus.addListener(this::onSpawnPlacementsRegister);
