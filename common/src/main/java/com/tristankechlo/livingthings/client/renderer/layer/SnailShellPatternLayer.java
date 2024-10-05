@@ -28,11 +28,10 @@ public class SnailShellPatternLayer extends RenderLayer<SnailEntity, EntityModel
                        float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
                        float headPitch) {
 
-        EntityModel<SnailEntity> snailModel = this.model;
         int colors = snail.getShellColor(this.patternType);
         ResourceLocation texture = snail.getShellPatternTexture(this.patternType);
 
-        coloredCutoutModelCopyLayerRender(this.getParentModel(), snailModel, texture, matrixStack, buffer, packedLight,
+        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, texture, matrixStack, buffer, packedLight,
                 snail, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, colors);
     }
 

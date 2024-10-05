@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-import java.awt.*;
 import java.util.List;
 
 public class SnailEntity extends Animal implements ILexiconEntry {
@@ -154,9 +154,9 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         if (stack.getItem() instanceof DyeItem) {
             DyeColor color = ((DyeItem) stack.getItem()).getDyeColor();
             if (player.isCrouching()) {
-                this.setShellColor(PatternType.FOREGROUND, color.getTextColor());
+                this.setShellColor(PatternType.FOREGROUND, color.getTextureDiffuseColor());
             } else {
-                this.setShellColor(PatternType.BACKGROUND, color.getTextColor());
+                this.setShellColor(PatternType.BACKGROUND, color.getTextureDiffuseColor());
             }
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
@@ -211,10 +211,6 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         }
     }
 
-    public void setShellColor(PatternType type, byte red, byte green, byte blue) {
-        this.setShellColor(type, (new Color(red, green, blue)).getRGB());
-    }
-
     @Override
     public int getMaxSpawnClusterSize() {
         return SnailConfig.maxSpawnedInChunk();
@@ -241,8 +237,8 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
         private SnailVariants(int bodyVariant, int shellVariant, int colorb, int colorf) {
             this.variant = (bodyVariant << 16) | (shellVariant & 0xFFFF);
-            this.colorBackground = colorb;
-            this.colorForeground = colorf;
+            this.colorBackground = FastColor.ARGB32.opaque(colorb);
+            this.colorForeground = FastColor.ARGB32.opaque(colorf);
         }
 
         public int getVariant() {
