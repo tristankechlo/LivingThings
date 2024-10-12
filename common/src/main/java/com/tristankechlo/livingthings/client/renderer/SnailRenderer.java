@@ -25,6 +25,7 @@ public class SnailRenderer extends MobRenderer<SnailEntity, EntityModel<SnailEnt
 
     @Override
     protected void scale(SnailEntity snail, PoseStack matrixStackIn, float partialTickTime) {
+        matrixStackIn.scale(0.8F, 0.8F, 0.8F);
         if (snail.isBaby()) {
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
         }
