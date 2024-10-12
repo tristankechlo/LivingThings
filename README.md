@@ -1,4 +1,7 @@
-# Living Things [![Curseforge](http://cf.way2muchnoise.eu/full_397252_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/living-things) [![Discord](https://img.shields.io/discord/639540436524072970?color=0a48c4&label=%20&logo=discord&logoColor=FFF)](https://discord.gg/bhUaWhq)
+# Living Things
+[![Curseforge](https://img.shields.io/curseforge/dt/397252?style=for-the-badge&logo=curseforge&color=e05d44)](https://www.curseforge.com/minecraft/mc-mods/living-things)&nbsp;
+[![Modrinth](https://img.shields.io/modrinth/dt/UKDLi1GJ?style=for-the-badge&logo=modrinth&color=e05d44)](https://modrinth.com/mod/living-things)&nbsp;
+[![Discord](https://img.shields.io/discord/639540436524072970?style=for-the-badge&logo=discord&logoColor=fff&label=%20&color=0a48c4)](https://discord.gg/bhUaWhq)
 
 ### adds various new Mobs to Minecraft
 
