@@ -4,6 +4,7 @@
 
 - fix potential render error that would make snail-shells invisible with some shaders
 - slightly decreased snail size
+- switched peacock sounds from stereo to mono
 
 ### Version 1.20.1 - 2.1.0
 
