@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.20.4 - 2.1.1
+
+- fix potential render error that would make snail-shells invisible with some shaders
+- slightly decreased snail size
+
 ### Version 1.20.4 - 2.1.0
 
 - fix incorrect recipe for arrow from shark tooth
