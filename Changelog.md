@@ -3,6 +3,7 @@
 ### Version 1.21.1 - 2.1.1
 
 - fix render error that would make snail-shells invisible with some shaders
+- slightly decreased snail size
 
 ### Version 1.21.1 - 2.1.0
 
