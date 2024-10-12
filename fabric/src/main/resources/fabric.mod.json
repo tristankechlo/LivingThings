@@ -13,7 +13,7 @@
         "homepage": "https://github.com/tristankechlo/LivingThings"
     },
     "license": "CC BY-NC-ND 4.0",
-    "icon": "assets/livingthings/logo.png",
+    "icon": "pack.png",
     "environment": "*",
     "entrypoints": {
         "main": [
