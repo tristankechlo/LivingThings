@@ -3,6 +3,7 @@
 ### Version 1.21.1 - 2.1.2
 
 - fix advancements unlocking all recipes at world start
+- fix dependencies not allowing minecraft 1.21
 
 ### Version 1.21.1 - 2.1.1
 
