@@ -11,7 +11,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:shark_tooth"
+						"items" : "livingthings:shark_tooth"
 					}
 				]
 			}

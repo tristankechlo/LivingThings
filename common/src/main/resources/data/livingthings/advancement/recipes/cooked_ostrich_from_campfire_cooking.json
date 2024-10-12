@@ -11,7 +11,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:ostrich"
+						"items" : "livingthings:ostrich"
 					}
 				]
 			}
@@ -21,7 +21,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:cooked_ostrich"
+						"items" : "livingthings:cooked_ostrich"
 					}
 				]
 			}

@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.21.1 - 2.1.2
+
+- fix advancements unlocking all recipes at world start
+
 ### Version 1.21.1 - 2.1.1
 
 - fix render error that would make snail-shells invisible with some shaders

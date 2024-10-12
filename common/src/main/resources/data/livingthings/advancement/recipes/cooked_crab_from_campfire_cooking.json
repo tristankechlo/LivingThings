@@ -11,7 +11,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:crab"
+						"items" : "livingthings:crab"
 					}
 				]
 			}
@@ -21,7 +21,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:cooked_crab"
+						"items" : "livingthings:cooked_crab"
 					}
 				]
 			}

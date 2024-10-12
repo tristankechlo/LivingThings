@@ -11,7 +11,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:giraffe"
+						"items" : "livingthings:giraffe"
 					}
 				]
 			}
@@ -21,7 +21,7 @@
 			"conditions" : {
 				"items" : [
 					{
-						"item" : "livingthings:cooked_giraffe"
+						"items" : "livingthings:cooked_giraffe"
 					}
 				]
 			}
