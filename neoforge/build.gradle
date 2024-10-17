@@ -1,16 +1,6 @@
 plugins {
-    id 'idea'
-    id 'net.neoforged.gradle.userdev' version '7.0.81'
-    id 'java-library'
-}
-
-base {
-    version = "${minecraft_version}-${mod_version}"
-    archivesBaseName = "${mod_id}-neoforge"
-}
-
-if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
-    minecraft.accessTransformers.file file('src/main/resources/META-INF/accesstransformer.cfg')
+    id 'multiloader-loader'
+    id 'net.neoforged.gradle.userdev' version '7.0.107'
 }
 
 runs {
@@ -28,21 +18,6 @@ runs {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
-    compileOnly project(":common")
     compileOnly ("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE:api")
     runtimeOnly ("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE")
-}
-
-// NeoGradle compiles the game, but we don't want to add our common code to the game's code
-Spec<Task> notNeoTask = { Task it -> !it.name.startsWith("neo") } as Spec<Task>
-
-tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
-    source(project(":common").sourceSets.main.allSource)
-}
-tasks.withType(Javadoc).matching(notNeoTask).configureEach {
-    source(project(":common").sourceSets.main.allJava)
-}
-
-processResources {
-    from project(":common").sourceSets.main.resources
 }
