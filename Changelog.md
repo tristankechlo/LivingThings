@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.21.1 - 2.1.3
+
+- remove custom argument type, which caused some incompatibilities with other mods
+
 ### Version 1.21.1 - 2.1.2
 
 - fix advancements unlocking all recipes at world start

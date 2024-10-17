@@ -18,13 +18,17 @@ public final class LivingThingsCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> command = literal(LivingThings.MOD_ID)
-                .then(argument("type", ProjectLinksArgumentType.get()).executes(LivingThingsCommand::execute));
+                .then(literal("github").executes((context) -> display(context, ProjectLinks.GITHUB)))
+                .then(literal("issue").executes((context) -> display(context, ProjectLinks.GITHUB_ISSUES)))
+                .then(literal("wiki").executes((context) -> display(context, ProjectLinks.GITHUB_WIKI)))
+                .then(literal("discord").executes((context) -> display(context, ProjectLinks.DISCORD)))
+                .then(literal("curseforge").executes((context) -> display(context, ProjectLinks.CURSEFORGE)))
+                .then(literal("modrinth").executes((context) -> display(context, ProjectLinks.MODRINTH)));
         dispatcher.register(command);
         LivingThings.LOGGER.info("Command '/{}' registered", LivingThings.MOD_ID);
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) {
-        ProjectLinks type = context.getArgument("type", ProjectLinks.class);
+    private static int display(CommandContext<CommandSourceStack> context, ProjectLinks type) {
         CommandSourceStack source = context.getSource();
         Component link = clickableLink(type.getUrl());
         Component message = Component.literal(type.getMessage()).withStyle(ChatFormatting.WHITE).append(link);
