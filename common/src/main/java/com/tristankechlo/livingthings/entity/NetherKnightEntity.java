@@ -109,7 +109,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
         String name = names.get(random.nextInt(names.size()));
         if (random.nextInt(1000) == 0) {
-            name = "Buecher_wurm's War Sword";
+            name = "Buecher_wurm's Butter Knife";
             stack.enchant(Enchantments.SHARPNESS, 4 + random.nextInt(6));
             stack.enchant(Enchantments.FIRE_ASPECT, 1 + random.nextInt(2));
             stack.enchant(Enchantments.KNOCKBACK, 1 + random.nextInt(2));
