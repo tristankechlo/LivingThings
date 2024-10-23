@@ -108,7 +108,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         String name = names.get(random.nextInt(names.size()));
         Registry<Enchantment> registry = this.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
         if (random.nextInt(1000) == 0) {
-            name = "Buecher_wurm's War Sword";
+            name = "Buecher_wurm's Butter Knife";
             stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 4 + random.nextInt(6));
             stack.enchant(registry.getHolderOrThrow(Enchantments.FIRE_ASPECT), 1 + random.nextInt(2));
             stack.enchant(registry.getHolderOrThrow(Enchantments.KNOCKBACK), 1 + random.nextInt(2));
