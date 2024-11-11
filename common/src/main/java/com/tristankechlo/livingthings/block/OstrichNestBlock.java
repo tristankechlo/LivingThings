@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -54,12 +55,12 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         boolean hasEgg = state.getValue(EGG);
 
         // prevent any use when rightclicked with lexicon
         if (player.getMainHandItem().getItem() == ModItems.LEXICON.get()) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
 
         if (hasEgg && stack.isEmpty()) {
@@ -71,7 +72,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
                 itemEntity.setDefaultPickUpDelay();
                 world.addFreshEntity(itemEntity);
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         if (!hasEgg && stack.is(ModItems.OSTRICH_EGG.get())) {
             //place egg when empty
@@ -81,7 +82,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
             if (!player.isCreative()) {
                 stack.shrink(1);
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         return super.useItemOn(stack, state, world, pos, player, handIn, hit);
     }
