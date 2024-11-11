@@ -69,7 +69,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
         this.tameAmount = 0;
     }
 
-    public static boolean checkElephantSpawnRules(EntityType<ElephantEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkElephantSpawnRules(EntityType<ElephantEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.ELEPHANT_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -83,7 +83,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
-        ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level());
+        ElephantEntity child = ModEntityTypes.ELEPHANT.get().create(this.level(), EntitySpawnReason.BREEDING);
         if (this.isTame() || ((ElephantEntity) parent).isTame()) {
             child.setTame(true, false);
         }
@@ -175,9 +175,9 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
         this.level().broadcastEntityEvent(this, (byte) 4);
-        boolean flag = super.doHurtTarget(target);
+        boolean flag = super.doHurtTarget(level, target);
         if (flag) {
             // throw target in the air
             target.setDeltaMovement(target.getDeltaMovement().add(0.0D, 0.7D, 0.0D));
@@ -267,21 +267,21 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     @Override
-    protected void dropEquipment() {
-        super.dropEquipment();
+    protected void dropEquipment(ServerLevel level) {
+        super.dropEquipment(level);
         if (this.entityInventory != null) {
             for (int i = 0; i < this.entityInventory.getContainerSize(); ++i) {
                 ItemStack itemstack = this.entityInventory.getItem(i);
                 if (!itemstack.isEmpty() && !EnchantmentHelper.has(itemstack, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)) {
-                    this.spawnAtLocation(itemstack);
+                    this.spawnAtLocation(level, itemstack);
                 }
             }
         }
         if (this.isSaddled() && this.random.nextBoolean()) {
-            this.spawnAtLocation(Items.SADDLE);
+            this.spawnAtLocation(level, Items.SADDLE);
         }
         if (this.hasChest() && this.random.nextBoolean()) {
-            this.spawnAtLocation(Items.CHEST);
+            this.spawnAtLocation(level, Items.CHEST);
         }
     }
 
@@ -390,7 +390,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
             } else if (this.getPassengers().isEmpty() && this.isSaddled()) {
                 this.doPlayerRide(player);
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
 
         } else if (this.isFood(stack)) {
 
@@ -398,7 +398,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                 int age = this.getAge();
                 this.usePlayerItem(player, hand, stack);
                 this.ageUp((int) ((float) (-age / 20) * 0.1F), true);
-                return InteractionResult.sidedSuccess(this.level().isClientSide());
+                return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
             }
 
             if (this.isTame()) {
@@ -408,15 +408,17 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                         float healAmount = 3.0F;
                         this.heal(healAmount);
                         this.usePlayerItem(player, hand, stack);
+                        return InteractionResult.SUCCESS_SERVER;
                     }
                 } else {
                     // if already full health, fall in love
                     if (!this.level().isClientSide() && !this.isBaby() && this.canBreed()) {
                         this.usePlayerItem(player, hand, stack);
                         this.setInLove(player);
+                        return InteractionResult.SUCCESS_SERVER;
                     }
                 }
-                return InteractionResult.sidedSuccess(this.level().isClientSide());
+                return InteractionResult.SUCCESS;
             }
 
         } else if (this.isTamingItem(stack) && !this.isBaby() && !this.isTame()) {
@@ -446,8 +448,9 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                 this.usePlayerItem(player, hand, stack);
                 this.setSaddled(true);
                 this.playSound(ModSounds.ELEPHANT_EQUIP_SADDLE.get(), 0.9F, 0.9F);
+                return InteractionResult.SUCCESS_SERVER;
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return InteractionResult.SUCCESS;
 
         } else if (this.isTame() && this.isSaddled() && stack.is(Items.CHEST) && !this.isBaby() && !this.hasChest()) {
 
@@ -456,8 +459,9 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                 this.usePlayerItem(player, hand, stack);
                 this.setHasChest(true);
                 this.playSound(ModSounds.ELEPHANT_EQUIP_CHEST.get(), 0.9F, 0.9F);
+                return InteractionResult.SUCCESS_SERVER;
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;

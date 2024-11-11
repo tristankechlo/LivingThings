@@ -44,19 +44,19 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
         super(entityType, worldIn);
     }
 
-    public static boolean checkGiraffeSpawnRules(EntityType<GiraffeEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkGiraffeSpawnRules(EntityType<GiraffeEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.GIRAFFE_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entityIn) {
-        GiraffeEntity entityChild = ModEntityTypes.GIRAFFE.get().create(this.level());
+        GiraffeEntity entityChild = ModEntityTypes.GIRAFFE.get().create(this.level(), EntitySpawnReason.BREEDING);
         entityChild.setVariant(this.getVariantFromParents(this, entityIn));
         return entityChild;
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         int color1Weight = GiraffeConfig.get().color1Weight.get();
         int color2Weight = GiraffeConfig.get().color2Weight.get();
         int whiteWeight = GiraffeConfig.get().colorWhiteWeight.get();

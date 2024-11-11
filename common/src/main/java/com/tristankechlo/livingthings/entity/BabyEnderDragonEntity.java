@@ -91,7 +91,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel level) {
         // slow falling
         if (!this.onGround() && this.getDeltaMovement().y < 0.0D) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
@@ -100,7 +100,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         if (this.navigation.isDone() && this.isOrderedToSit()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.05D, 0));
         }
-        super.customServerAiStep();
+        super.customServerAiStep(level);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
                 .add(Attributes.FOLLOW_RANGE, BabyEnderDragonConfig.followRange());
     }
 
-    public static boolean checkBabyEnderDragonSpawnRules(EntityType<BabyEnderDragonEntity> entityType, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean checkBabyEnderDragonSpawnRules(EntityType<BabyEnderDragonEntity> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(LivingThingsTags.BABY_ENDER_DRAGON_SPAWNABLE_ON);
     }
 
@@ -228,7 +228,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        BabyEnderDragonEntity child = ModEntityTypes.BABY_ENDER_DRAGON.get().create(world);
+        BabyEnderDragonEntity child = ModEntityTypes.BABY_ENDER_DRAGON.get().create(world, EntitySpawnReason.BREEDING);
         UUID uuid = this.getOwnerUUID();
         if (uuid != null) {
             child.setOwnerUUID(uuid);
@@ -310,19 +310,19 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
-        if (this.isInvulnerableTo(source)) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        if (this.isInvulnerableTo(level, source)) {
             return false;
         }
         if (source.getDirectEntity() instanceof AreaEffectCloud) {
             // can not be damaged by own AreaEffectCloud
             return this == source.getEntity();
         }
-        return super.hurt(source, damage);
+        return super.hurtServer(level, source, damage);
     }
 
     @Override
-    public boolean isAngryAtAllPlayers(Level level) {
+    public boolean isAngryAtAllPlayers(ServerLevel level) {
         return !this.isTame();
     }
 

@@ -55,13 +55,13 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         super(entityType, worldIn);
     }
 
-    public static boolean checkOstrichSpawnRules(EntityType<OstrichEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkOstrichSpawnRules(EntityType<OstrichEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.OSTRICH_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
-        return ModEntityTypes.OSTRICH.get().create(world);
+        return ModEntityTypes.OSTRICH.get().create(world, EntitySpawnReason.BREEDING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -136,10 +136,10 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     }
 
     @Override
-    protected void dropEquipment() {
-        super.dropEquipment();
+    protected void dropEquipment(ServerLevel level) {
+        super.dropEquipment(level);
         if (this.hasEgg()) {
-            this.spawnAtLocation(ModItems.OSTRICH_EGG.get());
+            this.spawnAtLocation(level, ModItems.OSTRICH_EGG.get());
         }
     }
 
@@ -181,8 +181,9 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         if (!breedingItem && !isLexicon && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
             if (!this.level().isClientSide && OstrichConfig.canBeRidden()) {
                 player.startRiding(this);
+                return InteractionResult.SUCCESS_SERVER;
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.CONSUME;
         } else {
             return super.mobInteract(player, hand);
         }

@@ -56,7 +56,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        OwlEntity child = ModEntityTypes.OWL.get().create(world);
+        OwlEntity child = ModEntityTypes.OWL.get().create(world, EntitySpawnReason.BREEDING);
         child.setVariant(this.getVariantFromParents(this, entity));
         return child;
     }
@@ -68,7 +68,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         int colorBrownWeight = OwlConfig.get().colorBrownWeight.get();
         int colorWhiteWeight = OwlConfig.get().colorWhiteWeight.get();
         int colorBlackWeight = OwlConfig.get().colorBlackWeight.get();
@@ -134,13 +134,14 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
                 } else {
                     this.level().broadcastEntityEvent(this, (byte) 6);
                 }
+                return InteractionResult.SUCCESS_SERVER;
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return InteractionResult.SUCCESS;
 
         } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && isTamingItem) {
 
             this.setOrderedToSit(!this.isOrderedToSit());
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
 
         } else {
             return super.mobInteract(player, hand);
@@ -165,7 +166,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
         this.flap += this.flapping * 2.0F;
     }
 
-    public static boolean checkOwlSpawnRules(EntityType<OwlEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkOwlSpawnRules(EntityType<OwlEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.OWL_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -226,12 +227,12 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (this.isInvulnerableTo(source)) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (this.isInvulnerableTo(level, source)) {
             return false;
         } else {
             this.setOrderedToSit(false);
-            return super.hurt(source, amount);
+            return super.hurtServer(level, source, amount);
         }
     }
 

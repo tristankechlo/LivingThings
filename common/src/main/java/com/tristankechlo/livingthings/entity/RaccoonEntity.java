@@ -43,13 +43,13 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
         super(type, worldIn);
     }
 
-    public static boolean checkRaccoonSpawnRules(EntityType<RaccoonEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkRaccoonSpawnRules(EntityType<RaccoonEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.RACCOON_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        return ModEntityTypes.RACCOON.get().create(world);
+        return ModEntityTypes.RACCOON.get().create(world, EntitySpawnReason.BREEDING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

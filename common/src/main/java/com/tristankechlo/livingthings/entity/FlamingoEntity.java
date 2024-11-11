@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -43,13 +43,13 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
         this.setPathfindingMalus(PathType.WATER, 1.0F);
     }
 
-    public static boolean checkFlamingoSpawnRules(EntityType<FlamingoEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkFlamingoSpawnRules(EntityType<FlamingoEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.FLAMINGO_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        return ModEntityTypes.FLAMINGO.get().create(world);
+        return ModEntityTypes.FLAMINGO.get().create(world, EntitySpawnReason.BREEDING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

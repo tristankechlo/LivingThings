@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -38,7 +38,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        return ModEntityTypes.KOALA.get().create(world);
+        return ModEntityTypes.KOALA.get().create(world, EntitySpawnReason.BREEDING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -73,7 +73,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
         }
     }
 
-    public static boolean checkKoalaSpawnRules(EntityType<KoalaEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkKoalaSpawnRules(EntityType<KoalaEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.KOALA_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

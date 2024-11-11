@@ -57,7 +57,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        CrabEntity entityChild = ModEntityTypes.CRAB.get().create(this.level());
+        CrabEntity entityChild = ModEntityTypes.CRAB.get().create(this.level(), EntitySpawnReason.BREEDING);
         entityChild.setVariant(this.getVariantFromParents(this, entity));
         entityChild.setScaling(CrabEntity.getWeightedRandomScaling(this.random));
 
@@ -89,12 +89,12 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
         this.targetSelector.addGoal(1, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
-    public static boolean checkCrabSpawnRules(EntityType<CrabEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkCrabSpawnRules(EntityType<CrabEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return (world.isWaterAt(pos)) || (world.getBlockState(pos.below()).is(LivingThingsTags.CRAB_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos));
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         int colorRedWeight = CrabConfig.get().colorRedWeight.get();
         int colorWhiteWeight = CrabConfig.get().colorWhiteWeight.get();
         int colorBlueWeight = CrabConfig.get().colorBlueWeight.get();

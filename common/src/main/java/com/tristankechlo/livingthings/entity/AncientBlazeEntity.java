@@ -42,7 +42,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
-public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
+public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> SHOOTS = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Integer> INVULNERABLE_TIME = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.INT);
@@ -65,7 +65,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         this.setInvulnerableTime(AncientBlazeConfig.chargingTime());
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
     }
@@ -134,15 +134,15 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(ServerLevel level) {
+        super.customServerAiStep(level);
         this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHitIn) {
         super.dropCustomDeathLoot(level, source, recentlyHitIn);
-        ItemEntity itementity = this.spawnAtLocation(ModItems.ANCIENT_HELMET.get());
+        ItemEntity itementity = this.spawnAtLocation(level, ModItems.ANCIENT_HELMET.get());
         if (itementity != null) {
             itementity.setExtendedLifetime();
         }
@@ -164,7 +164,7 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
         // dont get damaged while charging up
         if (this.getInvulnerableTime() > 0 && source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return false;
@@ -178,10 +178,10 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
             return true;
             // random chance for arrows, tridents,.. to be blocked
         } else if (!source.isDirect()) {
-            return this.random.nextInt(4) != 0 && super.hurt(source, amount);
+            return this.random.nextInt(4) != 0 && super.hurtServer(level, source, amount);
         } else {
             // normal damage handling
-            return super.hurt(source, amount);
+            return super.hurtServer(level, source, amount);
         }
     }
 
@@ -298,7 +298,6 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
         this.entityData.set(SHOOTS, shoots);
     }
 
-    @Override
     public boolean isPowered() {
         return this.entityData.get(INVULNERABLE_TIME) > 0;
     }

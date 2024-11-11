@@ -45,7 +45,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         canPlantMushroom = false;
     }
 
-    public static boolean checkShroomieSpawnRules(EntityType<ShroomieEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkShroomieSpawnRules(EntityType<ShroomieEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SHROOMIE_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -93,7 +93,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData data) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, SpawnGroupData data) {
         final int brownWeight = ShroomieConfig.get().colorBrownWeight.get();
         final int redWeight = ShroomieConfig.get().colorRedWeight.get();
         this.setVariant(this.getRandomVariant(random, new byte[]{0, 1}, new int[]{brownWeight, redWeight}));
@@ -141,7 +141,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob parent) {
-        ShroomieEntity shroomie = ModEntityTypes.SHROOMIE.get().create(world);
+        ShroomieEntity shroomie = ModEntityTypes.SHROOMIE.get().create(world, EntitySpawnReason.BREEDING);
         shroomie.setVariant(this.getVariantFromParents(this, parent));
         shroomie.setAge(0); // no baby shroomies
         return shroomie;

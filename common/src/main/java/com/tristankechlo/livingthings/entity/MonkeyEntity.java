@@ -138,20 +138,17 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     }
 
     @Override
-    public boolean isAlliedTo(Entity entityIn) {
+    public boolean considersEntityAsAlly(Entity entity) {
         if (this.isTame()) {
             LivingEntity livingentity = this.getOwner();
-            if (entityIn == livingentity) {
+            if (entity == livingentity) {
                 return true;
             }
-            if (entityIn instanceof TamableAnimal) {
-                return ((TamableAnimal) entityIn).isOwnedBy(livingentity);
-            }
-            if (livingentity != null) {
-                return livingentity.isAlliedTo(entityIn);
+            if (entity instanceof TamableAnimal) {
+                return ((TamableAnimal) entity).isOwnedBy(livingentity);
             }
         }
-        return super.isAlliedTo(entityIn);
+        return super.considersEntityAsAlly(entity);
     }
 
     @Override
@@ -214,7 +211,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
             } else if (stack.isEmpty()) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else if (!this.isTame() && this.isFood(stack)) {
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
@@ -226,7 +223,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
             } else {
                 this.level().broadcastEntityEvent(this, (byte) 6);
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide());
+            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         return super.mobInteract(player, hand);
     }
@@ -236,7 +233,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         return LexiconEntries.MONKEY;
     }
 
-    public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkMonkeySpawnRules(EntityType<MonkeyEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.MONKEY_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 

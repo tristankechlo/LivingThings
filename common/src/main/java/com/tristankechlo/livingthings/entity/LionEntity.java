@@ -56,20 +56,20 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         super(entityType, worldIn);
     }
 
-    public static boolean checkLionSpawnRules(EntityType<LionEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkLionSpawnRules(EntityType<LionEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.LION_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entityIn) {
-        LionEntity entityChild = ModEntityTypes.LION.get().create(this.level());
+        LionEntity entityChild = ModEntityTypes.LION.get().create(this.level(), EntitySpawnReason.BREEDING);
         entityChild.setGender(LionEntity.getWeightedRandomGender(this.random));
         entityChild.setVariant(this.getVariantFromParents(this, entityIn));
         return entityChild;
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         this.setGender(LionEntity.getWeightedRandomGender(this.random));
         int color1Weight = LionConfig.get().color1Weight.get();
         int colorWhiteWeight = LionConfig.get().colorWhiteWeight.get();

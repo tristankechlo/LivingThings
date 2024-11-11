@@ -90,13 +90,13 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
         return stack.is(LivingThingsTags.PEACOCK_FOOD);
     }
 
-    public static <T extends Animal> boolean checkPeacockSpawnRules(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType mobSpawnType, BlockPos pos, RandomSource randomSource) {
+    public static <T extends Animal> boolean checkPeacockSpawnRules(EntityType<T> entityType, ServerLevelAccessor world, EntitySpawnReason mobSpawnType, BlockPos pos, RandomSource randomSource) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.PEACOCK_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob parent) {
-        return ModEntityTypes.PEACOCK.get().create(level);
+        return ModEntityTypes.PEACOCK.get().create(level, EntitySpawnReason.BREEDING);
     }
 
     @Override

@@ -133,7 +133,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
         }
     }
 
-    public static boolean checkSharkSpawnRules(EntityType<SharkEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSharkSpawnRules(EntityType<SharkEntity> entity, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getFluidState(pos).is(LivingThingsTags.SHARK_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.SHARK_SPAWNABLE_ON);
     }
 

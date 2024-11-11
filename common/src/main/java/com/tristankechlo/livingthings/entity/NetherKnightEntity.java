@@ -11,6 +11,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -61,7 +62,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, SpawnGroupData data) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficultyInstance, EntitySpawnReason spawnReason, SpawnGroupData data) {
         this.setCanPickUpLoot(false);
         this.setLeftHanded(world.getRandom().nextBoolean());
         this.populateDefaultEquipmentSlots(random, difficultyInstance);
@@ -77,17 +78,17 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     }
 
     @Override
-    protected void dropEquipment() {
+    protected void dropEquipment(ServerLevel level) {
         final double dropChance = NetherKnightConfig.weaponDropChance() / 100.0D;
         ItemStack mainHand = this.getMainHandItem();
         if (mainHand != null && random.nextDouble() < dropChance) {
             mainHand.setDamageValue(500 + random.nextInt(500));
-            this.spawnAtLocation(mainHand);
+            this.spawnAtLocation(level, mainHand);
         }
         ItemStack offHand = this.getOffhandItem();
         if (offHand != null && random.nextDouble() < dropChance) {
             offHand.setDamageValue(500 + random.nextInt(500));
-            this.spawnAtLocation(offHand);
+            this.spawnAtLocation(level, offHand);
         }
     }
 
@@ -106,17 +107,17 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_SWORD);
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
         String name = names.get(random.nextInt(names.size()));
-        Registry<Enchantment> registry = this.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
+        Registry<Enchantment> registry = this.registryAccess().get(Registries.ENCHANTMENT).orElseThrow().value();
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's Butter Knife";
-            stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 4 + random.nextInt(6));
-            stack.enchant(registry.getHolderOrThrow(Enchantments.FIRE_ASPECT), 1 + random.nextInt(2));
-            stack.enchant(registry.getHolderOrThrow(Enchantments.KNOCKBACK), 1 + random.nextInt(2));
-            stack.enchant(registry.getHolderOrThrow(Enchantments.UNBREAKING), 1 + random.nextInt(3));
+            stack.enchant(registry.getOrThrow(Enchantments.SHARPNESS), 4 + random.nextInt(6));
+            stack.enchant(registry.getOrThrow(Enchantments.FIRE_ASPECT), 1 + random.nextInt(2));
+            stack.enchant(registry.getOrThrow(Enchantments.KNOCKBACK), 1 + random.nextInt(2));
+            stack.enchant(registry.getOrThrow(Enchantments.UNBREAKING), 1 + random.nextInt(3));
         } else {
-            stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 2 + random.nextInt(3));
+            stack.enchant(registry.getOrThrow(Enchantments.SHARPNESS), 2 + random.nextInt(3));
         }
-        stack.enchant(registry.getHolderOrThrow(Enchantments.LOOTING), 1);
+        stack.enchant(registry.getOrThrow(Enchantments.LOOTING), 1);
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }
@@ -125,15 +126,15 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_AXE);
         List<? extends String> names = NetherKnightConfig.get().axeNames.get();
         String name = names.get(random.nextInt(names.size()));
-        Registry<Enchantment> registry = this.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
+        Registry<Enchantment> registry = this.registryAccess().get(Registries.ENCHANTMENT).orElseThrow().value();
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's War Axe";
-            stack.enchant(registry.getHolderOrThrow(Enchantments.MENDING), 1);
-            stack.enchant(registry.getHolderOrThrow(Enchantments.EFFICIENCY), 3 + random.nextInt(3));
+            stack.enchant(registry.getOrThrow(Enchantments.MENDING), 1);
+            stack.enchant(registry.getOrThrow(Enchantments.EFFICIENCY), 3 + random.nextInt(3));
         } else {
-            stack.enchant(registry.getHolderOrThrow(Enchantments.EFFICIENCY), 1 + random.nextInt(3));
+            stack.enchant(registry.getOrThrow(Enchantments.EFFICIENCY), 1 + random.nextInt(3));
         }
-        stack.enchant(registry.getHolderOrThrow(Enchantments.SHARPNESS), 2);
+        stack.enchant(registry.getOrThrow(Enchantments.SHARPNESS), 2);
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
         return stack;
     }
@@ -199,8 +200,8 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     }
 
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        if (!super.doHurtTarget(entity)) {
+    public boolean doHurtTarget(ServerLevel level, Entity entity) {
+        if (!super.doHurtTarget(level, entity)) {
             return false;
         } else {
             if (entity instanceof LivingEntity) {
@@ -208,11 +209,6 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
             }
             return true;
         }
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float damage) {
-        return super.hurt(source, damage);
     }
 
     @Override

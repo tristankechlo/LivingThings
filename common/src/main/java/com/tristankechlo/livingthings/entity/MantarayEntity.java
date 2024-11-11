@@ -20,9 +20,9 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -90,7 +90,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         int colorBlueVariant = MantarayConfig.get().colorBlueVariant.get();
         int colorBrownVariant = MantarayConfig.get().colorBrownVariant.get();
         byte variant = this.getRandomVariant(random, new byte[]{0, 1}, new int[]{colorBlueVariant, colorBrownVariant});
@@ -115,7 +115,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
         return scaling.get().scaling;
     }
 
-    public static boolean checkMantaraySpawnRules(EntityType<MantarayEntity> entity, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkMantaraySpawnRules(EntityType<MantarayEntity> entity, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getFluidState(pos).is(LivingThingsTags.MANTARAY_SPAWNABLE_ON) && world.getFluidState(pos.above()).is(LivingThingsTags.MANTARAY_SPAWNABLE_ON);
     }
 

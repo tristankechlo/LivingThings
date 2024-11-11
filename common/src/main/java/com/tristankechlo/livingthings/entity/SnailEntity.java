@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -48,7 +47,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         super(type, worldIn);
     }
 
-    public static boolean checkSnailSpawnRules(EntityType<SnailEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
+    public static boolean checkSnailSpawnRules(EntityType<SnailEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SNAIL_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
@@ -58,7 +57,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        SnailEntity snailChild = ModEntityTypes.SNAIL.get().create(world);
+        SnailEntity snailChild = ModEntityTypes.SNAIL.get().create(world, EntitySpawnReason.BREEDING);
         if (entity == this) {
             // make copy of current snail
             snailChild.setShellColor(PatternType.FOREGROUND, this.getShellColor(PatternType.FOREGROUND));
@@ -99,7 +98,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
         // select randomly a preset
         SnailVariants data = SnailVariants.random(worldIn.getRandom());
         this.setVariant(data.getVariant());
@@ -162,7 +161,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
             }
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         return super.mobInteract(player, hand);
     }
@@ -238,8 +237,8 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
         private SnailVariants(int bodyVariant, int shellVariant, int colorb, int colorf) {
             this.variant = (bodyVariant << 16) | (shellVariant & 0xFFFF);
-            this.colorBackground = FastColor.ARGB32.opaque(colorb);
-            this.colorForeground = FastColor.ARGB32.opaque(colorf);
+            this.colorBackground = opaque(colorb);
+            this.colorForeground = opaque(colorf);
         }
 
         public int getVariant() {
@@ -256,6 +255,10 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
         public static SnailVariants random(RandomSource rand) {
             return VALUES[rand.nextInt(VALUES.length)];
+        }
+
+        public static int opaque(int color) {
+            return color | -16777216;
         }
 
     }
