@@ -2,9 +2,7 @@
     "type": "minecraft:crafting_shapeless",
     "group": "bonemeal",
     "ingredients": [
-        {
-            "item": "livingthings:shark_tooth"
-        }
+        "livingthings:shark_tooth"
     ],
     "result": {
         "id": "minecraft:bone_meal",

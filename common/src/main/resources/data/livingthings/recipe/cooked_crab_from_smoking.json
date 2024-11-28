@@ -1,8 +1,6 @@
 {
     "type": "minecraft:smoking",
-    "ingredient": {
-        "item": "livingthings:crab"
-    },
+    "ingredient": "livingthings:crab",
     "result": {
         "id": "livingthings:cooked_crab"
     },

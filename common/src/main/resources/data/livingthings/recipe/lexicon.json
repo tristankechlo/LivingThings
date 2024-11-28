@@ -1,12 +1,8 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:book"
-        },
-        {
-            "item": "minecraft:lapis_lazuli"
-        }
+        "minecraft:book",
+        "minecraft:lapis_lazuli"
     ],
     "result": {
         "id": "livingthings:lexicon",

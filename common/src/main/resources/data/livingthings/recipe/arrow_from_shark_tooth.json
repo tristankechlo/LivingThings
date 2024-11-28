@@ -7,15 +7,9 @@
         "F"
     ],
     "key": {
-        "T": {
-            "item": "livingthings:shark_tooth"
-        },
-        "I": {
-            "tag": "livingthings:stick"
-        },
-        "F": {
-            "item": "minecraft:feather"
-        }
+        "T": "livingthings:shark_tooth",
+        "I": "#livingthings:stick",
+        "F": "minecraft:feather"
     },
     "result": {
         "id": "minecraft:arrow",

@@ -1,8 +1,6 @@
 {
     "type": "minecraft:smoking",
-    "ingredient": {
-        "item": "livingthings:elephant"
-    },
+    "ingredient": "livingthings:elephant",
     "result": {
         "id": "livingthings:cooked_elephant"
     },
