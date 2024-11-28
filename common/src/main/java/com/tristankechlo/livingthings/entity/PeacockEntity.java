@@ -5,9 +5,9 @@ import com.tristankechlo.livingthings.entity.ai.PeacockDestroyCropBlocks;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -46,6 +46,7 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, PeacockConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, PeacockConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, PeacockConfig.movementSpeed());
     }

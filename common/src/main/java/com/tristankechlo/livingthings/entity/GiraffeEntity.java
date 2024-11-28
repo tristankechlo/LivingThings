@@ -66,7 +66,9 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, GiraffeConfig.health())
+        return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, GiraffeConfig.temptRange())
+                .add(Attributes.MAX_HEALTH, GiraffeConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, GiraffeConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, GiraffeConfig.attackDamage());

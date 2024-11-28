@@ -4,9 +4,9 @@ import com.tristankechlo.livingthings.config.entity.MonkeyConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -89,6 +89,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, MonkeyConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, MonkeyConfig.health())
                 .add(Attributes.ATTACK_DAMAGE, MonkeyConfig.attackDamage())
                 .add(Attributes.MOVEMENT_SPEED, MonkeyConfig.movementSpeed());

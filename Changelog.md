@@ -3,6 +3,7 @@
 ### Version 1.21.3 - 2.2.0
 
 - port to 1.21.3
+- make temptation range changeable through the config
 
 ### Version 1.21.1 - 2.2.0
 

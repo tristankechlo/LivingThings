@@ -72,6 +72,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, CrabConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, CrabConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, CrabConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.ATTACK_DAMAGE, CrabConfig.attackDamage());

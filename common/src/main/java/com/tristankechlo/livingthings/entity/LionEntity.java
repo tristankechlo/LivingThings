@@ -91,7 +91,9 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, LionConfig.health())
+        return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, LionConfig.temptRange())
+                .add(Attributes.MAX_HEALTH, LionConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, LionConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, LionConfig.attackDamage());

@@ -19,12 +19,13 @@ public final class RaccoonConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.23D, MIN_SPEED, MAX_SPEED);
     public final DoubleValue attackDamage = new DoubleValue("attackDamage", 2.0D, MIN_DAMAGE, MAX_DAMAGE);
+    public final DoubleValue temptRange = new DoubleValue("temptRange", 10.0D, MIN_TEMPT, MAX_TEMPT);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 6, 1, 15);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private RaccoonConfig() {
         super("raccoon");
-        this.registerConfigValues(canAttack, health, movementSpeed, attackDamage, maxSpawnedInChunk, spawnBiomes);
+        this.registerConfigValues(canAttack, health, movementSpeed, attackDamage, temptRange, maxSpawnedInChunk, spawnBiomes);
     }
 
     public static RaccoonConfig get() {
@@ -45,6 +46,10 @@ public final class RaccoonConfig extends EntityConfig {
 
     public static double attackDamage() {
         return INSTANCE.attackDamage.get();
+    }
+
+    public static double temptRange() {
+        return INSTANCE.temptRange.get();
     }
 
     public static int maxSpawnedInChunk() {

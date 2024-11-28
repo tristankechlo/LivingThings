@@ -16,12 +16,13 @@ public final class SnailConfig extends EntityConfig {
 
     public final DoubleValue health = new DoubleValue("health", 4.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.1D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue temptRange = new DoubleValue("temptRange", 10.0D, MIN_TEMPT, MAX_TEMPT);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 6, 1, 15);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private SnailConfig() {
         super("snail");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, spawnBiomes);
+        this.registerConfigValues(health, movementSpeed, temptRange, maxSpawnedInChunk, spawnBiomes);
     }
 
     public static SnailConfig get() {
@@ -34,6 +35,10 @@ public final class SnailConfig extends EntityConfig {
 
     public static double movementSpeed() {
         return INSTANCE.movementSpeed.get();
+    }
+
+    public static double temptRange() {
+        return INSTANCE.temptRange.get();
     }
 
     public static int maxSpawnedInChunk() {

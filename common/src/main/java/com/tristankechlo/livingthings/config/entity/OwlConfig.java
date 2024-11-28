@@ -17,6 +17,7 @@ public final class OwlConfig extends EntityConfig {
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
     public final DoubleValue flyingSpeed = new DoubleValue("flyingSpeed", 0.5D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue temptRange = new DoubleValue("temptRange", 10.0D, MIN_TEMPT, MAX_TEMPT);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 6, 1, 15);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
@@ -26,7 +27,7 @@ public final class OwlConfig extends EntityConfig {
 
     private OwlConfig() {
         super("owl");
-        this.registerConfigValues(health, movementSpeed, flyingSpeed, maxSpawnedInChunk, spawnBiomes);
+        this.registerConfigValues(health, movementSpeed, flyingSpeed, temptRange, maxSpawnedInChunk, spawnBiomes);
         this.registerForCategory("colorWeights", colorWhiteWeight, colorBrownWeight, colorBlackWeight);
     }
 
@@ -44,6 +45,10 @@ public final class OwlConfig extends EntityConfig {
 
     public static double flyingSpeed() {
         return INSTANCE.flyingSpeed.get();
+    }
+
+    public static double temptRange() {
+        return INSTANCE.temptRange.get();
     }
 
     public static int maxSpawnedInChunk() {

@@ -5,9 +5,9 @@ import com.tristankechlo.livingthings.entity.ai.ShroomiePlantMushroomGoal;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -135,6 +135,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, ShroomieConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, ShroomieConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, ShroomieConfig.movementSpeed());
     }

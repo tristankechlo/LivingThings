@@ -3,9 +3,9 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.KoalaConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -43,6 +43,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, KoalaConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, KoalaConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, KoalaConfig.movementSpeed());
     }

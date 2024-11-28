@@ -4,9 +4,9 @@ import com.tristankechlo.livingthings.config.entity.PenguinConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -44,6 +44,7 @@ public class PenguinEntity extends Animal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, PenguinConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, PenguinConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, PenguinConfig.movementSpeed());
     }

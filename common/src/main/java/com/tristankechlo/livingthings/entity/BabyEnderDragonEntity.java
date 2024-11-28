@@ -8,9 +8,9 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -178,6 +178,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, BabyEnderDragonConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, BabyEnderDragonConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, BabyEnderDragonConfig.movementSpeed())
                 .add(Attributes.FLYING_SPEED, BabyEnderDragonConfig.flyingSpeed())

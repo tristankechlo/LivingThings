@@ -3,9 +3,9 @@ package com.tristankechlo.livingthings.entity;
 import com.tristankechlo.livingthings.config.entity.FlamingoConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -54,6 +54,7 @@ public class FlamingoEntity extends Animal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, FlamingoConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, FlamingoConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, FlamingoConfig.movementSpeed());
     }

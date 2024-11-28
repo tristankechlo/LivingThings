@@ -17,13 +17,14 @@ public final class OstrichConfig extends EntityConfig {
 
     public final DoubleValue health = new DoubleValue("health", 20.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue temptRange = new DoubleValue("temptRange", 10.0D, MIN_TEMPT, MAX_TEMPT);
     public final BooleanValue canBeRidden = new BooleanValue("canBeRidden", true);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 5, 1, 15);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private OstrichConfig() {
         super("ostrich");
-        this.registerConfigValues(health, movementSpeed, canBeRidden, maxSpawnedInChunk, spawnBiomes);
+        this.registerConfigValues(health, movementSpeed, temptRange, canBeRidden, maxSpawnedInChunk, spawnBiomes);
     }
 
     public static OstrichConfig get() {
@@ -36,6 +37,10 @@ public final class OstrichConfig extends EntityConfig {
 
     public static double movementSpeed() {
         return INSTANCE.movementSpeed.get();
+    }
+
+    public static double temptRange() {
+        return INSTANCE.temptRange.get();
     }
 
     public static boolean canBeRidden() {

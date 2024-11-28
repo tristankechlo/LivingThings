@@ -5,9 +5,9 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -93,6 +93,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, SnailConfig.temptRange())
                 .add(Attributes.MAX_HEALTH, SnailConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, SnailConfig.movementSpeed());
     }

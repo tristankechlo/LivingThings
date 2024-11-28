@@ -16,13 +16,14 @@ public final class PenguinConfig extends EntityConfig {
 
     public final DoubleValue health = new DoubleValue("health", 10.0D, MIN_HEALTH, MAX_HEALTH);
     public final DoubleValue movementSpeed = new DoubleValue("movementSpeed", 0.25D, MIN_SPEED, MAX_SPEED);
+    public final DoubleValue temptRange = new DoubleValue("temptRange", 10.0D, MIN_TEMPT, MAX_TEMPT);
     public final IntegerValue maxSpawnedInChunk = new IntegerValue("maxSpawnedInChunk", 6, 1, 15);
     public final IntegerValue talkInterval = new IntegerValue("talkInterval", 180, 0, Integer.MAX_VALUE);
     public final ListValue<SpawnData> spawnBiomes = new ListValue<>("spawnBiomes", createDefaultSpawns(), SpawnData::serialize, SpawnData::deserialize);
 
     private PenguinConfig() {
         super("penguin");
-        this.registerConfigValues(health, movementSpeed, maxSpawnedInChunk, talkInterval, spawnBiomes);
+        this.registerConfigValues(health, movementSpeed, temptRange, maxSpawnedInChunk, talkInterval, spawnBiomes);
     }
 
     public static PenguinConfig get() {
@@ -35,6 +36,10 @@ public final class PenguinConfig extends EntityConfig {
 
     public static double movementSpeed() {
         return INSTANCE.movementSpeed.get();
+    }
+
+    public static double temptRange() {
+        return INSTANCE.temptRange.get();
     }
 
     public static int maxSpawnedInChunk() {

@@ -7,9 +7,9 @@ import com.tristankechlo.livingthings.entity.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
+import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -53,7 +53,9 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, RaccoonConfig.health())
+        return Mob.createMobAttributes()
+                .add(Attributes.TEMPT_RANGE, RaccoonConfig.temptRange())
+                .add(Attributes.MAX_HEALTH, RaccoonConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, RaccoonConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, RaccoonConfig.attackDamage());
