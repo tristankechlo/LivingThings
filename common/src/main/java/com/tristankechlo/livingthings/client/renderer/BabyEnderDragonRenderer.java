@@ -1,11 +1,12 @@
 package com.tristankechlo.livingthings.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.tristankechlo.livingthings.client.LivingThingsClient;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonModel;
 import com.tristankechlo.livingthings.client.model.entity.BabyEnderDragonSittingModel;
 import com.tristankechlo.livingthings.client.renderer.layer.BabyEnderDragonCollarLayer;
+import com.tristankechlo.livingthings.client.renderer.state.BabyEnderDragonRenderState;
 import com.tristankechlo.livingthings.entity.BabyEnderDragonEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,9 +14,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, EntityModel<BabyEnderDragonEntity>> {
+public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThingsClient.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
+    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
     private final BabyEnderDragonModel modelNormal;
     private final BabyEnderDragonSittingModel modelSitting;
 
@@ -27,18 +28,29 @@ public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, 
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BabyEnderDragonEntity entity) {
+    public BabyEnderDragonRenderState createRenderState() {
+        return new BabyEnderDragonRenderState();
+    }
+
+    @Override
+    public void extractRenderState(BabyEnderDragonEntity entity, BabyEnderDragonRenderState state, float $$2) {
+        super.extractRenderState(entity, state, $$2);
+        state.fromEntity(entity);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(BabyEnderDragonRenderState entity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(BabyEnderDragonEntity entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        if (entity.isTame() && entity.isInSittingPose() && !entity.isFlying()) {
+    public void render(BabyEnderDragonRenderState state, PoseStack poseStack, MultiBufferSource buffer, int packedLightIn) {
+        if (state.isTame && state.isSitting && !state.flying) {
             this.model = this.modelSitting;
         } else {
             this.model = this.modelNormal;
         }
-        super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        super.render(state, poseStack, buffer, packedLightIn);
     }
 
 }

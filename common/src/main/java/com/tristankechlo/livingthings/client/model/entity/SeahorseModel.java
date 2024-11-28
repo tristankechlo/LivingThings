@@ -1,17 +1,14 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.SeahorseEntity;
+import com.tristankechlo.livingthings.client.renderer.state.SeahorseRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class SeahorseModel<T extends SeahorseEntity> extends AdvancedEntityModel<T> {
+public class SeahorseModel<T extends SeahorseRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart Head;
     private final ModelPart Ear_Right;
     private final ModelPart Ear_Left;
@@ -20,11 +17,12 @@ public class SeahorseModel<T extends SeahorseEntity> extends AdvancedEntityModel
     private final ModelPart tail7;
 
     public SeahorseModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Head = Body.getChild("head");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Head = body.getChild("head");
         this.Ear_Right = Head.getChild("ear_right");
         this.Ear_Left = Head.getChild("ear_left");
-        this.tail = Body.getChild("tail");
+        this.tail = body.getChild("tail");
         ModelPart tail1 = tail.getChild("tail1");
         ModelPart tail2 = tail1.getChild("tail2");
         ModelPart tail3 = tail2.getChild("tail3");
@@ -35,7 +33,7 @@ public class SeahorseModel<T extends SeahorseEntity> extends AdvancedEntityModel
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.defaultHeadMovement(Head, -5, 0, headPitch, netHeadYaw);
 
         Ear_Right.yRot = -0.2F * Mth.cos(ageInTicks * 0.25F) - 0.55F;
@@ -44,11 +42,6 @@ public class SeahorseModel<T extends SeahorseEntity> extends AdvancedEntityModel
         tail.xRot = -0.1F * Mth.cos(ageInTicks * 0.1F) - 0.0436F;
         tail5.xRot = -0.2F * Mth.cos(ageInTicks * 0.1F) - 0.5236F;
         tail7.xRot = -0.1F * Mth.cos(ageInTicks * 0.15F) - 0.48F;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

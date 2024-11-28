@@ -14,6 +14,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -46,8 +47,8 @@ public final class BlockEvents {
         }
         ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty()) {
-            Registry<Enchantment> registry = world.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
-            int silktouchLevel = EnchantmentHelper.getItemEnchantmentLevel(registry.getHolderOrThrow(Enchantments.SILK_TOUCH), stack);
+            Registry<Enchantment> registry = world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+            int silktouchLevel = EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(Enchantments.SILK_TOUCH), stack);
             if (silktouchLevel > 0 || stack.getItem() instanceof ShearsItem) {
                 return;
             }
@@ -81,7 +82,7 @@ public final class BlockEvents {
             world.setBlock(pos.below(2), Blocks.AIR.defaultBlockState(), 3);
 
             // spawn ancient blaze
-            AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE.get().create((Level) world);
+            AncientBlazeEntity blaze = ModEntityTypes.ANCIENT_BLAZE.get().create((Level) world, EntitySpawnReason.MOB_SUMMONED);
             blaze.setInvulnerableTime(AncientBlazeConfig.chargingTime());
             blaze.setPos(pos.getX() + 0.5D, pos.below(2).getY() + 0.2D, pos.getZ() + 0.5D);
             world.addFreshEntity(blaze);
@@ -103,7 +104,7 @@ public final class BlockEvents {
             final int count = 10;
             final double radius = 6.0D;
             for (int i = 0; i < count; i++) {
-                LightningBolt bolt = EntityType.LIGHTNING_BOLT.create((Level) world);
+                LightningBolt bolt = EntityType.LIGHTNING_BOLT.create((Level) world, EntitySpawnReason.MOB_SUMMONED);
                 final double x = pos.getX() + (radius * Mth.cos((i * 2 * Mth.PI) / count));
                 final double z = pos.getZ() + (radius * Mth.sin((i * 2 * Mth.PI) / count));
                 final double y = pos.below().getY();
@@ -112,7 +113,7 @@ public final class BlockEvents {
             }
 
             // spawn baby ender dragon
-            BabyEnderDragonEntity dragon = ModEntityTypes.BABY_ENDER_DRAGON.get().create((Level) world);
+            BabyEnderDragonEntity dragon = ModEntityTypes.BABY_ENDER_DRAGON.get().create((Level) world, EntitySpawnReason.MOB_SUMMONED);
             dragon.setPos(pos.getX() + 0.5D, pos.getY() + 0.1D, pos.getZ() + 0.5D);
             world.addFreshEntity(dragon);
             return InteractionResult.SUCCESS;

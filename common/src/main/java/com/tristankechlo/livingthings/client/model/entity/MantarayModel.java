@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.MantarayEntity;
+import com.tristankechlo.livingthings.client.renderer.state.MantarayRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel<T> {
+public class MantarayModel<T extends MantarayRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart Tail;
@@ -20,6 +18,7 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
     private final ModelPart RightFlipper2;
 
     public MantarayModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.Tail = Body.getChild("Tail");
         this.Tail2 = Tail.getChild("Tail2");
@@ -30,7 +29,7 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.Body.xRot = headPitch * 0.0174532925F;
         this.Body.yRot = netHeadYaw * 0.0174532925F;
@@ -44,7 +43,7 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
         this.RightFlipper.zRot = 0.34906585F;
         this.RightFlipper2.zRot = 0.34906585F;
 
-        if (entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+        if (state.isMoving) {
             this.Body.xRot += -0.05F + (-0.05F * Mth.cos(ageInTicks * 0.2F));
 
             // wings flapping
@@ -53,11 +52,6 @@ public class MantarayModel<T extends MantarayEntity> extends AdvancedEntityModel
             this.RightFlipper.zRot = 0.6F * Mth.cos(ageInTicks * 0.15F);
             this.RightFlipper2.zRot = 0.6F * Mth.cos(ageInTicks * 0.15F);
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

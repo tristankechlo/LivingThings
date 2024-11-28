@@ -2,10 +2,29 @@ package com.tristankechlo.livingthings.client.model;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
-public abstract class AdvancedEntityModel<T extends Entity> extends EntityModel<T> {
+import java.util.function.Function;
+
+public abstract class AdvancedEntityModel<T extends LivingEntityRenderState> extends EntityModel<T> {
+
+    protected AdvancedEntityModel(ModelPart root) {
+        super(root);
+    }
+
+    protected AdvancedEntityModel(ModelPart root, Function<ResourceLocation, RenderType> $$1) {
+        super(root, $$1);
+    }
+
+    @Override
+    public void setupAnim(T state) {
+        this.animate(state, state.walkAnimationPos, state.walkAnimationSpeed, state.ageInTicks, state.yRot, state.xRot);
+    }
+
+    protected abstract void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch);
 
     protected void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
         modelRenderer.xRot = x;
@@ -13,15 +32,12 @@ public abstract class AdvancedEntityModel<T extends Entity> extends EntityModel<
         modelRenderer.zRot = z;
     }
 
-    protected void defaultHeadMovement(ModelPart head, float defaultDegreeX, float defaultDegreeY, float headPitch,
-                                       float netHeadYaw) {
+    protected void defaultHeadMovement(ModelPart head, float defaultDegreeX, float defaultDegreeY, float headPitch, float netHeadYaw) {
         head.xRot = this.deg2rad(defaultDegreeX) + this.deg2rad(headPitch);
         head.yRot = this.deg2rad(defaultDegreeY) + this.deg2rad(netHeadYaw);
     }
 
-    protected void walk(ModelPart frontRight, ModelPart frontLeft, ModelPart backRight,
-                        ModelPart backLeft, float limbSwing, float limbSwingAmount) {
-
+    protected void walk(ModelPart frontRight, ModelPart frontLeft, ModelPart backRight, ModelPart backLeft, float limbSwing, float limbSwingAmount) {
         this.walking2(backRight, limbSwing, limbSwingAmount);
         this.walking1(backLeft, limbSwing, limbSwingAmount);
         this.walking1(frontRight, limbSwing, limbSwingAmount);
@@ -37,8 +53,7 @@ public abstract class AdvancedEntityModel<T extends Entity> extends EntityModel<
     }
 
     protected void defaultWalking1(ModelPart model, float defaultDegree, float limbSwing, float limbSwingAmount) {
-        model.xRot = this.deg2rad(defaultDegree)
-                + Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        model.xRot = this.deg2rad(defaultDegree) + Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
     }
 
     protected void defaultWalking2(ModelPart model, float defaultDegree, float limbSwing, float limbSwingAmount) {

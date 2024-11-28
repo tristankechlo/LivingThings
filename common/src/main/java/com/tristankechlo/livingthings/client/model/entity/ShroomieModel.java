@@ -1,16 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.ShroomieEntity;
+import com.tristankechlo.livingthings.client.renderer.state.ShroomieRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel<T> {
+public class ShroomieModel<T extends ShroomieRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart LegLeft;
     private final ModelPart LegRight;
     private final ModelPart HeadBrown;
@@ -19,18 +16,19 @@ public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel
     private final ModelPart ArmRight;
 
     public ShroomieModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.LegLeft = Body.getChild("LegLeft");
-        this.LegRight = Body.getChild("LegRight");
-        this.HeadBrown = Body.getChild("HeadBrown");
-        this.HeadRed = Body.getChild("HeadRed");
-        this.ArmLeft = Body.getChild("ArmLeft");
-        this.ArmRight = Body.getChild("ArmRight");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.LegLeft = body.getChild("LegLeft");
+        this.LegRight = body.getChild("LegRight");
+        this.HeadBrown = body.getChild("HeadBrown");
+        this.HeadRed = body.getChild("HeadRed");
+        this.ArmLeft = body.getChild("ArmLeft");
+        this.ArmRight = body.getChild("ArmRight");
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getVariant() == 0) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (state.variant == 0) {
             HeadBrown.visible = true;
             HeadRed.visible = false;
         } else {
@@ -42,11 +40,6 @@ public class ShroomieModel<T extends ShroomieEntity> extends AdvancedEntityModel
         this.walking2(LegRight, limbSwing, limbSwingAmount);
         this.walking2(ArmLeft, limbSwing, limbSwingAmount);
         this.walking1(ArmRight, limbSwing, limbSwingAmount);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay, color);
     }
 
     @SuppressWarnings("unused")

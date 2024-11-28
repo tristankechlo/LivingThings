@@ -10,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public final class ModItems {
     public static final RegistryObject<Item> CRAB_SHELL = registerItem("crab_shell", () -> new Item(normalProps()));
     public static final RegistryObject<Item> LEXICON = registerItem("lexicon", () -> new LexiconItem(normalProps().stacksTo(1)));
     public static final RegistryObject<Item> BANANA = registerItem("banana", () -> new Item(normalProps().food(ModFoods.BANANA)));
-    public static final RegistryObject<Item> ANCIENT_HELMET = registerItem("ancient_helmet", () -> new ArmorItem(ModArmorMaterial.ANCIENT.asHolder(), ArmorItem.Type.HELMET, normalProps().stacksTo(1)));
+    public static final RegistryObject<Item> ANCIENT_HELMET = registerItem("ancient_helmet", () -> new ArmorItem(ModArmorMaterial.ANCIENT, ArmorType.HELMET, normalProps().stacksTo(1)));
     public static final RegistryObject<Item> OSTRICH = registerItem("ostrich", () -> new Item(normalProps().food(ModFoods.OSTRICH)));
     public static final RegistryObject<Item> COOKED_OSTRICH = registerItem("cooked_ostrich", () -> new Item(normalProps().food(ModFoods.COOKED_OSTRICH)));
     public static final RegistryObject<Item> ELEPHANT = registerItem("elephant", () -> new Item(normalProps().food(ModFoods.ELEPHANT)));

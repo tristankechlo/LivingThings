@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.BabyEnderDragonEntity;
+import com.tristankechlo.livingthings.client.renderer.state.BabyEnderDragonRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDragonEntity> {
+public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDragonRenderState> {
 
     private final ModelPart Body;
     private final ModelPart FrontLeftLeg;
@@ -24,6 +22,7 @@ public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDr
     private final ModelPart Head;
 
     public BabyEnderDragonSittingModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         ModelPart frontBody = this.Body.getChild("FrontBody");
         this.FrontLeftLeg = frontBody.getChild("FrontLeftLeg");
@@ -39,7 +38,7 @@ public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDr
     }
 
     @Override
-    public void setupAnim(BabyEnderDragonEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(BabyEnderDragonRenderState entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.Neck.yRot = (netHeadYaw / 3) * 0.0174532925F;
         this.Neck.xRot = 0.174533F + (headPitch / 3) * 0.0174532925F;
@@ -69,11 +68,6 @@ public class BabyEnderDragonSittingModel extends AdvancedEntityModel<BabyEnderDr
         this.Tail2.yRot = 0.0F;
         this.Tail3.yRot = 0.0F;
         this.Tail4.yRot = 0.0F;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 
     @SuppressWarnings("unused")

@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.FlamingoEntity;
+import com.tristankechlo.livingthings.client.renderer.state.FlamingoRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel<T> {
+public class FlamingoModel<T extends FlamingoRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart Head;
@@ -21,6 +19,7 @@ public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel
     private final ModelPart RightFoot;
 
     public FlamingoModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         ModelPart neckBottom = Body.getChild("NeckBottom");
         ModelPart neck2 = neckBottom.getChild("Neck2");
@@ -39,12 +38,12 @@ public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel
     }
 
     @Override
-    public void setupAnim(FlamingoEntity flamingo, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.Head.xRot = 0.2617993875F + (headPitch * 0.0174532925F);
         this.Head.yRot = (netHeadYaw / 3.75F) * 0.0174532925F;
 
-        if (flamingo.isLeftLegUp()) {
+        if (state.leftLegUp) {
             // values are defined by: ((Math.PI / 180) * AngleIn�)
             this.LeftLegTop.xRot = 1.3089969389F;
             this.LeftLegBottom.xRot = -2.7052603405F;
@@ -54,7 +53,7 @@ public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel
             this.RightLegBottom.xRot = -0.174532925F;
             this.RightFoot.xRot = 0.0436332312F;
 
-        } else if (flamingo.isRightLegUp()) {
+        } else if (state.rightLegUp) {
 
             this.LeftLegTop.xRot = 0.1308996938F;
             this.LeftLegBottom.xRot = -0.174532925F;
@@ -73,15 +72,6 @@ public class FlamingoModel<T extends FlamingoEntity> extends AdvancedEntityModel
             this.RightLegBottom.xRot = -0.174532925F;
             this.RightFoot.xRot = 0.0436332312F;
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-        if (this.young) {
-            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            matrixStackIn.translate(0, 1.5D, 0);
-        }
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     @SuppressWarnings("unused")

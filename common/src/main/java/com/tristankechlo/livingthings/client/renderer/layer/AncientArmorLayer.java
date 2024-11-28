@@ -11,37 +11,33 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 
-public class AncientArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
+public class AncientArmorLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
 
     private static final ResourceLocation ANCIENT_ARMOR = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
     private final AncientArmorModel model;
 
-    public AncientArmorLayer(RenderLayerParent<T, M> parent, AncientArmorModel model) {
+    public AncientArmorLayer(RenderLayerParent<S, M> parent, AncientArmorModel model) {
         super(parent);
         this.model = model;
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int var3, T entity, float var5, float var6, float var7, float var8, float var9, float var10) {
-        renderHelmet(poseStack, buffer, entity, var3);
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int var3, HumanoidRenderState state, float v, float v1) {
+        renderHelmet(poseStack, buffer, state, var3);
     }
 
-    private void renderHelmet(PoseStack poseStack, MultiBufferSource buffer, T entity, int var3) {
-        ItemStack itemstack = entity.getItemBySlot(EquipmentSlot.HEAD);
-        if (!itemstack.is(ModItems.ANCIENT_HELMET.get())) {
+    private void renderHelmet(PoseStack poseStack, MultiBufferSource buffer, HumanoidRenderState state, int var3) {
+        if (!state.headItem.is(ModItems.ANCIENT_HELMET.get())) {
             return;
         }
-        this.getParentModel().copyPropertiesTo((HumanoidModel<T>) model);
+        this.getParentModel().copyPropertiesTo((HumanoidModel<S>) model);
         this.model.setAllVisible(false);
         this.model.head.visible = true;
         this.model.hat.visible = true;
-        this.model.Head.visible = true;
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(ANCIENT_ARMOR), false);
         this.model.renderToBuffer(poseStack, vertexConsumer, var3, OverlayTexture.NO_OVERLAY);
 

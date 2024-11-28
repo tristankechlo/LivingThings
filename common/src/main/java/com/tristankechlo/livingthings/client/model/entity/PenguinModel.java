@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.PenguinEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
+public class PenguinModel extends AdvancedEntityModel<LivingEntityRenderState> {
 
     private final ModelPart Body;
     private final ModelPart Head;
@@ -20,6 +18,7 @@ public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
     private final ModelPart RightFeet;
 
     public PenguinModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.Head = root.getChild("Head");
         this.Beak = Head.getChild("Beak");
@@ -30,7 +29,7 @@ public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
     }
 
     @Override
-    public void setupAnim(PenguinEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(LivingEntityRenderState state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
         // wobbling effect while walking
         this.Body.zRot = (Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 7;
@@ -39,31 +38,13 @@ public class PenguinModel extends AdvancedEntityModel<PenguinEntity> {
         this.LeftWing.zRot = (-0.1308996938F) + ((-0.7872664625F + Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.0F) * limbSwingAmount);
         this.RightFeet.xRot = -((Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2);
         this.LeftFeet.xRot = (Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
-    }
 
-    @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-
-        if (this.young) {
-            matrixStackIn.pushPose();
+        if (state.isBaby) {
             this.Beak.setPos(0.0F, -2.25F, -3.75F);
-            float f = 0.55F;
-            matrixStackIn.scale(f, f, f);
-            matrixStackIn.translate(0.0D, 1.32D, 0.02D);
-            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-            matrixStackIn.popPose();
-
-            matrixStackIn.pushPose();
-            float f1 = 0.5F;
-            matrixStackIn.scale(f1, f1, f1);
-            matrixStackIn.translate(0.0D, 1.5D, 0.0D);
-            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-            matrixStackIn.popPose();
         } else {
             this.Beak.setPos(0.0F, -1.75F, -3.75F);
-            this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-            this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
         }
+
     }
 
     @SuppressWarnings("unused")

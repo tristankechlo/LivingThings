@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.OwlEntity;
+import com.tristankechlo.livingthings.client.renderer.state.OwlRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
+public class OwlModel<T extends OwlRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart Head;
@@ -20,6 +18,7 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
     private final ModelPart RightLeg;
 
     public OwlModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.Head = Body.getChild("Head");
         this.Tail = Body.getChild("Tail");
@@ -30,25 +29,11 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        if (this.young) {
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
-            matrixStack.translate(0, 1.5D, 0);
-        }
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.setRotationAngles(state, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.setRotationAngles(getOwlState(entity), limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-    }
-
-    @Override
-    public void prepareMobModel(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        this.setLivingAnimations(getOwlState(entity), entity);
-    }
-
-    public void setRotationAngles(OwlState state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(OwlRenderState state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.Head.xRot = -0.174532F + headPitch * ((float) Math.PI / 180F);
         this.Head.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.Head.zRot = 0.0F;
@@ -57,15 +42,16 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
         this.Tail.x = 0.0F;
         this.RightWing.x = -3.5F;
         this.LeftWing.x = 3.5F;
-        switch (state) {
+        switch (state.pose) {
             case SITTING:
                 break;
             case STANDING:
                 this.LeftLeg.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
                 this.RightLeg.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
                 break;
-            case FLYING:
+            case FALL_FLYING:
             default:
+                // TODO animate flapping wings
                 this.Tail.xRot = -0.959931F + Mth.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
                 this.LeftWing.zRot = -0.0873F - ageInTicks;
                 this.RightWing.zRot = 0.0873F + ageInTicks;
@@ -73,7 +59,7 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
         }
     }
 
-    public void setLivingAnimations(OwlState state, OwlEntity owl) {
+    public void setLivingAnimations(OwlRenderState state) {
         this.Body.xRot = 0.174532F;
 
         this.LeftWing.xRot = 0F;
@@ -92,14 +78,14 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
         this.RightLeg.y = -1.9107F;
         this.RightLeg.zRot = 0F;
 
-        switch (state) {
+        switch (state.pose) {
             case SITTING:
                 this.Body.xRot = 0F;
                 this.LeftLeg.xRot = 0F;
                 this.RightLeg.xRot = 0F;
                 break;
-            case FLYING:
-                if (owl.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+            case FALL_FLYING:
+                if (state.isMoving) {
                     this.LeftLeg.xRot += 0.6981317F;
                     this.RightLeg.xRot += 0.6981317F;
                 }
@@ -108,18 +94,6 @@ public class OwlModel<T extends OwlEntity> extends AdvancedEntityModel<T> {
             default:
                 break;
         }
-    }
-
-    private static OwlState getOwlState(OwlEntity owl) {
-        if (owl.isInSittingPose() || owl.isSleeping()) {
-            return OwlState.SITTING;
-        } else {
-            return owl.isFlying() ? OwlState.FLYING : OwlState.STANDING;
-        }
-    }
-
-    public static enum OwlState {
-        FLYING, STANDING, SITTING;
     }
 
     @SuppressWarnings("unused")

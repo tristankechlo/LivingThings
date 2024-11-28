@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.SharkEntity;
+import com.tristankechlo.livingthings.client.renderer.state.SharkRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
+public class SharkModel<T extends SharkRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart LeftFin;
@@ -18,6 +16,7 @@ public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
     private final ModelPart Tail2;
 
     public SharkModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.LeftFin = Body.getChild("LeftFin");
         this.RightFin = Body.getChild("RightFin");
@@ -26,15 +25,14 @@ public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         LeftFin.yRot = -0.2F * Mth.cos(ageInTicks * 0.3F);
         RightFin.yRot = -0.2F * Mth.cos(ageInTicks * 0.3F);
 
         this.Body.xRot = headPitch * 0.0174532925F;
         this.Body.yRot = netHeadYaw * 0.0174532925F;
 
-        if (entityIn.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+        if (state.isMoving) {
             this.Body.xRot += -0.05F + -0.05F * Mth.cos(ageInTicks * 0.3F);
             Tail.yRot = -0.15F * Mth.cos(ageInTicks * 0.3F);
             Tail2.yRot = -0.25F * Mth.cos(ageInTicks * 0.3F);
@@ -42,11 +40,6 @@ public class SharkModel<T extends SharkEntity> extends AdvancedEntityModel<T> {
             Tail.yRot = -0.05F * Mth.cos(ageInTicks * 0.3F);
             Tail2.yRot = -0.1F * Mth.cos(ageInTicks * 0.3F);
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, color);
     }
 
     @SuppressWarnings("unused")

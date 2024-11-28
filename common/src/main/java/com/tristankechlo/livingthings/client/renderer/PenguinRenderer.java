@@ -1,25 +1,45 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.tristankechlo.livingthings.client.LivingThingsClient;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.PenguinModel;
 import com.tristankechlo.livingthings.entity.PenguinEntity;
+import net.minecraft.client.model.BabyModelTransform;
+import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 
-public class PenguinRenderer extends MobRenderer<PenguinEntity, PenguinModel> {
+import java.util.Set;
 
-    protected static final ResourceLocation TEXTURE = LivingThingsClient.getEntityTexture("penguin/penguin.png");
-    protected static final ResourceLocation TEXTURE_CHILD = LivingThingsClient.getEntityTexture("penguin/penguin_baby.png");
+public class PenguinRenderer extends AgeableMobRenderer<PenguinEntity, LivingEntityRenderState, PenguinModel> {
+
+    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("penguin/penguin.png");
+    protected static final ResourceLocation TEXTURE_CHILD = LivingThings.getEntityTexture("penguin/penguin_baby.png");
+    public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(false, 8f, -1f, 0.55f, 0.5f, 0f, Set.of("Head"));
 
     public PenguinRenderer(EntityRendererProvider.Context context) {
-        super(context, new PenguinModel(context.bakeLayer(ModelLayer.PENGUIN)), 0.45F);
+        super(context, PenguinModel::new, ModelLayer.PENGUIN, ModelLayer.PENGUIN_BABY, 0.45F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PenguinEntity entity) {
-        return (entity.isBaby()) ? TEXTURE_CHILD : TEXTURE;
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
+    }
+
+    @Override
+    public void extractRenderState(PenguinEntity entity, LivingEntityRenderState state, float $$2) {
+        super.extractRenderState(entity, state, $$2);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
+        return state.isBaby ? TEXTURE_CHILD : TEXTURE;
+    }
+
+    public static MeshTransformer transform() {
+        // TODO create better transformer
+        return MeshTransformer.scaling(0.6F);
     }
 
 }

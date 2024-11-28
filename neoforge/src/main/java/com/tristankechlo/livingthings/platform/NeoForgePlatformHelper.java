@@ -17,7 +17,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
 import java.nio.file.Path;
 import java.util.function.Supplier;
@@ -62,7 +61,7 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props) {
-        return new DeferredSpawnEggItem(type, primaryColor, secondaryColor, props);
+        return new SpawnEggItem(type.get(), primaryColor, secondaryColor, props);
     }
 
     @Override

@@ -1,69 +1,56 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.PeacockEntity;
+import com.tristankechlo.livingthings.client.renderer.state.PeacockRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
+public class PeacockModel<T extends PeacockRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart LeftLeg;
     private final ModelPart RightLeg;
     private final ModelPart LeftWing;
     private final ModelPart RightWing;
     private final ModelPart Head;
-    private final ModelPart Tail1;
-    private final ModelPart Tail2;
-    private final ModelPart Tail3;
-    private final ModelPart Tail4;
-    private final ModelPart Tail5;
-    private final ModelPart Tail6;
-    private final ModelPart Tail7;
+    private final ModelPart[] tails;
+    private final float[] xPos = new float[]{1.48353F, 1.481785F, 1.481785F, 1.480039F, 1.480039F, 1.478294F, 1.478294F};
+    private final float[] zPos = new float[]{0.0F, 0.436332F, -0.436332F, 0.872665F, -0.872665F, 1.309F, -1.309F};
 
     public PeacockModel(ModelPart root) {
-        this.Body = root.getChild("body");
-        this.Head = this.Body.getChild("neck");
-        this.LeftLeg = this.Body.getChild("legLeft");
-        this.RightLeg = this.Body.getChild("legRight");
-        this.LeftWing = this.Body.getChild("wingLeft");
-        this.RightWing = this.Body.getChild("wingRight");
-        ModelPart tail = this.Body.getChild("tail");
-        this.Tail1 = tail.getChild("tail1");
-        this.Tail2 = tail.getChild("tail2");
-        this.Tail3 = tail.getChild("tail3");
-        this.Tail4 = tail.getChild("tail4");
-        this.Tail5 = tail.getChild("tail5");
-        this.Tail6 = tail.getChild("tail6");
-        this.Tail7 = tail.getChild("tail7");
+        super(root);
+        ModelPart body = root.getChild("body");
+        this.Head = body.getChild("neck");
+        this.LeftLeg = body.getChild("legLeft");
+        this.RightLeg = body.getChild("legRight");
+        this.LeftWing = body.getChild("wingLeft");
+        this.RightWing = body.getChild("wingRight");
+        ModelPart tail = body.getChild("tail");
+        tails = new ModelPart[]{
+                tail.getChild("tail1"), tail.getChild("tail2"), tail.getChild("tail3"), tail.getChild("tail4"),
+                tail.getChild("tail5"), tail.getChild("tail6"), tail.getChild("tail7")
+        };
     }
 
     @Override
-    public void setupAnim(PeacockEntity peacock, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount;
         this.RightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount;
         this.LeftWing.yRot = 0.0F;
         this.RightWing.yRot = 0.0F;
-        setRotationAngle(Tail1, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail2, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail3, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail4, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail5, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail6, -0.436332F, 0.0F, 0.0F);
-        setRotationAngle(Tail7, -0.436332F, 0.0F, 0.0F);
+        for (ModelPart x : tails) {
+            setRotationAngle(x, -0.436332F, 0.0F, 0.0F);
+        }
 
         // flap wings
-        if (peacock.isInPanic()) {
+        if (state.inPanic) {
             this.LeftWing.yRot = -0.436332F - Mth.cos(ageInTicks) * 0.5F;
             this.RightWing.yRot = 0.436332F + Mth.cos(ageInTicks) * 0.5F;
         }
 
         //animate head when eating
-        if (peacock.isDestroyingCrops()) {
+        if (state.isDestroyingCrops) {
             this.Head.yRot = 0.0F;
             this.Head.xRot = 1.74533F + Mth.cos(ageInTicks) * 0.5F;
             this.LeftWing.yRot = -0.436332F - Mth.cos(ageInTicks) * 0.25F;
@@ -73,36 +60,15 @@ public class PeacockModel extends AdvancedEntityModel<PeacockEntity> {
         }
 
         // move tail up
-        if (peacock.isTailFluffed()) {
-            setRotationAngle(Tail1, 1.48353F, 0.0F, 0.0F);
-            setRotationAngle(Tail2, 1.481785F, 0.0F, 0.436332F);
-            setRotationAngle(Tail3, 1.481785F, 0.0F, -0.436332F);
-            setRotationAngle(Tail4, 1.480039F, 0.0F, 0.872665F);
-            setRotationAngle(Tail5, 1.480039F, 0.0F, -0.872665F);
-            setRotationAngle(Tail6, 1.478294F, 0.0F, 1.309F);
-            setRotationAngle(Tail7, 1.478294F, 0.0F, -1.309F);
+        if (state.isTailFluffed) {
+            for (int i = 0; i < tails.length; i++) {
+                setRotationAngle(tails[i], xPos[i], 0.0F, zPos[i]);
+            }
         }
-    }
 
-    @Override
-    public void prepareMobModel(PeacockEntity peacock, float limbSwing, float limbSwingAmount, float partialTick) {
-        boolean isChild = peacock.isBaby();
-        this.Tail1.visible = !isChild;
-        this.Tail2.visible = !isChild;
-        this.Tail3.visible = !isChild;
-        this.Tail4.visible = !isChild;
-        this.Tail5.visible = !isChild;
-        this.Tail6.visible = !isChild;
-        this.Tail7.visible = !isChild;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-        if (this.young) {
-            poseStack.scale(0.5F, 0.5F, 0.5F);
-            poseStack.translate(0, 1.5D, 0);
+        for (ModelPart x : tails) {
+            x.visible = !state.isBaby;
         }
-        Body.render(poseStack, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     @SuppressWarnings("unused")

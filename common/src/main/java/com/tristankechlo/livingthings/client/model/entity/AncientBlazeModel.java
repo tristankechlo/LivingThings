@@ -1,9 +1,7 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.AncientBlazeEntity;
+import com.tristankechlo.livingthings.client.renderer.state.AncientBlazeRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -11,11 +9,10 @@ import net.minecraft.util.Mth;
 
 import java.util.Arrays;
 
-public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEntityModel<T> {
+public class AncientBlazeModel<T extends AncientBlazeRenderState> extends AdvancedEntityModel<T> {
 
     private static final int MAX_SHIELD_COUNT = 4;
     private static final int MAX_STICK_COUNT = 10;
-    private final ModelPart Body;
     private final ModelPart Head;
     private final ModelPart Shields;
     private final ModelPart Sticks;
@@ -23,14 +20,15 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
     private final ModelPart[] sticks; // 10
 
     public AncientBlazeModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Head = Body.getChild("Head");
-        this.Shields = Body.getChild("Shields");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Head = body.getChild("Head");
+        this.Shields = body.getChild("Shields");
         this.shields = new ModelPart[MAX_SHIELD_COUNT];
         Arrays.setAll(this.shields, (number) -> {
             return Shields.getChild("shield_" + number);
         });
-        this.Sticks = Body.getChild("Sticks");
+        this.Sticks = body.getChild("Sticks");
         this.sticks = new ModelPart[MAX_STICK_COUNT];
         Arrays.setAll(this.sticks, (number) -> {
             return Sticks.getChild("stick_" + number);
@@ -38,21 +36,20 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
     }
 
     @Override
-    public void setupAnim(AncientBlazeEntity blaze, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.Head.yRot = state.yRot * 0.017453F;
+        this.Head.xRot = state.xRot * 0.017453F;
 
-        this.Head.yRot = netHeadYaw * 0.017453F;
-        this.Head.xRot = headPitch * 0.017453F;
-
-        float f = 0.785398F + ageInTicks * -0.094247F;
+        float f = 0.785398F + state.ageInTicks * -0.094247F;
         for (int i = 0; i < this.sticks.length; i++) {
-            this.sticks[i].visible = (blaze.getShoots() > i);
-            this.sticks[i].y = Mth.cos((i * 3F + ageInTicks) * 0.3F) - 1.0F;
+            this.sticks[i].visible = (state.shoots > i);
+            this.sticks[i].y = Mth.cos((i * 3F + state.ageInTicks) * 0.3F) - 1.0F;
             this.sticks[i].x = Mth.cos(f) * 9.0F;
             this.sticks[i].z = Mth.sin(f) * 9.0F;
             f++;
         }
 
-        if (blaze.isPowered()) {
+        if (state.isPowered) {
             this.Shields.yRot = 0.785398F;
             this.Head.y = -22.5F;
 
@@ -63,7 +60,7 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
             }
 
         } else {
-            this.Shields.yRot = -ageInTicks / 50;
+            this.Shields.yRot = -state.ageInTicks / 50;
             this.Head.y = -24.5F;
 
             for (int i = 0; i < this.shields.length; i++) {
@@ -73,11 +70,6 @@ public class AncientBlazeModel<T extends AncientBlazeEntity> extends AdvancedEnt
             }
 
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

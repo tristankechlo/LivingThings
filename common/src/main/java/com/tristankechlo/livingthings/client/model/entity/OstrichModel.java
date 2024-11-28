@@ -1,19 +1,14 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.OstrichEntity;
+import com.tristankechlo.livingthings.client.renderer.state.OstrichRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class OstrichModel<T extends OstrichEntity> extends AdvancedEntityModel<T> {
+public class OstrichModel<T extends OstrichRenderState> extends AdvancedEntityModel<T> {
 
-    private boolean isLayingEgg;
-    private boolean isBuildingNest;
-    private final ModelPart Body;
     private final ModelPart Head;
     private final ModelPart Neck;
     private final ModelPart NeckTop;
@@ -25,30 +20,28 @@ public class OstrichModel<T extends OstrichEntity> extends AdvancedEntityModel<T
     private final ModelPart RightFoot;
 
     public OstrichModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Neck = Body.getChild("Neck");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Neck = body.getChild("Neck");
         this.NeckTop = Neck.getChild("NeckTop");
         this.Head = NeckTop.getChild("Head");
-        this.LeftLegTop = Body.getChild("LeftLegTop");
+        this.LeftLegTop = body.getChild("LeftLegTop");
         this.LeftLegBottom = LeftLegTop.getChild("LeftLegBottom");
         this.LeftFoot = LeftLegBottom.getChild("LeftFoot");
-        this.RightLegTop = Body.getChild("RightLegTop");
+        this.RightLegTop = body.getChild("RightLegTop");
         this.RightLegBottom = RightLegTop.getChild("RightLegBottom");
         this.RightFoot = RightLegBottom.getChild("RightFoot");
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.isLayingEgg = entity.isLayingEgg();
-        this.isBuildingNest = entity.isBuildingNest();
-
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.Head.xRot = headPitch * 0.0174532925F;
         this.Head.yRot = (netHeadYaw / 3.75F) * 0.0174532925F;
 
         this.NeckTop.xRot = (float) (this.Head.xRot / 1.75F);
         this.Neck.yRot = (float) (this.Head.yRot / 1.75F);
 
-        if (this.isLayingEgg) {
+        if (state.isLayingEgg) {
 
             this.LeftLegTop.xRot = 1.17809724375F;
             this.LeftLegBottom.xRot = -2.5743606466F;
@@ -58,7 +51,7 @@ public class OstrichModel<T extends OstrichEntity> extends AdvancedEntityModel<T
             this.RightLegBottom.xRot = -2.5743606466F;
             this.RightFoot.xRot = 0.6108652381F;
 
-        } else if (this.isBuildingNest) {
+        } else if (state.isBuildingNest) {
 
             this.LeftLegTop.xRot = 0.3926990812F;
             this.LeftLegBottom.xRot = -0.523598775F;
@@ -77,20 +70,7 @@ public class OstrichModel<T extends OstrichEntity> extends AdvancedEntityModel<T
             this.RightLegTop.xRot = 0.3926990812F + (Mth.cos(limbSwing * 0.6662F) * limbSwingAmount);
             this.RightLegBottom.xRot = -0.523598775F;
             this.RightFoot.xRot = 0.174532925F;
-
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-
-        if (this.young) {
-            matrixStack.scale(0.6F, 0.6F, 0.6F);
-            matrixStack.translate(0, 1, 0);
-        } else if (this.isLayingEgg) {
-            matrixStack.translate(0, 0.65, 0);
-        }
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

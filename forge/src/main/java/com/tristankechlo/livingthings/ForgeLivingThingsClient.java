@@ -1,6 +1,5 @@
 package com.tristankechlo.livingthings;
 
-import com.tristankechlo.livingthings.client.LivingThingsClient;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.client.model.entity.*;
@@ -17,26 +16,26 @@ public final class ForgeLivingThingsClient {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntityTypes.ELEPHANT.get(), LivingThingsClient.ELEPHANT_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.ELEPHANT.get(), ElephantRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.GIRAFFE.get(), GiraffeRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.LION.get(), LionRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.SHARK.get(), LivingThingsClient.SHARK_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.SHARK.get(), SharkRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.PENGUIN.get(), PenguinRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.OSTRICH.get(), LivingThingsClient.OSTRICH_RENDERER);
-        event.registerEntityRenderer(ModEntityTypes.FLAMINGO.get(), LivingThingsClient.FLAMINGO_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.OSTRICH.get(), OstrichRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.FLAMINGO.get(), FlamingoRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.CRAB.get(), CrabRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.MANTARAY.get(), MantarayRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.RACCOON.get(), LivingThingsClient.RACCOON_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.RACCOON.get(), RaccoonRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.OWL.get(), OwlRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.ANCIENT_BLAZE.get(), AncientBlazeRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.KOALA.get(), LivingThingsClient.KOALA_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.KOALA.get(), KoalaRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.SNAIL.get(), SnailRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.MONKEY.get(), MonkeyRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.NETHER_KNIGHT.get(), NetherKnightRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.SHROOMIE.get(), ShroomieRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.BABY_ENDER_DRAGON.get(), BabyEnderDragonRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.PEACOCK.get(), LivingThingsClient.PEACOCK_RENDERER);
+        event.registerEntityRenderer(ModEntityTypes.PEACOCK.get(), PeacockRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.THROWN_OSTRICH_EGG.get(), ThrownItemRenderer::new);
     }
 

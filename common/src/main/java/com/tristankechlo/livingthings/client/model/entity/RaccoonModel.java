@@ -1,17 +1,14 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.RaccoonEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-public class RaccoonModel<T extends RaccoonEntity> extends AdvancedEntityModel<T> {
+public class RaccoonModel<T extends LivingEntityRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart Head;
     private final ModelPart Tail;
     private final ModelPart LegFrontRight;
@@ -20,30 +17,23 @@ public class RaccoonModel<T extends RaccoonEntity> extends AdvancedEntityModel<T
     private final ModelPart LegBackLeft;
 
     public RaccoonModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Head = Body.getChild("Head");
-        this.Tail = Body.getChild("Tail");
-        this.LegFrontRight = Body.getChild("LegFrontRight");
-        this.LegFrontLeft = Body.getChild("LegFrontLeft");
-        this.LegBackRight = Body.getChild("LegBackRight");
-        this.LegBackLeft = Body.getChild("LegBackLeft");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Head = body.getChild("Head");
+        this.Tail = body.getChild("Tail");
+        this.LegFrontRight = body.getChild("LegFrontRight");
+        this.LegFrontLeft = body.getChild("LegFrontLeft");
+        this.LegBackRight = body.getChild("LegBackRight");
+        this.LegBackLeft = body.getChild("LegBackLeft");
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.Head.xRot = headPitch * 0.0174532925F;
         this.Head.yRot = (netHeadYaw / 3.75F) * 0.0174532925F;
         this.walk(LegFrontRight, LegFrontLeft, LegBackRight, LegBackLeft, limbSwing, limbSwingAmount);
         this.Tail.yRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
-    }
 
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        if (this.young) {
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
-            matrixStack.translate(0, 1.5D, 0);
-        }
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

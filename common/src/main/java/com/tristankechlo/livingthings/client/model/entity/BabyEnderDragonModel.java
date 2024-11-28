@@ -1,17 +1,14 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.BabyEnderDragonEntity;
+import com.tristankechlo.livingthings.client.renderer.state.BabyEnderDragonRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEntity> {
+public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonRenderState> {
 
-    private final ModelPart Body;
     private final ModelPart FrontLeftLeg;
     private final ModelPart FrontRightLeg;
     private final ModelPart BackLeftLeg;
@@ -29,17 +26,18 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
     private final ModelPart Bell;
 
     public BabyEnderDragonModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        ModelPart frontBody = this.Body.getChild("FrontBody");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        ModelPart frontBody = body.getChild("FrontBody");
         this.FrontLeftLeg = frontBody.getChild("FrontLeftLeg");
         this.FrontRightLeg = frontBody.getChild("FrontRightLeg");
-        this.BackLeftLeg = this.Body.getChild("BackLeftLeg");
-        this.BackRightLeg = this.Body.getChild("BackRightLeg");
+        this.BackLeftLeg = body.getChild("BackLeftLeg");
+        this.BackRightLeg = body.getChild("BackRightLeg");
         this.LeftWing = frontBody.getChild("LeftWing");
         this.LeftWing2 = this.LeftWing.getChild("LeftWing2");
         this.RightWing = frontBody.getChild("RightWing");
         this.RightWing2 = this.RightWing.getChild("RightWing2");
-        this.Tail = this.Body.getChild("Tail");
+        this.Tail = body.getChild("Tail");
         this.Tail2 = this.Tail.getChild("Tail2");
         this.Tail3 = this.Tail2.getChild("Tail3");
         this.Tail4 = this.Tail3.getChild("Tail4");
@@ -49,8 +47,7 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
     }
 
     @Override
-    public void setupAnim(BabyEnderDragonEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    protected void animate(BabyEnderDragonRenderState state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.Neck.yRot = (netHeadYaw / 3) * 0.0174532925F;
         this.Neck.xRot = (headPitch / 3) * 0.0174532925F;
         this.Head.yRot = (netHeadYaw / 2) * 0.0174532925F;
@@ -61,18 +58,19 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
         this.BackLeftLeg.xRot = 0.0F;
         this.BackRightLeg.xRot = 0.0F;
 
-        final boolean isMoving = entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D;
-        final boolean isFlying = entity.isFlying();
+        final boolean isMoving = state.isMoving();
+        final boolean isFlying = state.flying;
 
         if (isFlying && isMoving) { // is flying
-            this.animateFlying(limbSwing, limbSwingAmount, ageInTicks);
+            this.animateFlying(limbSwing, limbSwingAmount, state.ageInTicks);
         } else if (isFlying && !isMoving) { // hovering in the air
-            this.animateHovering(ageInTicks);
+            this.animateHovering(state.ageInTicks);
         } else if (!isFlying && !isMoving) { // standing
-            this.animateSwingingTail(ageInTicks, 1.0F);
+            this.animateSwingingTail(state.ageInTicks, 1.0F);
         } else {
-            this.animateWalking(limbSwing, limbSwingAmount, ageInTicks);
+            this.animateWalking(limbSwing, limbSwingAmount, state.ageInTicks);
         }
+        this.Bell.visible = state.isTame;
     }
 
     private void animateFlying(float limbSwing, float limbSwingAmount, float ageInTicks) {
@@ -147,17 +145,6 @@ public class BabyEnderDragonModel extends AdvancedEntityModel<BabyEnderDragonEnt
         this.Tail4.zRot = 0F;
 
         this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(poseStack, buffer, packedLight, packedOverlay, color);
-    }
-
-    @Override
-    public void prepareMobModel(BabyEnderDragonEntity entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        this.Bell.visible = entity.isTame();
-        super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
     }
 
     @SuppressWarnings("unused")

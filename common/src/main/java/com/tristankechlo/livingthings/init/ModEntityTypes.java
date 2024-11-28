@@ -6,6 +6,9 @@ import com.tristankechlo.livingthings.entity.projectile.ThrownOstrichEgg;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -27,25 +30,30 @@ public final class ModEntityTypes {
     public static final RegistryObject<EntityType<MantarayEntity>> MANTARAY = ENTITY_TYPES.register("mantaray", () -> create("mantaray", MantarayEntity::new, MobCategory.WATER_AMBIENT, 0.75F, 0.45F, 0.5F));
     public static final RegistryObject<EntityType<RaccoonEntity>> RACCOON = ENTITY_TYPES.register("raccoon", () -> create("raccoon", RaccoonEntity::new, MobCategory.CREATURE, 0.5F, 0.75F, 0.93F));
     public static final RegistryObject<EntityType<OwlEntity>> OWL = ENTITY_TYPES.register("owl", () -> create("owl", OwlEntity::new, MobCategory.CREATURE, 0.5F, 0.99F, 0.9F));
-    public static final RegistryObject<EntityType<AncientBlazeEntity>> ANCIENT_BLAZE = ENTITY_TYPES.register("ancient_blaze", () -> EntityType.Builder.of(AncientBlazeEntity::new, MobCategory.MONSTER).sized(0.7F, 2.99F).fireImmune().build(LivingThings.MOD_ID + ":ancient_blaze"));
+    public static final RegistryObject<EntityType<AncientBlazeEntity>> ANCIENT_BLAZE = ENTITY_TYPES.register("ancient_blaze", () -> build(EntityType.Builder.of(AncientBlazeEntity::new, MobCategory.MONSTER).sized(0.7F, 2.99F).fireImmune(), "ancient_blaze"));
     public static final RegistryObject<EntityType<KoalaEntity>> KOALA = ENTITY_TYPES.register("koala", () -> create("koala", KoalaEntity::new, MobCategory.CREATURE, 0.6F, 0.75F, 0.8F));
     public static final RegistryObject<EntityType<SnailEntity>> SNAIL = ENTITY_TYPES.register("snail", () -> create("snail", SnailEntity::new, MobCategory.CREATURE, 0.6F, 0.7F, 0.93F));
     public static final RegistryObject<EntityType<MonkeyEntity>> MONKEY = ENTITY_TYPES.register("monkey", () -> create("monkey", MonkeyEntity::new, MobCategory.CREATURE, 0.6F, 0.7F, 0.95F));
-    public static final RegistryObject<EntityType<NetherKnightEntity>> NETHER_KNIGHT = ENTITY_TYPES.register("nether_knight", () -> EntityType.Builder.of(NetherKnightEntity::new, MobCategory.MONSTER).sized(0.7F, 2.3F).fireImmune().build(LivingThings.MOD_ID + ":nether_knight"));
+    public static final RegistryObject<EntityType<NetherKnightEntity>> NETHER_KNIGHT = ENTITY_TYPES.register("nether_knight", () -> build(EntityType.Builder.of(NetherKnightEntity::new, MobCategory.MONSTER).sized(0.7F, 2.3F).fireImmune(), "nether_knight"));
     public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE = ENTITY_TYPES.register("shroomie", () -> create("shroomie", ShroomieEntity::new, MobCategory.CREATURE, 0.5F, 0.99F));
     public static final RegistryObject<EntityType<SeahorseEntity>> SEAHORSE = ENTITY_TYPES.register("seahorse", () -> create("seahorse", SeahorseEntity::new, MobCategory.WATER_AMBIENT, 0.2F, 0.7F, 0.85F));
     public static final RegistryObject<EntityType<BabyEnderDragonEntity>> BABY_ENDER_DRAGON = ENTITY_TYPES.register("baby_ender_dragon", () -> create("baby_ender_dragon", BabyEnderDragonEntity::new, MobCategory.CREATURE, 0.75F, 0.75F));
     public static final RegistryObject<EntityType<PeacockEntity>> PEACOCK = ENTITY_TYPES.register("peacock", () -> create("peacock", PeacockEntity::new, MobCategory.CREATURE, 0.6F, 1.25F));
-    public static final RegistryObject<EntityType<ThrownOstrichEgg>> THROWN_OSTRICH_EGG = ENTITY_TYPES.register("thrown_ostrich_egg", () -> EntityType.Builder.<ThrownOstrichEgg>of(ThrownOstrichEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(LivingThings.MOD_ID + ":thrown_ostrich_egg"));
+    public static final RegistryObject<EntityType<ThrownOstrichEgg>> THROWN_OSTRICH_EGG = ENTITY_TYPES.register("thrown_ostrich_egg", () -> build(EntityType.Builder.<ThrownOstrichEgg>of(ThrownOstrichEgg::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10), "thrown_ostrich_egg"));
 
     // create standard entity type
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height) {
-        return EntityType.Builder.of(factory, category).sized(width, height).build(LivingThings.MOD_ID + ":" + name);
+        return build(EntityType.Builder.of(factory, category).sized(width, height), name);
     }
 
     // create standard entity type with special eye height
     private static <T extends Entity> EntityType<T> create(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height, float eyeHeight) {
-        return EntityType.Builder.of(factory, category).sized(width, height).eyeHeight(height * eyeHeight).build(LivingThings.MOD_ID + ":" + name);
+        return build(EntityType.Builder.of(factory, category).sized(width, height).eyeHeight(height * eyeHeight), name);
+    }
+
+    private static <T extends Entity> EntityType<T> build(EntityType.Builder<T> builder, String type) {
+        ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, type));
+        return builder.build(key);
     }
 
 }

@@ -1,9 +1,8 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.NetherKnightEntity;
+import com.tristankechlo.livingthings.client.renderer.state.NetherKnightRenderState;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,9 +10,8 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class NetherKnightModel<T extends NetherKnightEntity> extends AdvancedEntityModel<T> implements ArmedModel {
+public class NetherKnightModel<T extends NetherKnightRenderState> extends AdvancedEntityModel<T> implements ArmedModel {
 
-    private final ModelPart Body;
     private final ModelPart Head;
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
@@ -21,16 +19,17 @@ public class NetherKnightModel<T extends NetherKnightEntity> extends AdvancedEnt
     private final ModelPart LeftLeg;
 
     public NetherKnightModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Head = Body.getChild("Head");
-        this.RightArm = Body.getChild("RightArm");
-        this.LeftArm = Body.getChild("LeftArm");
-        this.RightLeg = Body.getChild("RightLeg");
-        this.LeftLeg = Body.getChild("LeftLeg");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Head = body.getChild("Head");
+        this.RightArm = body.getChild("RightArm");
+        this.LeftArm = body.getChild("LeftArm");
+        this.RightLeg = body.getChild("RightLeg");
+        this.LeftLeg = body.getChild("LeftLeg");
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.defaultHeadMovement(Head, 0, 0, headPitch, netHeadYaw);
         this.LeftArm.xRot = 0;
         this.LeftArm.zRot = 0;
@@ -40,12 +39,7 @@ public class NetherKnightModel<T extends NetherKnightEntity> extends AdvancedEnt
         this.walking2(RightLeg, limbSwing, limbSwingAmount);
         this.walking2(LeftArm, limbSwing, limbSwingAmount);
         this.walking1(RightArm, limbSwing, limbSwingAmount);
-        this.setupAttackAnimation(entity, ageInTicks);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
+        this.setupAttackAnimation(state, ageInTicks);
     }
 
     @Override
@@ -57,15 +51,15 @@ public class NetherKnightModel<T extends NetherKnightEntity> extends AdvancedEnt
         return handSide == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
-    private void setupAttackAnimation(T entity, float ageInTicks) {
-        if (this.attackTime > 0.0F) {
-            float f = Mth.sin(attackTime * (float) Math.PI);
-            float f1 = Mth.sin((1.0F - (1.0F - attackTime) * (1.0F - attackTime)) * (float) Math.PI);
+    private void setupAttackAnimation(T state, float ageInTicks) {
+        if (state.attackTime > 0.0F) {
+            float f = Mth.sin(state.attackTime * (float) Math.PI);
+            float f1 = Mth.sin((1.0F - (1.0F - state.attackTime) * (1.0F - state.attackTime)) * (float) Math.PI);
             LeftArm.zRot = 0.0F;
             RightArm.zRot = 0.0F;
             LeftArm.yRot = 0.15707964F;
             RightArm.yRot = -0.15707964F;
-            if (entity.getMainArm() == HumanoidArm.RIGHT) {
+            if (state.mainArm == HumanoidArm.RIGHT) {
                 RightArm.xRot = -Mth.cos(ageInTicks * 0.1F) * 0.5F;
                 RightArm.xRot -= f * 1.2F + f1 * 0.4F;
             } else {

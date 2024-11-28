@@ -1,17 +1,14 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.CrabEntity;
+import com.tristankechlo.livingthings.client.renderer.state.CrabRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
+public class CrabModel<T extends CrabRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart Leg1;
     private final ModelPart Leg2;
     private final ModelPart Leg3;
@@ -24,21 +21,22 @@ public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
     private final ModelPart Shear2;
 
     public CrabModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Leg1 = Body.getChild("Leg1");
-        this.Leg2 = Body.getChild("Leg2");
-        this.Leg3 = Body.getChild("Leg3");
-        this.Leg4 = Body.getChild("Leg4");
-        this.Leg5 = Body.getChild("Leg5");
-        this.Leg6 = Body.getChild("Leg6");
-        this.Leg7 = Body.getChild("Leg7");
-        this.Leg8 = Body.getChild("Leg8");
-        this.Shear1 = Body.getChild("Shear1");
-        this.Shear2 = Body.getChild("Shear2");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        this.Leg1 = body.getChild("Leg1");
+        this.Leg2 = body.getChild("Leg2");
+        this.Leg3 = body.getChild("Leg3");
+        this.Leg4 = body.getChild("Leg4");
+        this.Leg5 = body.getChild("Leg5");
+        this.Leg6 = body.getChild("Leg6");
+        this.Leg7 = body.getChild("Leg7");
+        this.Leg8 = body.getChild("Leg8");
+        this.Shear1 = body.getChild("Shear1");
+        this.Shear2 = body.getChild("Shear2");
     }
 
     @Override
-    public void setupAnim(CrabEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         // set all legs to default {angle * (PI / 180)}
         this.Leg1.yRot = 0.174532925F;
         this.Leg1.zRot = 0.47996554375F;
@@ -67,21 +65,21 @@ public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
         float f7 = Math.abs(Mth.sin(limbSwing * 0.6662F + ((float) Math.PI / 2F)) * 0.4F) * limbSwingAmount;
         float f8 = Math.abs(Mth.sin(limbSwing * 0.6662F + ((float) Math.PI * 1.5F)) * 0.4F) * limbSwingAmount;
         this.Leg1.yRot += f1;
-        this.Leg2.yRot += -f1;
+        this.Leg2.yRot -= f1;
         this.Leg3.yRot += f2;
-        this.Leg4.yRot += -f2;
+        this.Leg4.yRot -= f2;
         this.Leg5.yRot += f3;
-        this.Leg6.yRot += -f3;
+        this.Leg6.yRot -= f3;
         this.Leg7.yRot += f4;
-        this.Leg8.yRot += -f4;
+        this.Leg8.yRot -= f4;
         this.Leg1.zRot += f5;
-        this.Leg2.zRot += -f5;
+        this.Leg2.zRot -= f5;
         this.Leg3.zRot += f6;
-        this.Leg4.zRot += -f6;
+        this.Leg4.zRot -= f6;
         this.Leg5.zRot += f7;
-        this.Leg6.zRot += -f7;
+        this.Leg6.zRot -= f7;
         this.Leg7.zRot += f8;
-        this.Leg8.zRot += -f8;
+        this.Leg8.zRot -= f8;
 
         // set shears default angles
         this.Shear1.xRot = -0.08726646259F;
@@ -92,16 +90,6 @@ public class CrabModel<T extends CrabEntity> extends AdvancedEntityModel<T> {
         // shears walking animation
         this.Shear1.xRot += -(Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
         this.Shear2.xRot += (Mth.cos(limbSwing * 1.3324F) * 0.75F * limbSwingAmount) / 2;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-
-        if (this.young) {
-            matrixStack.scale(0.6F, 0.6F, 0.6F);
-            matrixStack.translate(0, 1, 0);
-        }
-        Body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     @SuppressWarnings("unused")

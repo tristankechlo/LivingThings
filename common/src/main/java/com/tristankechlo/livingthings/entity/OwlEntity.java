@@ -5,7 +5,7 @@ import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -83,7 +83,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredients.OWL_FOOD, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Predicates.OWL_FOOD, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));

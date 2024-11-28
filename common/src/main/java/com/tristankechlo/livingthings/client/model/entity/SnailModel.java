@@ -1,35 +1,28 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.SnailEntity;
+import com.tristankechlo.livingthings.client.renderer.state.SnailRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class SnailModel<T extends SnailEntity> extends AdvancedEntityModel<T> {
+public class SnailModel<T extends SnailRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart LeftEyeStick;
     private final ModelPart RightEyeStick;
 
-    public SnailModel(ModelPart root, float scale) {
-        this.Body = root.getChild("Body");
+    public SnailModel(ModelPart root) {
+        super(root);
+        ModelPart Body = root.getChild("Body");
         this.LeftEyeStick = Body.getChild("LeftEyeStick");
         this.RightEyeStick = Body.getChild("RightEyeStick");
     }
 
     @Override
-    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.LeftEyeStick.zRot = Mth.cos(limbSwing * 0.6662F) * 0.4F * limbSwingAmount;
         this.RightEyeStick.zRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.4F * limbSwingAmount;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        Body.render(matrixStack, buffer, packedLight, packedOverlay, color);
     }
 
     @SuppressWarnings("unused")

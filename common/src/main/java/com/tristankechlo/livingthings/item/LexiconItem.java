@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +34,7 @@ public class LexiconItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (playerIn instanceof ServerPlayer) {
             ServerPlayer player = (ServerPlayer) playerIn;
             if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
@@ -49,8 +48,7 @@ public class LexiconItem extends Item {
                 player.sendSystemMessage(Component.translatable("messages.livingthings.nopatchouli.wiki", URL));
             }
         }
-        ItemStack stack = playerIn.getItemInHand(handIn);
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
     @Override

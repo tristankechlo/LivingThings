@@ -39,7 +39,8 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        if (!this.entity.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        Level level = this.entity.level();
+        if ((level instanceof ServerLevel) && !((ServerLevel) level).getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return false;
         } else if (this.nextStartTick > 0) {
             --this.nextStartTick;
@@ -54,7 +55,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
     }
 
     private boolean shouldMoveToDestination() {
-        return this.blockPos != null && this.isValidTarget(this.mob.level(), this.blockPos) ? true : this.findNearestBlock();
+        return this.blockPos != null && (this.isValidTarget(this.mob.level(), this.blockPos) ? true : this.findNearestBlock());
     }
 
     @Override

@@ -107,7 +107,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_SWORD);
         List<? extends String> names = NetherKnightConfig.get().swordNames.get();
         String name = names.get(random.nextInt(names.size()));
-        Registry<Enchantment> registry = this.registryAccess().get(Registries.ENCHANTMENT).orElseThrow().value();
+        Registry<Enchantment> registry = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's Butter Knife";
             stack.enchant(registry.getOrThrow(Enchantments.SHARPNESS), 4 + random.nextInt(6));
@@ -126,7 +126,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         ItemStack stack = new ItemStack(Items.NETHERITE_AXE);
         List<? extends String> names = NetherKnightConfig.get().axeNames.get();
         String name = names.get(random.nextInt(names.size()));
-        Registry<Enchantment> registry = this.registryAccess().get(Registries.ENCHANTMENT).orElseThrow().value();
+        Registry<Enchantment> registry = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         if (random.nextInt(1000) == 0) {
             name = "Buecher_wurm's War Axe";
             stack.enchant(registry.getOrThrow(Enchantments.MENDING), 1);

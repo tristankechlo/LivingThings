@@ -1,28 +1,40 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.tristankechlo.livingthings.client.LivingThingsClient;
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.SeahorseModel;
+import com.tristankechlo.livingthings.client.renderer.state.SeahorseRenderState;
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class SeahorseRenderer extends MobRenderer<SeahorseEntity, SeahorseModel<SeahorseEntity>> {
+public class SeahorseRenderer extends MobRenderer<SeahorseEntity, SeahorseRenderState, SeahorseModel<SeahorseRenderState>> {
 
-    private static final ResourceLocation GREEN = LivingThingsClient.getEntityTexture("seahorse/seahorse_green.png");
-    private static final ResourceLocation BLUE = LivingThingsClient.getEntityTexture("seahorse/seahorse_blue.png");
-    private static final ResourceLocation PURPLE = LivingThingsClient.getEntityTexture("seahorse/seahorse_purple.png");
-    private static final ResourceLocation RED = LivingThingsClient.getEntityTexture("seahorse/seahorse_red.png");
-    private static final ResourceLocation YELLOW = LivingThingsClient.getEntityTexture("seahorse/seahorse_yellow.png");
+    private static final ResourceLocation GREEN = LivingThings.getEntityTexture("seahorse/seahorse_green.png");
+    private static final ResourceLocation BLUE = LivingThings.getEntityTexture("seahorse/seahorse_blue.png");
+    private static final ResourceLocation PURPLE = LivingThings.getEntityTexture("seahorse/seahorse_purple.png");
+    private static final ResourceLocation RED = LivingThings.getEntityTexture("seahorse/seahorse_red.png");
+    private static final ResourceLocation YELLOW = LivingThings.getEntityTexture("seahorse/seahorse_yellow.png");
 
     public SeahorseRenderer(Context context) {
         super(context, new SeahorseModel<>(context.bakeLayer(ModelLayer.SEAHORSE)), 0.2F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SeahorseEntity entity) {
-        final byte variant = entity.getVariant();
+    public SeahorseRenderState createRenderState() {
+        return new SeahorseRenderState();
+    }
+
+    @Override
+    public void extractRenderState(SeahorseEntity entity, SeahorseRenderState state, float $$2) {
+        super.extractRenderState(entity, state, $$2);
+        state.fromEntity(entity);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(SeahorseRenderState state) {
+        final byte variant = state.variant;
         if (variant == 1) {
             return GREEN;
         } else if (variant == 2) {

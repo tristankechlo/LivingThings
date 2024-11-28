@@ -5,7 +5,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.SnailConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -112,7 +112,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredients.SNAIL_FOOD, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Predicates.SNAIL_FOOD, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));

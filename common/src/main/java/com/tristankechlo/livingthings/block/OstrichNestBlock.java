@@ -14,7 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -101,7 +101,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
                 worldIn.setBlock(pos, state.setValue(EGG, false).setValue(HATCH, 0), 2);
                 worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F, 0.9F);
 
-                OstrichEntity ostrichEntity = ModEntityTypes.OSTRICH.get().create(worldIn);
+                OstrichEntity ostrichEntity = ModEntityTypes.OSTRICH.get().create(worldIn, EntitySpawnReason.NATURAL);
                 ostrichEntity.setAge(-24000);
                 ostrichEntity.setPosRaw(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
                 worldIn.addFreshEntity(ostrichEntity);

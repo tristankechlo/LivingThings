@@ -1,15 +1,13 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.MonkeyEntity;
+import com.tristankechlo.livingthings.client.renderer.state.MonkeyRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> {
+public class MonkeyModel<T extends MonkeyRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart BodyFront;
@@ -27,6 +25,7 @@ public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> 
     //private final ModelPart BackLeftLegBottom;
 
     public MonkeyModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.BodyFront = Body.getChild("BodyFront");
         this.Head = BodyFront.getChild("Head");
@@ -39,13 +38,11 @@ public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> 
         this.FrontLeftLegBottom = FrontLeftLegTop.getChild("FrontLeftLegBottom");
         this.BackRightLegTop = Body.getChild("BackRightLegTop");
         this.BackLeftLegTop = Body.getChild("BackLeftLegTop");
-//		this.BackRightLegBottom = BackRightLegTop.getChild("BackRightLegBottom");
-//		this.BackLeftLegBottom = BackLeftLegTop.getChild("BackLeftLegBottom");
     }
 
     @Override
-    public void setupAnim(MonkeyEntity monkey, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (monkey.isPartying()) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (state.isPartying) {
             this.setPartyAngles();
             this.defaultWalking1(BackLeftLegTop, 67.5F, limbSwing, limbSwingAmount);
             this.defaultWalking2(BackRightLegTop, 67.5F, limbSwing, limbSwingAmount);
@@ -62,15 +59,6 @@ public class MonkeyModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> 
             Tail.yRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.3F * limbSwingAmount;
             Tail2.yRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.7F * limbSwingAmount;
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-        if (this.young) {
-            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            matrixStackIn.translate(0, 1.5D, 0);
-        }
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     private void setDefaultAngles() {

@@ -1,19 +1,15 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.GiraffeEntity;
+import com.tristankechlo.livingthings.client.renderer.state.GiraffeRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T> {
+public class GiraffeModel<T extends GiraffeRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart Head;
-    private final ModelPart Legs;
     private final ModelPart NeckTop;
     private final ModelPart NeckMiddle;
     private final ModelPart NeckBottom;
@@ -25,33 +21,23 @@ public class GiraffeModel<T extends GiraffeEntity> extends AdvancedEntityModel<T
     private final ModelPart TailBottom;
 
     public GiraffeModel(ModelPart root) {
-        this.Body = root.getChild("Body");
-        this.Legs = Body.getChild("Legs");
-        this.NeckBottom = Body.getChild("NeckBottom");
+        super(root);
+        ModelPart body = root.getChild("Body");
+        ModelPart legs = body.getChild("Legs");
+        this.NeckBottom = body.getChild("NeckBottom");
         this.NeckMiddle = NeckBottom.getChild("NeckMiddle");
         this.NeckTop = NeckMiddle.getChild("NeckTop");
         this.Head = NeckTop.getChild("Head");
-        this.FrontRightLeg = Legs.getChild("FrontRightLeg");
-        this.FrontLeftLeg = Legs.getChild("FrontLeftLeg");
-        this.BackRightLeg = Legs.getChild("BackRightLeg");
-        this.BackLeftLeg = Legs.getChild("BackLeftLeg");
-        this.TailTop = Body.getChild("TailTop");
+        this.FrontRightLeg = legs.getChild("FrontRightLeg");
+        this.FrontLeftLeg = legs.getChild("FrontLeftLeg");
+        this.BackRightLeg = legs.getChild("BackRightLeg");
+        this.BackLeftLeg = legs.getChild("BackLeftLeg");
+        this.TailTop = body.getChild("TailTop");
         this.TailBottom = TailTop.getChild("TailBottom");
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-
-        if (this.young) {
-            matrixStackIn.scale(0.6F, 0.6F, 0.6F);
-            matrixStackIn.translate(0, 1, 0);
-        }
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-
-    }
-
-    @Override
-    public void setupAnim(GiraffeEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void animate(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.Head.xRot = headPitch * 0.0174532925F;
         this.NeckTop.xRot = (float) (this.NeckMiddle.xRot / 1);

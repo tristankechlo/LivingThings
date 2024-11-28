@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4D));
         this.goalSelector.addGoal(2, new OstrichBreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new OstrichEntity.LayEggGoal(this, 1.1D));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, Ingredients.OSTRICH_FOOD, false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, Predicates.OSTRICH_FOOD, false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.3D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));

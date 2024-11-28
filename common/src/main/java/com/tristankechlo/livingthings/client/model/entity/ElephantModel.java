@@ -1,18 +1,16 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
+import com.tristankechlo.livingthings.client.renderer.state.ElephantRenderState;
 import com.tristankechlo.livingthings.entity.ElephantEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel<T> {
+public class ElephantModel<T extends ElephantRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Tusks;
-    private final ModelPart Body;
     private final ModelPart Chests;
     private final ModelPart Saddle;
     private final ModelPart Head;
@@ -28,11 +26,12 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
     private float headAngle;
 
     public ElephantModel(ModelPart root) {
-        this.Body = root.getChild("Body");
+        super(root);
+        ModelPart body = root.getChild("Body");
 
-        this.Chests = Body.getChild("Chests");
-        this.Saddle = Body.getChild("Saddle");
-        this.Head = Body.getChild("Head");
+        this.Chests = body.getChild("Chests");
+        this.Saddle = body.getChild("Saddle");
+        this.Head = body.getChild("Head");
 
         this.LeftEar = Head.getChild("LeftEar");
         this.RightEar = Head.getChild("RightEar");
@@ -42,24 +41,15 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
         this.TrunkMiddle = TrunkTop.getChild("TrunkMiddle");
         this.TrunkBottom = TrunkMiddle.getChild("TrunkBottom");
 
-        this.RightFrontLeg = Body.getChild("RightFrontLeg");
-        this.LeftFrontLeg = Body.getChild("LeftFrontLeg");
-        this.RightBackLeg = Body.getChild("RightBackLeg");
-        this.LeftBackLeg = Body.getChild("LeftBackLeg");
+        this.RightFrontLeg = body.getChild("RightFrontLeg");
+        this.LeftFrontLeg = body.getChild("LeftFrontLeg");
+        this.RightBackLeg = body.getChild("RightBackLeg");
+        this.LeftBackLeg = body.getChild("LeftBackLeg");
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        if (this.young) {
-            poseStack.scale(0.6F, 0.6F, 0.6F);
-            poseStack.translate(0, 1, 0);
-        }
-        Body.render(poseStack, buffer, packedLight, packedOverlay);
-    }
-
-    @Override
-    public void setupAnim(ElephantEntity elephant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (elephant.getAttackTimer() > 0) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (state.attackTimer > 0) {
             this.Head.xRot = this.headAngle;
         } else {
             this.Head.xRot = -0.0436332F + (headPitch * 0.0174532925F);
@@ -68,7 +58,7 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 
         this.walk(RightFrontLeg, LeftFrontLeg, RightBackLeg, LeftBackLeg, limbSwing, limbSwingAmount);
 
-        if (elephant.isAngry()) { // ears spread out when angry at player
+        if (state.angry) { // ears spread out when angry at player
             this.LeftEar.yRot = 1.13446F;
             this.LeftEar.zRot = 0.1309F;
             this.RightEar.yRot = -1.13446F;
@@ -88,21 +78,18 @@ public class ElephantModel<T extends ElephantEntity> extends AdvancedEntityModel
 
         this.TrunkBottom.xRot = 0.0872665F + (0.2F * Mth.sin(0.1F * ageInTicks + 2F));
         this.TrunkBottom.zRot = (0.2F * Mth.sin(0.1F * ageInTicks + 2F));
-    }
 
-    @Override
-    public void prepareMobModel(ElephantEntity elephant, float limbSwing, float limbSwingAmount, float partialTick) {
-        float i = elephant.getAttackTimer(); // counting down from 400 ticks
+        // prepare mob model
+        float i = state.attackTimer; // counting down from 400 ticks
         if (i > 0) {
             //calculate angle, linear between -10 and 55 degrees
-            float progress = (1.0F - ((i - partialTick) / (float) ElephantEntity.ANGER_TIME));
+            float progress = (1.0F - ((i - state.partialTicks) / (float) ElephantEntity.ANGER_TIME));
             this.headAngle = Mth.lerp(progress, 0.174533F, -0.959931F);
         }
 
-        this.Chests.visible = elephant.hasChest();
-        this.Saddle.visible = elephant.isSaddled();
-        this.Tusks.visible = !this.young;
-
+        this.Chests.visible = state.hasChest;
+        this.Saddle.visible = state.hasSaddle;
+        this.Tusks.visible = !state.isBaby;
     }
 
     @SuppressWarnings("unused")

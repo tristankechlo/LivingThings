@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -69,7 +69,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new CustomSitWhenOrderedToSitGoal(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredients.BABY_ENDERDRAGON_FOOD, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Predicates.BABY_ENDERDRAGON_FOOD, false));
         this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.1D, 120, 240, (float) BabyEnderDragonConfig.followRange()));
         this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.3D, 10.0F, 3.0F));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomFlyingGoal(this, 1.2D));

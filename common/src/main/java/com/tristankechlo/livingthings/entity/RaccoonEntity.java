@@ -7,7 +7,7 @@ import com.tristankechlo.livingthings.entity.ai.BreakTurtleEggGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.Predicates;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
@@ -64,7 +64,7 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.25D, false, RaccoonConfig::canAttack));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredients.RACCOON_FOOD, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Predicates.RACCOON_FOOD, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(5, new BreakOstrichEggGoal(this, 1.0D, 3, 100, false));
         this.goalSelector.addGoal(5, new BreakTurtleEggGoal(this, 1.0D, 3));

@@ -65,7 +65,7 @@ public final class ForgePlatformHelper implements IPlatformHelper {
         // fix invisible spawn eggs (only a problem in forge)
         primaryColor = (255 << 24) | primaryColor;
         secondaryColor = (255 << 24) | secondaryColor;
-        return new ForgeSpawnEggItem(() -> (EntityType<? extends Mob>) type.get(), primaryColor, secondaryColor, props);
+        return new ForgeSpawnEggItem(type, primaryColor, secondaryColor, props);
     }
 
     @Override

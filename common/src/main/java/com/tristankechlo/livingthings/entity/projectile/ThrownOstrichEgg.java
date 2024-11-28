@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -18,12 +19,14 @@ public class ThrownOstrichEgg extends ThrowableItemProjectile {
         super(type, world);
     }
 
-    public ThrownOstrichEgg(Level world, double x, double y, double z) {
-        super(ModEntityTypes.THROWN_OSTRICH_EGG.get(), x, y, z, world);
+    public ThrownOstrichEgg(double x, double y, double z, Level level, ItemStack stack) {
+        super(ModEntityTypes.THROWN_OSTRICH_EGG.get(), x, y, z, level, stack);
+        this.setItem(stack);
     }
 
-    public ThrownOstrichEgg(Level world, LivingEntity entity) {
-        super(ModEntityTypes.THROWN_OSTRICH_EGG.get(), entity, world);
+    public ThrownOstrichEgg(LivingEntity owner, Level level, ItemStack stack) {
+        this(owner.getX(), owner.getEyeY() - 0.10000000149011612, owner.getZ(), level, stack);
+        this.setOwner(owner);
     }
 
     @Override

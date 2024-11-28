@@ -1,21 +1,17 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.LionEntity;
+import com.tristankechlo.livingthings.client.renderer.state.LionRenderState;
 import com.tristankechlo.livingthings.entity.misc.IGenderedMob;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
+public class LionModel<T extends LionRenderState> extends AdvancedEntityModel<T> {
 
-    private final ModelPart Body;
     private final ModelPart Mane;
     private final ModelPart Head;
-    private final ModelPart Legs;
     private final ModelPart FrontRightLeg;
     private final ModelPart FrontLeftLeg;
     private final ModelPart BackRightLeg;
@@ -23,44 +19,28 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
     private final ModelPart Tail;
 
     public LionModel(ModelPart root) {
-        this.Body = root.getChild("Body");
+        super(root);
+        ModelPart body = root.getChild("Body");
         this.Mane = root.getChild("Mane");
-        this.Head = Body.getChild("Head");
-        this.Legs = Body.getChild("Legs");
-        this.FrontRightLeg = Legs.getChild("FrontRightLeg");
-        this.FrontLeftLeg = Legs.getChild("FrontLeftLeg");
-        this.BackRightLeg = Legs.getChild("BackRightLeg");
-        this.BackLeftLeg = Legs.getChild("BackLeftLeg");
-        this.Tail = Body.getChild("Tail");
+        this.Head = body.getChild("Head");
+        ModelPart legs = body.getChild("Legs");
+        this.FrontRightLeg = legs.getChild("FrontRightLeg");
+        this.FrontLeftLeg = legs.getChild("FrontLeftLeg");
+        this.BackRightLeg = legs.getChild("BackRightLeg");
+        this.BackLeftLeg = legs.getChild("BackLeftLeg");
+        this.Tail = body.getChild("Tail");
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-
-        if (this.young) {
-            matrixStackIn.scale(0.6F, 0.6F, 0.6F);
-            matrixStackIn.translate(0, 1, 0);
-        } else {
-            Mane.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-        }
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-    }
-
-    @Override
-    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    protected void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.Head.xRot = headPitch * 0.0174532925F;
         this.Head.yRot = (netHeadYaw / 3.75F) * 0.0174532925F;
 
         this.walk(FrontRightLeg, FrontLeftLeg, BackRightLeg, BackLeftLeg, limbSwing, limbSwingAmount);
 
         this.Tail.zRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.75F * limbSwingAmount;
-    }
 
-    @Override
-    public void prepareMobModel(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-        super.prepareMobModel(entityIn, limbSwing, limbSwingAmount, partialTick);
-        if (entityIn.getGender() == IGenderedMob.Gender.MALE) {
+        if (state.gender == IGenderedMob.Gender.MALE) {
             this.Mane.visible = true;
         } else {
             this.Mane.visible = false;
@@ -68,7 +48,6 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
     }
 
     @SuppressWarnings("unused")
-
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();

@@ -1,29 +1,28 @@
 package com.tristankechlo.livingthings.client.model.entity;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.tristankechlo.livingthings.client.model.AdvancedEntityModel;
-import com.tristankechlo.livingthings.entity.MonkeyEntity;
+import com.tristankechlo.livingthings.client.renderer.state.MonkeyRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class MonkeySittingModel<T extends MonkeyEntity> extends AdvancedEntityModel<T> {
+public class MonkeySittingModel<T extends MonkeyRenderState> extends AdvancedEntityModel<T> {
 
     private final ModelPart Body;
     private final ModelPart BodyTop;
     private final ModelPart Head;
 
     public MonkeySittingModel(ModelPart root) {
+        super(root);
         this.Body = root.getChild("Body");
         this.BodyTop = Body.getChild("BodyTop");
         this.Head = BodyTop.getChild("Head");
     }
 
     @Override
-    public void setupAnim(MonkeyEntity monkey, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (monkey.isPartying()) {
+    public void animate(T state, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (state.isPartying) {
             Head.xRot = 1.4835F + Mth.cos(ageInTicks * 0.4F) * 0.3F;
             Head.zRot = 0.0F;
             BodyTop.yRot = Mth.cos(ageInTicks * 0.2F) * 0.175F;
@@ -33,15 +32,6 @@ public class MonkeySittingModel<T extends MonkeyEntity> extends AdvancedEntityMo
             BodyTop.yRot = 0.0F;
         }
 
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, int color) {
-        if (this.young) {
-            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            matrixStackIn.translate(0, 1.5D, 0);
-        }
-        Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     @SuppressWarnings("unused")
