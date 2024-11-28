@@ -25,7 +25,7 @@ public final class ModArmorMaterial {
         defense.put(ArmorType.BODY, 5);
 
         int durability = 20;
-        int enchantmentValue = 0;
+        int enchantmentValue = 1;
         float toughness = 2f;
         float knockbackResistance = 0f;
         TagKey<Item> repairIngredient = LivingThingsTags.REPAIRS_ANCIENT_HELMET;

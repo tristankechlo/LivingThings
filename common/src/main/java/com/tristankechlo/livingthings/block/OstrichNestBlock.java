@@ -4,6 +4,7 @@ import com.tristankechlo.livingthings.entity.OstrichEntity;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.init.ModSounds;
+import com.tristankechlo.livingthings.init.RegistryHelper;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
@@ -44,8 +45,10 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     private static final VoxelShape EMPTY_NEST_SHAPE = Block.box(2, 0, 2, 14, 4, 14);
     private static final VoxelShape FULL_NEST_SHAPE = Shapes.join(EMPTY_NEST_SHAPE, Block.box(4, 0, 4, 12, 8, 12), BooleanOp.OR);
 
-    public OstrichNestBlock() {
-        super(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).strength(0.5F).randomTicks());
+    public OstrichNestBlock(String name) {
+        super(BlockBehaviour.Properties.of()
+                .setId(RegistryHelper.blockId(name))
+                .mapColor(MapColor.COLOR_BROWN).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).strength(0.5F).randomTicks());
         registerDefaultState(this.defaultBlockState().setValue(HATCH, 0).setValue(EGG, false));
     }
 
