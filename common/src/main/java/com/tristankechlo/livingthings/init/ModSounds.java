@@ -70,7 +70,8 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> PEACOCK_DEATH = registerSound("peacock.death");
 
     private static RegistryObject<SoundEvent> registerSound(String soundName) {
-        return SOUNDS.register(soundName, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, soundName)));
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, soundName);
+        return SOUNDS.register(soundName, () -> SoundEvent.createVariableRangeEvent(location));
     }
 
 }

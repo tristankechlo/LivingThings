@@ -29,7 +29,6 @@ public final class LivingThings {
         ModSounds.init();
         ModEntityTypes.init();
         ModCreativeTabs.init();
-        ModArmorMaterial.init();
     }
 
     public static void registerMobAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> consumer) {

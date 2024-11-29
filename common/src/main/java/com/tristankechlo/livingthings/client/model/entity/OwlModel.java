@@ -51,7 +51,6 @@ public class OwlModel<T extends OwlRenderState> extends AdvancedEntityModel<T> {
                 break;
             case FALL_FLYING:
             default:
-                // TODO animate flapping wings
                 this.Tail.xRot = -0.959931F + Mth.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
                 this.LeftWing.zRot = -0.1309F - state.flapAngle;
                 this.RightWing.zRot = 0.1309F + state.flapAngle;

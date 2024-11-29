@@ -6,14 +6,24 @@ import com.tristankechlo.livingthings.item.OstrichEggItem;
 import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
+import com.tristankechlo.livingthings.util.LivingThingsTags;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.ArrayList;
@@ -36,7 +46,7 @@ public final class ModItems {
     public static final RegistryObject<Item> CRAB_SHELL = registerItem("crab_shell", Item::new);
     public static final RegistryObject<Item> LEXICON = registerItem("lexicon", (p) -> new LexiconItem(p.stacksTo(1)));
     public static final RegistryObject<Item> BANANA = registerFoodItem("banana", ModFoods.BANANA);
-    public static final RegistryObject<Item> ANCIENT_HELMET = registerItem("ancient_helmet", (p) -> new ArmorItem(ModArmorMaterial.ANCIENT, ArmorType.HELMET, p.stacksTo(1)));
+    public static final RegistryObject<Item> ANCIENT_HELMET = registerArmorItem("ancient_helmet");
     public static final RegistryObject<Item> OSTRICH = registerFoodItem("ostrich", ModFoods.OSTRICH);
     public static final RegistryObject<Item> COOKED_OSTRICH = registerFoodItem("cooked_ostrich", ModFoods.COOKED_OSTRICH);
     public static final RegistryObject<Item> ELEPHANT = registerFoodItem("elephant", ModFoods.ELEPHANT);
@@ -74,6 +84,32 @@ public final class ModItems {
         RegistryObject<Item> registeredItem = ITEMS.register(name, () -> item.apply(p));
         ALL_ITEMS.add(registeredItem);
         return registeredItem;
+    }
+
+    private static RegistryObject<Item> registerArmorItem(String name) {
+        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "ancient_armor_model");
+        return registerItem(name, (p) -> {
+            p.stacksTo(1).durability(20)
+                    .repairable(LivingThingsTags.REPAIRS_ANCIENT_HELMET)
+                    .equippable(EquipmentSlot.HEAD)
+                    .component(DataComponents.EQUIPPABLE,
+                            Equippable.builder(EquipmentSlot.HEAD)
+                                    .setEquipSound(ModSounds.ANCIENT_ARMOR_EQUIP.asHolder())
+                                    .setModel(modelId)
+                                    .build()
+                    )
+                    .attributes(createAttributes(ArmorType.HELMET, 3, 2.0F));
+            return new Item(p);
+        });
+    }
+
+    private static ItemAttributeModifiers createAttributes(ArmorType armorType, int defense, float toughness) {
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        EquipmentSlotGroup group = EquipmentSlotGroup.bySlot(armorType.getSlot());
+        ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "armor." + armorType.getName());
+        builder.add(Attributes.ARMOR, new AttributeModifier(rl, defense, AttributeModifier.Operation.ADD_VALUE), group);
+        builder.add(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(rl, toughness, AttributeModifier.Operation.ADD_VALUE), group);
+        return builder.build();
     }
 
     private static RegistryObject<Item> registerFoodItem(String name, FoodProperties food) {

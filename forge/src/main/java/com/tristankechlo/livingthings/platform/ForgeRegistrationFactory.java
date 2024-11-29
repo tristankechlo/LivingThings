@@ -24,9 +24,9 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
             throw new NullPointerException("Cannot find mod container for id " + modId);
         final var cont = containerOpt.get();
         if (cont instanceof FMLModContainer fmlModContainer) {
-            final var register = DeferredRegister.create(resourceKey, modId);
-            register.register(fmlModContainer.getEventBus());
-            return new Provider<>(modId, register);
+            final var registry = DeferredRegister.create(resourceKey, modId);
+            registry.register(fmlModContainer.getEventBus());
+            return new Provider<>(modId, registry);
         } else {
             throw new ClassCastException("The container of the mod " + modId + " is not a FML one!");
         }
@@ -52,6 +52,7 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
         @Override
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
             final var obj = registry.<I>register(name, supplier);
+            final var holder = new ForgeHolder<>(obj);
             final var ro = new RegistryObject<I>() {
 
                 @Override
@@ -71,7 +72,7 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
 
                 @Override
                 public Holder<I> asHolder() {
-                    return obj.getHolder().orElseThrow();
+                    return holder;
                 }
             };
             entries.add((RegistryObject<T>) ro);
