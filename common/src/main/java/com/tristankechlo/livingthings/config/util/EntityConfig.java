@@ -14,7 +14,7 @@ public abstract class EntityConfig implements IConfig {
 
     public static final double MIN_HEALTH = 1.0D;
     public static final double MAX_HEALTH = 1024.0D;
-    public static final double MIN_SPEED = 0.7D;
+    public static final double MIN_SPEED = 0.0D;
     public static final double MAX_SPEED = 1024.0D;
     public static final double MIN_DAMAGE = 0.0D;
     public static final double MAX_DAMAGE = 2048.0D;
