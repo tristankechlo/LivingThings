@@ -26,8 +26,8 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightRenderS
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int i, NetherKnightRenderState state, float f1, float f2) {
-        this.renderArmWithItem(state.rightHandItem, state.rightHandItemModel, ItemDisplayContext.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, poseStack, buffer, i);
-        this.renderArmWithItem(state.leftHandItem, state.leftHandItemModel, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, poseStack, buffer, i);
+        this.renderArmWithItem(state.rightHandItem, state.rightHandItemModel, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, poseStack, buffer, i);
+        this.renderArmWithItem(state.leftHandItem, state.leftHandItemModel, ItemDisplayContext.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, poseStack, buffer, i);
     }
 
     private void renderArmWithItem(ItemStack itemStack, BakedModel model, ItemDisplayContext context, HumanoidArm hand, PoseStack poseStack, MultiBufferSource buffer, int i) {
@@ -40,7 +40,7 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightRenderS
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         boolean flag = hand == HumanoidArm.LEFT;
         poseStack.translate(0, 0.12D, -0.76D);
-        this.itemRenderer.render(itemStack, ItemDisplayContext.GROUND, flag, poseStack, buffer, i, OverlayTexture.NO_OVERLAY, model);
+        this.itemRenderer.render(itemStack, context, flag, poseStack, buffer, i, OverlayTexture.NO_OVERLAY, model);
         poseStack.popPose();
     }
 

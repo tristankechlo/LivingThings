@@ -37,12 +37,12 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
-    private boolean canPlantMushroom;
+    private boolean hasMushroom;
     private int mushroomCooldown;
 
     public ShroomieEntity(EntityType<? extends ShroomieEntity> entityType, Level world) {
         super(entityType, world);
-        canPlantMushroom = false;
+        hasMushroom = false;
     }
 
     public static boolean checkShroomieSpawnRules(EntityType<ShroomieEntity> animal, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
@@ -54,7 +54,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         super.readAdditionalSaveData(tag);
         this.setVariant(tag.getByte("ShroomieType"));
         this.mushroomCooldown = tag.getInt("MushroomCooldown");
-        this.canPlantMushroom = tag.getBoolean("CanPlantMushroom");
+        this.hasMushroom = tag.getBoolean("CanPlantMushroom");
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         super.addAdditionalSaveData(tag);
         tag.putByte("ShroomieType", getVariant());
         tag.putInt("MushroomCooldown", this.mushroomCooldown);
-        tag.putBoolean("CanPlantMushroom", this.canPlantMushroom);
+        tag.putBoolean("CanPlantMushroom", this.hasMushroom);
     }
 
     @Override
@@ -115,19 +115,16 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         ItemStack stack = player.getItemInHand(hand);
         if ((this.getVariant() == 1 && stack.is(Items.RED_MUSHROOM))
                 || (this.getVariant() == 0 && stack.is(Items.BROWN_MUSHROOM))) {
+            if (!this.hasMushroom) {
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+                this.mushroomCooldown += 100;
+                this.hasMushroom = true;
+                return InteractionResult.SUCCESS_SERVER;
+            }
             if (this.level().isClientSide) {
                 return InteractionResult.CONSUME;
-            } else {
-                if (!this.canPlantMushroom) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-                    this.mushroomCooldown += 100;
-                    this.canPlantMushroom = true;
-                    return InteractionResult.SUCCESS;
-                } else {
-                    return InteractionResult.FAIL;
-                }
             }
         }
         return super.mobInteract(player, hand);
@@ -149,13 +146,13 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     public boolean canPlantMushroom() {
-        return this.canPlantMushroom && this.mushroomCooldown <= 0;
+        return this.hasMushroom && this.mushroomCooldown <= 0;
     }
 
     public void plantedMushroom() {
         // 50% chance to plant another mushroom after the cooldown
         if (this.random.nextBoolean()) {
-            this.canPlantMushroom = false;
+            this.hasMushroom = false;
         }
         this.mushroomCooldown = RANGED_INTEGER.sample(random);
     }

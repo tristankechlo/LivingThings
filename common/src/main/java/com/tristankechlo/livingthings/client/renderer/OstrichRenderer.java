@@ -37,10 +37,10 @@ public class OstrichRenderer extends AgeableMobRenderer<OstrichEntity, OstrichRe
 
     @Override
     protected void scale(OstrichRenderState state, PoseStack poseStack) {
-        super.scale(state, poseStack);
         if (state.isLayingEgg) {
             poseStack.translate(0, 0.65, 0);
         }
+        super.scale(state, poseStack);
     }
 
 }

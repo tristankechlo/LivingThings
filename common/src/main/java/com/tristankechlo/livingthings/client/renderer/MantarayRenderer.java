@@ -42,6 +42,7 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayRender
     protected void scale(MantarayRenderState mantaray, PoseStack poseStack) {
         float scale = 1.0F + (mantaray.scale * 0.1F);
         poseStack.scale(scale, scale, scale);
+        super.scale(mantaray, poseStack);
     }
 
 }

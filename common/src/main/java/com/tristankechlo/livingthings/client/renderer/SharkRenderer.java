@@ -25,6 +25,7 @@ public class SharkRenderer extends MobRenderer<SharkEntity, SharkRenderState, Sh
     @Override
     public void extractRenderState(SharkEntity entity, SharkRenderState state, float $$2) {
         super.extractRenderState(entity, state, $$2);
+        state.fromEntity(entity);
     }
 
     @Override

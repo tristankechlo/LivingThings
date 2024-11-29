@@ -37,8 +37,8 @@ public class NetherKnightModel<T extends NetherKnightRenderState> extends Advanc
         this.RightArm.zRot = 0;
         this.walking1(LeftLeg, limbSwing, limbSwingAmount);
         this.walking2(RightLeg, limbSwing, limbSwingAmount);
-        this.walking2(LeftArm, limbSwing, limbSwingAmount);
-        this.walking1(RightArm, limbSwing, limbSwingAmount);
+        this.walking2(LeftArm, limbSwing, limbSwingAmount * 0.75f);
+        this.walking1(RightArm, limbSwing, limbSwingAmount * 0.75f);
         this.setupAttackAnimation(state, ageInTicks);
     }
 

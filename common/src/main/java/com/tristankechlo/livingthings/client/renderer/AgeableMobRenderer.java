@@ -14,8 +14,8 @@ import java.util.function.Function;
 
 public abstract class AgeableMobRenderer<T extends Mob, S extends LivingEntityRenderState, M extends EntityModel<? super S>> extends MobRenderer<T, S, M> {
 
-    private final M adultModel;
-    private final M babyModel;
+    public final M adultModel;
+    public final M babyModel;
 
     public AgeableMobRenderer(EntityRendererProvider.Context context, M adult, M baby, float shadowRadius) {
         super(context, adult, shadowRadius);

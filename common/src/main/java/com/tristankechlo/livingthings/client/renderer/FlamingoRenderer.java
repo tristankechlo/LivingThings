@@ -26,6 +26,7 @@ public class FlamingoRenderer extends AgeableMobRenderer<FlamingoEntity, Flaming
     @Override
     public void extractRenderState(FlamingoEntity entity, FlamingoRenderState state, float $$2) {
         super.extractRenderState(entity, state, $$2);
+        state.fromEntity(entity);
     }
 
     @Override

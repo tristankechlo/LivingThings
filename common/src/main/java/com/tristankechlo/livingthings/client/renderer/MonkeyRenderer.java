@@ -11,20 +11,24 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class MonkeyRenderer extends AgeableMobRenderer<MonkeyEntity, MonkeyRenderState, EntityModel<MonkeyRenderState>> {
+public class MonkeyRenderer extends MobRenderer<MonkeyEntity, MonkeyRenderState, EntityModel<MonkeyRenderState>> {
 
     private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("monkey/monkey.png");
-    private final MonkeyModel<MonkeyRenderState> modelNormal;
+    private final MonkeyModel<MonkeyRenderState> modelAdult;
+    private final MonkeyModel<MonkeyRenderState> modelBaby;
     private final MonkeySittingModel<MonkeyRenderState> modelSitting;
-    private byte lastAction;
+    private final MonkeySittingModel<MonkeyRenderState> modelSittingBaby;
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public MonkeyRenderer(Context context) {
-        super(context, MonkeyModel::new, ModelLayer.MONKEY, ModelLayer.MONKEY_BABY, 0.35F);
-        this.modelNormal = new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY));
+        super(context, new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY)), 0.35F);
+        this.modelAdult = new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY));
+        this.modelBaby = new MonkeyModel<>(context.bakeLayer(ModelLayer.MONKEY_BABY));
         this.modelSitting = new MonkeySittingModel<>(context.bakeLayer(ModelLayer.MONKEY_SITTING));
+        this.modelSittingBaby = new MonkeySittingModel<>(context.bakeLayer(ModelLayer.MONKEY_SITTING_BABY));
     }
 
     @Override
@@ -45,15 +49,11 @@ public class MonkeyRenderer extends AgeableMobRenderer<MonkeyEntity, MonkeyRende
 
     @Override
     public void render(MonkeyRenderState state, PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn) {
-        byte monkeyAction = (byte) ((state.isSitting) ? 1 : 0);
-        if (monkeyAction != this.lastAction) {
-            if (monkeyAction == 1) {
-                this.model = this.modelSitting;
-            } else {
-                this.model = modelNormal;
-            }
+        if (state.isSitting) {
+            this.model = state.isBaby ? this.modelSittingBaby : this.modelSitting;
+        } else {
+            this.model = state.isBaby ? this.modelBaby : this.modelAdult;
         }
-        this.lastAction = monkeyAction;
         super.render(state, poseStack, bufferIn, packedLightIn);
     }
 

@@ -1,6 +1,5 @@
 package com.tristankechlo.livingthings.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.entity.ElephantModel;
@@ -27,21 +26,13 @@ public class ElephantRenderer extends AgeableMobRenderer<ElephantEntity, Elephan
     @Override
     public void extractRenderState(ElephantEntity entity, ElephantRenderState state, float $$2) {
         super.extractRenderState(entity, state, $$2);
-        state.partialTicks = $$2; // TODO check if correct
+        state.fromEntity(entity);
+        state.partialTicks = $$2;
     }
 
     @Override
     public ResourceLocation getTextureLocation(ElephantRenderState entity) {
         return TEXTURE;
-    }
-
-    @Override
-    protected void scale(ElephantRenderState state, PoseStack poseStack) {
-        super.scale(state, poseStack);
-        if (state.isBaby) {
-            poseStack.scale(0.6F, 0.6F, 0.6F);
-            poseStack.translate(0, 1, 0);
-        }
     }
 
 }

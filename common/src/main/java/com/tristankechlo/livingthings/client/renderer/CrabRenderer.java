@@ -50,6 +50,7 @@ public class CrabRenderer extends AgeableMobRenderer<CrabEntity, CrabRenderState
             poseStack.scale(scale, scale, scale);
         }
         poseStack.translate(0.0D, 0.01D, 0.0D);
+        super.scale(state, poseStack);
     }
 
 }

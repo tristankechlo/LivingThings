@@ -16,7 +16,7 @@ public class PenguinRenderer extends AgeableMobRenderer<PenguinEntity, LivingEnt
 
     protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("penguin/penguin.png");
     protected static final ResourceLocation TEXTURE_CHILD = LivingThings.getEntityTexture("penguin/penguin_baby.png");
-    public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(false, 8f, -1f, 0.55f, 0.5f, 0f, Set.of("Head"));
+    public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(true, 9f, 0f, 1.9f, 1.5f, 12f, Set.of("Head"));
 
     public PenguinRenderer(EntityRendererProvider.Context context) {
         super(context, PenguinModel::new, ModelLayer.PENGUIN, ModelLayer.PENGUIN_BABY, 0.45F);
@@ -35,11 +35,6 @@ public class PenguinRenderer extends AgeableMobRenderer<PenguinEntity, LivingEnt
     @Override
     public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
         return state.isBaby ? TEXTURE_CHILD : TEXTURE;
-    }
-
-    public static MeshTransformer transform() {
-        // TODO create better transformer
-        return MeshTransformer.scaling(0.6F);
     }
 
 }
