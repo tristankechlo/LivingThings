@@ -4,6 +4,8 @@
 
 - port to 1.21.3
 - make temptation range changeable through the config
+- support for patchouli disabled for all loaders
+    - lexicon is currently not usable
 
 ### Version 1.21.1 - 2.2.0
 
@@ -18,7 +20,8 @@
     - add all water animals to `minecraft:aquatic`
     - definition of temptation/taming items now via item-tags
         - related config options of the mobs are no longer used
-        - this effects: BabyEnderDragon, Crab, Elephant, Flamingo, Giraffe, Koala, Lion, Monkey, Ostrich, Owl, Peacock, Penguin, Raccoon, Shroomie, Snail
+        - this effects: BabyEnderDragon, Crab, Elephant, Flamingo, Giraffe, Koala, Lion, Monkey, Ostrich, Owl, Peacock,
+          Penguin, Raccoon, Shroomie, Snail
         - now defined via the tag `livingthings:elephant_food`, `livingthings:flamingo_food`, ...
 - update banana item texture
 

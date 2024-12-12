@@ -35,12 +35,12 @@ public final class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
-        vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
+        //vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
     }
 
     @Override
     public void openBookGui(ServerPlayer player, ResourceLocation bookId) {
-        vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
+        //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
     }
 
     @Override
