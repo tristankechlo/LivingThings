@@ -20,8 +20,8 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightRenderS
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int i, NetherKnightRenderState state, float f1, float f2) {
-        this.renderArmWithItem(state.mainHandItem, HumanoidArm.RIGHT, poseStack, buffer, i);
-        this.renderArmWithItem(state.offHandItem, HumanoidArm.LEFT, poseStack, buffer, i);
+        this.renderArmWithItem(state.rightHandItem, HumanoidArm.RIGHT, poseStack, buffer, i);
+        this.renderArmWithItem(state.leftHandItem, HumanoidArm.LEFT, poseStack, buffer, i);
     }
 
     private void renderArmWithItem(ItemStackRenderState heldItem, HumanoidArm hand, PoseStack poseStack, MultiBufferSource buffer, int i) {

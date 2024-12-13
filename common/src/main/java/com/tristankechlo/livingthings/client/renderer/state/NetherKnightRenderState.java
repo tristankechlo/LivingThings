@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 
 public class NetherKnightRenderState extends LivingEntityRenderState implements StateFromEntity<NetherKnightEntity> {
 
-    public final ItemStackRenderState mainHandItem = new ItemStackRenderState();
-    public final ItemStackRenderState offHandItem = new ItemStackRenderState();
+    public final ItemStackRenderState rightHandItem = new ItemStackRenderState();
+    public final ItemStackRenderState leftHandItem = new ItemStackRenderState();
     public float attackTime;
     public HumanoidArm mainArm;
 
@@ -21,9 +21,9 @@ public class NetherKnightRenderState extends LivingEntityRenderState implements 
         this.mainArm = entity.getMainArm();
     }
 
-    public static void extractHoldingEntityRenderState(LivingEntity entity, NetherKnightRenderState reusedState, ItemModelResolver resolver) {
-        resolver.updateForLiving(reusedState.mainHandItem, entity.getMainHandItem(), ItemDisplayContext.GROUND, false, entity);
-        resolver.updateForLiving(reusedState.offHandItem, entity.getOffhandItem(), ItemDisplayContext.GROUND, true, entity);
+    public static void extractHoldingEntityRenderState(LivingEntity entity, NetherKnightRenderState state, ItemModelResolver resolver) {
+        resolver.updateForLiving(state.rightHandItem, entity.getItemHeldByArm(HumanoidArm.RIGHT), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, false, entity);
+        resolver.updateForLiving(state.leftHandItem, entity.getItemHeldByArm(HumanoidArm.LEFT), ItemDisplayContext.THIRD_PERSON_LEFT_HAND, true, entity);
     }
 
 }
