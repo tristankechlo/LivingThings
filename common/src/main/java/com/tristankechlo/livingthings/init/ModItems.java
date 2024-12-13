@@ -7,11 +7,10 @@ import com.tristankechlo.livingthings.platform.IPlatformHelper;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,6 +22,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.material.Fluids;
 
@@ -88,6 +88,7 @@ public final class ModItems {
 
     private static RegistryObject<Item> registerArmorItem(String name) {
         ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "ancient_armor_model");
+        var assetKey = ResourceKey.create(EquipmentAssets.ROOT_ID, modelId);
         return registerItem(name, (p) -> {
             p.stacksTo(1).durability(20)
                     .repairable(LivingThingsTags.REPAIRS_ANCIENT_HELMET)
@@ -95,7 +96,7 @@ public final class ModItems {
                     .component(DataComponents.EQUIPPABLE,
                             Equippable.builder(EquipmentSlot.HEAD)
                                     .setEquipSound(ModSounds.ANCIENT_ARMOR_EQUIP.asHolder())
-                                    .setModel(modelId)
+                                    .setAsset(assetKey)
                                     .build()
                     )
                     .attributes(createAttributes(ArmorType.HELMET, 3, 2.0F));

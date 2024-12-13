@@ -108,7 +108,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
         navigation.setCanFloat(true);
         navigation.setCanOpenDoors(true);
-        navigation.setCanPassDoors(true);
+        navigation.setCanOpenDoors(true);
         return navigation;
     }
 

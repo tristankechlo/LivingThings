@@ -50,7 +50,7 @@ public final class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props) {
-        return new SpawnEggItem(type.get(), primaryColor, secondaryColor, props);
+        return new SpawnEggItem(type.get(), props);
     }
 
     @Override

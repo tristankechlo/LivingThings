@@ -16,7 +16,7 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
 
     public NetherKnightRenderer(Context context) {
         super(context, new NetherKnightModel<>(context.bakeLayer(ModelLayer.NETHER_KNIGHT)), 0.5F);
-        this.addLayer(new NetherKnightHeldItemLayer<>(this, context.getItemRenderer()));
+        this.addLayer(new NetherKnightHeldItemLayer<>(this));
     }
 
     @Override
@@ -28,6 +28,7 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
     public void extractRenderState(NetherKnightEntity entity, NetherKnightRenderState state, float $$2) {
         super.extractRenderState(entity, state, $$2);
         state.fromEntity(entity);
+        NetherKnightRenderState.extractHoldingEntityRenderState(entity, state, this.itemModelResolver);
     }
 
     @Override

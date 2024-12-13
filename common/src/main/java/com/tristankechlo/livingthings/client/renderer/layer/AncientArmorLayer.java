@@ -31,7 +31,7 @@ public class AncientArmorLayer<S extends HumanoidRenderState, M extends Humanoid
     }
 
     private void renderHelmet(PoseStack poseStack, MultiBufferSource buffer, HumanoidRenderState state, int var3) {
-        if (!state.headItem.is(ModItems.ANCIENT_HELMET.get())) {
+        if (!state.headEquipment.is(ModItems.ANCIENT_HELMET.get())) {
             return;
         }
         this.getParentModel().copyPropertiesTo((HumanoidModel<S>) model);

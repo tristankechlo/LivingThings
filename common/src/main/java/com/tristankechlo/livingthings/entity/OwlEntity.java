@@ -177,7 +177,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
         FlyingPathNavigation navigation = new FlyingPathNavigation(this, worldIn);
         navigation.setCanOpenDoors(false);
         navigation.setCanFloat(true);
-        navigation.setCanPassDoors(true);
+        navigation.setCanOpenDoors(true);
         return navigation;
     }
 
