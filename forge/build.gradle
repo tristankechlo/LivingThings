@@ -8,6 +8,7 @@ mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
     config("${mod_id}.mixins.json")
 }
+jar.manifest.attributes.put("MixinConfigs", "${mod_id}.mixins.json")
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
@@ -43,8 +44,6 @@ minecraft {
         }
     }
 }
-
-jar.manifest.attributes.put("MixinConfigs", "${mod_id}.mixins.json")
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"

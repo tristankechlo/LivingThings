@@ -44,4 +44,3 @@ dependencies {
     annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
