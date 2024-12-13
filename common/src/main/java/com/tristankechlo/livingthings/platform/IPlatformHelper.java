@@ -31,8 +31,6 @@ public interface IPlatformHelper {
 
     MobBucketItem createMobBucketItem(RegistryObject<EntityType<SeahorseEntity>> type, Fluid fluid, SoundEvent sound, Item.Properties props);
 
-    SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props);
-
     CreativeModeTab.Builder getCreativeModeTab();
 
 }

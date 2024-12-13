@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "livingthings:block/ostrich_nest_empty"
+    }
+}

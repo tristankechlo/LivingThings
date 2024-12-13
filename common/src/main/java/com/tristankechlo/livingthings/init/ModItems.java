@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAssets;
@@ -119,7 +120,7 @@ public final class ModItems {
 
     private static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor) {
         Item.Properties p = new Item.Properties().setId(RegistryHelper.itemId(name)).useItemDescriptionPrefix();
-        RegistryObject<Item> registeredItem = ITEMS.register(name, () -> IPlatformHelper.INSTANCE.createSpawnEgg(type, primaryColor, secondaryColor, p));
+        RegistryObject<Item> registeredItem = ITEMS.register(name, () -> new SpawnEggItem(type.get(), p));
         SPAWN_EGGS.add(registeredItem);
         return registeredItem;
     }

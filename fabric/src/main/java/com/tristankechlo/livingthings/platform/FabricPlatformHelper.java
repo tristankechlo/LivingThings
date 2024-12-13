@@ -10,15 +10,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.material.Fluid;
 
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 @AutoService(IPlatformHelper.class)
 public final class FabricPlatformHelper implements IPlatformHelper {
@@ -46,11 +43,6 @@ public final class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public MobBucketItem createMobBucketItem(RegistryObject<EntityType<SeahorseEntity>> type, Fluid fluid, SoundEvent sound, Item.Properties props) {
         return new MobBucketItem(type.get(), fluid, sound, props);
-    }
-
-    @Override
-    public SpawnEggItem createSpawnEgg(Supplier<EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Item.Properties props) {
-        return new SpawnEggItem(type.get(), props);
     }
 
     @Override
