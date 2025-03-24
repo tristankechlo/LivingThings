@@ -206,11 +206,21 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
             return InteractionResult.PASS;
         }
         if (this.isTame()) {
-            if (this.isFood(stack) && stack.has(DataComponents.FOOD) && this.getHealth() < this.getMaxHealth()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+            // Giving food to a tame Monkey
+            if (this.isFood(stack) && stack.has(DataComponents.FOOD)) {
+                // Monkey needs health
+                if (this.getHealth() < this.getMaxHealth()) {
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
+                    }
+                    this.heal(stack.get(DataComponents.FOOD).nutrition());
+                // Monkey doesn't need health. Attempt to breed.
+                } else {
+                    if (!this.level().isClientSide() && !this.isBaby() && this.canBreed()) {
+                        this.usePlayerItem(player, hand, stack);
+                        this.setInLove(player);
+                    }
                 }
-                this.heal(stack.get(DataComponents.FOOD).nutrition());
             } else if (stack.isEmpty()) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
