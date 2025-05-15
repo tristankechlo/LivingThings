@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.20.6 - 2.2.1
+
+- add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
+
 ### Version 1.20.6 - 2.2.0
 
 - change default values of the NetherKnight
