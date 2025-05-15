@@ -5,6 +5,7 @@
 - add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
 - fix typo `Raccon` to `Raccoon` in `en_us.json` ([#72](https://github.com/tristankechlo/LivingThings/issues/72))
 - fix effect bugging out for `livingthings:ancient_helmet` ([#55](https://github.com/tristankechlo/LivingThings/issues/55) & [#68](https://github.com/tristankechlo/LivingThings/issues/68))
+- remove patchouli from recommended dependencies in `fabric.mod.json` ([#67](https://github.com/tristankechlo/LivingThings/issues/67))
 
 ### Version 1.21.4 - 2.2.0
 

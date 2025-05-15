@@ -32,9 +32,6 @@
         "minecraft": ">=${fabric_range_min_inclusive} <${fabric_range_max_exclusive}",
         "java": ">=${java_version}"
     },
-    "recommends": {
-        "patchouli": "*"
-    },
     "custom": {
         "modmenu": {
             "links": {
