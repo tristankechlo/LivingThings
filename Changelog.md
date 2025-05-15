@@ -3,6 +3,7 @@
 ### Version 1.18.2 - 2.2.1
 
 - add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
+- fix typo `Raccon` to `Raccoon` in `en_us.json` ([#72](https://github.com/tristankechlo/LivingThings/issues/72))
 
 ### Version 1.18.2 - 2.2.0
 
