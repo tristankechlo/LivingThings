@@ -24,6 +24,6 @@ a list of all translations, their translators, and the modversion they are creat
 
 | Language  |    last updated    | Translator                                                 |
 |:---------:|:------------------:|:-----------------------------------------------------------|
-| **en_us** |   2.2.0 (always)   | tristankechlo ([GitHub](https://github.com/tristankechlo)) |
-| **de_de** |   2.2.0 (always)   | tristankechlo ([GitHub](https://github.com/tristankechlo)) |
+| **en_us** |   2.2.1 (always)   | tristankechlo ([GitHub](https://github.com/tristankechlo)) |
+| **de_de** |   2.2.1 (always)   | tristankechlo ([GitHub](https://github.com/tristankechlo)) |
 | **zh_cn** | 2.0.1 (13.08.2023) | Rad586 ([GitHub](https://github.com/Rad586))               |
