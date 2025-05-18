@@ -69,6 +69,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> PEACOCK_HURT = registerSound("peacock.hurt");
     public static final RegistryObject<SoundEvent> PEACOCK_DEATH = registerSound("peacock.death");
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static RegistryObject<SoundEvent> registerSound(String soundName) {
         return SOUNDS.register(soundName, () -> new SoundEvent(new ResourceLocation(LivingThings.MOD_ID, soundName)));
     }

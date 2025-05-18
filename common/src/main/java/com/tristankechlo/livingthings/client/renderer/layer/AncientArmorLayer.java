@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class AncientArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static final ResourceLocation ANCIENT_ARMOR = new ResourceLocation(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
     private final AncientArmorModel model;
 
