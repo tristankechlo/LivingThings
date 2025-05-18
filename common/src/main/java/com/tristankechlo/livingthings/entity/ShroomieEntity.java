@@ -5,8 +5,8 @@ import com.tristankechlo.livingthings.entity.ai.ShroomiePlantMushroomGoal;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -36,6 +36,8 @@ import java.util.Random;
 
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
+    private static final ResourceLocation LOOTTABLE_RED = new ResourceLocation("livingthings", "entities/shroomie_red");
+    private static final ResourceLocation LOOTTABLE_BROWN = new ResourceLocation("livingthings", "entities/shroomie_brown");
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
     private boolean canPlantMushroom;
@@ -181,6 +183,17 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.SHROOMIE;
+    }
+
+    @Override
+    protected ResourceLocation getDefaultLootTable() {
+        byte variant = this.getVariant();
+        if (variant == 1) {
+            return LOOTTABLE_RED;
+        } else if (variant == 0) {
+            return LOOTTABLE_BROWN;
+        }
+        return super.getDefaultLootTable();
     }
 
 }
