@@ -8,6 +8,10 @@
 - fix that monkeys can not be breed ([#63](https://github.com/tristankechlo/LivingThings/issues/63))
 - ancient blaze now floating above water/lava ([#60](https://github.com/tristankechlo/LivingThings/issues/60))
 - shroomies now drop mushrooms dependent on their variant
+- command tamed owls to sit by right clicking them with any item ([#66](https://github.com/tristankechlo/LivingThings/issues/66))
+  - item tags `livingthings:owl_food` and `livingthings:owl_taming_food` are now merged into `livingthings:owl_food`
+  - taming/healing and breeding now use the same item tag
+  - children of tamed owls are now tamed as well
 
 ### Version 1.18.2 - 2.2.0
 
