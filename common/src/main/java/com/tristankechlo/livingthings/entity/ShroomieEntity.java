@@ -36,7 +36,9 @@ import java.util.Random;
 
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static final ResourceLocation LOOTTABLE_RED = new ResourceLocation("livingthings", "entities/shroomie_red");
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static final ResourceLocation LOOTTABLE_BROWN = new ResourceLocation("livingthings", "entities/shroomie_brown");
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
