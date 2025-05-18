@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -38,6 +39,7 @@ import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
@@ -109,6 +111,16 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     public void setCustomName(Component name) {
         super.setCustomName(name);
         this.bossInfo.setName(this.getDisplayName());
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        // float ancient blaze on water
+        if (this.level.getFluidState(this.blockPosition()).is(FluidTags.WATER)
+                || this.level.getFluidState(this.blockPosition()).is(FluidTags.LAVA)) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.5).add(0.0, 0.05, 0.0));
+        }
     }
 
     @Override
@@ -304,6 +316,11 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.ANCIENT_BLAZE;
+    }
+
+    @Override
+    public boolean canStandOnFluid(FluidState state) {
+        return state.is(FluidTags.WATER) || state.is(FluidTags.LAVA);
     }
 
 }

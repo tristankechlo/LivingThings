@@ -6,6 +6,7 @@
 - fix typo `Raccon` to `Raccoon` in `en_us.json` ([#72](https://github.com/tristankechlo/LivingThings/issues/72))
 - fix effect bugging out for `livingthings:ancient_helmet` ([#55](https://github.com/tristankechlo/LivingThings/issues/55) & [#68](https://github.com/tristankechlo/LivingThings/issues/68))
 - fix that monkeys can not be breed ([#63](https://github.com/tristankechlo/LivingThings/issues/63))
+- ancient blaze now floating above water/lava ([#60](https://github.com/tristankechlo/LivingThings/issues/60))
 
 ### Version 1.18.2 - 2.2.0
 
