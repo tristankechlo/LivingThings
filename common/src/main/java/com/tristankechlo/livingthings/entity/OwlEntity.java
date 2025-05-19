@@ -135,15 +135,13 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!this.isTame() && this.isFood(stack)) {
-            if (!this.level.isClientSide()) {
-                this.usePlayerItem(player, hand, stack);
-                if (this.random.nextInt(5) == 0) {
-                    this.tame(player);
-                    this.setOrderedToSit(true);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
+            this.usePlayerItem(player, hand, stack);
+            if (this.random.nextInt(5) == 0) {
+                this.tame(player);
+                this.setOrderedToSit(true);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 6);
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide());
         }
