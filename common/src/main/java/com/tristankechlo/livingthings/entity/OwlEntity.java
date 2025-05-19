@@ -63,15 +63,12 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 
         // Set the owner UUID and tame status for the child entity
         UUID uuid = this.getOwnerUUID();
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerUUID();
+        }
         if (uuid != null) {
             child.setOwnerUUID(uuid);
             child.setTame(true);
-        } else if (entity instanceof TamableAnimal) {
-            UUID uuid2 = ((TamableAnimal) entity).getOwnerUUID();
-            if (uuid2 != null) {
-                child.setOwnerUUID(uuid2);
-                child.setTame(true);
-            }
         }
         return child;
     }

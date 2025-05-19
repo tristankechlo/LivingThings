@@ -48,19 +48,17 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        MonkeyEntity monkey = ModEntityTypes.MONKEY.get().create(world);
+        MonkeyEntity child = ModEntityTypes.MONKEY.get().create(world);
+        // Set the owner UUID and tame status for the child entity
         UUID uuid = this.getOwnerUUID();
-        if (uuid != null) {
-            monkey.setOwnerUUID(uuid);
-            monkey.setTame(true);
-        } else if (entity instanceof TamableAnimal) {
-            UUID uuid2 = ((TamableAnimal) entity).getOwnerUUID();
-            if (uuid2 != null) {
-                monkey.setOwnerUUID(uuid2);
-                monkey.setTame(true);
-            }
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerUUID();
         }
-        return monkey;
+        if (uuid != null) {
+            child.setOwnerUUID(uuid);
+            child.setTame(true);
+        }
+        return child;
     }
 
     @Override
