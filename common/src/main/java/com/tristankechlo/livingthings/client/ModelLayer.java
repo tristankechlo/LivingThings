@@ -30,6 +30,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation PEACOCK = createLayerLocation("peacock");
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static ModelLayerLocation createLayerLocation(final String name) {
         return new ModelLayerLocation(new ResourceLocation(LivingThings.MOD_ID, name), "main");
     }
