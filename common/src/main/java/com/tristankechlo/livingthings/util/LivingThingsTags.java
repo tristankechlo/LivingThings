@@ -24,7 +24,6 @@ public final class LivingThingsTags {
     public static final TagKey<Item> MONKEY_FOOD = mobFood("monkey");
     public static final TagKey<Item> OSTRICH_FOOD = mobFood("ostrich");
     public static final TagKey<Item> OWL_FOOD = mobFood("owl");
-    public static final TagKey<Item> OWL_TAMING_FOOD = mobFood("owl_taming");
     public static final TagKey<Item> PEACOCK_FOOD = mobFood("peacock");
     public static final TagKey<Item> PENGUIN_FOOD = mobFood("penguin");
     public static final TagKey<Item> RACCOON_FOOD = mobFood("raccoon");
@@ -55,6 +54,7 @@ public final class LivingThingsTags {
         return registerBlockTag(name + "_spawnable_on");
     }
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static TagKey<Block> registerBlockTag(String name) {
         return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
     }
@@ -63,10 +63,12 @@ public final class LivingThingsTags {
         return registerItemTag(name + "_food");
     }
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static TagKey<Item> registerItemTag(String name) {
         return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
     }
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static TagKey<Fluid> registerFluidTag(String name) {
         return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(LivingThings.MOD_ID, name));
     }

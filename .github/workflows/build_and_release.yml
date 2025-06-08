@@ -56,11 +56,11 @@ jobs:
         with:
           distribution: "temurin"
           java-version: ${{ needs.prepare.outputs.java-version }}
-          cache: "gradle"
-          cache-dependency-path: "gradle.properties"
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-disabled: true
 
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
@@ -68,23 +68,17 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew build
 
-      - name: copy jar-files
-        shell: bash
-        run: |
-          mkdir ./dist
-          mv ./forge/build/libs/${{ env.MODID }}-*.jar ./dist
-          mv ./fabric/build/libs/${{ env.MODID }}-*.jar ./dist
-          echo -e "$(ls -lahG ./dist)"
-
       - name: Add files to GitHub-Release
         uses: shogo82148/actions-upload-release-asset@v1.7.5
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./dist/${{ env.MODID }}-*.jar"
+          asset_path: |
+            ./forge/build/libs/${{ env.MODID }}-*.jar
+            ./fabric/build/libs/${{ env.MODID }}-*.jar
           overwrite: true
 
       - name: publish mod files
-        uses: tristankechlo/publish-mc-mod@v1.0.0
+        uses: tristankechlo/publish-mc-mod@v2.0.0
         if: ${{ contains(github.event.release.name, '[RELEASE]') }}
         with:
           mc-version: ${{ needs.prepare.outputs.mc-version }}
@@ -92,10 +86,7 @@ jobs:
           curseforge-id: ${{ env.CURSEFORGE_ID }}
           modrinth-id: ${{ env.MODRINTH_ID }}
           changelog: ${{ github.event.release.body }}
-          featured: ${{ env.MODRINTH_FEATURED }}
-          forge: true
-          fabric: true
-          neoforge: false
+          loaders: forge,fabric
           version-range: ${{ needs.prepare.outputs.version-range }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -105,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Make embed
-        uses: tristankechlo/create-discord-embed@v1.0.0
+        uses: tristankechlo/create-discord-embed@v1.0.2
         with:
           released: ${{ contains(github.event.release.name, '[RELEASE]') }}
           changelog: "${{ github.event.release.body }}"

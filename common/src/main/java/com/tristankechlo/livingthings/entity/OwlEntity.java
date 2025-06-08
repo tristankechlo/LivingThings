@@ -5,8 +5,8 @@ import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.init.ModSounds;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -37,6 +37,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import java.util.UUID;
 
 public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
 
@@ -58,6 +59,16 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         OwlEntity child = ModEntityTypes.OWL.get().create(world);
         child.setVariant(this.getVariantFromParents(this, entity));
+
+        // Set the owner UUID and tame status for the child entity
+        UUID uuid = this.getOwnerUUID();
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerUUID();
+        }
+        if (uuid != null) {
+            child.setOwnerUUID(uuid);
+            child.setTame(true);
+        }
         return child;
     }
 
@@ -122,29 +133,26 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        boolean isTamingItem = stack.is(LivingThingsTags.OWL_TAMING_FOOD);
-        if (!this.isTame() && isTamingItem) {
-            if (!this.level.isClientSide()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-                if (this.random.nextInt(5) == 0) {
-                    this.tame(player);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
+        if (!this.isTame() && this.isFood(stack)) {
+            this.usePlayerItem(player, hand, stack);
+            if (this.random.nextInt(5) == 0) {
+                this.tame(player);
+                this.setOrderedToSit(true);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 6);
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide());
-
-        } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && isTamingItem) {
-
-            this.setOrderedToSit(!this.isOrderedToSit());
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
-
-        } else {
-            return super.mobInteract(player, hand);
         }
+        if (this.isTame() && !this.isFlying()) {
+            InteractionResult result = super.mobInteract(player, hand);
+            if ((!result.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
+                this.setOrderedToSit(!this.isOrderedToSit());
+                return InteractionResult.SUCCESS;
+            }
+            return result;
+        }
+        return InteractionResult.PASS;
     }
 
     private void calculateFlapping() {
