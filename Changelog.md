@@ -1,10 +1,18 @@
 # Changelog
 
-### Version 1.20.4 - 2.2.1
+### Version 1.20.4 - 2.3.0
 
-- add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
+- add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs`/`forge:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
 - fix typo `Raccon` to `Raccoon` in `en_us.json` ([#72](https://github.com/tristankechlo/LivingThings/issues/72))
 - fix effect bugging out for `livingthings:ancient_helmet` ([#55](https://github.com/tristankechlo/LivingThings/issues/55) & [#68](https://github.com/tristankechlo/LivingThings/issues/68))
+- fix that monkeys can not be breed ([#63](https://github.com/tristankechlo/LivingThings/issues/63))
+- ancient blaze now floating above water/lava ([#60](https://github.com/tristankechlo/LivingThings/issues/60))
+- shroomies now drop mushrooms dependent on their variant
+- command tamed owls to sit by right clicking them with any item ([#66](https://github.com/tristankechlo/LivingThings/issues/66))
+  - item tags `livingthings:owl_food` and `livingthings:owl_taming_food` are now merged into `livingthings:owl_food`
+  - taming/healing and breeding now use the same item tag
+  - children of tamed owls are now tamed as well
+- fix ancient blaze not killable by command while charging ([#62](https://github.com/tristankechlo/LivingThings/issues/62))
 
 ### Version 1.20.4 - 2.2.0
 

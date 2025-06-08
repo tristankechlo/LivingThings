@@ -16,7 +16,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory file('runs/client')
+            workingDirectory file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
             property 'mixin.env.remapRefMap', 'true'
@@ -25,7 +25,7 @@ minecraft {
         }
 
         server {
-            workingDirectory file('runs/server')
+            workingDirectory file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Server'
             property 'mixin.env.remapRefMap', 'true'

@@ -35,6 +35,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
+    private static final ResourceLocation LOOTTABLE_RED = new ResourceLocation("livingthings", "entities/shroomie_red");
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
+    private static final ResourceLocation LOOTTABLE_BROWN = new ResourceLocation("livingthings", "entities/shroomie_brown");
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
     private boolean canPlantMushroom;
@@ -180,6 +184,17 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.SHROOMIE;
+    }
+
+    @Override
+    protected ResourceLocation getDefaultLootTable() {
+        byte variant = this.getVariant();
+        if (variant == 1) {
+            return LOOTTABLE_RED;
+        } else if (variant == 0) {
+            return LOOTTABLE_BROWN;
+        }
+        return super.getDefaultLootTable();
     }
 
 }
