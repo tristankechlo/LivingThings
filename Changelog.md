@@ -12,6 +12,7 @@
   - item tags `livingthings:owl_food` and `livingthings:owl_taming_food` are now merged into `livingthings:owl_food`
   - taming/healing and breeding now use the same item tag
   - children of tamed owls are now tamed as well
+- fix ancient blaze not killable by command while charging ([#62](https://github.com/tristankechlo/LivingThings/issues/62))
 
 ### Version 1.19.4 - 2.2.0
 
