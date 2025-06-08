@@ -4,8 +4,8 @@ import com.tristankechlo.livingthings.config.entity.MonkeyConfig;
 import com.tristankechlo.livingthings.entity.ai.BetterMeleeAttackGoal;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
-import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.Ingredients;
+import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -48,19 +48,17 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        MonkeyEntity monkey = ModEntityTypes.MONKEY.get().create(world);
+        MonkeyEntity child = ModEntityTypes.MONKEY.get().create(world);
+        // Set the owner UUID and tame status for the child entity
         UUID uuid = this.getOwnerUUID();
-        if (uuid != null) {
-            monkey.setOwnerUUID(uuid);
-            monkey.setTame(true);
-        } else if (entity instanceof TamableAnimal) {
-            UUID uuid2 = ((TamableAnimal) entity).getOwnerUUID();
-            if (uuid2 != null) {
-                monkey.setOwnerUUID(uuid2);
-                monkey.setTame(true);
-            }
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerUUID();
         }
-        return monkey;
+        if (uuid != null) {
+            child.setOwnerUUID(uuid);
+            child.setTame(true);
+        }
+        return child;
     }
 
     @Override
@@ -213,18 +211,18 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
         }
         if (this.isTame()) {
             if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+                this.usePlayerItem(player, hand, stack);
                 this.heal(item.getFoodProperties().getNutrition());
-            } else if (stack.isEmpty() && this.isOwnedBy(player)) {
+                return InteractionResult.sidedSuccess(this.level.isClientSide());
+            }
+            if (stack.isEmpty() && this.isOwnedBy(player)) {
                 this.setOrderedToSit(!this.isOrderedToSit());
+                return InteractionResult.sidedSuccess(this.level.isClientSide());
             }
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
+            // if nothing else matches, breeding and aging is done by super()
+            return super.mobInteract(player, hand);
         } else if (!this.isTame() && this.isFood(stack)) {
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
+            this.usePlayerItem(player, hand, stack);
             if (this.random.nextInt(4) == 0) {
                 this.tame(player);
                 this.setOrderedToSit(true);

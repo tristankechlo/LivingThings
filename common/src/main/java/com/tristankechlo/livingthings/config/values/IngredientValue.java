@@ -104,6 +104,7 @@ public final class IngredientValue implements IConfig.Value<Ingredient> {
         return Ingredient.of(either.right().get());
     }
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static Either<Item, TagKey<Item>> deserializeO(JsonObject json) {
         if (json.has("item") && json.has("tag")) {
             throw new JsonParseException("An ingredient entry is either a tag or an item, not both");
