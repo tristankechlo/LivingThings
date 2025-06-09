@@ -13,6 +13,7 @@
   - taming/healing and breeding now use the same item tag
   - children of tamed owls are now tamed as well
 - fix ancient blaze not killable by command while charging ([#62](https://github.com/tristankechlo/LivingThings/issues/62))
+- fix seahorse buckets not copying the seahorse color ([#57](https://github.com/tristankechlo/LivingThings/issues/57))
 
 ### Version 1.20.6 - 2.2.0
 
