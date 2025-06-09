@@ -24,6 +24,7 @@ public final class LivingThingsClient {
     public final static EntityRendererProvider<SharkEntity> SHARK_RENDERER = context -> new SimpleEntityRenderer<>(context, 0.8F, SHARK_TEXTURE, ModelLayer.SHARK, SharkModel::new);
     public final static EntityRendererProvider<PeacockEntity> PEACOCK_RENDERER = context -> new SimpleEntityRenderer<>(context, 0.3F, PEACOCK_TEXTURE, ModelLayer.PEACOCK, PeacockModel::new);
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     public static ResourceLocation getEntityTexture(String texture) {
         return new ResourceLocation(LivingThings.MOD_ID, "textures/entity/" + texture);
     }

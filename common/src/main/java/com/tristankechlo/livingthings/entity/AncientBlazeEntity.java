@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -38,6 +39,7 @@ import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 
 public class AncientBlazeEntity extends Monster implements PowerableMob, RangedAttackMob, ILexiconEntry {
@@ -112,6 +114,16 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        // float ancient blaze on water
+        if (this.level().getFluidState(this.blockPosition()).is(FluidTags.WATER)
+                || this.level().getFluidState(this.blockPosition()).is(FluidTags.LAVA)) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.5).add(0.0, 0.05, 0.0));
+        }
+    }
+
+    @Override
     public void aiStep() {
         // slow falling
         if (!this.onGround() && this.getDeltaMovement().y < 0.0D) {
@@ -163,8 +175,8 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        // dont get damaged while charging up
-        if (this.getInvulnerableTime() > 0 && source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+        // don't get damaged while charging up
+        if (this.getInvulnerableTime() > 0 && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return false;
             // catch large fireballs
         } else if (source.getDirectEntity() instanceof LargeFireball && source.getEntity() instanceof Player) {
@@ -177,10 +189,9 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
             // random chance for arrows, tridents,.. to be blocked
         } else if (source.isIndirect()) {
             return this.random.nextInt(4) != 0 && super.hurt(source, amount);
-        } else {
-            // normal damage handling
-            return super.hurt(source, amount);
         }
+        // normal damage handling
+        return super.hurt(source, amount);
     }
 
     @Override
@@ -304,6 +315,11 @@ public class AncientBlazeEntity extends Monster implements PowerableMob, RangedA
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.ANCIENT_BLAZE;
+    }
+
+    @Override
+    public boolean canStandOnFluid(FluidState state) {
+        return state.is(FluidTags.WATER) || state.is(FluidTags.LAVA);
     }
 
 }

@@ -52,6 +52,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SNAIL_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
+    @SuppressWarnings("removal") // ResourceLocation constructor is removed in 1.21+ => stop forge from complaining here
     private static final ResourceLocation textureLocation(String name) {
         return new ResourceLocation(LivingThings.MOD_ID, "textures/entity/snail/" + name);
     }
