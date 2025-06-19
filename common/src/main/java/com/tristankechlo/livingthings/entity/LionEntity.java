@@ -86,8 +86,9 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         }
         Optional<WeightedGender> gender = WeightedRandom.getRandomItem(random,
                 ImmutableList.of(new WeightedGender(Math.max(0, maleWeight), Gender.MALE),
-                        new WeightedGender(Math.max(0, femaleWeight), Gender.FEMALE)));
-        return gender.get().gender;
+                        new WeightedGender(Math.max(0, femaleWeight), Gender.FEMALE)),
+                WeightedGender::weight);
+        return gender.get().gender();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -134,12 +135,12 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (compound.getBoolean("IsMale")) {
+        if (compound.getBooleanOr("IsMale", false)) {
             this.setGender(Gender.MALE);
         } else {
             this.setGender(Gender.FEMALE);
         }
-        this.setVariant(compound.getByte("LionVariant"));
+        this.setVariant(compound.getByteOr("LionVariant", (byte) 0));
         this.readPersistentAngerSaveData(this.level(), compound);
     }
 

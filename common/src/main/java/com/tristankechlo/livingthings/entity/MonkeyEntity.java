@@ -50,11 +50,11 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         MonkeyEntity child = ModEntityTypes.MONKEY.get().create(world, EntitySpawnReason.BREEDING);
         // Set the owner UUID and tame status for the child entity
-        UUID uuid = this.getOwnerUUID();
+        EntityReference<LivingEntity> uuid = this.getOwnerReference();
         if (uuid == null && (entity instanceof TamableAnimal)) {
-            uuid = ((TamableAnimal) entity).getOwnerUUID();
+            uuid = ((TamableAnimal) entity).getOwnerReference();
         }
-        child.setOwnerUUID(uuid);
+        child.setOwnerReference(uuid);
         child.setTame(true, false);
         return child;
     }
@@ -189,7 +189,7 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
+    protected int calculateFallDamage(double distance, float damageMultiplier) {
         return (int) (super.calculateFallDamage(distance, (damageMultiplier)) * 0.5D);
     }
 

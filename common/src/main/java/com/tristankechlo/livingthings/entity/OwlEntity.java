@@ -38,8 +38,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.UUID;
-
 public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> OWL_VARIANT = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.BYTE);
@@ -60,12 +58,12 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         OwlEntity child = ModEntityTypes.OWL.get().create(world, EntitySpawnReason.BREEDING);
         // Set the owner UUID and tame status for the child entity
-        UUID uuid = this.getOwnerUUID();
+        EntityReference<LivingEntity> uuid = this.getOwnerReference();
         if (uuid == null && (entity instanceof TamableAnimal)) {
-            uuid = ((TamableAnimal) entity).getOwnerUUID();
+            uuid = ((TamableAnimal) entity).getOwnerReference();
         }
         if (uuid != null) {
-            child.setOwnerUUID(uuid);
+            child.setOwnerReference(uuid);
             child.setTame(true, false);
         }
         child.setVariant(this.getVariantFromParents(this, entity));
@@ -114,7 +112,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("OwlVariant")) {
-            this.setVariant(compound.getByte("OwlVariant"));
+            this.setVariant(compound.getByteOr("OwlVariant", (byte) 0));
         } else {
             this.setVariant((byte) 0);
         }
@@ -199,7 +197,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     }
 
     @Override
-    public boolean causeFallDamage(float p_149683_, float p_149684_, DamageSource p_149685_) {
+    public boolean causeFallDamage(double p_149683_, float p_149684_, DamageSource p_149685_) {
         return false;
     }
 

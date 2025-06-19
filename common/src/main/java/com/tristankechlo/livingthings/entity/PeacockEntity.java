@@ -75,8 +75,8 @@ public class PeacockEntity extends Animal implements ILexiconEntry {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.entityData.set(FLUFFED, nbt.getBoolean("Fluffed"));
-        this.fluffedTime = nbt.getInt("FluffedTime");
+        this.entityData.set(FLUFFED, nbt.getBooleanOr("Fluffed", false));
+        this.fluffedTime = nbt.getIntOr("FluffedTime", 0);
     }
 
     @Override

@@ -104,7 +104,7 @@ public class GiraffeEntity extends Animal implements NeutralMob, IMobVariants, I
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getByte("GiraffeVariant"));
+        this.setVariant(compound.getByteOr("GiraffeVariant", (byte) 0));
         this.readPersistentAngerSaveData(this.level(), compound);
     }
 

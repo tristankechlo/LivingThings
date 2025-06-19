@@ -47,7 +47,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     private static final EntityDataAccessor<Boolean> IS_LAYING_EGG = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> BOOST_TIME = SynchedEntityData.defineId(OstrichEntity.class, EntityDataSerializers.INT);
-    private final ItemBasedSteering boostHelper = new ItemBasedSteering(this.entityData, BOOST_TIME, SADDLED);
+    private final ItemBasedSteering boostHelper = new ItemBasedSteering(this.entityData, BOOST_TIME);
     private int nestBuildingCounter;
     private int layingEggCounter;
 
@@ -99,14 +99,12 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("HasEgg", this.hasEgg());
-        this.boostHelper.addAdditionalSaveData(compound);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setHasEgg(compound.getBoolean("HasEgg"));
-        this.boostHelper.readAdditionalSaveData(compound);
+        this.setHasEgg(compound.getBooleanOr("HasEgg", false));
     }
 
     @Override

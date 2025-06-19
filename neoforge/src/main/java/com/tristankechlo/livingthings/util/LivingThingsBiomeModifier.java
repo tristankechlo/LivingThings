@@ -6,6 +6,7 @@ import com.tristankechlo.livingthings.config.GeneralConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 public class LivingThingsBiomeModifier implements BiomeModifier {
 
-    private Map<ResourceLocation, List<MobSpawnSettings.SpawnerData>> spawnData = null;
+    private Map<ResourceLocation, List<Weighted<MobSpawnSettings.SpawnerData>>> spawnData = null;
     private static final LivingThingsBiomeModifier INSTANCE = new LivingThingsBiomeModifier();
     public static final MapCodec<LivingThingsBiomeModifier> CODEC = MapCodec.unit(INSTANCE);
 
@@ -34,9 +35,9 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
         ResourceLocation biomeName = biomeID.get().location();
         if (phase == Phase.ADD && spawnData.containsKey(biomeName)) {
             MobSpawnSettingsBuilder spawns = builder.getMobSpawnSettings();
-            List<MobSpawnSettings.SpawnerData> spawnerData = spawnData.get(biomeName);
-            for (MobSpawnSettings.SpawnerData data : spawnerData) {
-                spawns.addSpawn(data.type.getCategory(), data);
+            List<Weighted<MobSpawnSettings.SpawnerData>> spawnerData = spawnData.get(biomeName);
+            for (Weighted<MobSpawnSettings.SpawnerData> data : spawnerData) {
+                spawns.addSpawn(data.value().type().getCategory(), data.weight(), data.value());
             }
         }
     }

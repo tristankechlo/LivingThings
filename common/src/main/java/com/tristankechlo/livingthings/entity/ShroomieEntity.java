@@ -61,9 +61,9 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setVariant(tag.getByte("ShroomieType"));
-        this.mushroomCooldown = tag.getInt("MushroomCooldown");
-        this.hasMushroom = tag.getBoolean("CanPlantMushroom");
+        this.setVariant(tag.getByteOr("ShroomieType", (byte) 0));
+        this.mushroomCooldown = tag.getIntOr("MushroomCooldown", 0);
+        this.hasMushroom = tag.getBooleanOr("CanPlantMushroom", false);
     }
 
     @Override

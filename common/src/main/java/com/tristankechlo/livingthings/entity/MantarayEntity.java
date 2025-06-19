@@ -85,8 +85,8 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getByte("MantarayVariant"));
-        this.setScaling(compound.getByte("MantarayScaling"));
+        this.setVariant(compound.getByteOr("MantarayVariant", (byte) 0));
+        this.setScaling(compound.getByteOr("MantarayScaling", (byte) 0));
     }
 
     @Override
@@ -111,8 +111,9 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
                 ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) -2),
                         new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 0),
                         new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) 2),
-                        new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
-        return scaling.get().scaling;
+                        new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)),
+                WeightedMobScaling::weight);
+        return scaling.get().scaling();
     }
 
     public static boolean checkMantaraySpawnRules(EntityType<MantarayEntity> entity, LevelAccessor world, EntitySpawnReason reason, BlockPos pos, RandomSource random) {

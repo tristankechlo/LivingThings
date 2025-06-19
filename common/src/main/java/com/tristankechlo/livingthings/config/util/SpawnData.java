@@ -8,6 +8,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -34,8 +35,8 @@ public final class SpawnData {
         this.biomes.addAll(biomes);
     }
 
-    public MobSpawnSettings.SpawnerData asSpawnerData(EntityType<?> entityType) {
-        return new MobSpawnSettings.SpawnerData(entityType, weight, minCount, maxCount);
+    public Weighted<MobSpawnSettings.SpawnerData> asSpawnerData(EntityType<?> entityType) {
+        return new Weighted<>(new MobSpawnSettings.SpawnerData(entityType, minCount, maxCount), weight);
     }
 
     public List<ResourceLocation> getBiomes() {

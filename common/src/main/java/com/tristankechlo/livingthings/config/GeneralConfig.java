@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.config.values.BooleanValue;
 import com.tristankechlo.livingthings.config.values.NumberValue.DoubleValue;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 
@@ -35,12 +36,12 @@ public final class GeneralConfig extends EntityConfig {
         return INSTANCE;
     }
 
-    public static Map<ResourceLocation, List<MobSpawnSettings.SpawnerData>> getSpawnData() {
-        Map<ResourceLocation, List<MobSpawnSettings.SpawnerData>> hashMap = new HashMap<>();
+    public static Map<ResourceLocation, List<Weighted<MobSpawnSettings.SpawnerData>>> getSpawnData() {
+        Map<ResourceLocation, List<Weighted<MobSpawnSettings.SpawnerData>>> hashMap = new HashMap<>();
         getDefaults().forEach((entityType, spawnDataSupplier) -> {
             spawnDataSupplier.get().forEach((spawnData) -> {
                 spawnData.getBiomes().forEach((biome) -> {
-                    List<MobSpawnSettings.SpawnerData> spawnDataList = hashMap.getOrDefault(biome, new ArrayList<>());
+                    List<Weighted<MobSpawnSettings.SpawnerData>> spawnDataList = hashMap.getOrDefault(biome, new ArrayList<>());
                     spawnDataList.add(spawnData.asSpawnerData(entityType));
                     hashMap.put(biome, spawnDataList);
                 });

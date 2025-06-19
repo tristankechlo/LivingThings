@@ -22,8 +22,8 @@ public class NetherKnightRenderState extends LivingEntityRenderState implements 
     }
 
     public static void extractHoldingEntityRenderState(LivingEntity entity, NetherKnightRenderState state, ItemModelResolver resolver) {
-        resolver.updateForLiving(state.rightHandItem, entity.getItemHeldByArm(HumanoidArm.RIGHT), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, false, entity);
-        resolver.updateForLiving(state.leftHandItem, entity.getItemHeldByArm(HumanoidArm.LEFT), ItemDisplayContext.THIRD_PERSON_LEFT_HAND, true, entity);
+        resolver.updateForLiving(state.rightHandItem, entity.getItemHeldByArm(HumanoidArm.RIGHT), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, entity);
+        resolver.updateForLiving(state.leftHandItem, entity.getItemHeldByArm(HumanoidArm.LEFT), ItemDisplayContext.THIRD_PERSON_LEFT_HAND, entity);
     }
 
 }

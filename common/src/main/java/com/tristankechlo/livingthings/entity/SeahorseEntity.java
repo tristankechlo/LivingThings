@@ -10,7 +10,6 @@ import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -75,7 +74,7 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setVariant(tag.getByte("SeahorseVariant"));
+        this.setVariant(tag.getByteOr("SeahorseVariant", (byte) 0));
     }
 
     @Override
@@ -115,10 +114,10 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     public void loadFromBucketTag(CompoundTag nbt) {
         super.loadFromBucketTag(nbt);
         byte variant = 0;
-        if (nbt.contains("BucketSeahorseVariantTag", Tag.TAG_BYTE)) {
-            variant = nbt.getByte("BucketSeahorseVariantTag");
-        } else if (nbt.contains("BucketSeahorseVariantTag", Tag.TAG_INT)) { // for compatibility with older versions
-            variant = (byte) nbt.getInt("BucketSeahorseVariantTag");
+        if (nbt.getByte("BucketSeahorseVariantTag").isPresent()) {
+            variant = nbt.getByte("BucketSeahorseVariantTag").get();
+        } else if (nbt.getInt("BucketSeahorseVariantTag").isPresent()) { // for compatibility with older versions
+            variant = (byte) (int) nbt.getInt("BucketSeahorseVariantTag").get();
         }
         this.setVariant(variant);
     }

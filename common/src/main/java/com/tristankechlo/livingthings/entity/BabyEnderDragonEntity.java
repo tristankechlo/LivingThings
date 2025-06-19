@@ -165,7 +165,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setCollarColor(DyeColor.byId(nbt.getInt("CollarColor")));
+        this.setCollarColor(DyeColor.byId(nbt.getIntOr("CollarColor", DyeColor.RED.getId())));
         this.readPersistentAngerSaveData(level(), nbt);
     }
 
@@ -230,9 +230,12 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         BabyEnderDragonEntity child = ModEntityTypes.BABY_ENDER_DRAGON.get().create(world, EntitySpawnReason.BREEDING);
-        UUID uuid = this.getOwnerUUID();
+        EntityReference<LivingEntity> uuid = this.getOwnerReference();
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerReference();
+        }
         if (uuid != null) {
-            child.setOwnerUUID(uuid);
+            child.setOwnerReference(uuid);
             child.setTame(true, false);
         }
         return child;
@@ -257,7 +260,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
         double d5 = entity.getY(0.5) - d2;
         double d6 = entity.getZ() - d3;
         CustomDragonFireball dragonfireball = new CustomDragonFireball(this.level(), this, d4, d5, d6);
-        dragonfireball.moveTo(d1, d2, d3, 0.0F, 0.0F);
+        dragonfireball.snapTo(d1, d2, d3, 0.0F, 0.0F);
         this.level().addFreshEntity(dragonfireball);
         if (!this.level().isClientSide() && !this.isSilent()) {
             this.level().playSound(null, this.blockPosition(), ModSounds.BABY_ENDER_DRAGON_SHOOT.get(),
@@ -266,7 +269,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
+    public boolean causeFallDamage(double p_147187_, float p_147188_, DamageSource p_147189_) {
         return false;
     }
 

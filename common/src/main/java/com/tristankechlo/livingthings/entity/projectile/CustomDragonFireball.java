@@ -54,7 +54,7 @@ public class CustomDragonFireball extends DragonFireball {
                 effectcloud.setRadius(this.radius);
                 effectcloud.setDuration(this.duration);
                 effectcloud.setRadiusPerTick((this.spreadSpeed - effectcloud.getRadius()) / (float) effectcloud.getDuration());
-                effectcloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 1));
+                effectcloud.addEffect(new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 1, 1));
                 if (!list.isEmpty()) {
                     for (LivingEntity livingentity : list) {
                         double d0 = this.distanceToSqr(livingentity);

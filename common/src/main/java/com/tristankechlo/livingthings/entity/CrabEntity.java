@@ -124,8 +124,9 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
                 ImmutableList.of(new WeightedMobScaling(Math.max(0, scaling1Weight), (byte) 0),
                         new WeightedMobScaling(Math.max(0, scaling2Weight), (byte) 2),
                         new WeightedMobScaling(Math.max(0, scaling3Weight), (byte) -2),
-                        new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)));
-        return scaling.get().scaling;
+                        new WeightedMobScaling(Math.max(0, scaling4Weight), (byte) 6)),
+                WeightedMobScaling::weight);
+        return scaling.get().scaling();
     }
 
     @Override
@@ -146,8 +147,8 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getByte("CrabVariant"));
-        this.setScaling(compound.getByte("CrabScaling"));
+        this.setVariant(compound.getByteOr("CrabVariant", (byte) 0));
+        this.setScaling(compound.getByteOr("CrabScaling", (byte) 0));
         this.readPersistentAngerSaveData(this.level(), compound);
     }
 

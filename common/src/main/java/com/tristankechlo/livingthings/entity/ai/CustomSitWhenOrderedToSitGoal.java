@@ -21,7 +21,7 @@ public class CustomSitWhenOrderedToSitGoal extends SitWhenOrderedToGoal {
     public boolean canUse() {
         if (!this.mob.isTame()) {
             return false;
-        } else if (this.mob.isInWaterOrBubble()) {
+        } else if (this.mob.isInWaterOrRain()) {
             return false;
         } else {
             LivingEntity livingentity = this.mob.getOwner();

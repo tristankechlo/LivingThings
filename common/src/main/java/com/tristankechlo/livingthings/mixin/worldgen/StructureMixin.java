@@ -2,7 +2,8 @@ package com.tristankechlo.livingthings.mixin.worldgen;
 
 import com.tristankechlo.livingthings.config.entity.NetherKnightConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.Weighted;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -38,18 +39,17 @@ public abstract class StructureMixin {
         }
 
         MobSpawnSettings.SpawnerData netherKnightSpawnData = new MobSpawnSettings.SpawnerData(ModEntityTypes.NETHER_KNIGHT.get(),
-                NetherKnightConfig.get().spawnWeight.get(),
                 NetherKnightConfig.get().minSpawnCount.get(),
                 NetherKnightConfig.get().maxSpawnCount.get());
 
         customSpawnOverrides = new HashMap<>(settings.spawnOverrides()); //make copy, because original is unmodifiable
         StructureSpawnOverride oldMonsterSpawns = customSpawnOverrides.get(MobCategory.MONSTER);
-        List<MobSpawnSettings.SpawnerData> newMonsterSpawns = new ArrayList<>();
+        List<Weighted<MobSpawnSettings.SpawnerData>> newMonsterSpawns = new ArrayList<>();
         if (oldMonsterSpawns != null) {
             newMonsterSpawns = new ArrayList<>(oldMonsterSpawns.spawns().unwrap()); //make copy, because original is unmodifiable
         }
-        newMonsterSpawns.add(netherKnightSpawnData);
-        WeightedRandomList<MobSpawnSettings.SpawnerData> weightedRandomList = WeightedRandomList.create(newMonsterSpawns);
+        newMonsterSpawns.add(new Weighted<>(netherKnightSpawnData, NetherKnightConfig.get().spawnWeight.get())); //add Nether Knight spawn data
+        WeightedList<MobSpawnSettings.SpawnerData> weightedRandomList = WeightedList.of(newMonsterSpawns);
         NetherFortressStructureAccessor.setFortressEnemies(weightedRandomList); //set static field 'FORTRESS_ENEMIES', values are used somewhere else too
         StructureSpawnOverride newOverrides = new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, weightedRandomList);
         customSpawnOverrides.put(MobCategory.MONSTER, newOverrides);

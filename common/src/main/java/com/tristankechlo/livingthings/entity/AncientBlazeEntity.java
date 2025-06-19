@@ -102,8 +102,8 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setInvulnerableTime(compound.getInt("ChargedTime"));
-        this.setShoots(compound.getByte("Shoots"));
+        this.setInvulnerableTime(compound.getIntOr("ChargedTime", 0));
+        this.setShoots(compound.getByteOr("Shoots", (byte) 0));
         if (this.hasCustomName()) {
             this.bossInfo.setName(this.getDisplayName());
         }
@@ -239,7 +239,7 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
                 blaze.setCustomName(this.getCustomName());
                 blaze.setNoAi(this.isNoAi());
                 blaze.setInvulnerable(this.isInvulnerable());
-                blaze.moveTo(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
+                blaze.snapTo(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
                 this.level().addFreshEntity(blaze);
             }
         }
@@ -267,7 +267,7 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
     }
 
     @Override
-    public boolean causeFallDamage(float p_149683_, float p_149684_, DamageSource p_149685_) {
+    public boolean causeFallDamage(double p_397597_, float p_147187_, DamageSource p_147189_) {
         return false;
     }
 

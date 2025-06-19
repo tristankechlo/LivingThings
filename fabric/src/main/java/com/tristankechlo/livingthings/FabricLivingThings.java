@@ -50,11 +50,11 @@ public final class FabricLivingThings implements ModInitializer {
         // register biomemodifiers that mobs can spawn
         GeneralConfig.getSpawnData().forEach((biomeLocation, spawnDataList) -> {
             spawnDataList.forEach((spawnerData) -> {
-                EntityType<?> entityType = spawnerData.type;
+                EntityType<?> entityType = spawnerData.value().type();
                 MobCategory category = entityType.getCategory();
                 BiomeModifications.addSpawn((selectionContext) -> {
                     return selectionContext.getBiomeKey().location().equals(biomeLocation);
-                }, category, entityType, spawnerData.getWeight().asInt(), spawnerData.minCount, spawnerData.maxCount);
+                }, category, entityType, spawnerData.weight(), spawnerData.value().minCount(), spawnerData.value().maxCount());
             });
         });
     }

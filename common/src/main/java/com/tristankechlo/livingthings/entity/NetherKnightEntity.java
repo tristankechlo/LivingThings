@@ -180,7 +180,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         // float in lava
         if (this.isInLava()) {
             CollisionContext iselectioncontext = CollisionContext.of(this);
-            if (iselectioncontext.isAbove(LiquidBlock.STABLE_SHAPE, this.blockPosition(), true)
+            if (iselectioncontext.isAbove(LiquidBlock.SHAPE_STABLE, this.blockPosition(), true)
                     && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
                 this.setOnGround(true);
             } else {

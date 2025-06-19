@@ -117,12 +117,12 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.readPersistentAngerSaveData(this.level(), compound);
-        this.setSaddled(compound.getBoolean("Saddled"));
-        this.setHasChest(compound.getBoolean("Chested"));
-        this.setTame(compound.getBoolean("Tamed"), false);
-        this.tameAmount = compound.getInt("TameAmount");
+        this.setSaddled(compound.getBooleanOr("Saddled", false));
+        this.setHasChest(compound.getBooleanOr("Chested", false));
+        this.setTame(compound.getBooleanOr("Tamed", false), false);
+        this.tameAmount = compound.getIntOr("TameAmount", 0);
 
-        this.entityInventory.fromTag(compound.getList("Inventory", 10), this.registryAccess());
+        this.entityInventory.fromTag(compound.getListOrEmpty("Inventory"), this.registryAccess());
         this.initInventory();
     }
 
@@ -290,7 +290,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     @Override
     public void travel(Vec3 travelVector) {
         if (this.isAlive()) {
-            if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
+            if (this.isVehicle() && this.isLocalClientAuthoritative() && this.isSaddled()) {
                 LivingEntity livingentity = this.getControllingPassenger();
                 this.setYRot(livingentity.getYRot());
                 this.yRotO = this.getYRot();
@@ -306,7 +306,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                     forwardSpeed *= 0.2F;
                 }
 
-                if (this.isControlledByLocalInstance()) {
+                if (this.isLocalClientAuthoritative()) {
                     this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
                     super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
                 } else if (livingentity instanceof Player) {
@@ -432,7 +432,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                 // mark as tamed if taming amount is reached
                 if (this.tameAmount >= 1000) {
                     this.setTame(true, true);
-                    this.setOwnerUUID(player.getUUID());
+                    this.setOwner(player);
                     if (player instanceof ServerPlayer) {
                         CriteriaTriggers.TAME_ANIMAL.trigger((ServerPlayer) player, this);
                     }
@@ -488,8 +488,8 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
         @Override
         protected boolean canAttack(LivingEntity entity, TargetingConditions conditions) {
             if (entity instanceof Player) {
-                UUID ownerID = ((ElephantEntity) this.mob).getOwnerUUID();
-                if (ownerID != null && entity.getUUID().equals(ownerID)) {
+                LivingEntity ownerID = ((ElephantEntity) this.mob).getOwner();
+                if (ownerID != null && entity.getUUID().equals(ownerID.getUUID())) {
                     return false;
                 }
             }

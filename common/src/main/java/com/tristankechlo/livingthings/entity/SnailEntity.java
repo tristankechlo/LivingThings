@@ -131,9 +131,9 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getByte("SnailVariant"));
-        this.setShellColor(PatternType.FOREGROUND, compound.getInt("ShellColorF"));
-        this.setShellColor(PatternType.BACKGROUND, compound.getInt("ShellColorB"));
+        this.setVariant(compound.getByteOr("SnailVariant", (byte) SnailVariants.NORMAL.getVariant()));
+        this.setShellColor(PatternType.FOREGROUND, compound.getIntOr("ShellColorF", SnailVariants.NORMAL.getForegroundColor()));
+        this.setShellColor(PatternType.BACKGROUND, compound.getIntOr("ShellColorB", SnailVariants.NORMAL.getBackgroundColor()));
     }
 
     @Override

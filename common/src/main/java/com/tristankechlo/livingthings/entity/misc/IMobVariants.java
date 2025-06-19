@@ -1,8 +1,6 @@
 package com.tristankechlo.livingthings.entity.misc;
 
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.AgeableMob;
 
@@ -47,24 +45,9 @@ public interface IMobVariants {
             }
             weightedList.add(new WeightedMobVariant(weights[i], variants[i]));
         }
-        return WeightedRandom.getRandomItem(random, weightedList).get().variant;
+        return WeightedRandom.getRandomItem(random, weightedList, WeightedMobVariant::weight).get().variant();
     }
 
-    class WeightedMobVariant implements WeightedEntry {
-
-        public final byte variant;
-        public final Weight weight;
-
-        public WeightedMobVariant(int weight, byte variant) {
-            this.variant = variant;
-            this.weight = Weight.of(weight);
-        }
-
-        @Override
-        public Weight getWeight() {
-            return this.weight;
-        }
-
-    }
+    record WeightedMobVariant(int weight, byte variant) {}
 
 }

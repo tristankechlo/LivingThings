@@ -3,9 +3,8 @@ package com.tristankechlo.livingthings.mixin;
 import com.tristankechlo.livingthings.init.ModItems;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,13 +16,12 @@ public abstract class PlayerMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;moveCloak()V"))
     private void LivingThings$onArmorTick(CallbackInfo ci) {
-        ItemStack helmet = this.getItemBySlot(EquipmentSlot.HEAD);
-        if (helmet.is(ModItems.ANCIENT_HELMET.get())) {
+        if (this.isEquipped(ModItems.ANCIENT_HELMET.get())) {
             ((Player) (Object) this).addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 0, false, false, true));
         }
     }
 
     @Shadow
-    public abstract ItemStack getItemBySlot(EquipmentSlot slotIn);
+    protected abstract boolean isEquipped(Item item);
 
 }

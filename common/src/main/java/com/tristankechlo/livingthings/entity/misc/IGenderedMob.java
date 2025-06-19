@@ -1,8 +1,5 @@
 package com.tristankechlo.livingthings.entity.misc;
 
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
-
 public interface IGenderedMob {
 
     Gender getGender();
@@ -13,20 +10,6 @@ public interface IGenderedMob {
         MALE, FEMALE;
     }
 
-    class WeightedGender implements WeightedEntry {
+    record WeightedGender(int weight, Gender gender) {}
 
-        public final Gender gender;
-        public final Weight weight;
-
-        public WeightedGender(int weight, Gender gender) {
-            this.gender = gender;
-            this.weight = Weight.of(weight);
-        }
-
-        @Override
-        public Weight getWeight() {
-            return this.weight;
-        }
-
-    }
 }

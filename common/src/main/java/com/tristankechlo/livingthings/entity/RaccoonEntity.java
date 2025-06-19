@@ -121,7 +121,7 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
+    protected int calculateFallDamage(double distance, float damageMultiplier) {
         return super.calculateFallDamage(distance, (damageMultiplier * 0.3F));
     }
 

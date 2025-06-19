@@ -1,6 +1,6 @@
 package com.tristankechlo.livingthings.mixin.worldgen;
 
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.structure.structures.NetherFortressStructure;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ public interface NetherFortressStructureAccessor {
 
     @Mutable
     @Accessor("FORTRESS_ENEMIES")
-    static void setFortressEnemies(WeightedRandomList<MobSpawnSettings.SpawnerData> FORTRESS_ENEMIES) {
+    static void setFortressEnemies(WeightedList<MobSpawnSettings.SpawnerData> FORTRESS_ENEMIES) {
         throw new AssertionError();
     }
 

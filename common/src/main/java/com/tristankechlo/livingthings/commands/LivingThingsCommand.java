@@ -29,7 +29,7 @@ public final class LivingThingsCommand {
 
     private static int display(CommandContext<CommandSourceStack> context, ProjectLinks type) {
         CommandSourceStack source = context.getSource();
-        Component link = clickableLink(type.getUrl());
+        Component link = clickableLink(type);
         Component message = Component.literal(type.getMessage()).withStyle(ChatFormatting.WHITE).append(link);
         sendMessage(source, message, false);
         return 1;
@@ -44,10 +44,10 @@ public final class LivingThingsCommand {
         source.sendSuccess(() -> start, broadcastToOps);
     }
 
-    private static MutableComponent clickableLink(String url) {
-        MutableComponent mutableComponent = Component.literal(url);
+    private static MutableComponent clickableLink(ProjectLinks type) {
+        MutableComponent mutableComponent = Component.literal(type.getUrl());
         mutableComponent.withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE);
-        mutableComponent.withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)));
+        mutableComponent.withStyle(style -> style.withClickEvent(new ClickEvent.OpenUrl(type.getUri())));
         return mutableComponent;
     }
 }

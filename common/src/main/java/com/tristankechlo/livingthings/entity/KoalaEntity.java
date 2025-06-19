@@ -113,7 +113,7 @@ public class KoalaEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
+    protected int calculateFallDamage(double distance, float damageMultiplier) {
         return (int) (super.calculateFallDamage(distance, (damageMultiplier)) * 0.5D);
     }
 
