@@ -53,7 +53,8 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, RaccoonConfig.health())
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, RaccoonConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, RaccoonConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, RaccoonConfig.attackDamage());

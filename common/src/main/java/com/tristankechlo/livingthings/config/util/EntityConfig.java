@@ -13,11 +13,11 @@ import java.util.List;
 public abstract class EntityConfig implements IConfig {
 
     public static final double MIN_HEALTH = 1.0D;
-    public static final double MAX_HEALTH = Short.MAX_VALUE;
-    public static final double MIN_SPEED = 0.05D;
-    public static final double MAX_SPEED = 10.0D;
-    public static final double MIN_DAMAGE = 1.0D;
-    public static final double MAX_DAMAGE = Short.MAX_VALUE;
+    public static final double MAX_HEALTH = 1024.0D;
+    public static final double MIN_SPEED = 0.0D;
+    public static final double MAX_SPEED = 1024.0D;
+    public static final double MIN_DAMAGE = 0.0D;
+    public static final double MAX_DAMAGE = 2048.0D;
 
     private final List<IConfig> children = new ArrayList<>();
     private final List<Pair<String, List<IConfig>>> categories = new ArrayList<>();

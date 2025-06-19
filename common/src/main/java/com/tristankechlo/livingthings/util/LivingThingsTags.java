@@ -10,8 +10,6 @@ import net.minecraft.world.level.material.Fluid;
 
 public final class LivingThingsTags {
 
-    public static final TagKey<Block> DROPS_BANANAS = registerBlockTag("drops_bananas");
-
     // item tags for entity temptation
     public static final TagKey<Item> BABY_ENDERDRAGON_FOOD = mobFood("baby_ender_dragon");
     public static final TagKey<Item> CRAB_FOOD = mobFood("crab");
@@ -24,7 +22,6 @@ public final class LivingThingsTags {
     public static final TagKey<Item> MONKEY_FOOD = mobFood("monkey");
     public static final TagKey<Item> OSTRICH_FOOD = mobFood("ostrich");
     public static final TagKey<Item> OWL_FOOD = mobFood("owl");
-    public static final TagKey<Item> OWL_TAMING_FOOD = mobFood("owl_taming");
     public static final TagKey<Item> PEACOCK_FOOD = mobFood("peacock");
     public static final TagKey<Item> PENGUIN_FOOD = mobFood("penguin");
     public static final TagKey<Item> RACCOON_FOOD = mobFood("raccoon");
@@ -51,6 +48,9 @@ public final class LivingThingsTags {
     public static final TagKey<Block> BABY_ENDER_DRAGON_SPAWNABLE_ON = spawnableOn("baby_ender_dragon");
     public static final TagKey<Block> PEACOCK_SPAWNABLE_ON = spawnableOn("peacock");
 
+    // other block tags
+    public static final TagKey<Block> DROPS_BANANAS = registerBlockTag("drops_bananas");
+
     private static TagKey<Block> spawnableOn(String name) {
         return registerBlockTag(name + "_spawnable_on");
     }
@@ -58,7 +58,7 @@ public final class LivingThingsTags {
     private static TagKey<Block> registerBlockTag(String name) {
         return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
-    
+
     private static TagKey<Item> mobFood(String name) {
         return registerItemTag(name + "_food");
     }

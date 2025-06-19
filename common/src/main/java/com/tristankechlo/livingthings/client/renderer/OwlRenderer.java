@@ -32,9 +32,10 @@ public class OwlRenderer extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
     }
 
     @Override
-    protected void scale(OwlEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
+    protected void scale(OwlEntity owl, PoseStack matrixStackIn, float partialTickTime) {
         // scale the owl down a bit, to be smaller than one block
         matrixStackIn.scale(0.94F, 0.94F, 0.94F);
+        super.scale(owl, matrixStackIn, partialTickTime);
     }
 
     @Override

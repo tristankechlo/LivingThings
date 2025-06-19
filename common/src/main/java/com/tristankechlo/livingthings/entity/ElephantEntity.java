@@ -91,7 +91,8 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, ElephantConfig.health())
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, ElephantConfig.health())
                 .add(Attributes.MOVEMENT_SPEED, ElephantConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, ElephantConfig.attackDamage());
@@ -408,12 +409,14 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
                         float healAmount = 3.0F;
                         this.heal(healAmount);
                         this.usePlayerItem(player, hand, stack);
+                        return InteractionResult.SUCCESS;
                     }
                 } else {
                     // if already full health, fall in love
                     if (!this.level().isClientSide() && !this.isBaby() && this.canBreed()) {
                         this.usePlayerItem(player, hand, stack);
                         this.setInLove(player);
+                        return InteractionResult.SUCCESS;
                     }
                 }
                 return InteractionResult.sidedSuccess(this.level().isClientSide());

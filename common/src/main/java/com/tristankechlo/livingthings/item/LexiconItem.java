@@ -36,8 +36,7 @@ public class LexiconItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (playerIn instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer) playerIn;
+        if (playerIn instanceof ServerPlayer player) {
             if (IPlatformHelper.INSTANCE.isModLoaded("patchouli")) {
                 // open the lexicon
                 final ResourceLocation book = BuiltInRegistries.ITEM.getKey(ModItems.LEXICON.get());

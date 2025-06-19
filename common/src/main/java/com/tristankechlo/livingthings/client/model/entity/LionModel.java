@@ -68,7 +68,6 @@ public class LionModel<T extends LionEntity> extends AdvancedEntityModel<T> {
     }
 
     @SuppressWarnings("unused")
-
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();

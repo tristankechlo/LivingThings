@@ -16,7 +16,6 @@ public final class Ingredients {
     public static final Ingredient MONKEY_FOOD = Ingredient.of(LivingThingsTags.MONKEY_FOOD);
     public static final Ingredient OSTRICH_FOOD = Ingredient.of(LivingThingsTags.OSTRICH_FOOD);
     public static final Ingredient OWL_FOOD = Ingredient.of(LivingThingsTags.OWL_FOOD);
-    public static final Ingredient OWL_TAMING_FOOD = Ingredient.of(LivingThingsTags.OWL_TAMING_FOOD);
     public static final Ingredient PEACOCK_FOOD = Ingredient.of(LivingThingsTags.PEACOCK_FOOD);
     public static final Ingredient PENGUIN_FOOD = Ingredient.of(LivingThingsTags.PENGUIN_FOOD);
     public static final Ingredient RACCOON_FOOD = Ingredient.of(LivingThingsTags.RACCOON_FOOD);

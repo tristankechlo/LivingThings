@@ -30,6 +30,7 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayModel<
     protected void scale(MantarayEntity mantaray, PoseStack matrixStackIn, float partialTickTime) {
         float scale = 1.0F + (mantaray.getScaling() * 0.1F);
         matrixStackIn.scale(scale, scale, scale);
+        super.scale(mantaray, matrixStackIn, partialTickTime);
     }
 
 }

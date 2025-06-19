@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.entity;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.entity.ai.ShroomiePlantMushroomGoal;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
@@ -9,10 +10,12 @@ import com.tristankechlo.livingthings.util.Ingredients;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -32,17 +35,20 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
+    private static final ResourceKey<LootTable> LOOTTABLE_RED = createLootTableRK("entities/shroomie_red");
+    private static final ResourceKey<LootTable> LOOTTABLE_BROWN = createLootTableRK("entities/shroomie_brown");
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
-    private boolean canPlantMushroom;
+    private boolean hasMushroom;
     private int mushroomCooldown;
 
     public ShroomieEntity(EntityType<? extends ShroomieEntity> entityType, Level world) {
         super(entityType, world);
-        canPlantMushroom = false;
+        hasMushroom = false;
     }
 
     public static boolean checkShroomieSpawnRules(EntityType<ShroomieEntity> animal, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -54,7 +60,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         super.readAdditionalSaveData(tag);
         this.setVariant(tag.getByte("ShroomieType"));
         this.mushroomCooldown = tag.getInt("MushroomCooldown");
-        this.canPlantMushroom = tag.getBoolean("CanPlantMushroom");
+        this.hasMushroom = tag.getBoolean("CanPlantMushroom");
     }
 
     @Override
@@ -62,7 +68,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
         super.addAdditionalSaveData(tag);
         tag.putByte("ShroomieType", getVariant());
         tag.putInt("MushroomCooldown", this.mushroomCooldown);
-        tag.putBoolean("CanPlantMushroom", this.canPlantMushroom);
+        tag.putBoolean("CanPlantMushroom", this.hasMushroom);
     }
 
     @Override
@@ -118,12 +124,12 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
             if (this.level().isClientSide) {
                 return InteractionResult.CONSUME;
             } else {
-                if (!this.canPlantMushroom) {
+                if (!this.hasMushroom) {
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
                     this.mushroomCooldown += 100;
-                    this.canPlantMushroom = true;
+                    this.hasMushroom = true;
                     return InteractionResult.SUCCESS;
                 } else {
                     return InteractionResult.FAIL;
@@ -148,13 +154,13 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     public boolean canPlantMushroom() {
-        return this.canPlantMushroom && this.mushroomCooldown <= 0;
+        return this.hasMushroom && this.mushroomCooldown <= 0;
     }
 
     public void plantedMushroom() {
         // 50% chance to plant another mushroom after the cooldown
         if (this.random.nextBoolean()) {
-            this.canPlantMushroom = false;
+            this.hasMushroom = false;
         }
         this.mushroomCooldown = RANGED_INTEGER.sample(random);
     }
@@ -175,6 +181,21 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.SHROOMIE;
+    }
+
+    @Override
+    protected ResourceKey<LootTable> getDefaultLootTable() {
+        byte variant = this.getVariant();
+        if (variant == 1) {
+            return LOOTTABLE_RED;
+        } else if (variant == 0) {
+            return LOOTTABLE_BROWN;
+        }
+        return super.getDefaultLootTable();
+    }
+
+    private static ResourceKey<LootTable> createLootTableRK(String name) {
+        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
 }

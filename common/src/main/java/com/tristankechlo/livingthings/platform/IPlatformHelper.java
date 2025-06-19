@@ -1,6 +1,8 @@
 package com.tristankechlo.livingthings.platform;
 
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
+import com.tristankechlo.livingthings.init.ModSounds;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -17,17 +19,9 @@ import java.util.function.Supplier;
 
 public interface IPlatformHelper {
 
-    public static final IPlatformHelper INSTANCE = Services.load(IPlatformHelper.class);
-
-    String getPlatformName();
+    IPlatformHelper INSTANCE = Services.load(IPlatformHelper.class);
 
     boolean isModLoaded(String modId);
-
-    boolean isDevelopmentEnvironment();
-
-    default String getEnvironmentName() {
-        return isDevelopmentEnvironment() ? "development" : "production";
-    }
 
     Path getConfigDirectory();
 

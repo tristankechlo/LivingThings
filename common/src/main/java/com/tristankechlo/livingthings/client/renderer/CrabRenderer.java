@@ -37,6 +37,7 @@ public class CrabRenderer extends MobRenderer<CrabEntity, CrabModel<CrabEntity>>
             matrixStackIn.scale(scale, scale, scale);
         }
         matrixStackIn.translate(0.0D, 0.01D, 0.0D);
+        super.scale(crab, matrixStackIn, partialTickTime);
     }
 
 }
