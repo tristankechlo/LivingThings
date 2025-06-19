@@ -48,19 +48,15 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        MonkeyEntity monkey = ModEntityTypes.MONKEY.get().create(world, EntitySpawnReason.BREEDING);
+        MonkeyEntity child = ModEntityTypes.MONKEY.get().create(world, EntitySpawnReason.BREEDING);
+        // Set the owner UUID and tame status for the child entity
         UUID uuid = this.getOwnerUUID();
-        if (uuid != null) {
-            monkey.setOwnerUUID(uuid);
-            monkey.setTame(true, false);
-        } else if (entity instanceof TamableAnimal) {
-            UUID uuid2 = ((TamableAnimal) entity).getOwnerUUID();
-            if (uuid2 != null) {
-                monkey.setOwnerUUID(uuid2);
-                monkey.setTame(true, false);
-            }
+        if (uuid == null && (entity instanceof TamableAnimal)) {
+            uuid = ((TamableAnimal) entity).getOwnerUUID();
         }
-        return monkey;
+        child.setOwnerUUID(uuid);
+        child.setTame(true, false);
+        return child;
     }
 
     @Override
@@ -204,19 +200,19 @@ public class MonkeyEntity extends TamableAnimal implements ILexiconEntry {
             return InteractionResult.PASS;
         }
         if (this.isTame()) {
-            if (this.isFood(stack) && stack.has(DataComponents.FOOD) && this.getHealth() < this.getMaxHealth()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+            if (this.isFood(stack) && this.getHealth() < this.getMaxHealth()) {
+                this.usePlayerItem(player, hand, stack);
                 this.heal(stack.get(DataComponents.FOOD).nutrition());
-            } else if (stack.isEmpty()) {
+                return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            }
+            if (stack.isEmpty() && this.isOwnedBy(player)) {
                 this.setOrderedToSit(!this.isOrderedToSit());
+                return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
             }
-            return this.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            // if nothing else matches, breeding and aging is done by super()
+            return super.mobInteract(player, hand);
         } else if (!this.isTame() && this.isFood(stack)) {
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
+            this.usePlayerItem(player, hand, stack);
             if (this.random.nextInt(4) == 0) {
                 this.tame(player);
                 this.setOrderedToSit(true);

@@ -20,7 +20,6 @@ public final class Predicates {
     public static final Predicate<ItemStack> MONKEY_FOOD = of(LivingThingsTags.MONKEY_FOOD);
     public static final Predicate<ItemStack> OSTRICH_FOOD = of(LivingThingsTags.OSTRICH_FOOD);
     public static final Predicate<ItemStack> OWL_FOOD = of(LivingThingsTags.OWL_FOOD);
-    public static final Predicate<ItemStack> OWL_TAMING_FOOD = of(LivingThingsTags.OWL_TAMING_FOOD);
     public static final Predicate<ItemStack> PEACOCK_FOOD = of(LivingThingsTags.PEACOCK_FOOD);
     public static final Predicate<ItemStack> PENGUIN_FOOD = of(LivingThingsTags.PENGUIN_FOOD);
     public static final Predicate<ItemStack> RACCOON_FOOD = of(LivingThingsTags.RACCOON_FOOD);

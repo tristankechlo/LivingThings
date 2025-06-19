@@ -20,10 +20,13 @@ neoForge {
             ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
         }
         client {
+            gameDirectory = project.file('run')
             client()
         }
         server {
+            gameDirectory = project.file('run')
             server()
+            programArgument("--nogui")
         }
     }
     mods {
@@ -35,10 +38,6 @@ neoForge {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
-
-    // TODO re-enable patchouli
-    //compileOnly("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT:api")
-    //runtimeOnly("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT")
 
     compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
     annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version

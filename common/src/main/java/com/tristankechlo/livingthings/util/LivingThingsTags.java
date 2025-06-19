@@ -22,7 +22,6 @@ public final class LivingThingsTags {
     public static final TagKey<Item> MONKEY_FOOD = mobFood("monkey");
     public static final TagKey<Item> OSTRICH_FOOD = mobFood("ostrich");
     public static final TagKey<Item> OWL_FOOD = mobFood("owl");
-    public static final TagKey<Item> OWL_TAMING_FOOD = mobFood("owl_taming");
     public static final TagKey<Item> PEACOCK_FOOD = mobFood("peacock");
     public static final TagKey<Item> PENGUIN_FOOD = mobFood("penguin");
     public static final TagKey<Item> RACCOON_FOOD = mobFood("raccoon");

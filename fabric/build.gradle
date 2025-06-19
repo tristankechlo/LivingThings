@@ -19,8 +19,6 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    // TODO reimplement lexicon
-    //modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
     compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
@@ -36,13 +34,11 @@ loom {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
-            runDir("runs/client")
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
-            runDir("runs/server")
         }
     }
 }

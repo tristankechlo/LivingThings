@@ -10,6 +10,7 @@ import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -106,8 +107,20 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     public void saveToBucketTag(ItemStack stack) {
         super.saveToBucketTag(stack);
         CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, (tag) -> {
-            tag.putInt("BucketSeahorseVariantTag", this.getVariant());
+            tag.putByte("BucketSeahorseVariantTag", this.getVariant());
         });
+    }
+
+    @Override
+    public void loadFromBucketTag(CompoundTag nbt) {
+        super.loadFromBucketTag(nbt);
+        byte variant = 0;
+        if (nbt.contains("BucketSeahorseVariantTag", Tag.TAG_BYTE)) {
+            variant = nbt.getByte("BucketSeahorseVariantTag");
+        } else if (nbt.contains("BucketSeahorseVariantTag", Tag.TAG_INT)) { // for compatibility with older versions
+            variant = (byte) nbt.getInt("BucketSeahorseVariantTag");
+        }
+        this.setVariant(variant);
     }
 
     @Override

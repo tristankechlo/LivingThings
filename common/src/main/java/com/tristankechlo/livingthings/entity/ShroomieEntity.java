@@ -1,18 +1,22 @@
 package com.tristankechlo.livingthings.entity;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.ShroomieConfig;
 import com.tristankechlo.livingthings.entity.ai.ShroomiePlantMushroomGoal;
 import com.tristankechlo.livingthings.entity.misc.IMobVariants;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
+import com.tristankechlo.livingthings.mixin.entity.MobAccessor;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -32,9 +36,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.loot.LootTable;
+
+import java.util.Optional;
 
 public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntry {
 
+    private static final ResourceKey<LootTable> LOOTTABLE_RED = createLootTableRK("entities/shroomie_red");
+    private static final ResourceKey<LootTable> LOOTTABLE_BROWN = createLootTableRK("entities/shroomie_brown");
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(ShroomieEntity.class, EntityDataSerializers.BYTE);
     private static final UniformInt RANGED_INTEGER = TimeUtil.rangeOfSeconds(30, 60);
     private boolean hasMushroom;
@@ -168,11 +177,17 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
             return;
         }
         this.entityData.set(VARIANT, type);
+        var table = type == 1 ? LOOTTABLE_RED : LOOTTABLE_BROWN;
+        ((MobAccessor) this).setLootTable(Optional.of(table));
     }
 
     @Override
     public ResourceLocation getLexiconEntry() {
         return LexiconEntries.SHROOMIE;
+    }
+
+    private static ResourceKey<LootTable> createLootTableRK(String name) {
+        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
 }
