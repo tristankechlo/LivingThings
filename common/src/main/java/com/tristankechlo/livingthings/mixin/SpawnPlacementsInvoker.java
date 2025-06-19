@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface SpawnPlacementsInvoker {
 
     @Invoker("register")
-    public static <T extends Mob> void register(EntityType<T> entityType, SpawnPlacementType type, Heightmap.Types heightmap, SpawnPredicate<T> predicate) {
+    static <T extends Mob> void register(EntityType<T> entityType, SpawnPlacementType type, Heightmap.Types heightmap, SpawnPredicate<T> predicate) {
         throw new IllegalStateException("Mixin did not apply!");
     }
 
