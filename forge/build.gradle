@@ -21,7 +21,7 @@ minecraft {
             ideaModule "${rootProject.name}.${project.name}.main"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            property 'eventbus.api.strictRuntimeChecks', 'false'
+            property 'eventbus.api.strictRuntimeChecks', 'true'
         }
 
         client {
