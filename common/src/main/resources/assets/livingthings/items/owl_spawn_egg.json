@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 15587285
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 7223348
-            }
-        ]
+        "model": "livingthings:item/owl_spawn_egg"
     }
 }

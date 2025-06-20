@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 16167424
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 16775293
-            }
-        ]
+        "model": "livingthings:item/ancient_blaze_spawn_egg"
     }
 }

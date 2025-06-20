@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 1579548
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 10693281
-            }
-        ]
+        "model": "livingthings:item/nether_knight_spawn_egg"
     }
 }

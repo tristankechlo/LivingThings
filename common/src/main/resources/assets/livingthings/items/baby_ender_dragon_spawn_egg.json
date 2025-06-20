@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 2104868
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 16734669
-            }
-        ]
+        "model": "livingthings:item/baby_ender_dragon_spawn_egg"
     }
 }

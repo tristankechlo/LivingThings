@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 5656656
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 9406086
-            }
-        ]
+        "model": "livingthings:item/koala_spawn_egg"
     }
 }

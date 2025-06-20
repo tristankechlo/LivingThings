@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 12097165
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 14366735
-            }
-        ]
+        "model": "livingthings:item/shroomie_spawn_egg"
     }
 }

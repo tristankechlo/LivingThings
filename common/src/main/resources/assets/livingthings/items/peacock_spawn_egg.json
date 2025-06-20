@@ -1,16 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "minecraft:item/template_spawn_egg",
-        "tints": [
-            {
-                "type": "minecraft:constant",
-                "value": 1146823
-            },
-            {
-                "type": "minecraft:constant",
-                "value": 8836155
-            }
-        ]
+        "model": "livingthings:item/peacock_spawn_egg"
     }
 }
