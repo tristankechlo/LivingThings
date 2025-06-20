@@ -12,7 +12,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -45,6 +44,8 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
@@ -114,27 +115,26 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(ValueInput compound) {
         super.readAdditionalSaveData(compound);
         this.readPersistentAngerSaveData(this.level(), compound);
         this.setSaddled(compound.getBooleanOr("Saddled", false));
         this.setHasChest(compound.getBooleanOr("Chested", false));
         this.setTame(compound.getBooleanOr("Tamed", false), false);
         this.tameAmount = compound.getIntOr("TameAmount", 0);
-
-        this.entityInventory.fromTag(compound.getListOrEmpty("Inventory"), this.registryAccess());
+        this.entityInventory.fromItemList(compound.listOrEmpty("Inventory", ItemStack.CODEC));
         this.initInventory();
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(ValueOutput compound) {
         super.addAdditionalSaveData(compound);
         this.addPersistentAngerSaveData(compound);
         compound.putBoolean("Saddled", this.isSaddled());
         compound.putBoolean("Chested", this.hasChest());
         compound.putBoolean("Tamed", this.isTame());
         compound.putInt("TameAmount", this.tameAmount);
-        compound.put("Inventory", this.entityInventory.createTag(this.registryAccess()));
+        this.entityInventory.storeAsItemList(compound.list("Inventory", ItemStack.CODEC));
     }
 
     private void initInventory() {

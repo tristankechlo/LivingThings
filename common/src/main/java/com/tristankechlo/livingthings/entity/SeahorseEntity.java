@@ -33,6 +33,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariants, ILexiconEntry {
 
@@ -66,13 +68,13 @@ public class SeahorseEntity extends AbstractSchoolingFish implements IMobVariant
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putByte("SeahorseVariant", getVariant());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
         this.setVariant(tag.getByteOr("SeahorseVariant", (byte) 0));
     }

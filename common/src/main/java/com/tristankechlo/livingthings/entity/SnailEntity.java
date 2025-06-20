@@ -9,7 +9,6 @@ import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -31,6 +30,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 
@@ -129,7 +130,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(ValueInput compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getByteOr("SnailVariant", (byte) SnailVariants.NORMAL.getVariant()));
         this.setShellColor(PatternType.FOREGROUND, compound.getIntOr("ShellColorF", SnailVariants.NORMAL.getForegroundColor()));
@@ -137,7 +138,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(ValueOutput compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("SnailVariant", this.getVariant());
         compound.putInt("ShellColorF", this.getShellColor(PatternType.FOREGROUND));

@@ -50,7 +50,7 @@ public class CustomDragonFireball extends DragonFireball {
                     effectcloud.setOwner((LivingEntity) entity);
                 }
 
-                effectcloud.setParticle(ParticleTypes.DRAGON_BREATH);
+                effectcloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
                 effectcloud.setRadius(this.radius);
                 effectcloud.setDuration(this.duration);
                 effectcloud.setRadiusPerTick((this.spreadSpeed - effectcloud.getRadius()) / (float) effectcloud.getDuration());

@@ -25,7 +25,7 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
         final var cont = containerOpt.get();
         if (cont instanceof FMLModContainer fmlModContainer) {
             final var registry = DeferredRegister.create(resourceKey, modId);
-            registry.register(fmlModContainer.getEventBus());
+            registry.register(fmlModContainer.getModBusGroup());
             return new Provider<>(modId, registry);
         } else {
             throw new ClassCastException("The container of the mod " + modId + " is not a FML one!");
@@ -52,29 +52,7 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
         @Override
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
             final var obj = registry.<I>register(name, supplier);
-            final var holder = new ForgeHolder<>(obj);
-            final var ro = new RegistryObject<I>() {
-
-                @Override
-                public ResourceKey<I> getResourceKey() {
-                    return obj.getKey();
-                }
-
-                @Override
-                public ResourceLocation getId() {
-                    return obj.getId();
-                }
-
-                @Override
-                public I get() {
-                    return obj.get();
-                }
-
-                @Override
-                public Holder<I> asHolder() {
-                    return holder;
-                }
-            };
+            final var ro = new ForgeRegistryObject<>(obj);
             entries.add((RegistryObject<T>) ro);
             return ro;
         }
@@ -82,6 +60,39 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
         @Override
         public Set<RegistryObject<T>> getEntries() {
             return entriesView;
+        }
+
+        public static class ForgeRegistryObject<I> implements RegistryObject<I> {
+
+            private final net.minecraftforge.registries.RegistryObject<I> value;
+
+            public ForgeRegistryObject(net.minecraftforge.registries.RegistryObject<I> value) {
+                this.value = value;
+            }
+
+            @Override
+            public ResourceKey<I> getResourceKey() {
+                return value.getKey();
+            }
+
+            @Override
+            public ResourceLocation getId() {
+                return value.getId();
+            }
+
+            @Override
+            public I get() {
+                return value.get();
+            }
+
+            @Override
+            public Holder<I> asHolder() {
+                var holder = value.getHolder();
+                if (holder.isEmpty()) {
+                    throw new IllegalStateException("Holder is empty for " + getId());
+                }
+                return holder.get();
+            }
         }
     }
 }

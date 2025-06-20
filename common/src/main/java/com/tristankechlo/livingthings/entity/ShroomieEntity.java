@@ -12,7 +12,6 @@ import com.tristankechlo.livingthings.util.LivingThingsTags;
 import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,6 +35,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Optional;
@@ -59,7 +60,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
         this.setVariant(tag.getByteOr("ShroomieType", (byte) 0));
         this.mushroomCooldown = tag.getIntOr("MushroomCooldown", 0);
@@ -67,7 +68,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putByte("ShroomieType", getVariant());
         tag.putInt("MushroomCooldown", this.mushroomCooldown);
