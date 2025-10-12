@@ -9,9 +9,10 @@ import com.tristankechlo.livingthings.client.renderer.state.MonkeyRenderState;
 import com.tristankechlo.livingthings.entity.MonkeyEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.ResourceLocation;
 
 public class MonkeyRenderer extends MobRenderer<MonkeyEntity, MonkeyRenderState, EntityModel<MonkeyRenderState>> {
@@ -48,13 +49,13 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, MonkeyRenderState,
     }
 
     @Override
-    public void render(MonkeyRenderState state, PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn) {
+    public void submit(MonkeyRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
         if (state.isSitting) {
             this.model = state.isBaby ? this.modelSittingBaby : this.modelSitting;
         } else {
             this.model = state.isBaby ? this.modelBaby : this.modelAdult;
         }
-        super.render(state, poseStack, bufferIn, packedLightIn);
+        super.submit(state, poseStack, collector, cameraRenderState);
     }
 
 }

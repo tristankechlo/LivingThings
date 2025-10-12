@@ -253,8 +253,11 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
     }
 
     @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return AncientBlazeConfig.peacefulDespawn() && super.shouldDespawnInPeaceful();
+    public void checkDespawn() {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL && AncientBlazeConfig.peacefulDespawn()) {
+            this.discard();
+        }
+        super.checkDespawn();
     }
 
     @Override

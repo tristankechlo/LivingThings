@@ -1,6 +1,7 @@
 package com.tristankechlo.livingthings.entity.projectile;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -42,7 +43,7 @@ public class CustomDragonFireball extends DragonFireball {
             this.gameEvent(GameEvent.PROJECTILE_LAND, this.getOwner());
         }
         if (hitResult.getType() != HitResult.Type.ENTITY || !this.ownedBy(((EntityHitResult) hitResult).getEntity())) {
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
                 List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
                 AreaEffectCloud effectcloud = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
                 Entity entity = this.getOwner();
@@ -50,7 +51,7 @@ public class CustomDragonFireball extends DragonFireball {
                     effectcloud.setOwner((LivingEntity) entity);
                 }
 
-                effectcloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
+                effectcloud.setCustomParticle(PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F));
                 effectcloud.setRadius(this.radius);
                 effectcloud.setDuration(this.duration);
                 effectcloud.setRadiusPerTick((this.spreadSpeed - effectcloud.getRadius()) / (float) effectcloud.getDuration());

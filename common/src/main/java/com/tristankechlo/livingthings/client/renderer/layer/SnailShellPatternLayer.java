@@ -6,7 +6,7 @@ import com.tristankechlo.livingthings.client.renderer.state.SnailRenderState;
 import com.tristankechlo.livingthings.entity.SnailEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
@@ -22,13 +22,12 @@ public class SnailShellPatternLayer extends RenderLayer<SnailRenderState, Entity
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLight, SnailRenderState snail, float f1, float f2) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, SnailRenderState state, float yRot, float xRot) {
+        int colors = state.getShellColor(this.patternType);
+        ResourceLocation texture = state.getShellPatternTexture(this.patternType);
+        EntityModel<SnailRenderState> model = state.isBaby ? this.parent.babyModel : this.parent.adultModel;
 
-        int colors = snail.getShellColor(this.patternType);
-        ResourceLocation texture = snail.getShellPatternTexture(this.patternType);
-        EntityModel<SnailRenderState> model = snail.isBaby ? this.parent.babyModel : this.parent.adultModel;
-
-        coloredCutoutModelCopyLayerRender(model, texture, matrixStack, buffer, packedLight, snail, colors);
+        coloredCutoutModelCopyLayerRender(model, texture, poseStack, collector, packedLight, state, colors, 1);
     }
 
 }

@@ -120,7 +120,8 @@ public final class ModItems {
 
     private static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type) {
         Item.Properties p = new Item.Properties().setId(RegistryHelper.itemId(name)).useItemDescriptionPrefix();
-        RegistryObject<Item> registeredItem = ITEMS.register(name, () -> new SpawnEggItem(type.get(), p));
+        p.spawnEgg(type.get());
+        RegistryObject<Item> registeredItem = ITEMS.register(name, () -> new SpawnEggItem(p));
         SPAWN_EGGS.add(registeredItem);
         return registeredItem;
     }

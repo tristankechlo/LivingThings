@@ -4,10 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.world.entity.Mob;
 
 import java.util.function.Function;
@@ -27,9 +28,10 @@ public abstract class AgeableMobRenderer<T extends Mob, S extends LivingEntityRe
         this(context, model.apply(context.bakeLayer(adult)), model.apply(context.bakeLayer(baby)), shadowRadius);
     }
 
-    public void render(S state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    @Override
+    public void submit(S state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraState) {
         this.model = state.isBaby ? this.babyModel : this.adultModel;
-        super.render(state, poseStack, bufferSource, packedLight);
+        super.submit(state, poseStack, collector, cameraState);
     }
 
 }

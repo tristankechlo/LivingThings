@@ -25,7 +25,7 @@ public class OstrichEggItem extends Item implements ProjectileItem {
     public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         world.playSound(null, player.blockPosition(), SoundEvents.EGG_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             ThrownOstrichEgg thrownEgg = new ThrownOstrichEgg(player, world, stack);
             thrownEgg.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             world.addFreshEntity(thrownEgg);

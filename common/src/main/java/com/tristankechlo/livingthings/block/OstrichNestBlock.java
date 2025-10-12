@@ -70,7 +70,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
             //drop egg when present
             world.setBlock(pos, state.setValue(EGG, false).setValue(HATCH, 0), 2);
             world.playSound(player, pos, ModSounds.OSTRICH_EGG_REMOVED.get(), SoundSource.BLOCKS, 0.7F, 0.9F);
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.OSTRICH_EGG.get()));
                 itemEntity.setDefaultPickUpDelay();
                 world.addFreshEntity(itemEntity);

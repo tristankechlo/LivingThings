@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Player.class)
 public abstract class PlayerMixin {
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;moveCloak()V"))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;updatePlayerPose()V"))
     private void LivingThings$onArmorTick(CallbackInfo ci) {
         if (this.isEquipped(ModItems.ANCIENT_HELMET.get())) {
             ((Player) (Object) this).addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 0, false, false, true));

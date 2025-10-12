@@ -124,7 +124,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (BOOST_TIME.equals(key) && this.level().isClientSide) {
+        if (BOOST_TIME.equals(key) && this.level().isClientSide()) {
             this.boostHelper.onSynced();
         }
         super.onSyncedDataUpdated(key);
@@ -179,7 +179,7 @@ public class OstrichEntity extends Animal implements ItemSteerable, ILexiconEntr
         boolean breedingItem = this.isFood(player.getItemInHand(hand));
         boolean isLexicon = player.getMainHandItem().getItem() == ModItems.LEXICON.get();
         if (!breedingItem && !isLexicon && !this.isVehicle() && !this.isBaby() && !player.isSecondaryUseActive()) {
-            if (!this.level().isClientSide && OstrichConfig.canBeRidden()) {
+            if (!this.level().isClientSide() && OstrichConfig.canBeRidden()) {
                 player.startRiding(this);
                 return InteractionResult.SUCCESS_SERVER;
             }

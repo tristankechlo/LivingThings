@@ -31,8 +31,8 @@ public final class ForgeLivingThings {
         BIOME_MODIFIER.register(modBusGroup); // needs to be registered before config is loaded
 
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
-        EntityAttributeCreationEvent.getBus(modBusGroup).addListener(this::onAttributeRegister);
-        SpawnPlacementRegisterEvent.getBus(modBusGroup).addListener(this::onSpawnPlacementsRegister);
+        EntityAttributeCreationEvent.BUS.addListener(this::onAttributeRegister);
+        SpawnPlacementRegisterEvent.BUS.addListener(this::onSpawnPlacementsRegister);
 
         RegisterCommandsEvent.BUS.addListener(this::registerCommands);
         BlockEvent.BreakEvent.BUS.addListener(this::onBlockBreak);

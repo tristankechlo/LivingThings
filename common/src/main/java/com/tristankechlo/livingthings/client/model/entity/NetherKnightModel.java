@@ -7,6 +7,7 @@ import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
@@ -43,8 +44,8 @@ public class NetherKnightModel<T extends NetherKnightRenderState> extends Advanc
     }
 
     @Override
-    public void translateToHand(HumanoidArm handSide, PoseStack stack) {
-        this.getArm(handSide).translateAndRotate(stack);
+    public void translateToHand(EntityRenderState renderState, HumanoidArm arm, PoseStack poseStack) {
+        this.getArm(arm).translateAndRotate(poseStack);
     }
 
     private ModelPart getArm(HumanoidArm handSide) {

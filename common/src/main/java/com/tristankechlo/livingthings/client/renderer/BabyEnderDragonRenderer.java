@@ -9,9 +9,10 @@ import com.tristankechlo.livingthings.client.renderer.layer.BabyEnderDragonColla
 import com.tristankechlo.livingthings.client.renderer.state.BabyEnderDragonRenderState;
 import com.tristankechlo.livingthings.entity.BabyEnderDragonEntity;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.ResourceLocation;
 
 public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> {
@@ -44,13 +45,13 @@ public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, 
     }
 
     @Override
-    public void render(BabyEnderDragonRenderState state, PoseStack poseStack, MultiBufferSource buffer, int packedLightIn) {
+    public void submit(BabyEnderDragonRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
         if (state.isTame && state.isSitting && !state.flying) {
             this.model = this.modelSitting;
         } else {
             this.model = this.modelNormal;
         }
-        super.render(state, poseStack, buffer, packedLightIn);
+        super.submit(state, poseStack, collector, cameraRenderState);
     }
 
 }

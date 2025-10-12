@@ -91,7 +91,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
     @Override
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide && this.mushroomCooldown > 0) {
+        if (!this.level().isClientSide() && this.mushroomCooldown > 0) {
             this.mushroomCooldown--;
         }
     }
@@ -133,7 +133,7 @@ public class ShroomieEntity extends Animal implements IMobVariants, ILexiconEntr
                 this.hasMushroom = true;
                 return InteractionResult.SUCCESS_SERVER;
             }
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 return InteractionResult.CONSUME;
             }
         }
