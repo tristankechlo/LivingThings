@@ -27,7 +27,8 @@ public class SnailShellPatternLayer extends RenderLayer<SnailRenderState, Entity
         ResourceLocation texture = state.getShellPatternTexture(this.patternType);
         EntityModel<SnailRenderState> model = state.isBaby ? this.parent.babyModel : this.parent.adultModel;
 
-        coloredCutoutModelCopyLayerRender(model, texture, poseStack, collector, packedLight, state, colors, 1);
+        int i = this.patternType == SnailEntity.PatternType.FOREGROUND ? 1 : 0;
+        coloredCutoutModelCopyLayerRender(model, texture, poseStack, collector, packedLight, state, colors, i);
     }
 
 }
