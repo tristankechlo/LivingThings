@@ -297,6 +297,11 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
         if (this.isAlive()) {
             if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
+                if (livingentity == null) {
+                    super.travel(travelVector);
+                    return;
+                }
+
                 this.setYRot(livingentity.getYRot());
                 this.yRotO = this.getYRot();
                 this.setXRot(livingentity.getXRot() * 0.5F);
@@ -312,12 +317,8 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, ILexico
                 }
 
                 this.flyingSpeed = this.getSpeed() * 0.1F;
-                if (this.isControlledByLocalInstance()) {
-                    this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
-                } else if (livingentity instanceof Player) {
-                    this.setDeltaMovement(Vec3.ZERO);
-                }
+                this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
 
                 this.calculateEntityAnimation(this, false);
             } else {

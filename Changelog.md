@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.18.2 - 2.3.1
+
+- fix game crashing when elephants are ridden by non-player-entities
+
 ### Version 1.18.2 - 2.3.0
 
 - add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs`/`forge:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
