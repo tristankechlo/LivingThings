@@ -1,5 +1,6 @@
 package com.tristankechlo.livingthings.mixin.worldgen;
 
+import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.config.entity.NetherKnightConfig;
 import com.tristankechlo.livingthings.init.ModEntityTypes;
 import net.minecraft.util.random.WeightedRandomList;
@@ -36,21 +37,26 @@ public abstract class StructureMixin {
             cir.setReturnValue(customSpawnOverrides);
             return;
         }
+        final int spawnWeight = NetherKnightConfig.get().spawnWeight.get();
+        if (spawnWeight <= 0) {
+            LivingThings.LOGGER.info("Nether Knight spawn weight is set to 0, not added to Fortress Spawns");
+            return;
+        }
 
         MobSpawnSettings.SpawnerData netherKnightSpawnData = new MobSpawnSettings.SpawnerData(ModEntityTypes.NETHER_KNIGHT.get(),
-                NetherKnightConfig.get().spawnWeight.get(),
+                spawnWeight,
                 NetherKnightConfig.get().minSpawnCount.get(),
                 NetherKnightConfig.get().maxSpawnCount.get());
 
-        customSpawnOverrides = new HashMap<>(settings.spawnOverrides()); //make copy, because original is unmodifiable
+        customSpawnOverrides = new HashMap<>(settings.spawnOverrides()); // make copy, because original is unmodifiable
         StructureSpawnOverride oldMonsterSpawns = customSpawnOverrides.get(MobCategory.MONSTER);
         List<MobSpawnSettings.SpawnerData> newMonsterSpawns = new ArrayList<>();
         if (oldMonsterSpawns != null) {
-            newMonsterSpawns = new ArrayList<>(oldMonsterSpawns.spawns().unwrap()); //make copy, because original is unmodifiable
+            newMonsterSpawns = new ArrayList<>(oldMonsterSpawns.spawns().unwrap()); // make copy, because original is unmodifiable
         }
         newMonsterSpawns.add(netherKnightSpawnData);
         WeightedRandomList<MobSpawnSettings.SpawnerData> weightedRandomList = WeightedRandomList.create(newMonsterSpawns);
-        NetherFortressStructureAccessor.setFortressEnemies(weightedRandomList); //set static field 'FORTRESS_ENEMIES', values are used somewhere else too
+        NetherFortressStructureAccessor.setFortressEnemies(weightedRandomList); // set static field 'FORTRESS_ENEMIES', values are used somewhere else too
         StructureSpawnOverride newOverrides = new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, weightedRandomList);
         customSpawnOverrides.put(MobCategory.MONSTER, newOverrides);
 
