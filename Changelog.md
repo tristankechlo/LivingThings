@@ -1,20 +1,29 @@
 # Changelog
 
-### Version 1.19.4 - 2.3.0
+## Version 1.19.4 - 2.3.1
 
-- add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs`/`forge:eggs` item tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
+- allow setting spawn weights to 0 in the config to disable spawning of the NetherKnight
+- fix game crashing when elephants are ridden by non-player-entities
+
+## Version 1.19.4 - 2.3.0
+
+- add `livingthings:ostrich_egg` to the `c:eggs`/`minecraft:eggs`/`forge:eggs` item
+  tags ([#53](https://github.com/tristankechlo/LivingThings/issues/53))
 - fix typo `Raccon` to `Raccoon` in `en_us.json` ([#72](https://github.com/tristankechlo/LivingThings/issues/72))
-- fix effect bugging out for `livingthings:ancient_helmet` ([#55](https://github.com/tristankechlo/LivingThings/issues/55) & [#68](https://github.com/tristankechlo/LivingThings/issues/68))
+- fix effect bugging out
+  for `livingthings:ancient_helmet` ([#55](https://github.com/tristankechlo/LivingThings/issues/55) & [#68](https://github.com/tristankechlo/LivingThings/issues/68))
 - fix that monkeys can not be breed ([#63](https://github.com/tristankechlo/LivingThings/issues/63))
 - ancient blaze now floating above water/lava ([#60](https://github.com/tristankechlo/LivingThings/issues/60))
 - shroomies now drop mushrooms dependent on their variant
-- command tamed owls to sit by right clicking them with any item ([#66](https://github.com/tristankechlo/LivingThings/issues/66))
-  - item tags `livingthings:owl_food` and `livingthings:owl_taming_food` are now merged into `livingthings:owl_food`
-  - taming/healing and breeding now use the same item tag
-  - children of tamed owls are now tamed as well
-- fix ancient blaze not killable by command while charging ([#62](https://github.com/tristankechlo/LivingThings/issues/62))
+- command tamed owls to sit by right clicking them with any
+  item ([#66](https://github.com/tristankechlo/LivingThings/issues/66))
+    - item tags `livingthings:owl_food` and `livingthings:owl_taming_food` are now merged into `livingthings:owl_food`
+    - taming/healing and breeding now use the same item tag
+    - children of tamed owls are now tamed as well
+- fix ancient blaze not killable by command while
+  charging ([#62](https://github.com/tristankechlo/LivingThings/issues/62))
 
-### Version 1.19.4 - 2.2.0
+## Version 1.19.4 - 2.2.0
 
 - change default values of the NetherKnight
     - lowered `weaponDropChance` from 100% to 15%
@@ -27,21 +36,22 @@
     - add all water animals to `minecraft:aquatic`
     - definition of temptation/taming items now via item-tags
         - related config options of the mobs are no longer used
-        - this effects: BabyEnderDragon, Crab, Elephant, Flamingo, Giraffe, Koala, Lion, Monkey, Ostrich, Owl, Peacock, Penguin, Raccoon, Shroomie, Snail
+        - this effects: BabyEnderDragon, Crab, Elephant, Flamingo, Giraffe, Koala, Lion, Monkey, Ostrich, Owl, Peacock,
+          Penguin, Raccoon, Shroomie, Snail
         - now defined via the tag `livingthings:elephant_food`, `livingthings:flamingo_food`, ...
 - update banana item texture
 
-### Version 1.19.4 - 2.1.3
+## Version 1.19.4 - 2.1.3
 
 - remove custom argument type, which caused some incompatibilities with other mods
 
-### Version 1.19.4 - 2.1.1
+## Version 1.19.4 - 2.1.1
 
 - fix render error that would make snail-shells invisible with some shaders
 - slightly decreased snail size
 - switched peacock sounds from stereo to mono
 
-### Version 1.19.4 - 2.1.0
+## Version 1.19.4 - 2.1.0
 
 - fix incorrect recipe for arrow from shark tooth
 - fix incorrect advancement format
@@ -56,15 +66,15 @@
     - once tamed, no longer tries to shoot other players
     - attack/follow range is now adjustable through the config
 
-### Version 1.19.4 - 2.0.3
+## Version 1.19.4 - 2.0.3
 
 - fix missing subtitle for sound `livingthings:baby_ender_dragon.flap`
 
-### Version 1.19.4 - 2.0.2
+## Version 1.19.4 - 2.0.2
 
 - fix game crashing by mantarays
 
-### Version 1.19.4 - 2.0.1
+## Version 1.19.4 - 2.0.1
 
 - fix ostrich and elephant not moving
 - fix not rendering items in hand of nether_knight
@@ -73,7 +83,7 @@
 - remove unnecessary empty lines in patchouli book
 - add *zh_cn* translation
 
-### Version 1.19.4 - 2.0.0
+## Version 1.19.4 - 2.0.0
 
 - port to 1.19.4
 - new config format
@@ -94,7 +104,7 @@
     - can be found in jungles and savannas
     - will destroy crops
 
-### Version 1.18.2 - 1.5.0
+## Version 1.18.2 - 1.5.0
 
 - port to 1.18.2
 - new improved elephant texture
@@ -105,7 +115,7 @@
 - reduced falldamage for monkeys and koalas
 - dropchance for the netherknight weapons are now changable through the config
 
-### Version 1.18.1 - 1.4.1
+## Version 1.18.1 - 1.4.1
 
 - port to 1.18.1
 - entity spawn rules now use data-tags to determine on which blocks the entities can spawn on
@@ -115,11 +125,11 @@
 - reduced ostrich hitbox
 - changed spawnrates for raccoon, snail and seahorses
 
-### Version 1.17.1 - 1.4.0
+## Version 1.17.1 - 1.4.0
 
 - port to 1.17.1
 
-### Version 1.16.5 - 1.4.0
+## Version 1.16.5 - 1.4.0
 
 - compress images
 - compress sound files
@@ -133,17 +143,17 @@
     - raw giraffe meat
     - cooked giraffe meat
 
-### Version 1.16.5 - 1.3.2
+## Version 1.16.5 - 1.3.2
 
 - add nether knight entity
 
-### Version 1.16.5 - 1.3.1
+## Version 1.16.5 - 1.3.1
 
 - added loot for snail/monkey/mantaray/kaola
 - added more items
     - raw/cooked elephant meat
 
-### Version 1.16.4 - 1.3.0
+## Version 1.16.4 - 1.3.0
 
 - added snail entity
     - will spawn in different variations
@@ -166,7 +176,7 @@
 - removed custom particles completely
 - translation to *ru_ru* by [Intaria](https://github.com/Intaria) for version 1.2.3
 
-### Version 1.16.4 - 1.2.3
+## Version 1.16.4 - 1.2.3
 
 - port to 1.16.4
 - added koala entity
@@ -174,12 +184,12 @@
 - movement speed now changeable for all mobs through config
 - temporarily disabling custom particles
 
-### Version 1.16.3 - 1.2.2
+## Version 1.16.3 - 1.2.2
 
 - fix some server-side errors
 - improve ancient helmet model
 
-### Version 1.16.3 - 1.2.1
+## Version 1.16.3 - 1.2.1
 
 - added AncientBlaze entity
     - will drop it's helmet on death
@@ -188,17 +198,17 @@
     - adds 2 minutes of Fire Resistance as Effect when worn
 - fix Shark-Damage not changeable through the config
 
-### Version 1.16.3 - 1.2.0
+## Version 1.16.3 - 1.2.0
 
 - translation to *pt_br* by [Mikeliro](https://github.com/Mikeliro)
 - improved *de_de* translation
 
-### Version 1.16.3 - 1.1.9
+## Version 1.16.3 - 1.1.9
 
 - adjust mob attributes like health/damage
 - update lexicon item
 
-### Version 1.16.3 - 1.1.8
+## Version 1.16.3 - 1.1.8
 
 - added raccoon entity
     - they destroy the ostrich egg in a nest
@@ -208,7 +218,7 @@
     - flying animal like parrots
     - can spawn in 3 different colors
 
-### Version 1.16.3 - 1.1.7
+## Version 1.16.3 - 1.1.7
 
 - added mantaray entity
     - can spawn in 2 different colors and 4 different sizes
@@ -216,7 +226,7 @@
 - crabs can spawn in different sizes now
 - fix the patchouli book glitching sometimes
 
-### Version 1.16.3 - 1.1.6
+## Version 1.16.3 - 1.1.6
 
 - added crab entity
 - added items:
@@ -225,14 +235,14 @@
     - crab shell
 - color and gender variants are now weighted-random and changeable in the config
 
-### Version 1.16.3 - 1.1.5
+## Version 1.16.3 - 1.1.5
 
 - fix shark only spawning in two biomes
 - ostrich babys are no longer rideable
 - fix recipe for patchouli book (producing errors on startup if mod not installed)
 - added some config comments
 
-### Version 1.16.3 - 1.1.4
+## Version 1.16.3 - 1.1.4
 
 - port to 1.16.3
 - extended config
@@ -243,18 +253,18 @@
     - they need to be tamed before
     - they can have an inventory when rightclicked with a chest before
 
-### Version 1.16.2 - 1.1.3
+## Version 1.16.2 - 1.1.3
 
 - small bug fixes and improvements
     - wrong eye height for some mobs
     - shark not swimming sometimes
     - Ostrich Eggs now hatch a little bit faster
 
-### Version 1.16.2 - 1.1.2
+## Version 1.16.2 - 1.1.2
 
 - added Flamingos
 
-### Version 1.16.2 - 1.1.1
+## Version 1.16.2 - 1.1.1
 
 - Ostrichs are now rideable
     - if they are being ridden they just run in the direction you look
@@ -263,7 +273,7 @@
 - tweaked penguin spawns
 - added Patchouli support
 
-### Version 1.16.2 - 1.1.0
+## Version 1.16.2 - 1.1.0
 
 - port to 1.16.2
 - improved Mob-Attributes

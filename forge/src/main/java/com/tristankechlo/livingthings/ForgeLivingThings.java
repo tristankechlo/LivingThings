@@ -6,10 +6,12 @@ import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
 import com.tristankechlo.livingthings.init.ModItems;
 import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
+import com.tristankechlo.livingthings.util.StructureAddon;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -51,6 +53,7 @@ public final class ForgeLivingThings {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(LivingThings::registerDispenserBehavior);
+        event.enqueueWork(() -> ((StructureAddon) StructureType.FORTRESS).livingthings$setupSpawnOverrides());
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {
