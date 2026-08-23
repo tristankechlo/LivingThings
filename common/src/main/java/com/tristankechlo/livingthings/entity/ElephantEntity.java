@@ -287,47 +287,63 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (this.isAlive()) {
-            if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
-                LivingEntity livingentity = this.getControllingPassenger();
-                this.setYRot(livingentity.getYRot());
-                this.yRotO = this.getYRot();
-                this.setXRot(livingentity.getXRot() * 0.5F);
-                this.setRot(this.getYRot(), this.getXRot());
-                this.yBodyRot = this.getYRot();
-                this.yHeadRot = this.yBodyRot;
-                float sideSpeed = livingentity.xxa * 0.4F;
-                float forwardSpeed = livingentity.zza * 0.7F;
-
-                // if moving backwards -> move slower
-                if (forwardSpeed <= 0.0F) {
-                    forwardSpeed *= 0.2F;
-                }
-
-                if (this.isControlledByLocalInstance()) {
-                    this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
-                } else if (livingentity instanceof Player) {
-                    this.setDeltaMovement(Vec3.ZERO);
-                }
-
-                this.calculateEntityAnimation(false);
-            } else {
+        if (!this.isAlive()) {
+            return;
+        }
+        if (this.isVehicle() && this.isControlledByLocalInstance() && this.isSaddled()) {
+            LivingEntity livingentity = this.getControllingPassenger();
+            if (livingentity == null) {
                 super.travel(travelVector);
+                return;
             }
+            this.setYRot(livingentity.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(livingentity.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            this.yBodyRot = this.getYRot();
+            this.yHeadRot = this.yBodyRot;
+            float sideSpeed = livingentity.xxa * 0.4F;
+            float forwardSpeed = livingentity.zza * 0.7F;
+
+            // if moving backwards -> move slower
+            if (forwardSpeed <= 0.0F) {
+                forwardSpeed *= 0.2F;
+            }
+
+            if (this.isControlledByLocalInstance()) {
+                this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
+            } else if (livingentity instanceof Player) {
+                this.setDeltaMovement(Vec3.ZERO);
+            }
+
+            this.calculateEntityAnimation(false);
+        } else {
+            super.travel(travelVector);
         }
     }
 
-    public boolean isTamingItem(ItemStack stack) {
-        return stack.is(LivingThingsTags.ELEPHANT_TAMING_FOOD);
+    @Override
+    protected boolean canAddPassenger(Entity entity) {
+        return entity instanceof Player && this.isSaddled() && super.canAddPassenger(entity);
     }
 
+    @Override
+    public boolean isControlledByLocalInstance() {
+        return this.getControllingPassenger() instanceof Player;
+    }
+
+    @Override
     public LivingEntity getControllingPassenger() {
         Entity passenger = this.getFirstPassenger();
         if (passenger instanceof Player) {
             return (Player) passenger;
         }
         return null;
+    }
+
+    public boolean isTamingItem(ItemStack stack) {
+        return stack.is(LivingThingsTags.ELEPHANT_TAMING_FOOD);
     }
 
     public boolean isSaddled() {
