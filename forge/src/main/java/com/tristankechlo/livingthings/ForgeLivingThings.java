@@ -6,15 +6,19 @@ import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
 import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
 import com.tristankechlo.livingthings.util.StructureAddon;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -43,12 +47,18 @@ public final class ForgeLivingThings {
         MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
         MinecraftForge.EVENT_BUS.addListener(this::onBlockBreak);
         MinecraftForge.EVENT_BUS.addListener(this::onBlockPlace);
+        MinecraftForge.EVENT_BUS.addListener(this::serverStartup);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(LivingThings::registerDispenserBehavior);
-        event.enqueueWork(() -> ((StructureAddon) StructureType.FORTRESS).livingthings$setupSpawnOverrides());
+    }
+
+    private void serverStartup(final ServerAboutToStartEvent event) {
+        Registry<Structure> reg = event.getServer().registryAccess().registry(Registries.STRUCTURE).orElseThrow();
+        Structure s = reg.getHolderOrThrow(BuiltinStructures.FORTRESS).value();
+        ((StructureAddon) s).livingthings$setupSpawnOverrides();
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {

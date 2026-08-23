@@ -8,17 +8,21 @@ import com.tristankechlo.livingthings.util.StructureAddon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 public final class FabricLivingThings implements ModInitializer {
 
@@ -60,7 +64,11 @@ public final class FabricLivingThings implements ModInitializer {
             });
         });
 
-        ((StructureAddon) StructureType.FORTRESS).livingthings$setupSpawnOverrides();
+        ServerLifecycleEvents.SERVER_STARTING.register(server -> {
+            Registry<Structure> reg = server.registryAccess().registry(Registries.STRUCTURE).orElseThrow();
+            Structure s = reg.getHolderOrThrow(BuiltinStructures.FORTRESS).value();
+            ((StructureAddon) s).livingthings$setupSpawnOverrides();
+        });
     }
 
 }
