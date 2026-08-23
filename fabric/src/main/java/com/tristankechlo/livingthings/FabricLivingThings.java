@@ -4,6 +4,7 @@ import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import com.tristankechlo.livingthings.events.BlockEvents;
+import com.tristankechlo.livingthings.util.StructureAddon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 
 public final class FabricLivingThings implements ModInitializer {
 
@@ -57,6 +59,8 @@ public final class FabricLivingThings implements ModInitializer {
                 }, category, entityType, spawnerData.getWeight().asInt(), spawnerData.minCount, spawnerData.maxCount);
             });
         });
+
+        ((StructureAddon) StructureType.FORTRESS).livingthings$setupSpawnOverrides();
     }
 
 }
