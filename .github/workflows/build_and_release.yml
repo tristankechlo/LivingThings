@@ -2,19 +2,10 @@ name: Build and Publish Release
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 env:
   MODID: "livingthings"
-  CURSEFORGE_ID: 397252
-  CURSEFORGE_LINK: "https://www.curseforge.com/minecraft/mc-mods/living-things"
-  MODRINTH_ID: "UKDLi1GJ"
-  MODRINTH_LINK: "https://modrinth.com/mod/living-things"
-  MODRINTH_FEATURED: false # if this version should be featured on modrinth
-  DISCORD_COLOR: 4037621
-  DISCORD_MENTION: "<@&890143122913370112>"
-  DISCORD_TITLE: "New version for LivingThings just released :exclamation:"
-  DISCORD_THUMBNAIL: "https://cdn.modrinth.com/data/UKDLi1GJ/d345468b19bfd5ffffa1ed070297a6a74535e9d6.png"
 
 jobs:
   prepare:
@@ -32,8 +23,8 @@ jobs:
         id: properties
         uses: christian-draeger/read-properties@1.1.1
         with:
-          path: 'gradle.properties'
-          properties: 'minecraft_version mod_version version_range java_version'
+          path: "gradle.properties"
+          properties: "minecraft_version mod_version version_range java_version"
 
       - name: Changelog
         shell: bash
@@ -84,8 +75,8 @@ jobs:
         with:
           mc-version: ${{ needs.prepare.outputs.mc-version }}
           mod-version: ${{ needs.prepare.outputs.mod-version }}
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          modrinth-id: ${{ env.MODRINTH_ID }}
+          curseforge-id: 397252
+          modrinth-id: "UKDLi1GJ"
           changelog: ${{ github.event.release.body }}
           loaders: forge,fabric,neoforge
           version-range: ${{ needs.prepare.outputs.version-range }}
@@ -93,23 +84,23 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
   send-discord-embed:
-    needs: [ "prepare", "build-and-release" ]
+    needs: ["prepare", "build-and-release"]
     runs-on: ubuntu-latest
     steps:
       - name: Make embed
-        uses: tristankechlo/create-discord-embed@v1.0.2
+        uses: tristankechlo/create-discord-embed@v1.1
         with:
           released: ${{ contains(github.event.release.name, '[RELEASE]') }}
           changelog: "${{ github.event.release.body }}"
           version: "${{ needs.prepare.outputs.mc-version }} - ${{ needs.prepare.outputs.mod-version }}"
-          color: ${{ env.DISCORD_COLOR }}
-          content: "${{ contains(github.event.release.name, '[RELEASE]') && env.DISCORD_MENTION || 'This update will not be published!'}}"
-          title: ${{ env.DISCORD_TITLE }}
-          description: "${{ contains(github.event.release.name, '[RELEASE]') && 'The update is available for *Forge*, *Fabric* and *NeoForge*' || 'The update will *not* be released to Curseforge or Modrinth'}}"
-          curseforge: ${{ env.CURSEFORGE_LINK }}
-          modrinth: ${{ env.MODRINTH_LINK }}
+          color: 4037621
+          mod-name: "Living Things"
+          mention: "<@&890143122913370112>"
+          loaders: Forge,Fabric,NeoForge
+          curseforge: "https://www.curseforge.com/minecraft/mc-mods/living-things"
+          modrinth: "https://modrinth.com/mod/living-things"
           github: ${{ github.event.release.html_url }}
-          thumbnail: ${{ env.DISCORD_THUMBNAIL }}
+          thumbnail: "https://cdn.modrinth.com/data/UKDLi1GJ/d345468b19bfd5ffffa1ed070297a6a74535e9d6.png"
 
       - name: Send Discord Message
         uses: tsickert/discord-webhook@v6.0.0
