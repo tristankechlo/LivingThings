@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.21.1 - 2.3.2
+
+- update neoforge dependencies (potential fix for [#79](https://github.com/tristankechlo/LivingThings/issues/79))
+
 ## Version 1.21.1 - 2.3.1
 
 - allow setting spawn weights to 0 in the config to disable spawning of the NetherKnight
