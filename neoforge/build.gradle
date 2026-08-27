@@ -1,30 +1,42 @@
 plugins {
     id 'lt-loader'
-    id 'net.neoforged.gradle.userdev' version '7.0.145'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    version = neoforge_version
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+        }
+        client {
+            gameDirectory = project.file('run')
+            client()
+        }
+        server {
+            gameDirectory = project.file('run')
+            server()
+            programArgument("--nogui")
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neoforge_version}"
     compileOnly("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT:api")
     runtimeOnly("vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT")
 
     compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
     annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
-}
-
-runs {
-    configureEach {
-        modSource project.sourceSets.main
-    }
-    client {
-        workingDirectory file('run')
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-    }
-    server {
-        workingDirectory file('run')
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
