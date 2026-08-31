@@ -1,0 +1,6 @@
+{
+	"name" : "友好的Mob",
+	"description" : "これらのMobは、決して誰も傷つけません！",
+	"icon" : "minecraft:writable_book",
+	"sortnum" : 0
+}

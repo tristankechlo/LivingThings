@@ -1,0 +1,16 @@
+{
+	"name" : "生のライオン肉",
+	"icon" : "livingthings:lion",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)ライオンがドロップ"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:lion",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます$(li)製錬すると焼きライオン肉になります"
+		}
+	]
+}

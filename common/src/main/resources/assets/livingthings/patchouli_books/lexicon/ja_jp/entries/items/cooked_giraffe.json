@@ -1,0 +1,16 @@
+{
+	"name" : "焼きキリン肉",
+	"icon" : "livingthings:cooked_giraffe",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)生のキリン肉を製錬すると手に入る"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_giraffe",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます"
+		}
+	]
+}

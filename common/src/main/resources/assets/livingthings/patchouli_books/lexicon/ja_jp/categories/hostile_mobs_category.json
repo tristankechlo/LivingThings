@@ -1,0 +1,6 @@
+{
+	"name" : "敵対的Mob",
+	"description" : "これらのMobは、あなたを攻撃してきます。ご注意を！",
+	"icon" : "minecraft:writable_book",
+	"sortnum" : 2
+}

@@ -1,0 +1,17 @@
+
+{
+    "name": "焼き蟹肉",
+    "icon": "livingthings:cooked_crab",
+    "category": "livingthings:item_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(br)$(bold)入手方法：$()$(br)生の蟹肉を製錬すると手に入る"
+        },
+        {
+            "type": "spotlight",
+            "item": "livingthings:cooked_crab",
+            "text": "$(br)$(bold)用途：$()$(li)食べることができます"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+
+{
+	"name" : "バナナ",
+	"icon" : "livingthings:banana",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)ジャングルの葉を破壊すると手に入る"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:banana",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます"
+		}
+	]
+}

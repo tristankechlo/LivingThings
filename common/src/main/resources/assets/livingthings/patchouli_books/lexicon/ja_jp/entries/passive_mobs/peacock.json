@@ -1,0 +1,20 @@
+{
+	"name" : "クジャク",
+	"icon" : "livingthings:peacock_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "美しい色の羽根で知られる、大型のキジの一種。$(br2)$(bold)体力：$()ハート4個分$(br2)$(bold)繁殖アイテム：$()$(li)小麦"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:peacock",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 40,
+			"offset" : 0.2,
+			"text" : "$(bold)サバンナ$()や$(bold)ジャングル$()で見つかります。"
+		}
+	]
+}

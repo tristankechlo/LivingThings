@@ -1,0 +1,20 @@
+{
+	"name" : "オニイトマキエイ",
+	"icon" : "livingthings:mantaray_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "海の中を飛ぶように動き回る水生動物。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)ドロップ：$()$(li)1-2 生鱈"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:mantaray",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 37,
+			"offset" : -0.1,
+			"text" : "すべての$(bold)海洋$()バイオームで見つかります。"
+		}
+	]
+}

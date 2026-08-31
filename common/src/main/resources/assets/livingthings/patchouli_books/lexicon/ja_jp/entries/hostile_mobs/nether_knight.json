@@ -1,0 +1,20 @@
+{
+	"name" : "ネザーナイト",
+	"icon" : "livingthings:nether_knight_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "ネザー要塞を守る凶暴な戦士。"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:nether_knight{HandItems:[{id:\"minecraft:netherite_axe\", Count:1b, tag: {Enchantments: [{lvl: 3s, id: \"minecraft:efficiency\"}]}},{id: \"minecraft:netherite_sword\", Count: 1b, tag: {Enchantments: [{lvl: 3s, id: \"minecraft:efficiency\"}]}}]}",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"offset" : 0.2,
+			"text" : ""
+		}
+	]
+}

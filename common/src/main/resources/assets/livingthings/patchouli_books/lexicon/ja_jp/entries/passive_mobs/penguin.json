@@ -1,0 +1,19 @@
+{
+	"name" : "ペンギン",
+	"icon" : "livingthings:penguin_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "とてもおしゃべりな可愛い動物。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)繁殖アイテム：$()$(li)生鮭$(li)生鱈$(li)フグ"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:penguin",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"text" : "$(bold)氷雪$()バイオームで見つかります。"
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"name" : "焼き象肉",
+	"icon" : "livingthings:cooked_elephant",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)生の象肉を製錬すると手に入る"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_elephant",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます"
+		}
+	]
+}

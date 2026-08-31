@@ -1,0 +1,17 @@
+
+{
+	"name" : "カニの甲羅",
+	"icon" : "livingthings:crab_shell",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)カニがドロップ"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:crab_shell",
+			"text" : "$(br)$(bold)用途：$()$(li)使用方法は不明です"
+		}
+	]
+}

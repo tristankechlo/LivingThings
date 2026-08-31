@@ -1,0 +1,27 @@
+{
+	"name" : "古代のブレイズ",
+	"icon" : "livingthings:ancient_blaze_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "ネザーから現れた新たなボス！$(br2)$(bold)体力：$()ハート125個分$(br)$(bold)攻撃力：$()ハート3個分$(br2)$(bold)攻撃：$()$(li)6 大きな火の玉$(li)\u221e 小さな火の玉"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:ancient_blaze{Shoots:6}",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 35,
+			"text" : "儀式によって召喚できます（次のページ）"
+		},
+		{
+			"type" : "text",
+			"text" : "$(bold)召喚$()$(br2)古代のブレイズを召喚するには、グロウストーン2個の上に、ジャック・オ・ランタンを設置する必要があります。$(br2)召喚された古代のブレイズは、6発の大きな火の玉を発射するまで無敵になります。$(br2)飛び交う棒の数で、大きな火の玉の数が分かります。"
+		},
+		{
+			"type" : "text",
+			"text" : "$(bold)死亡$()$(br2)死亡時、古代のヘルメットをドロップします。$(br2)死亡した古代のブレイズは、復讐のため4体の通常のブレイズを生成します。"
+		}
+	]
+}

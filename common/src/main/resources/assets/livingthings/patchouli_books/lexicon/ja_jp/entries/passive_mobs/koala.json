@@ -1,0 +1,20 @@
+{
+	"name" : "コアラ",
+	"icon" : "livingthings:koala_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "1日の大半は眠っている、とてものんびりとした動物。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)繁殖アイテム：$()$(li)小麦$(br2)$(bold)ドロップ：$()$(li)1-2 革"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:koala",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 42,
+			"offset" : 0,
+			"text" : "$(bold)ジャングル$()バイオームで見つかります。"
+		}
+	]
+}

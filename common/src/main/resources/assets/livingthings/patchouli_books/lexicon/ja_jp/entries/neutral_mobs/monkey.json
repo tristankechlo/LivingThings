@@ -1,0 +1,18 @@
+{
+	"name" : "サル",
+	"icon" : "livingthings:monkey_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br2)$(bold)体力：$()ハート3個分$(br)$(bold)攻撃力：$()ハート1.5個分$(br2)$(bold)繁殖アイテム：$()$(li)リンゴ$(li)バナナ$(br2)$(bold)ドロップ：$()$(li)1-2 革$(li)0-1 バナナ"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:monkey",
+			"rotate" : false,
+			"default_rotation" : 35,
+			"text" : "すべての$(bold)ジャングル$()バイオームで見つかります。"
+		}
+	]
+}

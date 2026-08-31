@@ -1,0 +1,16 @@
+{
+	"name" : "ダチョウの巣",
+	"icon" : "livingthings:ostrich_nest",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)シルクタッチの道具を使用せずに採掘すると巣が壊れ、数本の棒が手に入ります。"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:ostrich_nest",
+			"text" : "$(br)$(bold)用途：$()$(br)設置することができます$(br)ダチョウが卵を産むことがあります"
+		}
+	]
+}

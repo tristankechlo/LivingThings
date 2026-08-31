@@ -1,0 +1,20 @@
+{
+	"name" : "子どもエンダードラゴン",
+	"icon" : "livingthings:baby_ender_dragon_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "コーラスフルーツに弱い準危険動物！$(br)手懐けた子どもエンダードラゴンはあなたについて回ります。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)手懐けアイテム：$()$(li)コーラスフルーツ"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:baby_ender_dragon",
+			"rotate" : false,
+			"scale" : 0.6,
+			"default_rotation" : 45,
+			"offset" : 0.2,
+			"text" : "ドラゴンの卵をプルプァの柱の上に設置すると孵化します。"
+		}
+	]
+}

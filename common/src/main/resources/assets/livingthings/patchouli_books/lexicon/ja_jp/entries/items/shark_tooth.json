@@ -1,0 +1,16 @@
+{
+	"name" : "サメの歯",
+	"icon" : "livingthings:shark_tooth",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)サメがドロップ"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:shark_tooth",
+			"text" : "$(br)$(bold)用途：$()$(li)矢のクラフトに使用できます$(li)骨粉にクラフトできます"
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"name" : "ゾウ",
+	"icon" : "livingthings:elephant_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "怒らせると怖い、巨大な動物！$(br2)$(bold)体力：$()ハート30個分$(br)$(bold)攻撃力：$()ハート3.5個分$(br2)$(bold)繁殖アイテム：$()$(li)小麦（手懐けたときのみ）$(br2)リンゴで手懐けることができます。手懐けたゾウは鞍やチェストを装着することができます。"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:elephant",
+			"rotate" : false,
+			"scale" : 0.9,
+			"default_rotation" : 45,
+			"text" : "すべての$(bold)サバンナ$()バイオームで見つかります。"
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"name" : "ライオン",
+	"icon" : "livingthings:lion_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "危険な動物！$(br2)$(bold)体力：$()ハート10個分$(br)$(bold)攻撃力：$()ハート2.5個分$(br2)$(bold)繁殖アイテム：$()$(li)生の牛肉$(li)生の鶏肉$(li)生の兎肉"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:lion{IsMale:true}",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 45,
+			"text" : "すべての$(bold)サバンナ$()バイオームで見つかります。"
+		}
+	]
+}

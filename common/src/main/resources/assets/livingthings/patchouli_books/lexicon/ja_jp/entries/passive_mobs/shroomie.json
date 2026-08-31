@@ -1,0 +1,19 @@
+{
+	"name" : "シュルーミー",
+	"icon" : "livingthings:shroomie_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "キノコを与えると、少なくとも1本は植えてくれる役に立つ動物。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)繁殖アイテム：$()$(li)小麦$(br2)$(bold)ドロップ：$()$(li)1-2 赤色のキノコ$(br)    --- または ---$(li)1-2 茶色のキノコ"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:shroomie{ShroomieType:1}",
+			"rotate" : false,
+			"default_rotation" : 30,
+			"offset" : 0.1,
+			"text" : "すべての$(bold)キノコ島$()バイオームで見つかります。"
+		}
+	]
+}

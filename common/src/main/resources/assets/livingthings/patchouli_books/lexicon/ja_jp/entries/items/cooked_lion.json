@@ -1,0 +1,16 @@
+{
+	"name" : "焼きライオン肉",
+	"icon" : "livingthings:cooked_lion",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)生のライオン肉を製錬すると手に入る"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:cooked_lion",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます"
+		}
+	]
+}

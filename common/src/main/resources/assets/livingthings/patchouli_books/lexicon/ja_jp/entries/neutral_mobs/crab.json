@@ -1,0 +1,20 @@
+{
+	"name" : "カニ",
+	"icon" : "livingthings:crab_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br2)$(bold)体力：$()ハート4個分$(br)$(bold)攻撃力：$()ハート0.5個分$(br2)$(bold)繁殖アイテム：$()$(li)生鱈$(br2)$(bold)ドロップ：$()$(li)1-2 生の蟹肉$(li)0-1 カニの甲羅"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:crab",
+			"rotate" : false,
+			"scale" : 1.1,
+			"default_rotation" : 25,
+			"offset" : -0.3,
+			"text" : "$(bold)沼地$()や$(bold)砂浜$()で見つかります。"
+		}
+	]
+}

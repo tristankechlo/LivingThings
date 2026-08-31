@@ -1,0 +1,19 @@
+{
+	"name" : "サメ",
+	"icon" : "livingthings:shark_spawn_egg",
+	"category" : "livingthings:hostile_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "プレイヤーを追い詰める、素早い水生生物！$(br2)$(bold)体力：$()ハート11個分$(br)$(bold)攻撃力：$()ハート3個分$(br2)$(bold)ドロップ：$()$(li)0-3 サメの歯$(li)1-2 生鱈"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:shark",
+			"rotate" : false,
+			"scale" : 0.5,
+			"default_rotation" : 45,
+			"text" : "すべての$(bold)海洋$()バイオームで見つかります。"
+		}
+	]
+}

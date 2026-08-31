@@ -1,0 +1,17 @@
+
+{
+	"name" : "生の蟹肉",
+	"icon" : "livingthings:crab",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)カニがドロップ"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:crab",
+			"text" : "$(br)$(bold)用途：$()$(li)食べることができます$(li)製錬すると焼き蟹肉になります"
+		}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"name" : "フラミンゴ",
+	"icon" : "livingthings:flamingo_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "ほとんどの時間片足で立っている、桃色の鳥。$(br2)$(bold)体力：$()ハート5個分$(br2)$(bold)繁殖アイテム：$()$(li)生鮭$(li)生鱈"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:flamingo",
+			"rotate" : false,
+			"scale" : 0.8,
+			"default_rotation" : 40,
+			"offset" : 0.2,
+			"text" : "$(bold)沼地$()や$(bold)河川$()で見つかります。"
+		}
+	]
+}

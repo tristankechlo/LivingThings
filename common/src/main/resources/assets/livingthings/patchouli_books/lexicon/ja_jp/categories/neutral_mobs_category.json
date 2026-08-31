@@ -1,0 +1,6 @@
+{
+	"name" : "中立的Mob",
+	"description" : "これらのMobは、あなたが先に攻撃した場合のみ敵対します！",
+	"icon" : "minecraft:writable_book",
+	"sortnum" : 1
+}

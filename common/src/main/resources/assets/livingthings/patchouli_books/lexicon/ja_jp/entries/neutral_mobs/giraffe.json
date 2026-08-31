@@ -1,0 +1,20 @@
+{
+	"name" : "キリン",
+	"icon" : "livingthings:giraffe_spawn_egg",
+	"category" : "livingthings:neutral_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "攻撃すると怒る巨大な動物！$(br2)$(bold)体力：$()ハート15個分$(br)$(bold)攻撃力：$()ハート2個分$(br2)$(bold)繁殖アイテム：$()$(li)小麦"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:giraffe",
+			"rotate" : false,
+			"scale" : 1.0,
+			"default_rotation" : 45,
+			"offset" : 0.1,
+			"text" : "すべての$(bold)サバンナ$()バイオームで見つかります。"
+		}
+	]
+}

@@ -1,0 +1,16 @@
+
+{
+	"name" : "タツノオトシゴ入りバケツ",
+	"icon" : "livingthings:seahorse_bucket",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)水入りバケツでタツノオトシゴを右クリック"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:seahorse_bucket"
+		}
+	]
+}

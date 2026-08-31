@@ -1,0 +1,20 @@
+{
+	"name" : "タツノオトシゴ",
+	"icon" : "livingthings:seahorse_spawn_egg",
+	"category" : "livingthings:passive_mobs_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "群れをなして海中を泳ぐカラフルな動物。$(br2)$(bold)体力：$()ハート2個分"
+		},
+		{
+			"type" : "entity",
+			"entity" : "livingthings:seahorse",
+			"rotate" : false,
+			"scale" : 1.4,
+			"default_rotation" : 40,
+			"offset" : -0.1,
+			"text" : "$(bold)暖かい海$()や$(bold)ぬるい海$()で見つかります。"
+		}
+	]
+}

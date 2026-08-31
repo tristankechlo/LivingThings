@@ -1,0 +1,16 @@
+{
+	"name" : "ダチョウの卵",
+	"icon" : "livingthings:ostrich_egg",
+	"category" : "livingthings:item_category",
+	"pages" : [
+		{
+			"type" : "text",
+			"text" : "$(br)$(bold)入手方法：$()$(br)卵があるダチョウの巣をプレイヤーが右クリックすると、卵をドロップすることができます。$(br2)巣を作ろうとしたダチョウがドロップすることもあります。"
+		},
+		{
+			"type" : "spotlight",
+			"item" : "livingthings:ostrich_egg",
+			"text" : "$(br)$(bold)用途：$()$(br)ダチョウの巣に設置すると、子どものダチョウが孵化します"
+		}
+	]
+}
