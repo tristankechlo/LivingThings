@@ -21,7 +21,7 @@ public final class NetherKnightConfig extends EntityConfig {
     public final DoubleValue attackDamage = new DoubleValue("attackDamage", 10.0D, MIN_DAMAGE, MAX_DAMAGE);
     public final DoubleValue weaponDropChance = new DoubleValue("weaponDropChance", 15, 0, 100);
 
-    public final IntegerValue spawnWeight = new IntegerValue("spawnWeight", 15, 1, Short.MAX_VALUE);
+    public final IntegerValue spawnWeight = new IntegerValue("spawnWeight", 15, 0, Short.MAX_VALUE);
     public final IntegerValue minSpawnCount = new IntegerValue("minSpawnCount", 1, 1, Short.MAX_VALUE);
     public final IntegerValue maxSpawnCount = new IntegerValue("maxSpawnCount", 2, 1, Short.MAX_VALUE);
 
