@@ -21,8 +21,8 @@ dependencies {
 
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
-    compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
-    annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
+    compileOnly "com.google.auto.service:auto-service:$auto_service_version"
+    annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
 }
 
 loom {
