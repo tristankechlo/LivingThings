@@ -8,6 +8,7 @@ mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
     config("${mod_id}.mixins.json")
 }
+
 jar.manifest.attributes.put("MixinConfigs", "${mod_id}.mixins.json")
 
 minecraft {
@@ -48,11 +49,11 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0-beta.10'
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0-beta.12'
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
-    annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
+    compileOnly "com.google.auto.service:auto-service:$auto_service_version"
+    annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
 }
 
 sourceSets.each {

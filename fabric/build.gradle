@@ -16,13 +16,13 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
     }
 
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
 
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
-    compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
-    annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
+    compileOnly "com.google.auto.service:auto-service:$auto_service_version"
+    annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
 }
 
 loom {
@@ -42,4 +42,3 @@ loom {
         }
     }
 }
-

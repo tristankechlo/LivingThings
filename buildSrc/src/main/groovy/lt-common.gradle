@@ -39,7 +39,6 @@ repositories {
         name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf /Patchouli )'
         url = "https://maven.blamejared.com"
     }
-    //maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 // Declare capabilities on the outgoing configurations.

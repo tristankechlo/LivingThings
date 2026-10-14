@@ -5,11 +5,6 @@ plugins {
 
 neoForge {
     version = neoforge_version
-    // Automatically enable neoforge AccessTransformers if the file exists
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
-    }
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
@@ -39,7 +34,7 @@ neoForge {
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
 
-    compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
-    annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
+    compileOnly "com.google.auto.service:auto-service:$auto_service_version"
+    annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
 }
 
