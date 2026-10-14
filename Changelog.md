@@ -3,6 +3,7 @@
 ## Version 1.21.11 - 2.3.2
 
 - port to 1.21.11
+- allow setting spawn weights to 0 in the config to disable spawning of the NetherKnight
 
 ## Version 1.21.10 - 2.3.0
 
