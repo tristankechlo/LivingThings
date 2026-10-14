@@ -8,14 +8,14 @@ import net.minecraft.client.model.BabyModelTransform;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Set;
 
 public class PenguinRenderer extends AgeableMobRenderer<PenguinEntity, LivingEntityRenderState, PenguinModel> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("penguin/penguin.png");
-    protected static final ResourceLocation TEXTURE_CHILD = LivingThings.getEntityTexture("penguin/penguin_baby.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("penguin/penguin.png");
+    protected static final Identifier TEXTURE_CHILD = LivingThings.getEntityTexture("penguin/penguin_baby.png");
     public static final MeshTransformer BABY_TRANSFORMER = new BabyModelTransform(true, 9f, 0f, 1.9f, 1.5f, 12f, Set.of("Head"));
 
     public PenguinRenderer(EntityRendererProvider.Context context) {
@@ -33,7 +33,7 @@ public class PenguinRenderer extends AgeableMobRenderer<PenguinEntity, LivingEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
+    public Identifier getTextureLocation(LivingEntityRenderState state) {
         return state.isBaby ? TEXTURE_CHILD : TEXTURE;
     }
 

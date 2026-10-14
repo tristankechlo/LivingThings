@@ -5,13 +5,19 @@ import com.tristankechlo.livingthings.commands.LivingThingsCommand;
 import com.tristankechlo.livingthings.config.ConfigManager;
 import com.tristankechlo.livingthings.events.BlockEvents;
 import com.tristankechlo.livingthings.util.LivingThingsBiomeModifier;
+import com.tristankechlo.livingthings.util.StructureAddon;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -37,10 +43,17 @@ public final class ForgeLivingThings {
         RegisterCommandsEvent.BUS.addListener(this::registerCommands);
         BlockEvent.BreakEvent.BUS.addListener(this::onBlockBreak);
         BlockEvent.EntityPlaceEvent.BUS.addListener(this::onBlockPlace);
+        ServerAboutToStartEvent.BUS.addListener(this::serverStartup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(LivingThings::registerDispenserBehavior);
+    }
+
+    private void serverStartup(final ServerAboutToStartEvent event) {
+        Registry<Structure> reg = event.getServer().registryAccess().lookupOrThrow(Registries.STRUCTURE);
+        Structure s = reg.getValueOrThrow(BuiltinStructures.FORTRESS);
+        ((StructureAddon) s).livingthings$setupSpawnOverrides();
     }
 
     private void registerCommands(final RegisterCommandsEvent event) {

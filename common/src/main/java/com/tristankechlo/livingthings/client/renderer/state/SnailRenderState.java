@@ -2,21 +2,21 @@ package com.tristankechlo.livingthings.client.renderer.state;
 
 import com.tristankechlo.livingthings.entity.SnailEntity;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class SnailRenderState extends LivingEntityRenderState implements StateFromEntity<SnailEntity> {
 
     public int shellColorForeground;
     public int shellColorBackground;
-    public ResourceLocation bodyTexture;
-    public ResourceLocation shellPatternTextureForeground;
-    public ResourceLocation shellPatternTextureBackground;
+    public Identifier bodyTexture;
+    public Identifier shellPatternTextureForeground;
+    public Identifier shellPatternTextureBackground;
 
     public int getShellColor(SnailEntity.PatternType type) {
         return type == SnailEntity.PatternType.FOREGROUND ? shellColorForeground : shellColorBackground;
     }
 
-    public ResourceLocation getShellPatternTexture(SnailEntity.PatternType type) {
+    public Identifier getShellPatternTexture(SnailEntity.PatternType type) {
         return type == SnailEntity.PatternType.FOREGROUND ? shellPatternTextureForeground : shellPatternTextureBackground;
     }
 

@@ -9,11 +9,11 @@ import com.tristankechlo.livingthings.entity.AncientBlazeEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, AncientBlazeRenderState, AncientBlazeModel<AncientBlazeRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("ancient_blaze/ancient_blaze.png");
+    private static final Identifier TEXTURE = LivingThings.getEntityTexture("ancient_blaze/ancient_blaze.png");
 
     public AncientBlazeRenderer(Context context) {
         super(context, new AncientBlazeModel<>(context.bakeLayer(ModelLayer.ANCIENT_BLAZE)), 0.5F);
@@ -31,7 +31,7 @@ public class AncientBlazeRenderer extends MobRenderer<AncientBlazeEntity, Ancien
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AncientBlazeRenderState state) {
+    public Identifier getTextureLocation(AncientBlazeRenderState state) {
         return TEXTURE;
     }
 

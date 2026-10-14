@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.init.RegistryHelper;
 import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -113,7 +113,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     private boolean canGrow(Level world) {
-        float f = world.getTimeOfDay(1.0F);
+        float f = (world.getDayTime() % 24000L) / 24000.0F;
         if (f < 0.7F && f > 0.6F) {
             return true;
         } else {
@@ -132,7 +132,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.OSTRICH_NEST_BLOCK;
     }
 

@@ -6,7 +6,7 @@ import com.tristankechlo.livingthings.init.ModItems;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -31,12 +31,12 @@ public final class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
+    public void openBookEntry(Identifier bookId, Identifier entryId, int page) {
         //vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
     }
 
     @Override
-    public void openBookGui(ServerPlayer player, ResourceLocation bookId) {
+    public void openBookGui(ServerPlayer player, Identifier bookId) {
         //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
     }
 

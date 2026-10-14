@@ -13,11 +13,11 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
+    private static final Identifier TEXTURE = LivingThings.getEntityTexture("baby_ender_dragon/baby_ender_dragon.png");
     private final BabyEnderDragonModel modelNormal;
     private final BabyEnderDragonSittingModel modelSitting;
 
@@ -40,7 +40,7 @@ public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, 
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BabyEnderDragonRenderState entity) {
+    public Identifier getTextureLocation(BabyEnderDragonRenderState entity) {
         return TEXTURE;
     }
 

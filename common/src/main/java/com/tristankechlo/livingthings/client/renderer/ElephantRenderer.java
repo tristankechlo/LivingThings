@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.client.renderer.state.ElephantRenderState;
 import com.tristankechlo.livingthings.entity.ElephantEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ElephantRenderer extends AgeableMobRenderer<ElephantEntity, ElephantRenderState, ElephantModel<ElephantRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("elephant/elephant.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("elephant/elephant.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.6F);
 
     public ElephantRenderer(EntityRendererProvider.Context context) {
@@ -31,7 +31,7 @@ public class ElephantRenderer extends AgeableMobRenderer<ElephantEntity, Elephan
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ElephantRenderState entity) {
+    public Identifier getTextureLocation(ElephantRenderState entity) {
         return TEXTURE;
     }
 

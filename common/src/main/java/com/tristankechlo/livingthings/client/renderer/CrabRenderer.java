@@ -8,13 +8,13 @@ import com.tristankechlo.livingthings.client.renderer.state.CrabRenderState;
 import com.tristankechlo.livingthings.entity.CrabEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class CrabRenderer extends AgeableMobRenderer<CrabEntity, CrabRenderState, CrabModel<CrabRenderState>> {
 
-    protected static final ResourceLocation TEXTURE_WHITE = LivingThings.getEntityTexture("crab/crab_white.png");
-    protected static final ResourceLocation TEXTURE_RED = LivingThings.getEntityTexture("crab/crab_red.png");
-    protected static final ResourceLocation TEXTURE_BLUE = LivingThings.getEntityTexture("crab/crab_blue.png");
+    protected static final Identifier TEXTURE_WHITE = LivingThings.getEntityTexture("crab/crab_white.png");
+    protected static final Identifier TEXTURE_RED = LivingThings.getEntityTexture("crab/crab_red.png");
+    protected static final Identifier TEXTURE_BLUE = LivingThings.getEntityTexture("crab/crab_blue.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.6F);
 
     public CrabRenderer(Context context) {
@@ -33,7 +33,7 @@ public class CrabRenderer extends AgeableMobRenderer<CrabEntity, CrabRenderState
     }
 
     @Override
-    public ResourceLocation getTextureLocation(CrabRenderState entity) {
+    public Identifier getTextureLocation(CrabRenderState entity) {
         byte variant = entity.variant;
         if (variant == 2) {
             return TEXTURE_BLUE;

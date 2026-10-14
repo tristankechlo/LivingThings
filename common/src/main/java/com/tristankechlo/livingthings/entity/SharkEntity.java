@@ -6,7 +6,10 @@ import com.tristankechlo.livingthings.util.ILexiconEntry;
 import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -24,7 +27,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.fish.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -33,14 +36,13 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private int angerTime;
-    private UUID angerTarget;
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(SharkEntity.class, EntityDataSerializers.LONG);
+    private EntityReference<LivingEntity> angerTarget;
 
     public SharkEntity(EntityType<? extends SharkEntity> type, Level worldIn) {
         super(type, worldIn);
@@ -54,6 +56,12 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
                 .add(Attributes.MOVEMENT_SPEED, SharkConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, SharkConfig.attackDamage());
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(ANGER_END_TIME, -1L);
     }
 
     @Override
@@ -90,7 +98,7 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
                 this.setDeltaMovement(this.getDeltaMovement().add(((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.3D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
                 this.setYRot(this.random.nextFloat() * 360.0F);
                 this.setOnGround(false);
-                this.hasImpulse = true;
+                this.needsSync = true;
             }
         }
     }
@@ -116,8 +124,8 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     }
 
     @Override
-    protected AABB getAttackBoundingBox() {
-        return super.getAttackBoundingBox().inflate(1.25D);
+    protected AABB getAttackBoundingBox(double range) {
+        return super.getAttackBoundingBox(range).inflate(1.25D);
     }
 
     @Override
@@ -139,32 +147,32 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.angerTime;
-    }
-
-    @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.angerTime = time;
-    }
-
-    @Override
-    public UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.angerTarget = target;
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.angerTarget = persistentAngerTarget;
+    }
+
+    @Override
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
+    }
+
+    @Override
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.entityData.set(ANGER_END_TIME, persistentAngerEndTime);
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+        this.setTimeToRemainAngry(rangedInteger.sample(this.random));
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.SHARK;
     }
 

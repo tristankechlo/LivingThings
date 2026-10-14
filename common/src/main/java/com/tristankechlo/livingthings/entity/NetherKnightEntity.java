@@ -10,7 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
@@ -217,7 +217,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.NETHER_KNIGHT;
     }
 

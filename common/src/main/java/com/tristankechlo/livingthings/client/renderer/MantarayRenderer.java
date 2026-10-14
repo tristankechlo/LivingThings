@@ -8,12 +8,12 @@ import com.tristankechlo.livingthings.client.renderer.state.MantarayRenderState;
 import com.tristankechlo.livingthings.entity.MantarayEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayRenderState, MantarayModel<MantarayRenderState>> {
 
-    protected static final ResourceLocation TEXTURE_BLUE = LivingThings.getEntityTexture("mantaray/mantaray_blue.png");
-    protected static final ResourceLocation TEXTURE_BROWN = LivingThings.getEntityTexture("mantaray/mantaray_brown.png");
+    protected static final Identifier TEXTURE_BLUE = LivingThings.getEntityTexture("mantaray/mantaray_blue.png");
+    protected static final Identifier TEXTURE_BROWN = LivingThings.getEntityTexture("mantaray/mantaray_brown.png");
 
     public MantarayRenderer(Context context) {
         super(context, new MantarayModel<>(context.bakeLayer(ModelLayer.MANTARAY)), 0.35F);
@@ -31,7 +31,7 @@ public class MantarayRenderer extends MobRenderer<MantarayEntity, MantarayRender
     }
 
     @Override
-    public ResourceLocation getTextureLocation(MantarayRenderState entity) {
+    public Identifier getTextureLocation(MantarayRenderState entity) {
         if (entity.variant == 1) {
             return TEXTURE_BROWN;
         }

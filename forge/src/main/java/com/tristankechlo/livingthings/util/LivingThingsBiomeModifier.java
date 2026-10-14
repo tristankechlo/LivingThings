@@ -5,7 +5,7 @@ import com.tristankechlo.livingthings.ForgeLivingThings;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class LivingThingsBiomeModifier implements BiomeModifier {
 
-    private Map<ResourceLocation, List<Weighted<MobSpawnSettings.SpawnerData>>> spawnData = null;
+    private Map<Identifier, List<Weighted<MobSpawnSettings.SpawnerData>>> spawnData = null;
     private static final LivingThingsBiomeModifier INSTANCE = new LivingThingsBiomeModifier();
     public static final MapCodec<LivingThingsBiomeModifier> CODEC = MapCodec.unit(INSTANCE);
 
@@ -32,7 +32,7 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
         if (biomeID.isEmpty()) {
             return;
         }
-        ResourceLocation biomeName = biomeID.get().location();
+        Identifier biomeName = biomeID.get().identifier();
         if (phase == Phase.ADD && spawnData.containsKey(biomeName)) {
             MobSpawnSettingsBuilder spawns = builder.getMobSpawnSettings();
             List<Weighted<MobSpawnSettings.SpawnerData>> spawnerData = spawnData.get(biomeName);

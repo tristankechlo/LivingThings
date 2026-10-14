@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.entity.RaccoonEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class RaccoonRenderer extends AgeableMobRenderer<RaccoonEntity, LivingEntityRenderState, RaccoonModel<LivingEntityRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("raccoon/raccoon.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("raccoon/raccoon.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public RaccoonRenderer(EntityRendererProvider.Context context) {
@@ -29,7 +29,7 @@ public class RaccoonRenderer extends AgeableMobRenderer<RaccoonEntity, LivingEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntityRenderState entity) {
+    public Identifier getTextureLocation(LivingEntityRenderState entity) {
         return TEXTURE;
     }
 

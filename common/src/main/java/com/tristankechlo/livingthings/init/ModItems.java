@@ -10,7 +10,7 @@ import com.tristankechlo.livingthings.util.LivingThingsTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -88,7 +88,7 @@ public final class ModItems {
     }
 
     private static RegistryObject<Item> registerArmorItem(String name) {
-        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "ancient_armor_model");
+        Identifier modelId = Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, "ancient_armor_model");
         var assetKey = ResourceKey.create(EquipmentAssets.ROOT_ID, modelId);
         return registerItem(name, (p) -> {
             p.stacksTo(1).durability(20)
@@ -108,7 +108,7 @@ public final class ModItems {
     private static ItemAttributeModifiers createAttributes(ArmorType armorType, int defense, float toughness) {
         ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
         EquipmentSlotGroup group = EquipmentSlotGroup.bySlot(armorType.getSlot());
-        ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "armor." + armorType.getName());
+        Identifier rl = Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, "armor." + armorType.getName());
         builder.add(Attributes.ARMOR, new AttributeModifier(rl, defense, AttributeModifier.Operation.ADD_VALUE), group);
         builder.add(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(rl, toughness, AttributeModifier.Operation.ADD_VALUE), group);
         return builder.build();

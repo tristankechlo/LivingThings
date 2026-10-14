@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.client.renderer.state.FlamingoRenderState;
 import com.tristankechlo.livingthings.entity.FlamingoEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class FlamingoRenderer extends AgeableMobRenderer<FlamingoEntity, FlamingoRenderState, FlamingoModel<FlamingoRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("flamingo/flamingo.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("flamingo/flamingo.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public FlamingoRenderer(EntityRendererProvider.Context context) {
@@ -30,7 +30,7 @@ public class FlamingoRenderer extends AgeableMobRenderer<FlamingoEntity, Flaming
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FlamingoRenderState entity) {
+    public Identifier getTextureLocation(FlamingoRenderState entity) {
         return TEXTURE;
     }
 

@@ -3,7 +3,7 @@ package com.tristankechlo.livingthings;
 import com.tristankechlo.livingthings.entity.*;
 import com.tristankechlo.livingthings.init.*;
 import com.tristankechlo.livingthings.mixin.SpawnPlacementsInvoker;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
@@ -83,7 +83,7 @@ public final class LivingThings {
         DispenserBlock.registerProjectileBehavior(ModItems.OSTRICH_EGG.get());
     }
 
-    public static ResourceLocation getEntityTexture(String texture) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/" + texture);
+    public static Identifier getEntityTexture(String texture) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, "textures/entity/" + texture);
     }
 }

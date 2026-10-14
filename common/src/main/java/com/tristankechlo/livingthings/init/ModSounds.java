@@ -4,7 +4,7 @@ import com.tristankechlo.livingthings.LivingThings;
 import com.tristankechlo.livingthings.platform.RegistrationProvider;
 import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
 public final class ModSounds {
@@ -70,7 +70,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> PEACOCK_DEATH = registerSound("peacock.death");
 
     private static RegistryObject<SoundEvent> registerSound(String soundName) {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, soundName);
+        Identifier location = Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, soundName);
         return SOUNDS.register(soundName, () -> SoundEvent.createVariableRangeEvent(location));
     }
 

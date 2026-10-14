@@ -15,7 +15,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.ItemTags;
@@ -41,17 +41,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGenderedMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Boolean> MALE = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> LION_VARIANT = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private int angerTime;
-    private UUID angerTarget;
+    private EntityReference<LivingEntity> angerTarget;
 
     public LionEntity(EntityType<? extends LionEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
@@ -121,6 +121,7 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
         super.defineSynchedData(builder);
         builder.define(MALE, false);
         builder.define(LION_VARIANT, (byte) 0);
+        builder.define(ANGER_END_TIME, -1L);
     }
 
     @Override
@@ -146,8 +147,8 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     }
 
     @Override
-    protected AABB getAttackBoundingBox() {
-        return super.getAttackBoundingBox().inflate(1.8D);
+    protected AABB getAttackBoundingBox(double range) {
+        return super.getAttackBoundingBox(range).inflate(1.8D);
     }
 
     @Override
@@ -223,32 +224,32 @@ public class LionEntity extends Animal implements NeutralMob, IMobVariants, IGen
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.angerTime;
+    public long getPersistentAngerEndTime() {
+        return this.getEntityData().get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.angerTime = time;
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.getEntityData().set(ANGER_END_TIME, persistentAngerEndTime);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.angerTarget = persistentAngerTarget;
+    }
+
+    @Override
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.angerTarget = target;
-    }
-
-    @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+        this.setTimeToRemainAngry(rangedInteger.sample(this.random));
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.LION;
     }
 

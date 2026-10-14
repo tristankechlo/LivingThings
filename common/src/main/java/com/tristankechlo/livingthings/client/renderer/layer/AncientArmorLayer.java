@@ -6,18 +6,19 @@ import com.tristankechlo.livingthings.client.ModelLayer;
 import com.tristankechlo.livingthings.client.model.armor.AncientArmorModel;
 import com.tristankechlo.livingthings.init.ModItems;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class AncientArmorLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
 
-    private static final ResourceLocation ANCIENT_ARMOR = ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
+    private static final Identifier ANCIENT_ARMOR = Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/models/armor/ancient_layer_1.png");
     private final AncientArmorModel model;
 
     public AncientArmorLayer(RenderLayerParent<S, M> parent, EntityRendererProvider.Context context) {
@@ -38,7 +39,7 @@ public class AncientArmorLayer<S extends HumanoidRenderState, M extends Humanoid
                 this.model,
                 state,
                 poseStack,
-                RenderType.armorCutoutNoCull(ANCIENT_ARMOR),
+                RenderTypes.armorCutoutNoCull(ANCIENT_ARMOR),
                 packedLight,
                 OverlayTexture.NO_OVERLAY,
                 state.outlineColor,

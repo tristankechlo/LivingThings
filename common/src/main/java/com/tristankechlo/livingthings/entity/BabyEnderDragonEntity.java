@@ -16,7 +16,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -50,15 +50,14 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, RangedAttackMob, FlyingAnimal, ILexiconEntry {
 
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BabyEnderDragonEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
-    private UUID persistentAngerTarget;
+    private EntityReference<LivingEntity> persistentAngerTarget;
 
     public BabyEnderDragonEntity(EntityType<? extends BabyEnderDragonEntity> entity, Level level) {
         super(entity, level);
@@ -88,7 +87,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(COLLAR_COLOR, DyeColor.RED.getId());
-        builder.define(REMAINING_ANGER_TIME, 0);
+        builder.define(REMAINING_ANGER_TIME, -1L);
     }
 
     @Override
@@ -199,28 +198,28 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
+    public long getPersistentAngerEndTime() {
         return this.entityData.get(REMAINING_ANGER_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(REMAINING_ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.entityData.set(REMAINING_ANGER_TIME, persistentAngerEndTime);
     }
 
     @Override
-    public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.persistentAngerTarget = persistentAngerTarget;
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.persistentAngerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID uuid) {
-        this.persistentAngerTarget = uuid;
+    public void startPersistentAngerTimer() {
+        this.setTimeToRemainAngry(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
     @Override
@@ -332,7 +331,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.BABY_ENDER_DRAGON;
     }
 

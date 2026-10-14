@@ -4,6 +4,7 @@
 
 - port to 1.21.11
 - allow setting spawn weights to 0 in the config to disable spawning of the NetherKnight
+- fix game crashing when elephants are ridden by non-player-entities
 
 ## Version 1.21.10 - 2.3.0
 

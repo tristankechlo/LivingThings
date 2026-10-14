@@ -1,7 +1,7 @@
 package com.tristankechlo.livingthings.mixin.client;
 
 import com.tristankechlo.livingthings.client.renderer.layer.AncientArmorLayer;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;

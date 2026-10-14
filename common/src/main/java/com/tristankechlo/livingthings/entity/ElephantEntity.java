@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -47,8 +47,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCustomInventoryScreen, ILexiconEntry {
 
@@ -57,11 +56,11 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     private static Component CONTAINER_NAME = null;
     private static final EntityDataAccessor<Boolean> IS_SADDLED = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_CHEST = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> REMAINING_ANGER_TIME = SynchedEntityData.defineId(ElephantEntity.class, EntityDataSerializers.LONG);
     protected SimpleContainer entityInventory;
     private int tameAmount;
     private int attackTimer;
-    private UUID angerTarget;
+    private EntityReference<LivingEntity> angerTarget;
 
     public ElephantEntity(EntityType<ElephantEntity> entityType, Level worldIn) {
         super(entityType, worldIn);
@@ -79,7 +78,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
         super.defineSynchedData(builder);
         builder.define(IS_SADDLED, false);
         builder.define(HAS_CHEST, false);
-        builder.define(REMAINING_ANGER_TIME, 0);
+        builder.define(REMAINING_ANGER_TIME, -1L);
     }
 
     @Override
@@ -289,39 +288,50 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (this.isAlive()) {
-            if (this.isVehicle() && this.isLocalClientAuthoritative() && this.isSaddled()) {
-                LivingEntity livingentity = this.getControllingPassenger();
-                this.setYRot(livingentity.getYRot());
-                this.yRotO = this.getYRot();
-                this.setXRot(livingentity.getXRot() * 0.5F);
-                this.setRot(this.getYRot(), this.getXRot());
-                this.yBodyRot = this.getYRot();
-                this.yHeadRot = this.yBodyRot;
-                float sideSpeed = livingentity.xxa * 0.4F;
-                float forwardSpeed = livingentity.zza * 0.7F;
-
-                // if moving backwards -> move slower
-                if (forwardSpeed <= 0.0F) {
-                    forwardSpeed *= 0.2F;
-                }
-
-                if (this.isLocalClientAuthoritative()) {
-                    this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
-                } else if (livingentity instanceof Player) {
-                    this.setDeltaMovement(Vec3.ZERO);
-                }
-
-                this.calculateEntityAnimation(false);
-            } else {
+        if (!this.isAlive()) {
+            return;
+        }
+        if (this.isVehicle() && this.isLocalClientAuthoritative() && this.isSaddled()) {
+            LivingEntity livingentity = this.getControllingPassenger();
+            if (livingentity == null) {
                 super.travel(travelVector);
+                return;
             }
+            this.setYRot(livingentity.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(livingentity.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            this.yBodyRot = this.getYRot();
+            this.yHeadRot = this.yBodyRot;
+            float sideSpeed = livingentity.xxa * 0.4F;
+            float forwardSpeed = livingentity.zza * 0.7F;
+
+            // if moving backwards -> move slower
+            if (forwardSpeed <= 0.0F) {
+                forwardSpeed *= 0.2F;
+            }
+
+            if (this.isLocalClientAuthoritative()) {
+                this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                super.travel(new Vec3(sideSpeed, travelVector.y, forwardSpeed));
+            } else if (livingentity instanceof Player) {
+                this.setDeltaMovement(Vec3.ZERO);
+            }
+
+            this.calculateEntityAnimation(false);
+        } else {
+            super.travel(travelVector);
         }
     }
 
-    public boolean isTamingItem(ItemStack stack) {
-        return stack.is(LivingThingsTags.ELEPHANT_TAMING_FOOD);
+    @Override
+    protected boolean canAddPassenger(Entity entity) {
+        return entity instanceof Player && this.isSaddled() && super.canAddPassenger(entity);
+    }
+
+    @Override
+    public boolean isLocalClientAuthoritative() {
+        return this.getControllingPassenger() instanceof Player;
     }
 
     public LivingEntity getControllingPassenger() {
@@ -330,6 +340,10 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
             return (Player) passenger;
         }
         return null;
+    }
+
+    public boolean isTamingItem(ItemStack stack) {
+        return stack.is(LivingThingsTags.ELEPHANT_TAMING_FOOD);
     }
 
     public boolean isSaddled() {
@@ -353,28 +367,28 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.entityData.set(REMAINING_ANGER_TIME, persistentAngerEndTime);
+    }
+
+    @Override
+    public long getPersistentAngerEndTime() {
         return this.entityData.get(REMAINING_ANGER_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(REMAINING_ANGER_TIME, time);
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.angerTarget = persistentAngerTarget;
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.angerTarget = target;
-    }
-
-    @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+        this.setTimeToRemainAngry(rangedInteger.sample(this.random));
     }
 
     @Override
@@ -475,7 +489,7 @@ public class ElephantEntity extends TamableAnimal implements NeutralMob, HasCust
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.ELEPHANT;
     }
 

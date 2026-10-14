@@ -7,11 +7,11 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BabyEnderDragonCollarLayer extends RenderLayer<BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> {
 
-    private static final ResourceLocation COLLAR = LivingThings.getEntityTexture("baby_ender_dragon/baby_ender_dragon_collar.png");
+    private static final Identifier COLLAR = LivingThings.getEntityTexture("baby_ender_dragon/baby_ender_dragon_collar.png");
 
     public BabyEnderDragonCollarLayer(RenderLayerParent<BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> renderLayerParent) {
         super(renderLayerParent);

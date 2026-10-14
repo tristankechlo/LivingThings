@@ -8,12 +8,12 @@ import com.tristankechlo.livingthings.entity.ShroomieEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ShroomieRenderer extends MobRenderer<ShroomieEntity, ShroomieRenderState, EntityModel<ShroomieRenderState>> {
 
-    private static final ResourceLocation RED = LivingThings.getEntityTexture("shroomie/shroomie_red.png");
-    private static final ResourceLocation BROWN = LivingThings.getEntityTexture("shroomie/shroomie_brown.png");
+    private static final Identifier RED = LivingThings.getEntityTexture("shroomie/shroomie_red.png");
+    private static final Identifier BROWN = LivingThings.getEntityTexture("shroomie/shroomie_brown.png");
 
     public ShroomieRenderer(Context context) {
         super(context, new ShroomieModel<>(context.bakeLayer(ModelLayer.SHROOMIE)), 0.4F);
@@ -31,7 +31,7 @@ public class ShroomieRenderer extends MobRenderer<ShroomieEntity, ShroomieRender
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ShroomieRenderState state) {
+    public Identifier getTextureLocation(ShroomieRenderState state) {
         if (state.variant == 1) {
             return RED;
         }

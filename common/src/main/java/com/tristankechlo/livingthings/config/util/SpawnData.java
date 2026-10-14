@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.tristankechlo.livingthings.LivingThings;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.entity.EntityType;
@@ -19,16 +19,16 @@ import java.util.List;
 
 public final class SpawnData {
 
-    private final List<ResourceLocation> biomes = new ArrayList<>();
+    private final List<Identifier> biomes = new ArrayList<>();
     private final int weight;
     private final int minCount;
     private final int maxCount;
 
     public SpawnData(int weight, int minCount, int maxCount, ResourceKey<Biome>[] biomes) {
-        this(weight, minCount, maxCount, Arrays.stream(biomes).map(ResourceKey::location).toList());
+        this(weight, minCount, maxCount, Arrays.stream(biomes).map(ResourceKey::identifier).toList());
     }
 
-    public SpawnData(int weight, int minCount, int maxCount, List<ResourceLocation> biomes) {
+    public SpawnData(int weight, int minCount, int maxCount, List<Identifier> biomes) {
         this.weight = weight;
         this.minCount = minCount;
         this.maxCount = maxCount;
@@ -39,7 +39,7 @@ public final class SpawnData {
         return new Weighted<>(new MobSpawnSettings.SpawnerData(entityType, minCount, maxCount), weight);
     }
 
-    public List<ResourceLocation> getBiomes() {
+    public List<Identifier> getBiomes() {
         return biomes;
     }
 
@@ -65,11 +65,11 @@ public final class SpawnData {
         int minCount = GsonHelper.getAsInt(json, "minGroupSize");
         int maxCount = GsonHelper.getAsInt(json, "maxGroupSize");
 
-        List<ResourceLocation> biomes = new ArrayList<>();
+        List<Identifier> biomes = new ArrayList<>();
         JsonArray biomesArray = GsonHelper.getAsJsonArray(json, "biomes");
         for (JsonElement biomeElement : biomesArray) {
             String biomeString = GsonHelper.convertToString(biomeElement, "biome");
-            ResourceLocation biomeLoc = ResourceLocation.tryParse(biomeString);
+            Identifier biomeLoc = Identifier.tryParse(biomeString);
             if (biomeLoc == null) {
                 LivingThings.LOGGER.error("Ignoring invalid biome: {}", biomeString);
                 continue;

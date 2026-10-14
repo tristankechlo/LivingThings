@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.platform.RegistryObject;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -52,7 +52,7 @@ public final class ModEntityTypes {
     }
 
     private static <T extends Entity> EntityType<T> build(EntityType.Builder<T> builder, String type) {
-        ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, type));
+        ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, type));
         return builder.build(key);
     }
 

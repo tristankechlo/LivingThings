@@ -11,7 +11,10 @@ import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -31,14 +34,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-
-import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
 
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private int angerTime;
-    private UUID angerTarget;
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(RaccoonEntity.class, EntityDataSerializers.LONG);
+    private EntityReference<LivingEntity> angerTarget;
 
     public RaccoonEntity(EntityType<? extends Animal> type, Level worldIn) {
         super(type, worldIn);
@@ -60,6 +62,12 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
                 .add(Attributes.MOVEMENT_SPEED, RaccoonConfig.movementSpeed())
                 .add(Attributes.FOLLOW_RANGE, 16.0D)
                 .add(Attributes.ATTACK_DAMAGE, RaccoonConfig.attackDamage());
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(ANGER_END_TIME, -1L);
     }
 
     @Override
@@ -127,32 +135,32 @@ public class RaccoonEntity extends Animal implements NeutralMob, ILexiconEntry {
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.angerTime;
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.angerTime = time;
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.entityData.set(ANGER_END_TIME, persistentAngerEndTime);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.angerTarget = target;
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.angerTarget = persistentAngerTarget;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+        this.setTimeToRemainAngry(rangedInteger.sample(this.random));
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.RACCOON;
     }
 

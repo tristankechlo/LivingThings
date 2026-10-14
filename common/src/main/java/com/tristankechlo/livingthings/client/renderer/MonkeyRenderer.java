@@ -13,11 +13,11 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MonkeyRenderer extends MobRenderer<MonkeyEntity, MonkeyRenderState, EntityModel<MonkeyRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("monkey/monkey.png");
+    private static final Identifier TEXTURE = LivingThings.getEntityTexture("monkey/monkey.png");
     private final MonkeyModel<MonkeyRenderState> modelAdult;
     private final MonkeyModel<MonkeyRenderState> modelBaby;
     private final MonkeySittingModel<MonkeyRenderState> modelSitting;
@@ -44,7 +44,7 @@ public class MonkeyRenderer extends MobRenderer<MonkeyEntity, MonkeyRenderState,
     }
 
     @Override
-    public ResourceLocation getTextureLocation(MonkeyRenderState entity) {
+    public Identifier getTextureLocation(MonkeyRenderState entity) {
         return TEXTURE;
     }
 

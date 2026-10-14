@@ -5,8 +5,8 @@ import com.tristankechlo.livingthings.entity.AncientBlazeEntity;
 import com.tristankechlo.livingthings.init.ModSounds;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.projectile.LargeFireball;
-import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
+import net.minecraft.world.entity.projectile.hurtingprojectile.SmallFireball;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;

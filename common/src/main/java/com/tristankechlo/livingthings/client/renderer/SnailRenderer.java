@@ -8,7 +8,7 @@ import com.tristankechlo.livingthings.entity.SnailEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class SnailRenderer extends AgeableMobRenderer<SnailEntity, SnailRenderState, EntityModel<SnailRenderState>> {
 
@@ -33,7 +33,7 @@ public class SnailRenderer extends AgeableMobRenderer<SnailEntity, SnailRenderSt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SnailRenderState snail) {
+    public Identifier getTextureLocation(SnailRenderState snail) {
         return snail.bodyTexture;
     }
 

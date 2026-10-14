@@ -4,8 +4,8 @@ import com.google.auto.service.AutoService;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -36,9 +36,9 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
         private Provider(String modId, ResourceKey<? extends Registry<T>> key) {
             this.modId = modId;
 
-            final var reg = BuiltInRegistries.REGISTRY.get(key.location());
+            final var reg = BuiltInRegistries.REGISTRY.get(key.identifier());
             if (reg.isEmpty()) {
-                throw new RuntimeException("Registry with name " + key.location() + " was not found!");
+                throw new RuntimeException("Registry with name " + key.identifier() + " was not found!");
             }
             registry = (Registry<T>) reg.get();
         }
@@ -50,7 +50,7 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
 
         @Override
         public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
-            final var rl = ResourceLocation.fromNamespaceAndPath(modId, name);
+            final var rl = Identifier.fromNamespaceAndPath(modId, name);
             final var obj = Registry.register(registry, rl, supplier.get());
             final ResourceKey<I> key = ResourceKey.create((ResourceKey<? extends Registry<I>>) registry.key(), rl);
             final var ro = new RegistryObject<I>() {
@@ -61,7 +61,7 @@ public final class FabricRegistrationFactory implements RegistrationProvider.Fac
                 }
 
                 @Override
-                public ResourceLocation getId() {
+                public Identifier getId() {
                     return rl;
                 }
 

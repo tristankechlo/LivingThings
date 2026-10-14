@@ -2,9 +2,9 @@ package com.tristankechlo.livingthings.client.model;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import java.util.function.Function;
@@ -15,7 +15,7 @@ public abstract class AdvancedEntityModel<T extends LivingEntityRenderState> ext
         super(root);
     }
 
-    protected AdvancedEntityModel(ModelPart root, Function<ResourceLocation, RenderType> $$1) {
+    protected AdvancedEntityModel(ModelPart root, Function<Identifier, RenderType> $$1) {
         super(root, $$1);
     }
 

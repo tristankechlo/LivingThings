@@ -8,13 +8,13 @@ import com.tristankechlo.livingthings.client.renderer.state.OwlRenderState;
 import com.tristankechlo.livingthings.entity.OwlEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class OwlRenderer extends AgeableMobRenderer<OwlEntity, OwlRenderState, OwlModel<OwlRenderState>> {
 
-    protected static final ResourceLocation TEXTURE_BROWN = LivingThings.getEntityTexture("owl/owl_brown.png");
-    protected static final ResourceLocation TEXTURE_WHITE = LivingThings.getEntityTexture("owl/owl_white.png");
-    protected static final ResourceLocation TEXTURE_BLACK = LivingThings.getEntityTexture("owl/owl_black.png");
+    protected static final Identifier TEXTURE_BROWN = LivingThings.getEntityTexture("owl/owl_brown.png");
+    protected static final Identifier TEXTURE_WHITE = LivingThings.getEntityTexture("owl/owl_white.png");
+    protected static final Identifier TEXTURE_BLACK = LivingThings.getEntityTexture("owl/owl_black.png");
     public static final MeshTransformer NORMAL_TRANSFORMER = MeshTransformer.scaling(0.94F);
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
@@ -35,7 +35,7 @@ public class OwlRenderer extends AgeableMobRenderer<OwlEntity, OwlRenderState, O
     }
 
     @Override
-    public ResourceLocation getTextureLocation(OwlRenderState state) {
+    public Identifier getTextureLocation(OwlRenderState state) {
         byte variant = state.variant;
         if (variant == 1) {
             return TEXTURE_WHITE;

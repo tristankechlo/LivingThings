@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.client.renderer.state.AncientBlazeRenderSt
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class AncientBlazeChargedLayer extends EnergySwirlLayer<AncientBlazeRenderState, AncientBlazeModel<AncientBlazeRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("ancient_blaze/ancient_blaze_charge.png");
+    private static final Identifier TEXTURE = LivingThings.getEntityTexture("ancient_blaze/ancient_blaze_charge.png");
     private final AncientBlazeModel<AncientBlazeRenderState> model;
 
     public AncientBlazeChargedLayer(RenderLayerParent<AncientBlazeRenderState, AncientBlazeModel<AncientBlazeRenderState>> entityRenderer, EntityModelSet entityModelSet) {
@@ -30,7 +30,7 @@ public class AncientBlazeChargedLayer extends EnergySwirlLayer<AncientBlazeRende
     }
 
     @Override
-    protected ResourceLocation getTextureLocation() {
+    protected Identifier getTextureLocation() {
         return TEXTURE;
     }
 

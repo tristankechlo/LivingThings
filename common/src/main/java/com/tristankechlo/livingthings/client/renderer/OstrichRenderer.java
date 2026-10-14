@@ -8,11 +8,11 @@ import com.tristankechlo.livingthings.client.renderer.state.OstrichRenderState;
 import com.tristankechlo.livingthings.entity.OstrichEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class OstrichRenderer extends AgeableMobRenderer<OstrichEntity, OstrichRenderState, OstrichModel<OstrichRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("ostrich/ostrich.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("ostrich/ostrich.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.6F);
 
     public OstrichRenderer(EntityRendererProvider.Context context) {
@@ -31,7 +31,7 @@ public class OstrichRenderer extends AgeableMobRenderer<OstrichEntity, OstrichRe
     }
 
     @Override
-    public ResourceLocation getTextureLocation(OstrichRenderState entity) {
+    public Identifier getTextureLocation(OstrichRenderState entity) {
         return TEXTURE;
     }
 

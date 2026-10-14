@@ -7,12 +7,12 @@ import com.tristankechlo.livingthings.client.renderer.state.LionRenderState;
 import com.tristankechlo.livingthings.entity.LionEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState, LionModel<LionRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("lion/lion.png");
-    protected static final ResourceLocation TEXTURE_WHITE = LivingThings.getEntityTexture("lion/lion_white.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("lion/lion.png");
+    protected static final Identifier TEXTURE_WHITE = LivingThings.getEntityTexture("lion/lion_white.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.6F);
 
     public LionRenderer(Context context) {
@@ -31,7 +31,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LionRenderState entity) {
+    public Identifier getTextureLocation(LionRenderState entity) {
         if (entity.variant != 0) {
             return TEXTURE_WHITE;
         }

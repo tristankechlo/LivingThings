@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -38,17 +38,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class CrabEntity extends Animal implements IMobVariants, NeutralMob, IScaleableMob, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> CRAB_VARIANT = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> CRAB_SCALING = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(CrabEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt rangedInteger = TimeUtil.rangeOfSeconds(20, 39);
-    private int angerTime;
-    private UUID angerTarget;
+    private EntityReference<LivingEntity> angerTarget;
 
     public CrabEntity(EntityType<? extends CrabEntity> type, Level worldIn) {
         super(type, worldIn);
@@ -135,6 +135,7 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
         super.defineSynchedData(builder);
         builder.define(CRAB_VARIANT, (byte) 0);
         builder.define(CRAB_SCALING, (byte) 0);
+        builder.define(ANGER_END_TIME, -1L);
     }
 
     @Override
@@ -217,32 +218,32 @@ public class CrabEntity extends Animal implements IMobVariants, NeutralMob, ISca
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.angerTime;
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.angerTime = time;
+    public void setPersistentAngerEndTime(long persistentAngerEndTime) {
+        this.entityData.set(ANGER_END_TIME, persistentAngerEndTime);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.angerTarget = persistentAngerTarget;
+    }
+
+    @Override
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.angerTarget = target;
-    }
-
-    @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(rangedInteger.sample(this.random));
+        this.setTimeToRemainAngry(rangedInteger.sample(this.random));
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.CRAB;
     }
 

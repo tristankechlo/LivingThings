@@ -8,11 +8,11 @@ import com.tristankechlo.livingthings.client.renderer.state.NetherKnightRenderSt
 import com.tristankechlo.livingthings.entity.NetherKnightEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, NetherKnightRenderState, NetherKnightModel<NetherKnightRenderState>> {
 
-    private static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("nether_knight/nether_knight.png");
+    private static final Identifier TEXTURE = LivingThings.getEntityTexture("nether_knight/nether_knight.png");
 
     public NetherKnightRenderer(Context context) {
         super(context, new NetherKnightModel<>(context.bakeLayer(ModelLayer.NETHER_KNIGHT)), 0.5F);
@@ -32,7 +32,7 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
     }
 
     @Override
-    public ResourceLocation getTextureLocation(NetherKnightRenderState entity) {
+    public Identifier getTextureLocation(NetherKnightRenderState entity) {
         return TEXTURE;
     }
 

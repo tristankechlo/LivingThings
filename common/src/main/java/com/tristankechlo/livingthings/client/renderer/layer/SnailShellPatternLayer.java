@@ -8,7 +8,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class SnailShellPatternLayer extends RenderLayer<SnailRenderState, EntityModel<SnailRenderState>> {
 
@@ -24,7 +24,7 @@ public class SnailShellPatternLayer extends RenderLayer<SnailRenderState, Entity
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, SnailRenderState state, float yRot, float xRot) {
         int colors = state.getShellColor(this.patternType);
-        ResourceLocation texture = state.getShellPatternTexture(this.patternType);
+        Identifier texture = state.getShellPatternTexture(this.patternType);
         EntityModel<SnailRenderState> model = state.isBaby ? this.parent.babyModel : this.parent.adultModel;
 
         int i = this.patternType == SnailEntity.PatternType.FOREGROUND ? 1 : 0;

@@ -12,7 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -40,9 +40,9 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> SHELL_COLOR_F = SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> SHELL_COLOR_B = SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
-    private static final ResourceLocation[] BODY_TEXTURES = new ResourceLocation[]{textureLocation("snail_body_1.png")};
-    private static final ResourceLocation[] SHELL_TEXTURES_B = new ResourceLocation[]{textureLocation("snail_shell_b1.png"), textureLocation("snail_shell_b2.png")};
-    private static final ResourceLocation[] SHELL_TEXTURES_F = new ResourceLocation[]{textureLocation("snail_shell_f1.png"), textureLocation("snail_shell_f2.png")};
+    private static final Identifier[] BODY_TEXTURES = new Identifier[]{textureLocation("snail_body_1.png")};
+    private static final Identifier[] SHELL_TEXTURES_B = new Identifier[]{textureLocation("snail_shell_b1.png"), textureLocation("snail_shell_b2.png")};
+    private static final Identifier[] SHELL_TEXTURES_F = new Identifier[]{textureLocation("snail_shell_f1.png"), textureLocation("snail_shell_f2.png")};
 
     public SnailEntity(EntityType<? extends Animal> type, Level worldIn) {
         super(type, worldIn);
@@ -52,8 +52,8 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         return world.getBlockState(pos.below()).is(LivingThingsTags.SNAIL_SPAWNABLE_ON) && isBrightEnoughToSpawn(world, pos);
     }
 
-    private static final ResourceLocation textureLocation(String name) {
-        return ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/entity/snail/" + name);
+    private static final Identifier textureLocation(String name) {
+        return Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, "textures/entity/snail/" + name);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         return super.mobInteract(player, hand);
     }
 
-    public ResourceLocation getBodyTexture() {
+    public Identifier getBodyTexture() {
         return BODY_TEXTURES[this.getBodyVariant()];
     }
 
@@ -176,7 +176,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
         return (short) (this.getVariant() >> 16);
     }
 
-    public ResourceLocation getShellPatternTexture(PatternType type) {
+    public Identifier getShellPatternTexture(PatternType type) {
         return (type == PatternType.FOREGROUND) ? SHELL_TEXTURES_F[this.getShellVariant()]
                 : SHELL_TEXTURES_B[this.getShellVariant()];
     }
@@ -219,7 +219,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     }
 
     @Override
-    public ResourceLocation getLexiconEntry() {
+    public Identifier getLexiconEntry() {
         return LexiconEntries.SNAIL;
     }
 

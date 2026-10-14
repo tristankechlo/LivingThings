@@ -4,7 +4,7 @@ import com.google.auto.service.AutoService;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 import net.minecraftforge.registries.DeferredRegister;
@@ -76,7 +76,7 @@ public final class ForgeRegistrationFactory implements RegistrationProvider.Fact
             }
 
             @Override
-            public ResourceLocation getId() {
+            public Identifier getId() {
                 return value.getId();
             }
 

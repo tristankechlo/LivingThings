@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.client.renderer.state.PeacockRenderState;
 import com.tristankechlo.livingthings.entity.PeacockEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class PeacockRenderer extends AgeableMobRenderer<PeacockEntity, PeacockRenderState, PeacockModel<PeacockRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("peacock/peacock.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("peacock/peacock.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public PeacockRenderer(EntityRendererProvider.Context context) {
@@ -30,7 +30,7 @@ public class PeacockRenderer extends AgeableMobRenderer<PeacockEntity, PeacockRe
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PeacockRenderState entity) {
+    public Identifier getTextureLocation(PeacockRenderState entity) {
         return TEXTURE;
     }
 

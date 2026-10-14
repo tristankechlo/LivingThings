@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.client;
 
 import com.tristankechlo.livingthings.LivingThings;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class ModelLayer {
 
@@ -46,7 +46,7 @@ public final class ModelLayer {
     public static final ModelLayerLocation ANCIENT_ARMOR = createLayerLocation("ancientarmormodel");
 
     private static ModelLayerLocation createLayerLocation(final String name) {
-        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name), "main");
+        return new ModelLayerLocation(Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, name), "main");
     }
 
 }

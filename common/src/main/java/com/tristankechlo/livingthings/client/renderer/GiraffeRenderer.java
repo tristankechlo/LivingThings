@@ -7,13 +7,13 @@ import com.tristankechlo.livingthings.client.renderer.state.GiraffeRenderState;
 import com.tristankechlo.livingthings.entity.GiraffeEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class GiraffeRenderer extends AgeableMobRenderer<GiraffeEntity, GiraffeRenderState, GiraffeModel<GiraffeRenderState>> {
 
-    protected static final ResourceLocation TEXTURE_1 = LivingThings.getEntityTexture("giraffe/giraffe_1.png");
-    protected static final ResourceLocation TEXTURE_2 = LivingThings.getEntityTexture("giraffe/giraffe_2.png");
-    protected static final ResourceLocation TEXTURE_WHITE = LivingThings.getEntityTexture("giraffe/giraffe_white.png");
+    protected static final Identifier TEXTURE_1 = LivingThings.getEntityTexture("giraffe/giraffe_1.png");
+    protected static final Identifier TEXTURE_2 = LivingThings.getEntityTexture("giraffe/giraffe_2.png");
+    protected static final Identifier TEXTURE_WHITE = LivingThings.getEntityTexture("giraffe/giraffe_white.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.6F);
 
     public GiraffeRenderer(Context context) {
@@ -32,7 +32,7 @@ public class GiraffeRenderer extends AgeableMobRenderer<GiraffeEntity, GiraffeRe
     }
 
     @Override
-    public ResourceLocation getTextureLocation(GiraffeRenderState state) {
+    public Identifier getTextureLocation(GiraffeRenderState state) {
         byte variant = state.variant;
         if (variant == 2) {
             return TEXTURE_WHITE;

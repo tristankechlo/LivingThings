@@ -4,7 +4,7 @@ import com.google.auto.service.AutoService;
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
 import com.tristankechlo.livingthings.init.ModItems;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -31,12 +31,12 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void openBookEntry(ResourceLocation bookId, ResourceLocation entryId, int page) {
+    public void openBookEntry(Identifier bookId, Identifier entryId, int page) {
         //vazkii.patchouli.api.PatchouliAPI.get().openBookEntry(bookId, entryId, page);
     }
 
     @Override
-    public void openBookGui(ServerPlayer player, ResourceLocation bookId) {
+    public void openBookGui(ServerPlayer player, Identifier bookId) {
         //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(player, bookId);
     }
 
@@ -47,7 +47,7 @@ public final class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public CreativeModeTab.Builder getCreativeModeTab() {
-        return CreativeModeTab.builder()
+        return CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.livingthings.general"))
                 .icon(() -> ModItems.SHARK_TOOTH.get().getDefaultInstance())
                 .displayItems((parameters, output) -> {

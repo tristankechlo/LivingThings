@@ -7,11 +7,11 @@ import com.tristankechlo.livingthings.entity.KoalaEntity;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class KoalaRenderer extends AgeableMobRenderer<KoalaEntity, LivingEntityRenderState, KoalaModel<LivingEntityRenderState>> {
 
-    protected static final ResourceLocation TEXTURE = LivingThings.getEntityTexture("koala/koala.png");
+    protected static final Identifier TEXTURE = LivingThings.getEntityTexture("koala/koala.png");
     public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public KoalaRenderer(EntityRendererProvider.Context context) {
@@ -29,7 +29,7 @@ public class KoalaRenderer extends AgeableMobRenderer<KoalaEntity, LivingEntityR
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntityRenderState entity) {
+    public Identifier getTextureLocation(LivingEntityRenderState entity) {
         return TEXTURE;
     }
 

@@ -2,7 +2,7 @@ package com.tristankechlo.livingthings.util;
 
 import com.tristankechlo.livingthings.LivingThings;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -59,7 +59,7 @@ public final class LivingThingsTags {
     }
 
     private static TagKey<Block> registerBlockTag(String name) {
-        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Item> mobFood(String name) {
@@ -67,11 +67,11 @@ public final class LivingThingsTags {
     }
 
     private static TagKey<Item> registerItemTag(String name) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
     private static TagKey<Fluid> registerFluidTag(String name) {
-        return TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(LivingThings.MOD_ID, name));
+        return TagKey.create(Registries.FLUID, Identifier.fromNamespaceAndPath(LivingThings.MOD_ID, name));
     }
 
 }
