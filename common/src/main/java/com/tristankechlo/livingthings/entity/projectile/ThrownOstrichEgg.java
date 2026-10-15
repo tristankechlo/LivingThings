@@ -49,7 +49,7 @@ public class ThrownOstrichEgg extends ThrowableItemProjectile {
         if (eventID == 3) {
             double offset = 0.18D;
             for (int i = 0; i < 8; ++i) {
-                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset);
+                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getDefaultItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset, (this.random.nextFloat() - 0.5D) * offset);
             }
         }
     }

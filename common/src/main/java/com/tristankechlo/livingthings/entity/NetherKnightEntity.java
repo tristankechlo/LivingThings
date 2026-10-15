@@ -35,11 +35,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
@@ -49,8 +50,7 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         super(type, world);
         this.setPathfindingMalus(PathType.WATER, -1.0F);
         this.setPathfindingMalus(PathType.LAVA, 0.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.FIRE, 0.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -180,13 +180,18 @@ public class NetherKnightEntity extends Monster implements ILexiconEntry {
         // float in lava
         if (this.isInLava()) {
             CollisionContext iselectioncontext = CollisionContext.of(this);
-            if (iselectioncontext.isAbove(LiquidBlock.SHAPE_STABLE, this.blockPosition(), true)
+            if (iselectioncontext.isAbove(this.getLiquidCollisionShape(), this.blockPosition(), true)
                     && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
                 this.setOnGround(true);
             } else {
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.5D).add(0.0D, 0.05D, 0.0D));
             }
         }
+    }
+
+    @Override
+    public VoxelShape getLiquidCollisionShape() {
+        return Block.column(16.0F, 0.0F, 8.0F);
     }
 
     @Override

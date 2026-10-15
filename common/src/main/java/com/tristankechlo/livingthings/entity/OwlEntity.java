@@ -51,8 +51,7 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
     public OwlEntity(EntityType<? extends OwlEntity> type, Level worldIn) {
         super(type, worldIn);
         this.moveControl = new FlyingMoveControl(this, 10, false);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.FIRE, -1.0F);
     }
 
     @Override

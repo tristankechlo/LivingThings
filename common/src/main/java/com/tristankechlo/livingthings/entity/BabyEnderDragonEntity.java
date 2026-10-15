@@ -127,7 +127,7 @@ public class BabyEnderDragonEntity extends TamableAnimal implements NeutralMob, 
                 return InteractionResult.SUCCESS;
             }
             if (this.isOwnedBy(player) && (item instanceof DyeItem)) {
-                DyeColor dyecolor = ((DyeItem) item).getDyeColor();
+                DyeColor dyecolor = stack.get(DataComponents.DYE);
                 if (dyecolor != this.getCollarColor()) {
                     this.setCollarColor(dyecolor);
                     this.usePlayerItem(player, hand, stack);

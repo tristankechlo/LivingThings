@@ -3,7 +3,6 @@ package com.tristankechlo.livingthings.platform;
 import com.google.auto.service.AutoService;
 import com.tristankechlo.livingthings.entity.SeahorseEntity;
 import com.tristankechlo.livingthings.init.ModItems;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -47,7 +46,7 @@ public final class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public CreativeModeTab.Builder getCreativeModeTab() {
-        return FabricItemGroup.builder()
+        return CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.livingthings.general"))
                 .icon(() -> ModItems.SHARK_TOOTH.get().getDefaultInstance())
                 .displayItems((parameters, output) -> {

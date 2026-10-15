@@ -18,7 +18,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.FollowBoatGoal;
+import net.minecraft.world.entity.ai.goal.FollowPlayerRiddenEntityGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
@@ -28,7 +28,9 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.fish.WaterAnimal;
+import net.minecraft.world.entity.animal.nautilus.Nautilus;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -69,7 +71,8 @@ public class SharkEntity extends WaterAnimal implements NeutralMob, ILexiconEntr
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(1, new BetterMeleeAttackGoal(this, 1.05D, false, SharkConfig::canAttack));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 35));
-        this.goalSelector.addGoal(3, new FollowBoatGoal(this));
+        this.goalSelector.addGoal(3, new FollowPlayerRiddenEntityGoal(this, AbstractBoat.class));
+        this.goalSelector.addGoal(3, new FollowPlayerRiddenEntityGoal(this, Nautilus.class));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));

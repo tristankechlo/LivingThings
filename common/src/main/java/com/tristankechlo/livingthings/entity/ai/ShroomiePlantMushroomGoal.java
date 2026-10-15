@@ -63,7 +63,7 @@ public class ShroomiePlantMushroomGoal extends MoveToBlockGoal {
     @Override
     protected boolean isValidTarget(LevelReader world, BlockPos pos) {
         BlockState blockstate = world.getBlockState(pos);
-        if (blockstate.is(BlockTags.MUSHROOM_GROW_BLOCK)) {
+        if (blockstate.is(BlockTags.HUGE_BROWN_MUSHROOM_CAN_PLACE_ON) || blockstate.is(BlockTags.HUGE_RED_MUSHROOM_CAN_PLACE_ON)) {
             return world.getBlockState(pos.above()).isAir();
         } else {
             BlockState mushroom = Blocks.BROWN_MUSHROOM.defaultBlockState();

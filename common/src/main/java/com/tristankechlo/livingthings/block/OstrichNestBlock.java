@@ -113,11 +113,11 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     }
 
     private boolean canGrow(Level world) {
-        float f = (world.getDayTime() % 24000L) / 24000.0F;
+        float f = (world.getOverworldClockTime() % 24000L) / 24000.0F;
         if (f < 0.7F && f > 0.6F) {
             return true;
         } else {
-            return world.random.nextInt(175) == 0;
+            return world.getRandom().nextInt(175) == 0;
         }
     }
 

@@ -12,7 +12,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -79,7 +78,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
     }
 
     public void playBrokenSound(Level worldIn, BlockPos pos) {
-        worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F, 0.9F + worldIn.random.nextFloat() * 0.2F);
+        worldIn.playSound(null, pos, ModSounds.OSTRICH_EGG_CRACKS.get(), SoundSource.BLOCKS, 0.7F, 0.9F + worldIn.getRandom().nextFloat() * 0.2F);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class BreakOstrichEggGoal extends MoveToBlockGoal {
                 this.entity.setDeltaMovement(vector3d.x, 0.3D, vector3d.z);
                 if (!world.isClientSide()) {
                     ((ServerLevel) world).sendParticles(
-                            new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.EGG)),
+                            new ItemParticleOption(ParticleTypes.ITEM, Items.EGG),
                             blockpos1.getX() + 0.5D, blockpos1.getY() + 0.7D, blockpos1.getZ() + 0.5D, 3,
                             (random.nextFloat() - 0.5D) * 0.08D, (random.nextFloat() - 0.5D) * 0.08D,
                             (random.nextFloat() - 0.5D) * 0.08D, 0.15F);

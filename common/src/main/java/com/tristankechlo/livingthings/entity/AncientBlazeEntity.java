@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -49,15 +50,15 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
 
     private static final EntityDataAccessor<Byte> SHOOTS = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Integer> INVULNERABLE_TIME = SynchedEntityData.defineId(AncientBlazeEntity.class, EntityDataSerializers.INT);
-    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.PROGRESS);
+    private final ServerBossEvent bossInfo;
 
     public AncientBlazeEntity(EntityType<? extends AncientBlazeEntity> type, Level world) {
         super(type, world);
         this.setPathfindingMalus(PathType.WATER, -1.0F);
         this.setPathfindingMalus(PathType.LAVA, 8.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.FIRE, 0.0F);
         this.xpReward = 30;
+        this.bossInfo = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

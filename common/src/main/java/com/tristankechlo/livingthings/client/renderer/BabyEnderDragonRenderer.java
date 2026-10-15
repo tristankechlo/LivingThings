@@ -12,7 +12,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
 public class BabyEnderDragonRenderer extends MobRenderer<BabyEnderDragonEntity, BabyEnderDragonRenderState, EntityModel<BabyEnderDragonRenderState>> {

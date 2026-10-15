@@ -9,6 +9,7 @@ import com.tristankechlo.livingthings.util.LexiconEntries;
 import com.tristankechlo.livingthings.util.LivingThingsTags;
 import com.tristankechlo.livingthings.util.Predicates;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -154,7 +155,7 @@ public class SnailEntity extends Animal implements ILexiconEntry {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() instanceof DyeItem) {
-            DyeColor color = ((DyeItem) stack.getItem()).getDyeColor();
+            DyeColor color = stack.get(DataComponents.DYE);
             if (player.isCrouching()) {
                 this.setShellColor(PatternType.FOREGROUND, color.getTextureDiffuseColor());
             } else {
