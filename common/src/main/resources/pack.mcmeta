@@ -1,6 +1,10 @@
 {
     "pack": {
         "description": "Living Things",
-        "pack_format": 57
+        "min_format": [
+            101,
+            1
+        ],
+        "max_format": 1000
     }
 }

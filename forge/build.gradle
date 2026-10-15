@@ -1,63 +1,73 @@
 plugins {
     id 'lt-loader'
-    id 'net.minecraftforge.gradle' version '[6.0.36,6.2)'
-    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-}
-
-mixin {
-    add(sourceSets.main, "${mod_id}.refmap.json")
-    config("${mod_id}.mixins.json")
+    id 'net.minecraftforge.gradle' version '[7.0.17,8)'
 }
 
 jar.manifest.attributes.put("MixinConfigs", "${mod_id}.mixins.json")
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
-    copyIdeResources = true
-    reobf = false
-
     runs {
         configureEach {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            property 'eventbus.api.strictRuntimeChecks', 'true'
+            workingDir = layout.projectDirectory.dir('run')
+
+            args "--mixin.config=${mod_id}.mixins.json"
+            systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
+            systemProperty 'forge.enabledGameTestNamespaces', "${mod_id}"
         }
 
-        client {
-            taskName 'Client'
-            mods {
-                modClientRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
-                }
-            }
-        }
+        register('client')
 
-        server {
-            taskName 'Server'
-            mods {
-                modServerRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
-                }
-            }
+        register('server') {
+            args '--nogui'
         }
     }
 }
 
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    maven { url = "https://repo.spongepowered.org/maven" }
+    mavenCentral()
+}
+
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0-beta.12'
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    annotationProcessor('net.minecraftforge:eventbus-validator:7.0.5')
+
+    compileOnly("org.spongepowered:mixin:0.8.5")
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    compileOnly "com.google.auto.service:auto-service:$auto_service_version"
-    annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
+    compileOnly("com.google.auto.service:auto-service:$auto_service_version")
+    annotationProcessor("com.google.auto.service:auto-service:$auto_service_version")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements'].each { variant ->
+    configurations.named("$variant") {
+        attributes {
+            attribute(loaderAttribute, 'forge')
+        }
+    }
+}
+
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant ->
+        configurations.named("$variant") {
+            attributes {
+                attribute(loaderAttribute, 'forge')
+            }
+        }
+    }
 }
