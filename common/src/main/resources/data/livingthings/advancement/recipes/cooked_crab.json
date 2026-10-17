@@ -29,7 +29,7 @@
 		"has_the_recipe" : {
 			"trigger" : "minecraft:recipe_unlocked",
 			"conditions" : {
-				"recipe" : "livingthings:cooked_crab"
+				"recipes" : "livingthings:cooked_crab"
 			}
 		}
 	},

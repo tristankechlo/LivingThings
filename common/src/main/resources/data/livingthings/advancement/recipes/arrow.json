@@ -29,7 +29,7 @@
 		"has_the_recipe" : {
 			"trigger" : "minecraft:recipe_unlocked",
 			"conditions" : {
-				"recipe" : "livingthings:arrow_from_shark_tooth"
+				"recipes" : "livingthings:arrow_from_shark_tooth"
 			}
 		}
 	},

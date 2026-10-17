@@ -29,7 +29,7 @@
 		"has_the_recipe" : {
 			"trigger" : "minecraft:recipe_unlocked",
 			"conditions" : {
-				"recipe" : "livingthings:cooked_lion_from_campfire_cooking"
+				"recipes" : "livingthings:cooked_lion_from_campfire_cooking"
 			}
 		}
 	},
