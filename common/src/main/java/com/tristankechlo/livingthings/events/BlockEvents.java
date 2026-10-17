@@ -15,7 +15,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -104,7 +104,7 @@ public final class BlockEvents {
             final int count = 10;
             final double radius = 6.0D;
             for (int i = 0; i < count; i++) {
-                LightningBolt bolt = EntityType.LIGHTNING_BOLT.create((Level) world, EntitySpawnReason.MOB_SUMMONED);
+                LightningBolt bolt = EntityTypes.LIGHTNING_BOLT.create((Level) world, EntitySpawnReason.MOB_SUMMONED);
                 final double x = pos.getX() + (radius * Mth.cos((i * 2 * Mth.PI) / count));
                 final double z = pos.getZ() + (radius * Mth.sin((i * 2 * Mth.PI) / count));
                 final double y = pos.below().getY();

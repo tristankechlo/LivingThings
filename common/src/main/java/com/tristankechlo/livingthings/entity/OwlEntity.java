@@ -28,7 +28,6 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -39,7 +38,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
-public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVariants, ILexiconEntry {
+public class OwlEntity extends TamableAnimal implements IMobVariants, ILexiconEntry {
 
     private static final EntityDataAccessor<Byte> OWL_VARIANT = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.BYTE);
     public float flap;
@@ -241,6 +240,11 @@ public class OwlEntity extends TamableAnimal implements FlyingAnimal, IMobVarian
 
     public boolean isFlying() {
         return !this.onGround();
+    }
+
+    @Override
+    protected boolean omnidirectionalAirMover() {
+        return true;
     }
 
     @Override

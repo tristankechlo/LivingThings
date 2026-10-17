@@ -234,7 +234,7 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
         int amount = AncientBlazeConfig.blazeSpawnCount();
         if (!this.level().isClientSide() && amount >= 1 && this.isDeadOrDying()) {
             for (int i = 0; i < amount; i++) {
-                Blaze blaze = new Blaze(EntityType.BLAZE, this.level());
+                Blaze blaze = new Blaze(EntityTypes.BLAZE, this.level());
                 if (this.isPersistenceRequired()) {
                     blaze.setPersistenceRequired();
                 }
