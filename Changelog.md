@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 26.2 - 2.3.2
+
+- port to 26.2
+
 ## Version 26.1.2 - 2.3.2
 
 - port to 26.1.2
