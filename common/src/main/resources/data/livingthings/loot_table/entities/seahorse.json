@@ -7,9 +7,9 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:heart_of_the_sea",
-                    "functions": [
+                    "modifier": [
                         {
-                            "function": "minecraft:set_count",
+                            "type": "minecraft:set_count",
                             "count": {
                                 "type": "minecraft:binomial",
                                 "n": 1,
@@ -26,10 +26,11 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:kelp",
-                    "functions": [
+                    "modifier": [
                         {
-                            "function": "minecraft:set_count",
+                            "type": "minecraft:set_count",
                             "count": {
+                                "type": "minecraft:uniform",
                                 "min": 2,
                                 "max": 5
                             }
@@ -40,6 +41,7 @@
         },
         {
             "rolls": {
+                "type": "minecraft:uniform",
                 "min": 0,
                 "max": 1
             },

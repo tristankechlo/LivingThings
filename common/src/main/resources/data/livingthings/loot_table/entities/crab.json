@@ -7,9 +7,9 @@
                 {
                     "type": "minecraft:item",
                     "name": "livingthings:crab",
-                    "functions": [
+                    "modifier": [
                         {
-                            "function": "minecraft:set_count",
+                            "type": "minecraft:set_count",
                             "count": {
                                 "type": "minecraft:uniform",
                                 "min": 1,
@@ -17,26 +17,25 @@
                             }
                         },
                         {
-                            "function": "minecraft:enchanted_count_increase",
+                            "type": "minecraft:enchanted_count_increase",
                             "enchantment": "minecraft:looting",
                             "count": {
+                                "type": "minecraft:uniform",
                                 "min": 0,
                                 "max": 2
                             }
                         },
                         {
-                            "function": "minecraft:furnace_smelt",
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_properties",
-                                    "entity": "this",
-                                    "predicate": {
-                                        "flags": {
-                                            "is_on_fire": true
-                                        }
+                            "type": "minecraft:furnace_smelt",
+                            "condition": {
+                                "type": "minecraft:entity_properties",
+                                "entity": "this",
+                                "predicate": {
+                                    "minecraft:flags": {
+                                        "is_on_fire": true
                                     }
                                 }
-                            ]
+                            }
                         }
                     ]
                 }
@@ -48,9 +47,9 @@
                 {
                     "type": "minecraft:item",
                     "name": "livingthings:crab_shell",
-                    "functions": [
+                    "modifier": [
                         {
-                            "function": "minecraft:set_count",
+                            "type": "minecraft:set_count",
                             "count": {
                                 "type": "minecraft:uniform",
                                 "min": 0,
