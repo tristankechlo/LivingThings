@@ -17,13 +17,13 @@ public class NetherKnightRenderState extends LivingEntityRenderState implements 
 
     @Override
     public void fromEntity(NetherKnightEntity entity) {
-        this.attackTime = entity.attackAnim;
         this.mainArm = entity.getMainArm();
     }
 
-    public static void extractHoldingEntityRenderState(LivingEntity entity, NetherKnightRenderState state, ItemModelResolver resolver) {
+    public static void extractHoldingEntityRenderState(LivingEntity entity, NetherKnightRenderState state, ItemModelResolver resolver, float partialTicks) {
         resolver.updateForLiving(state.rightHandItem, entity.getItemHeldByArm(HumanoidArm.RIGHT), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, entity);
         resolver.updateForLiving(state.leftHandItem, entity.getItemHeldByArm(HumanoidArm.LEFT), ItemDisplayContext.THIRD_PERSON_LEFT_HAND, entity);
+        state.attackTime = entity.getSwingAnimation(partialTicks);
     }
 
 }

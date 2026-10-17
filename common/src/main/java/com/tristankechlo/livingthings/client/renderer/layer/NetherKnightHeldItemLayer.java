@@ -30,8 +30,8 @@ public class NetherKnightHeldItemLayer<M extends EntityModel<NetherKnightRenderS
         }
         poseStack.pushPose();
         this.getParentModel().translateToHand(state, hand, poseStack);
-        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.rotate(Axis.XP.rotationDegrees(-90.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(180.0F));
         poseStack.translate(0, 0.12D, -0.76D);
         heldItem.submit(poseStack, collector, i, OverlayTexture.NO_OVERLAY, state.outlineColor);
         poseStack.popPose();

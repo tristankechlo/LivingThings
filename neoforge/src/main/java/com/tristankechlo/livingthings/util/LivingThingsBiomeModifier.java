@@ -4,9 +4,11 @@ import com.mojang.serialization.MapCodec;
 import com.tristankechlo.livingthings.NeoForgeLivingThings;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.Weighted;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -24,7 +26,7 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
     public static final MapCodec<LivingThingsBiomeModifier> CODEC = MapCodec.unit(INSTANCE);
 
     @Override
-    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+    public void modify(RegistryAccess access, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (spawnData == null) {
             this.spawnData = GeneralConfig.getSpawnData();
         }
@@ -37,7 +39,10 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
             MobSpawnSettingsBuilder spawns = builder.getMobSpawnSettings();
             List<Weighted<MobSpawnSettings.SpawnerData>> spawnerData = spawnData.get(biomeName);
             for (Weighted<MobSpawnSettings.SpawnerData> data : spawnerData) {
-                spawns.addSpawn(data.value().type().getCategory(), data.weight(), data.value());
+                spawns.addSpawn(data.value().type(), data.weight(), UniformInt.of(
+                        data.value().count().minInclusive(),
+                        data.value().count().maxInclusive()
+                ));
             }
         }
     }

@@ -240,7 +240,7 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
                 }
                 blaze.setCustomName(this.getCustomName());
                 blaze.setNoAi(this.isNoAi());
-                blaze.setInvulnerable(this.isInvulnerable());
+                blaze.setPermanentlyInvulnerable(this.isInvulnerable());
                 blaze.snapTo(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
                 this.level().addFreshEntity(blaze);
             }

@@ -25,10 +25,10 @@ public class NetherKnightRenderer extends MobRenderer<NetherKnightEntity, Nether
     }
 
     @Override
-    public void extractRenderState(NetherKnightEntity entity, NetherKnightRenderState state, float $$2) {
-        super.extractRenderState(entity, state, $$2);
+    public void extractRenderState(NetherKnightEntity entity, NetherKnightRenderState state, float partialTicks) {
+        super.extractRenderState(entity, state, partialTicks);
         state.fromEntity(entity);
-        NetherKnightRenderState.extractHoldingEntityRenderState(entity, state, this.itemModelResolver);
+        NetherKnightRenderState.extractHoldingEntityRenderState(entity, state, this.itemModelResolver, partialTicks);
     }
 
     @Override

@@ -4,9 +4,13 @@ import com.mojang.serialization.MapCodec;
 import com.tristankechlo.livingthings.ForgeLivingThings;
 import com.tristankechlo.livingthings.config.GeneralConfig;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.Weighted;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.attribute.EnvironmentAttributeMap;
+import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.attribute.modifier.MobSpawnSettingsModifier;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -34,11 +38,19 @@ public class LivingThingsBiomeModifier implements BiomeModifier {
         }
         Identifier biomeName = biomeID.get().identifier();
         if (phase == Phase.ADD && spawnData.containsKey(biomeName)) {
-            MobSpawnSettingsBuilder spawns = builder.getMobSpawnSettings();
+            EnvironmentAttributeMap.Entry<MobSpawnSettings, ?> spawnSettings = builder.attributes().get(EnvironmentAttributes.NATURAL_MOB_SPAWNS);
+            if (spawnSettings == null || spawnSettings.modifier() != MobSpawnSettingsModifier.overlay()) {
+                return;
+            }
+            MobSpawnSettingsBuilder spawns = new MobSpawnSettingsBuilder(spawnSettings.cast(MobSpawnSettingsModifier.overlay()));
             List<Weighted<MobSpawnSettings.SpawnerData>> spawnerData = spawnData.get(biomeName);
             for (Weighted<MobSpawnSettings.SpawnerData> data : spawnerData) {
-                spawns.addSpawn(data.value().type().getCategory(), data.weight(), data.value());
+                spawns.addSpawn(data.value().type(), data.weight(), UniformInt.of(
+                        data.value().count().minInclusive(),
+                        data.value().count().maxInclusive()
+                ));
             }
+            builder.attributes().modify(EnvironmentAttributes.NATURAL_MOB_SPAWNS, MobSpawnSettingsModifier.overlay(), spawns.build());
         }
     }
 

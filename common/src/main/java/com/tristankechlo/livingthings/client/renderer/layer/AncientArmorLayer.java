@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
@@ -42,8 +41,7 @@ public class AncientArmorLayer<S extends HumanoidRenderState, M extends Humanoid
                 RenderTypes.armorCutoutNoCull(ANCIENT_ARMOR),
                 packedLight,
                 OverlayTexture.NO_OVERLAY,
-                state.outlineColor,
-                null
+                state.outlineColor
         );
     }
 

@@ -6,6 +6,7 @@ import com.tristankechlo.livingthings.init.ModEntityTypes;
 import com.tristankechlo.livingthings.util.StructureAddon;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -91,9 +92,12 @@ public abstract class StructureMixin implements StructureAddon {
 
     @Unique
     private Weighted<MobSpawnSettings.SpawnerData> livingThings$makeSpawnerData() {
-        MobSpawnSettings.SpawnerData spawnerData = new MobSpawnSettings.SpawnerData(ModEntityTypes.NETHER_KNIGHT.get(),
-                NetherKnightConfig.get().minSpawnCount.get(),
-                NetherKnightConfig.get().maxSpawnCount.get()
+        MobSpawnSettings.SpawnerData spawnerData = new MobSpawnSettings.SpawnerData(
+                ModEntityTypes.NETHER_KNIGHT.get(),
+                UniformInt.of(
+                        NetherKnightConfig.get().minSpawnCount.get(),
+                        NetherKnightConfig.get().maxSpawnCount.get()
+                )
         );
         return new Weighted<>(spawnerData, NetherKnightConfig.get().spawnWeight.get());
     }

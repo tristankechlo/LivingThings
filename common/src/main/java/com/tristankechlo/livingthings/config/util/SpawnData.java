@@ -5,10 +5,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.tristankechlo.livingthings.LivingThings;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.Weighted;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -36,7 +37,7 @@ public final class SpawnData {
     }
 
     public Weighted<MobSpawnSettings.SpawnerData> asSpawnerData(EntityType<?> entityType) {
-        return new Weighted<>(new MobSpawnSettings.SpawnerData(entityType, minCount, maxCount), weight);
+        return new Weighted<>(new MobSpawnSettings.SpawnerData(entityType, UniformInt.of(minCount, maxCount)), weight);
     }
 
     public List<Identifier> getBiomes() {

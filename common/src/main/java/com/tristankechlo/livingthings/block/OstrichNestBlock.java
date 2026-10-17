@@ -48,7 +48,7 @@ public class OstrichNestBlock extends Block implements ILexiconEntry {
     public OstrichNestBlock(String name) {
         super(BlockBehaviour.Properties.of()
                 .setId(RegistryHelper.blockId(name))
-                .mapColor(MapColor.COLOR_BROWN).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).strength(0.5F).randomTicks());
+                .mapColor(MapColor.COLOR_BROWN).sound(SoundType.GRASS).pushReaction(PushReaction.POPPED).strength(0.5F).randomTicks());
         registerDefaultState(this.defaultBlockState().setValue(HATCH, 0).setValue(EGG, false));
     }
 

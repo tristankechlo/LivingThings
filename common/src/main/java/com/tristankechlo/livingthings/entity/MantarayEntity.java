@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.DifficultyInstance;
@@ -61,7 +62,7 @@ public class MantarayEntity extends AbstractSchoolingFish implements IMobVariant
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(0, new TryFindLiquidGoal(this, FluidTags.WATER));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.55D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, SharkEntity.class, 16.0F, 1.3D, 1.45D));
         this.goalSelector.addGoal(3, new FollowFlockLeaderGoal(this));
