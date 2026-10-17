@@ -58,7 +58,7 @@ public class AncientBlazeEntity extends Monster implements RangedAttackMob, ILex
         this.setPathfindingMalus(PathType.LAVA, 8.0F);
         this.setPathfindingMalus(PathType.FIRE, 0.0F);
         this.xpReward = 30;
-        this.bossInfo = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        this.bossInfo = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.PROGRESS);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
